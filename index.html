@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>SkidInc. - Idle Hacking Game</title>
+
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="app/css/font-import.css">
+	<link rel="stylesheet" href="app/css/scrollbar.css">
+	<link rel="stylesheet" href="app/css/interface.css">
+	<link rel="stylesheet" href="app/css/nav-tabs.css">
+	<link rel="stylesheet" href="app/css/elements.css">
+	<link rel="stylesheet" href="app/css/navbar.css">
+	<link rel="stylesheet" href="app/css/console.css">
+
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700'>
+
+	<script src="lib/jquery/js/jquery.min.js"></script>
+	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+	    		<a class="navbar-brand">SkidInc. <small>prototype</small></a>
+	    	</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="well">
+					<p id="well-resources"></p>
+				</div>
+			</div>
+
+			<div class="col-md-9">
+			    <ul class="nav nav-tabs nav-justified" role="tablist">
+			        <li class="active"><a href="#console" data-toggle="tab">
+			        	<i class="fa fa-terminal"></i> Console</a>
+			        </li>
+			    </ul>
+			    
+			    <div class="tab-content">
+			    	<!-- CONSOLE -->
+			        <div role="tabpanel" class="tab-pane fade in active" id="console">
+			            <div class="console-container">
+			                <div id="console-content" class="console content text-justify"></div>
+			                <div class="console input-container">
+			                    <div class="console input-logo">
+			                        <i class="fa fa-angle-right"></i>
+			                    </div>
+			                    <div class="console input">
+			                        <input id="console-input" type="text">
+			                    </div>
+			                    <div id="console-enter" class="console enter">
+			                        <i class="fa fa-chevron-right"></i>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+	<script src="app/js/beautify.js"></script>
+	<script src="app/js/console.js"></script>
+	<script src="app/js/core.js"></script>
+</body>
+</html>

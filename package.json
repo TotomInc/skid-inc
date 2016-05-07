@@ -1,0 +1,15 @@
+{
+  "name": "hack-inc",
+  "version": "1.0.0",
+  "description": "Incremental-game with hacking theme.",
+  "keywords": [
+    "idle",
+    "game",
+    "hacking"
+  ],
+  "author": "TotomInc",
+  "license": "MIT",
+  "devDependencies": {
+    "bower-installer": "^1.2.0"
+  }
+}
