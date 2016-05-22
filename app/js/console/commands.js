@@ -1,37 +1,29 @@
 _console.commands = {
-    help: {
+    'help': {
         name: 'help',
-        desc: 'show all commands and their respective help info',
-        effect: '_console.printHelp()',
-        args: false,
-        argsRequired: false,
+        desc: 'print a list of all the commands.',
+        exec: '_console.print("help");',
+        args: false
     },
-    arguments: {
-        name: 'arguments',
-        desc: 'show all arguments available',
-        effect: '_console.printArgs()',
-        args: false,
-        argsRequired: false
+
+    'guide': {
+        name: 'guide',
+        desc: 'read the guide to learn the basics.',
+        exec: '_console.print("guide");',
+        args: false
     },
-    clear: {
-        name: 'clear',
-        desc: 'clear all text from the console',
-        effect: '_console.clear()',
-        args: false,
-        argsRequired: false,
+
+    'args': {
+        name: 'args',
+        desc: 'print a list of arguments available.',
+        exec: '_console.print("args");',
+        args: false
     },
-    hack: {
+
+    'hack': {
         name: 'hack',
-        desc: 'execute this command to earn money and experience',
-        effect: '_console.earn()',
-        args: false,
-        argsRequired: false,
-    },
-    'getting-started': {
-        name: 'getting-started',
-        desc: 'a guide to learn the basics of the game',
-        effect: '_console.guide()',
-        args: false,
-        argsRequired: false,
+        desc: 'hack a place to earn money and experience.',
+        exec: '',
+        args: [['-p'], ['-pl']]
     }
 };
