@@ -13,6 +13,9 @@ var _console = {
 
 		if (exist && !current.args)
 			eval(current.exec);
+		else if (exist && current.args) {
+			eval(current.exec)(parts);
+		}
 		else if (!exist)
 			this.print('log', this.errors.cmd);
 

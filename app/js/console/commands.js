@@ -1,4 +1,6 @@
 _console.commands = {
+    // if arguments: no parenthesis
+    
     'help': {
         name: 'help',
         desc: 'print a list of all the commands.',
@@ -23,7 +25,7 @@ _console.commands = {
     'hack': {
         name: 'hack',
         desc: 'hack a place to earn money and experience.',
-        exec: '',
+        exec: '_console.hack',
         args: [['-p'], ['-pl']]
     }
 };
