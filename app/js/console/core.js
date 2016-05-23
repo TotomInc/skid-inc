@@ -1,4 +1,8 @@
 var _console = {
+	clear: function() {
+		$('#console-content').empty();
+	},
+	
 	enterCmd: function() {
 		var fullCmd = $('#console-input').val(),
 			parts = fullCmd.split(' '),

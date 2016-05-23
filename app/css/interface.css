@@ -8,3 +8,10 @@ body {
 input:focus {
 	outline: none;
 }
+
+pre {
+	border: none;
+	color: #9d9d9d;
+	text-align: center;
+	background-color: transparent;
+}

@@ -11,6 +11,8 @@ var _core = {
 			this.player.level++;
 			this.player.exp -= this.player.maxExp;
 			this.player.maxExp = Math.pow(this.player.level, this.player.expInflation) * 100;
+			
+			_console.print('ascii', this.ascii.levelUp);
 		}
 	},
 	

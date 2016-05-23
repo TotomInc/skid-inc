@@ -1,6 +1,13 @@
 _console.commands = {
     // if arguments: no parenthesis
     
+    'clear': {
+        name: 'clear',
+        desc: 'clear console output',
+        exec: '_console.clear();',
+        args: false
+    },
+    
     'help': {
         name: 'help',
         desc: 'print a list of all the commands.',

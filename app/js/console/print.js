@@ -19,17 +19,23 @@ _console.print = function(type, text) {
             break;
 
         case 'error':
-            $('#console-content').append('<p><span class="console-error">[ERROR]</span> : ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-error">[ERROR]</span> ' + text + '</p>');
             break;
 
         case 'warn':
-            $('#console-content').append('<p><span class="console-warn">[WARN]</span> : ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-warn">[WARN]</span> ' + text + '</p>');
             break;
         
         case 'gain':
-            $('#console-content').append('<p><span class="console-gain">[GAIN]</span> : ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-gain">[GAIN]</span> ' + text + '</p>');
+            break;
+        
+        case 'ascii':
+            $('#console-content').append('<pre>' + text + '</pre>');
             break;
     }
+    
+    $(document).scrollTop($(document).height());
 };
 
 // when on Opera || IE, this.print() call the printer page
