@@ -2,6 +2,7 @@ _console.print = function(type, text) {
     switch (type) {
         case 'guide':
             $('#console-content').append('<p>GUIDE: TODO</p>');
+            break;
 
         case 'help':
             for (var cmd in this.commands)

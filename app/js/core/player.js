@@ -6,10 +6,10 @@ _core.player = {
 	maxExp: 100,
 	expInflation: 1.05,
 	moneyMult: 1,
-	randMoneyMax: 10,
-	randMoneyMin: 6,
+	randMoneyMax: 18,
+	randMoneyMin: 10,
 	expMult: 1,
-	randExpMax: 8,
-	randExpMin: 4,
-	clickReducer: 4
+	randExpMax: 12,
+	randExpMin: 6,
+	clickReducer: 6
 };

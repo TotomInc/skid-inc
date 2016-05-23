@@ -20,6 +20,8 @@ var _core = {
 			'<b>Level</b>: ' + _beautify.fix(this.player.level, 0) + '<br>' +
 			'<b>Exp</b>: ' + _beautify.fix(this.player.exp, 0) + '/' + _beautify.fix(this.player.maxExp, 0)
 		);
+		
+		document.title = _beautify.fix(this.player.money) + '$ - SkidInc.';
 	},
 	
 	updateGame: function(times) {
