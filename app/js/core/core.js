@@ -12,7 +12,7 @@ var _core = {
 			this.player.exp -= this.player.maxExp;
 			this.player.maxExp = Math.pow(this.player.level, this.player.expInflation) * 100;
 			
-			_console.print('ascii', this.ascii.levelUp);
+			_console.print('gain', 'LEVEL++!');
 		}
 	},
 	
@@ -23,7 +23,7 @@ var _core = {
 			'<b>Exp</b>: ' + _beautify.fix(this.player.exp, 0) + '/' + _beautify.fix(this.player.maxExp, 0)
 		);
 		
-		document.title = _beautify.fix(this.player.money) + '$ - SkidInc.';
+		document.title = '$' + _beautify.fix(this.player.money) + ' - SkidInc.';
 	},
 	
 	updateGame: function(times) {
@@ -54,6 +54,7 @@ var _core = {
 	
 	varInit: function() {
 		_console.varInit();
+		_sounds.varInit();
 	},
 
 	domInit: function() {

@@ -1,17 +1,12 @@
 _console.print = function(type, text) {
     switch (type) {
         case 'guide':
-            $('#console-content').append('<p>GUIDE: TODO</p>');
+                $('#console-content').append('<p>GUIDE: TODO</p>');
             break;
 
         case 'help':
             for (var cmd in this.commands)
                 $('#console-content').append('<p><b>' + this.commands[cmd].name + '</b>: ' + this.commands[cmd].desc + '</p>');
-            break;
-
-        case 'args':
-            for (var arg in this.args)
-                $('#console-content').append('<p><b>' + this.args[arg].name + '</b>: ' + this.args[arg].desc + '</p>');
             break;
 
         case 'log':
@@ -29,15 +24,11 @@ _console.print = function(type, text) {
         case 'gain':
             $('#console-content').append('<p><span class="console-gain">[GAIN]</span> ' + text + '</p>');
             break;
-        
-        case 'ascii':
-            $('#console-content').append('<pre>' + text + '</pre>');
-            break;
     }
     
-    $(document).scrollTop($(document).height());
+    $('#console-content').scrollTop(1e6);
 };
 
 // when on Opera || IE, this.print() call the printer page
-if (isOpera || isIE)
+if (isOpera || isIE || isChrome || isFirefox)
     window['print'] = _console.print;

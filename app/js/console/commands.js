@@ -4,8 +4,8 @@ _console.commands = {
     'clear': {
         name: 'clear',
         desc: 'clear console output',
-        exec: '_console.clear();',
-        args: false
+        exec: '_console.clear',
+        args: []
     },
     
     'help': {
@@ -22,17 +22,17 @@ _console.commands = {
         args: false
     },
 
-    'args': {
-        name: 'args',
-        desc: 'print a list of arguments available.',
-        exec: '_console.print("args");',
-        args: false
-    },
-
     'hack': {
         name: 'hack',
         desc: 'hack a place to earn money and experience.',
         exec: '_console.hack',
-        args: [['-p'], ['-pl']]
-    }
+        args: [['hack', '-p'], ['hack', '-pl']]
+    },
+    
+    'config': {
+        name: 'config',
+        desc: 'print a list of configs commands.',
+        exec: '_console.config',
+        args: [['config', '-sound'], ['config', '-volume']]
+    },
 };

@@ -4,5 +4,6 @@ _core.options = {
     interval: undefined,
     now: new Date().getTime(),
     before: new Date().getTime(),
-    version: 0.001
+    version: 0.001,
+    sounds: true
 };
