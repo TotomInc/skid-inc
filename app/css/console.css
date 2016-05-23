@@ -90,3 +90,15 @@
 .console.enter > i {
 	margin: 4px 6px;
 }
+
+.console-warn {
+	color: #d35400;
+}
+
+.console-error {
+	color: #c0392b;
+}
+
+.console-gain {
+	color: #27ae60;
+}

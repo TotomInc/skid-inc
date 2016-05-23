@@ -1,5 +1,30 @@
 var _core = {
-	updateGame: function(times) {},
+	earnMoney: function(amount) {
+		this.player.money += amount;
+		this.player.totalMoney += amount;
+	},
+	
+	earnExp: function(amount) {
+		this.player.exp += amount;
+		
+		while (this.player.exp >= this.player.maxExp) {
+			this.player.level++;
+			this.player.exp -= this.player.maxExp;
+			this.player.maxExp = Math.pow(this.player.level, this.player.expInflation) * 100;
+		}
+	},
+	
+	display: function() {
+		$('#well-resources').html('' +
+			'<b>Money</b>: $' + _beautify.fix(this.player.money) + '<br>' +
+			'<b>Level</b>: ' + _beautify.fix(this.player.level, 0) + '<br>' +
+			'<b>Exp</b>: ' + _beautify.fix(this.player.exp, 0) + '/' + _beautify.fix(this.player.maxExp, 0)
+		);
+	},
+	
+	updateGame: function(times) {
+		this.display();
+	},
 	
 	coreLoop: function() {
 		this.options.now = new Date().getTime();
@@ -16,7 +41,6 @@ var _core = {
 	},
 	
 	intervalsInit: function() {
-		console.log('first: ' + this.options.fps);
 		this.options.interval = 1000 / this.options.fps;
 		
 		this.options.intervals.core = window.setInterval(function() {

@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="app/css/elements.css">
 	<link rel="stylesheet" href="app/css/navbar.css">
 	<link rel="stylesheet" href="app/css/console.css">
+	<link rel="stylesheet" href="app/css/no-select.css">
 
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700'>
 
@@ -20,7 +21,7 @@
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body class="noselect">
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -34,6 +35,10 @@
 			<div class="col-md-3">
 				<div class="well">
 					<p id="well-resources"></p>
+				</div>
+				
+				<div id="hack-button" class="hack-button">
+					<p>Hack!</p>
 				</div>
 			</div>
 
@@ -66,6 +71,8 @@
 			</div>
 		</div>
 	</div>
+
+	<script src="app/js/browser-detection/detection.js"></script>
 
 	<script src="app/js/beautify/beautify.js"></script>
 

@@ -25,6 +25,10 @@ var _console = {
 	varInit: function() {},
 
 	domInit: function() {
+		$('#hack-button').on('click', function() {
+			_console.hack(['button'], 'button');
+		});
+		
 		$('#console-enter').on('click', function() {
 			_console.enterCmd();
 		});

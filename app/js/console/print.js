@@ -18,11 +18,19 @@ _console.print = function(type, text) {
             break;
 
         case 'error':
-            $('#console-content').append('<p>[ERROR] : ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-error">[ERROR]</span> : ' + text + '</p>');
             break;
 
         case 'warn':
-            $('#console-content').append('<p>[WARN] : ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-warn">[WARN]</span> : ' + text + '</p>');
+            break;
+        
+        case 'gain':
+            $('#console-content').append('<p><span class="console-gain">[GAIN]</span> : ' + text + '</p>');
             break;
     }
 };
+
+// when on Opera || IE, this.print() call the printer page
+if (isOpera || isIE)
+    window['print'] = _console.print;
