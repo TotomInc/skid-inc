@@ -99,6 +99,10 @@
 	color: #c0392b;
 }
 
-.console-gain {
+.console-gain, .console-help {
 	color: #27ae60;
+}
+
+.console-log {
+	color: #2980b9;
 }

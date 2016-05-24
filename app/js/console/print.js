@@ -6,11 +6,11 @@ _console.print = function(type, text) {
 
         case 'help':
             for (var cmd in this.commands)
-                $('#console-content').append('<p><b>' + this.commands[cmd].name + '</b>: ' + this.commands[cmd].desc + '</p>');
+                $('#console-content').append('<p><span class="console-help">[HELP]</span> <b>' + this.commands[cmd].name + '</b>: ' + this.commands[cmd].desc + '</p>');
             break;
 
         case 'log':
-            $('#console-content').append('<p>' + text + '</p>');
+            $('#console-content').append('<p><span class="console-log">[LOG]</span> ' + text + '</p>');
             break;
 
         case 'error':

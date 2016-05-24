@@ -3,9 +3,7 @@ _console.enterCmd = function() {
         parts = fullCmd.split(' '),
         exist = false,
         current = undefined,
-        rand = Math.floor(Math.random() * 100),
-        randSound = Math.floor(Math.random() * (1 - 0 + 1)) + 0,
-        effect = new Audio(_sounds.devices[randSound]);
+        effect = new Audio(_sounds.button);
 
     for (var cmd in this.commands) {
         if (this.commands[cmd].name == parts[0])

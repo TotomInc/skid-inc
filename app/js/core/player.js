@@ -18,5 +18,9 @@ _core.player = {
 	randExpMax: 16,
 	randExpMin: 10,
 	
-	clickReducer: 10
+	clickReducer: 10,
+	
+	isHacking: false,
+	hackingWhat: undefined,
+	hackingProgress: 0
 };

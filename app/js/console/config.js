@@ -2,21 +2,27 @@ _console.config = function(args) {
     // args = ['config', '-sound', '0']
     
     if (args.length == 1) {
+        // config
         if (args.indexOf('config') == 0)
-            _console.print('error', _console.errors.configError1);
+            _console.print('error', _console.errors.configError);
     }
     
     if (args.length == 2) {
-        if (args.indexOf('config') == 0 && args.indexOf('-help') == 1)
-            _console.print('log', '<b>config -sound <i>value</i></b>: enable or disable sounds with 1 or 0 (defaut 0).<br><b>config -whaow <i>value</i></b>: it\'s a secret.');
-
+        // config -help
+        if (args.indexOf('config') == 0 && args.indexOf('-help') == 1) {
+            for (var arg in _console.commands.config.args) {
+                var thisArg = _console.commands.config.args[arg];
+                this.print('log', '<b>' + thisArg.name + '</b>: ' + thisArg.desc + ' Example: <b>' + thisArg.example + '</b>');
+            }
+        }
+        
+        // config -whaow
         if (args.indexOf('config') == 0 && args.indexOf('-whaow') == 1)
-            _console.print('warn', 'MATRIX ! (TODO)');
+            _console.print('warn', 'TODO');
     }
     
     if (args.length == 3) {
-        // config -sound 0
-        // config -sound 1
+        // config -sound value (0/1)
         if (args.indexOf('config') == 0 && args.indexOf('-sound') == 1 && typeof args[2] == 'string') {
             var value = parseInt(args[2]);
             
@@ -27,5 +33,5 @@ _console.config = function(args) {
             } else
                 this.print('error', this.errors.soundValue);
         }
-    };
+    }
 };

@@ -16,6 +16,12 @@ var _core = {
 		}
 	},
 	
+	hackProgress: function(times) {
+		if (this.player.isHacking) {
+			console.log('hacking')
+		}
+	},
+	
 	display: function() {
 		$('#well-resources').html('' +
 			'<b>Money</b>: $' + _beautify.fix(this.player.money) + '<br>' +
@@ -27,6 +33,7 @@ var _core = {
 	},
 	
 	updateGame: function(times) {
+		this.hackProgress(times)
 		this.display();
 	},
 	
