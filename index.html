@@ -5,6 +5,8 @@
 	<link rel="icon" type="image/png" href="favicon.png">
 	<title>$0 - SkidInc.</title>
 
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700'>
+
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
 
@@ -15,9 +17,6 @@
 	<link rel="stylesheet" href="app/css/navbar.css">
 	<link rel="stylesheet" href="app/css/console.css">
 	<link rel="stylesheet" href="app/css/no-select.css">
-	<link rel="stylesheet" href="app/css/footer.css">
-
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700'>
 
 	<script src="lib/jquery/js/jquery.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -31,10 +30,6 @@
 	    	</div>
 		</div>
 	</nav>
-	
-	<div class="footer">
-		<p>Based on an original idea by <a href="http://steamcommunity.com/id/totominc/">TotomInc</a>.<br>Developed by <a href="http://steamcommunity.com/id/totominc/">TotomInc</a> and <a href="http://steamcommunity.com/profiles/76561198108137968/">Mr. Pink</a>.</p>
-	</div>
 
 	<div class="container">
 		<div class="row">
@@ -43,15 +38,15 @@
 					<p id="well-resources"></p>
 				</div>
 				
-				<div id="hack-button" class="hack-button">
-					<p>Hack!</p>
-				</div>
+				<!--<div id="hack-button" class="hack-button">-->
+				<!--	<p>Hack!</p>-->
+				<!--</div>-->
 			</div>
 
 			<div class="col-md-9">
 			    <ul class="nav nav-tabs nav-justified" role="tablist">
-			        <li class="active"><a href="#console" data-toggle="tab">
-			        	<i class="fa fa-terminal"></i> Console</a>
+			        <li class="active">
+			        	<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
 			        </li>
 			    </ul>
 
@@ -77,35 +72,41 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="app/js/browser-detection/detection.js"></script>
-
-	<script src="app/js/beautify/beautify.js"></script>
 	
-	<script src="app/js/sounds/core.js"></script>
-
-	<script src="app/js/console/core.js"></script>
-	<script src="app/js/console/print.js"></script>
-	<script src="app/js/console/errors.js"></script>
-	<script src="app/js/console/commands.js"></script>
-	<script src="app/js/console/hack.js"></script>
-	<script src="app/js/console/config.js"></script>
-	<script src="app/js/console/enterCmd.js"></script>
-	<script src="app/js/console/clear.js"></script>
-
+	<!-- GAME SCRIPTS -->
+	<script src="app/js/helpers/beautify.js"></script>
+	
 	<script src="app/js/core/core.js"></script>
-	<script src="app/js/core/options.js"></script>
 	<script src="app/js/core/player.js"></script>
-	<script src="app/js/core/init.js"></script>
+	<script src="app/js/core/options.js"></script>
+	<script src="app/js/core/detection.js"></script>
 	
+	<script src="app/js/console/core.js"></script>
+	<script src="app/js/console/errors.js"></script>
+	<script src="app/js/console/print.js"></script>
+	<script src="app/js/console/hack.js"></script>
+	
+	<!-- CALLED WHEN ALL SCRIPTS LOADED -->
+	<script type="text/javascript">
+		game.init();
+	</script>
+	
+	<!-- GA (GOOGLE ANALYTICS) -->
 	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 	
-	  ga('create', 'UA-54540685-19', 'auto');
-	  ga('send', 'pageview');
+		ga('create', 'UA-54540685-19', 'auto');
+		ga('send', 'pageview');
 	</script>
 </body>
 </html>
