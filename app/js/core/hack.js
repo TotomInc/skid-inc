@@ -40,6 +40,20 @@ game.hack = function(from) {
     if (from == 'mini-market' || from == 'market' || from == 'bank' || from == 'jewelry' || from == 'trading-center') {
         var thisPlace = game.console.cmds.hack.places[from];
 
+        if (!game.player.isHacking) {
+            if (game.player.level >= thisPlace.reqLevel) {
+                game.player.isHacking = true;
+                game.player.hackingWhat = from;
+                game.console.print('log', 'Hack in progress...');
+                game.console.print('hack-bar');
+            }
+            else
+                game.console.print('error', game.console.errors.levelLow);
+        }
+        else
+            game.console.print('error', game.console.errors.hackInProgress);
+
+
         return;
     };
     

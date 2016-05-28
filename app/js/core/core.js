@@ -30,11 +30,57 @@ var game = {
         };
     },
     
+    hackProgress: function(times) {
+        if (game.player.isHacking) {
+            var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
+                time = thisPlace.time,
+                fps = game.options.fps,
+                barStatus = '|',
+                maxBar = 50,
+                filled = Math.floor(game.player.hackingProgress / time * maxBar),
+                left = Math.ceil(maxBar - filled),
+                percent = Math.floor(game.player.hackingProgress / time * 100),
+                moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
+                expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward);
+            
+            game.player.hackingProgress += times / fps;
+            
+            if (game.player.hackingProgress < time) {
+                for (var i = 0; i < filled; i++)
+                    barStatus += '#';
+                
+                for (var i = 0; i < left; i++)
+                    barStatus += '=';
+                
+                barStatus += '| (' + fix(percent, 2) + '%)';
+                
+                $('#hacking-progress').html(barStatus);
+            }
+            else if (game.player.hackingProgress >= time) {
+                game.player.isHacking = false;
+                game.player.hackingWhat = undefined;
+                game.player.hackingProgress = 0;
+                
+                for (var i = 0; i < maxBar; i++)
+                    barStatus += '#';
+                
+                barStatus += '| (100.00%)';
+                
+                $('#hacking-progress').html(barStatus).removeAttr('id');
+                
+                game.earnMoney(moneyReward);
+                game.earnExp(expReward);
+                
+                game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
+            };
+        };
+    },
+    
     display: function() {
         $('#well-resources').html(
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
-            'Exp: ' + fix(game.player.exp, 0) + '/' + fix(game.player.maxExp, 0)
+            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -52,6 +98,7 @@ var game = {
     },
     
     updateGame: function(times) {
+        game.hackProgress(times);
         game.display();
     },
     

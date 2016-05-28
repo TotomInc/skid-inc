@@ -6,8 +6,28 @@
 	box-shadow: none;
 }
 
+.tab-pane > .well {
+	border: 0;
+	border-bottom: 1px solid #222;
+	border-left: 1px solid #222;
+	border-right: 1px solid #222;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.tab-panel > .well a {
+	color: #9d9d9d;
+	font-weight: bold;
+}
+
 .well p {
 	margin: 0;
+}
+
+.well p a {
+	color: #9d9d9d;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 .panel-default {

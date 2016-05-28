@@ -18,5 +18,9 @@ game.player = {
     randExpMax: 5,
     randExpMin: 1,
     
-    clickReducer: 16
+    clickReducer: 16,
+    
+    isHacking: false,
+    hackingWhat: undefined,
+    hackingProgress: 0
 };

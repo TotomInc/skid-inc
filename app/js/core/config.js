@@ -19,13 +19,13 @@ game.config = function(from) {
     };
     
     if (from == "background-off") {
-        game.console.print('log', 'Background sound have been turned off.');
+        game.console.print('log', 'Background have been turned off.');
         game.options.background = false;
         return;
     };
     
     if (from == "background-on") {
-        game.console.print('log', 'Background sound have been turned on');
+        game.console.print('log', 'Background have been turned on');
         game.options.background = true;
         return;
     };

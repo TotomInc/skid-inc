@@ -34,3 +34,31 @@
 	background-color: #333;
 	border: 1px solid #222;
 }
+
+.nav-tabs.nav-justified>li>a {
+	border: 1px solid #222;
+	background-color: #333;
+}
+
+.nav .open>a,
+.nav .open>a:focus,
+.nav .open>a:hover,
+.nav .open>a:active,
+.nav .open>a:visited {
+	border-color: #222;
+	background-color: #333;
+}
+
+.dropdown-menu,
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover,
+.dropdown-menu>li>a:active,
+.dropdown-menu>li>a:visited {
+	transition: all 0.2s;
+	background-color: #333;
+}
+
+.dropdown-menu>li>a {
+	transition: all 0.2s;
+	color: #9d9d9d !important;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<link rel="icon" type="image/png" href="favicon.png">
@@ -17,7 +18,6 @@
 	<link rel="stylesheet" href="app/css/navbar.css">
 	<link rel="stylesheet" href="app/css/console.css">
 	<link rel="stylesheet" href="app/css/no-select.css">
-	<link rel="stylesheet" href="app/css/footer.css" >
 
 	<script src="lib/jquery/js/jquery.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -27,97 +27,102 @@
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-	    		<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(prototype)</i></small></a>
-	    	</div>
+				<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(prototype)</i></small></a>
+			</div>
 		</div>
 	</nav>
-	
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
 				<div class="well">
 					<p id="well-resources"></p>
 				</div>
-				
+
 				<div id="hack-button" class="hack-button">
 					<p>Hack!</p>
 				</div>
 			</div>
 
 			<div class="col-md-9">
-			    <ul class="nav nav-tabs nav-justified" role="tablist">
-			        <li class="active">
-			        	<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
-			        </li>
-			        
+				<ul class="nav nav-tabs nav-justified" role="tablist">
+					<li class="active">
+						<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
+					</li>
+
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
 					      More <span class="caret"></span>
 					    </a>
 						<ul class="dropdown-menu">
-					        <li>
-					        	<a href="#credits" data-toggle="tab">Credits</a>
-					        </li>
+							<li>
+								<a href="#credits" data-toggle="tab">Credits</a>
+							</li>
 						</ul>
 					</li>
-			    </ul>
+				</ul>
 
-			    <div class="tab-content">
-			    	<!-- CONSOLE -->
-			        <div role="tabpanel" class="tab-pane fade in active" id="console">
-			            <div class="console-container">
-			                <div id="console-content" class="console content text-justify"></div>
-			                <div class="console input-container">
-			                    <div class="console input-logo">
-			                        <i class="fa fa-angle-right"></i>
-			                    </div>
-			                    <div class="console input">
-			                        <input id="console-input" type="text">
-			                    </div>
-			                    <div id="console-enter" class="console enter">
-			                        <i class="fa fa-chevron-right"></i>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-			        
-			        <!-- CREDITS -->
-			        <div role="tabpanel" class="tab-pane fade" id="credits"></div>
-			    </div>
+				<div class="tab-content">
+					<!-- CONSOLE -->
+					<div role="tabpanel" class="tab-pane fade in active" id="console">
+						<div class="console-container">
+							<div class="console logo"></div>
+							<div id="console-content" class="console content text-justify"></div>
+							<div class="console input-container">
+								<div class="console input-logo">
+									<i class="fa fa-angle-right"></i>
+								</div>
+								<div class="console input">
+									<input id="console-input" type="text">
+								</div>
+								<div id="console-enter" class="console enter">
+									<i class="fa fa-chevron-right"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- CREDITS -->
+					<div role="tabpanel" class="tab-pane fade" id="credits">
+						<div class="well">
+							<p>
+								Project management : <a target="_blank" href="http://totominc.github.io">TotomInc</a><br>
+								Coding : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a><br>
+								Assets designer : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a><br>
+								Based on a original idea by <a href="#">Emiel</a>
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div class="footer">
-		<p>
-			Based on an original idea by <a target="_blank" href="http://www.github.com/TotomInc">TotomInc</a>.<br>
-			Developed by <a target="_blank" href="http://www.github.com/TotomInc">TotomInc</a> and <a target="_blank" href="http://steamcommunity.com/id/mr__pink/">Mr. Pink</a>. Art assets by <a target="_blank" href="http://steamcommunity.com/id/tim089/">Tim</a>.
-		</p>
-	</div>
-	
+
 	<!-- GAME SCRIPTS -->
 	<script src="app/js/helpers/beautify.js"></script>
-	
+	<script src="app/js/helpers/capitalize.js"></script>
+
 	<script src="app/js/core/core.js"></script>
 	<script src="app/js/core/player.js"></script>
 	<script src="app/js/core/options.js"></script>
 	<script src="app/js/core/hack.js"></script>
 	<script src="app/js/core/detection.js"></script>
 	<script src="app/js/core/config.js"></script>
-	
+
 	<script src="app/js/console/core.js"></script>
 	<script src="app/js/console/cmds.js"></script>
 	<script src="app/js/console/errors.js"></script>
 	<script src="app/js/console/print.js"></script>
 	<script src="app/js/console/help.js"></script>
-	
+	<script src="app/js/console/places.js"></script>
+
 	<script src="app/js/sounds/core.js"></script>
-	
+
 	<!-- CALLED WHEN ALL SCRIPTS LOADED -->
 	<script type="text/javascript">
 		game.init();
 	</script>
-	
+
 	<!-- GA -->
 	<script>
 		(function(i, s, o, g, r, a, m) {
@@ -131,9 +136,10 @@
 			a.src = g;
 			m.parentNode.insertBefore(a, m)
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-	
+
 		ga('create', 'UA-54540685-19', 'auto');
 		ga('send', 'pageview');
 	</script>
 </body>
+
 </html>
