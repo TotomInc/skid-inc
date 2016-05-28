@@ -3,11 +3,12 @@ game.options = {
     interval: undefined,
     fps: 10,
     bindTime: 500,
+    sounds: false,
+    background: false,
+    version: 0.001,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
-    
-    version: 0.001,
     
     isOpera: false,
     isFirefox: false,

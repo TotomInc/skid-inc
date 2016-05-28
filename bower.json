@@ -14,7 +14,8 @@
   "devDependencies": {
     "jquery": "^2.2.3",
     "bootstrap": "^3.3.6",
-    "components-font-awesome": "^4.6.1"
+    "components-font-awesome": "^4.6.1",
+    "tooltipster": "^3.3.0"
   },
   "install": {
     "base": "lib",
@@ -38,7 +39,8 @@
         "bower_components/bootstrap/dist/css/*.css",
         "bower_components/bootstrap/dist/fonts/*.*",
         "bower_components/bootstrap/dist/js/*.js"
-      ]
+      ],
+      "tooltipster": "bower_components/tooltipster/js/jquery.tooltipster.min.js"
     }
   }
 }

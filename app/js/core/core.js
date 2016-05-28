@@ -4,7 +4,8 @@ var game = {
     },
     
     setInputTimeout: function() {
-        $('#console-input').unbind();
+        $('#console-input').val('');
+        $('#console-input').unbind('keydown');
 
         setTimeout(function() {
             $('#console-input').bind('keydown', function(e) {
@@ -58,9 +59,15 @@ var game = {
         game.options.interval = (1000 / game.options.fps);
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
+        
+        game.sounds.varInit();
     },
     
     domInit: function() {
+        $('#hack-button').on('click', function() {
+            game.hack('sp-click');
+        });
+        
 		$('#console-enter').on('click', function() {
 			game.console.executer();
 		});
@@ -73,6 +80,10 @@ var game = {
 		$('#console-input').bind('copy paste', function(e) {
 			e.preventDefault();
 		});
+		
+		$('img').on('dragstart', function(e) {
+		    e.preventDefault();
+		});
     },
     
     init: function() {
@@ -80,4 +91,3 @@ var game = {
         game.domInit();
     }
 };
-

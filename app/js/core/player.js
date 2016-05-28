@@ -10,11 +10,13 @@ game.player = {
 
     moneyMult: 1,
 
-    randMoneyMax: 20,
-    randMoneyMin: 10,
+    randMoneyMax: 7,
+    randMoneyMin: 3,
 
     expMult: 1,
 
-    randExpMax: 16,
-    randExpMin: 10
+    randExpMax: 5,
+    randExpMin: 1,
+    
+    clickReducer: 16
 };
