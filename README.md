@@ -21,4 +21,4 @@ Otherwise if you want to code:
 - Tim: art assets.
 - Emiel: ideas.
 
-[Play it here!](https://www.google.com "Skid-Inc")
+[Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc")
