@@ -1,6 +1,6 @@
 # skid-inc
 
-Incremental-game with an hacking theme. Actually in early beta, but playable.
+Skid-Inc is an incremental-game with a hacking theme. Actually in early beta, but playable.
 
 ### Want to help?
 
