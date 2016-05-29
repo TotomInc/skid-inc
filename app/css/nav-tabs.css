@@ -17,6 +17,7 @@
 .nav-tabs.nav-justified>.active>a:focus,
 .nav-tabs.nav-justified>.active>a:hover {
 	border-bottom: 1px solid #222 !important;
+	background-color: #2D2D2D;
 }
 
 .nav-tabs.nav-justified>li>a {
@@ -49,16 +50,26 @@
 	background-color: #333;
 }
 
+.dropdown-menu>li>a {
+	color: #9d9d9d !important;
+}
+
 .dropdown-menu,
 .dropdown-menu>li>a:focus,
-.dropdown-menu>li>a:hover,
-.dropdown-menu>li>a:active,
-.dropdown-menu>li>a:visited {
+.dropdown-menu>li>a:active {
 	transition: all 0.2s;
 	background-color: #333;
 }
 
-.dropdown-menu>li>a {
+.dropdown-menu>li>a:hover {
 	transition: all 0.2s;
-	color: #9d9d9d !important;
+	background-color: #2D2D2D;
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover {
+	border-top: 1px solid #222;
+	border-bottom: 1px solid #222;
+	background-color: #2D2D2D;
 }

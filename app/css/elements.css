@@ -77,12 +77,3 @@
 	font-size: 18px;
 	color: #27ae60;
 }
-
-.logo-container > img {
-	display: block;
-	margin: 0 auto 25px;
-	max-width: 100%;
-	max-height: 100%;
-	width: auto;
-	height: auto;
-}
