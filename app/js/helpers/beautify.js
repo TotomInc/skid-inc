@@ -1,9 +1,9 @@
-var _beautify = {
-	prefixes: ["m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
+var beautify = {
+	prefixes: [
+	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
 		"D ", "UD ", "DD ", "TD ", "qD ", "QD ", "sD ", "SD ", "OD ", "ND ",
 		"V ", "UV ", "DV ", "TV ", "qV ", "QV ", "sV ", "SV ", "OV ", "NV ",
-		"T ", "UT ", "DT ", "TT ", "qT ", "QT ", "sT ", "ST ", "OT ", "NT ",
-		"~q ", "Uq ", "Dq ", "Tq ", "qq ", "Qq ", "sq ", "Sq ", "Oq ", "Nq "
+		"T ", "UT ", "DT ", "TT ", "qT ", "QT ", "sT ", "ST ", "OT ", "NT "
 	],
 
 	beautify: function(x, n) {
@@ -36,14 +36,16 @@ var _beautify = {
 
 	fix: function(x, n) {
 		if (x >= 1e6)
-			return _beautify.beautify(x, 3)
+			return beautify.beautify(x, 3)
 		else if (x < 1e6 && typeof n == 'number')
-			return _beautify.beautify(x, n);
+			return beautify.beautify(x, n);
 		else if (x < 1e6 && typeof n !== 'number')
-			return _beautify.beautify(x, 2);
+			return beautify.beautify(x, 2);
 	},
 
 	varInit: function() {
-		window['_fix'] = _beautify.fix;
+		window['fix'] = beautify.fix;
 	}
 };
+
+beautify.varInit();
