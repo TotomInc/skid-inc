@@ -18,3 +18,14 @@
 .navbar-inverse .navbar-brand:hover {
 	color: #9d9d9d;
 }
+
+.nav>li>a:focus,
+.nav>li>a:hover {
+	transition: background-color 0.2s;
+	transition: color 0.2s;
+	border: 0;
+	border-color: #222;
+	border-left: 1px solid #222;
+	border-right: 1px solid #222;
+	color: #333;
+}

@@ -145,6 +145,14 @@ var game = {
     },
     
     domInit: function() {
+        $('#navbar-mute').on('click', function() {
+            game.console.print('warn', 'GAME MUTE ONCLICK TODO');
+        });
+        
+        $('#navbar-save').on('click', function() {
+            game.console.print('warn', 'GAME SAVE ONCLICK TODO');
+        });
+        
         $('#hack-button').on('click', function() {
             game.hack('sp-click');
         });
