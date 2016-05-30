@@ -1,4 +1,4 @@
-# skid-inc
+# [Skid-Inc](https://totominc.github.io/skid-inc/ "Skid-Inc")
 
 Skid-Inc is an incremental-game with a hacking theme. Actually in early beta, but playable.
 
@@ -20,6 +20,16 @@ Otherwise if you want to code:
 - MrPinkCat: coding.
 - Tim: art assets.
 - Emiel: ideas.
+
+### Workflow:
+
+For any pull request, create your own branch.
+
+Otherwise, all new features currently working on are on a secondary branch.
+
+Once we reach a milestone on this secondary branch, we can merge it to gh-pages (the main branch).
+
+### Links:
 
 [Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc")
 
