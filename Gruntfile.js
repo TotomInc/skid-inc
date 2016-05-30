@@ -32,7 +32,8 @@ module.exports = function(grunt) {
                     'app/js/console/core.js',
                     'app/js/console/cmds.js',
                     'app/js/console/*.js',
-                    'app/js/sounds/*.js'
+                    'app/js/sounds/*.js',
+                    'app/js/achievements/*.js'
                 ],
                 dest: 'app/prod/skid-inc.js'
             }

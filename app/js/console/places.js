@@ -6,7 +6,7 @@ game.console.cmds.hack.places = {
         minExpReward: 50,
         maxExpReward: 150,
         time: 5,
-        reqLevel: 0
+        reqLevel: 5
     },
     'market': {
         name: 'market',
@@ -15,25 +15,25 @@ game.console.cmds.hack.places = {
         minExpReward: 200,
         maxExpReward: 450,
         time: 40,
-        reqLevel: 0
+        reqLevel: 10
     },
-    'bank': {
-        name: 'bank',
+    'jewelry': {
+        name: 'jewelry',
         minMoneyReward: 240000,
         maxMoneyReward: 800000,
         minExpReward: 500,
         maxExpReward: 850,
         time: 80,
-        reqLevel: 0
+        reqLevel: 25
     },
-    'jewelry': {
-        name: 'jewelry',
+    'bank': {
+        name: 'bank',
         minMoneyReward: 9600000,
         maxMoneyReward: 31968000,
         minExpReward: 1000,
         maxExpReward: 1750,
         time: 160,
-        reqLevel: 0
+        reqLevel: 15
     },
     'trading-center': {
         name: 'trading-center',
@@ -42,6 +42,6 @@ game.console.cmds.hack.places = {
         minExpReward: 2500,
         maxExpReward: 5000,
         time: 280,
-        reqLevel: 0
+        reqLevel: 50
     }
 };

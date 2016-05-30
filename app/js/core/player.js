@@ -20,6 +20,10 @@ game.player = {
     
     clickReducer: 16,
     
+    achievementsPoints: 0,
+    
+    timesHacked: 0,
+    
     isHacking: false,
     hackingWhat: undefined,
     hackingProgress: 0,

@@ -1,11 +1,13 @@
 game.buy = function(from) {
     if (from == "sp") {
         game.console.print('error', game.console.errors.buyNoArgs);
+        
         return;
     };
     
     if (from == "serv") {
         game.console.print('error', game.console.errors.buyNoArgsServ);
+        
         return;
     };
     
@@ -44,10 +46,10 @@ game.buy = function(from) {
             game.player.serverPers++;
             
             var newCost = game.getPersServerCost();
-            game.console.print('gain', 'You successfully bought a personal server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '.');
+            game.console.print('gain', 'You successfully bought a personal server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
         else
-            game.console.print('error', 'Not enough money to buy a personal server, cost $' + fix(cost) + '.');
+            game.console.print('error', 'Not enough money to buy a personal server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
         
         return;
     };
@@ -60,10 +62,10 @@ game.buy = function(from) {
             game.player.serverPro++;
             
             var newCost = game.getProServerCost();
-            game.console.print('gain', 'You successfully bought a professional server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '.');
+            game.console.print('gain', 'You successfully bought a professional server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
         else
-            game.console.print('error', 'Not enough money to buy a professional server, cost $' + fix(cost) + '.');
+            game.console.print('error', 'Not enough money to buy a professional server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
         
         return;
     };
@@ -76,10 +78,10 @@ game.buy = function(from) {
             game.player.serverSpeedHack++;
             
             var newCost = game.getSpeedhackCost();
-            game.console.print('gain', 'You successfully bought a VM server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '.');
+            game.console.print('gain', 'You successfully bought a VM server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
         else
-            game.console.print('error', 'Not enough money to buy a VM server, cost $' + fix(cost) + '.');
+            game.console.print('error', 'Not enough money to buy a VM server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
 
         return;
     };

@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-05-29 */
+/*! skid-inc - v1.0.0 - 2016-05-30 */
 var beautify = {
 	prefixes: [
 	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
@@ -88,13 +88,42 @@ var game = {
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
+            game.console.print('gain', 'Level-up!');
         };
+    },
+    
+    getPlaceTime: function(thisPlace) {
+        return thisPlace.time / (1 + (game.player.serverSpeedHack * game.player.serverSpeedHackAccelerator));
+    },
+    
+    getProServerMult: function() {
+        return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
+    },
+    
+    getProServerCost: function() {
+        return Math.floor(game.player.serverProCost * Math.pow(game.player.serverProInflation, game.player.serverPro));
+    },
+    
+    getPersServerMult: function() {
+        return (1 + (game.player.serverPers * (game.player.serverPersReward - 1)));
+    },
+    
+    getPersServerCost: function() {
+        return Math.floor(game.player.serverPersCost * Math.pow(game.player.serverPersInflation, game.player.serverPers));
+    },
+    
+    getSpeedhackMult: function() {
+        return (1 + (game.player.serverSpeedHack * (game.player.serverSpeedHackAccelerator - 1)));
+    },
+    
+    getSpeedhackCost: function() {
+        return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
     },
     
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
-                time = thisPlace.time,
+                time = game.getPlaceTime(thisPlace),
                 fps = game.options.fps,
                 barStatus = '|',
                 maxBar = 50,
@@ -141,7 +170,10 @@ var game = {
         $('#well-resources').html(
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
-            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0)
+            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
+            'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
+            'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
+            'VM servers: ' + fix(game.player.serverSpeedHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -167,7 +199,9 @@ var game = {
         game.options.interval = (1000 / game.options.fps);
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
+        game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
         
+        game.achievements.varInit();
         game.sounds.varInit();
     },
     
@@ -192,6 +226,13 @@ var game = {
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
 		});
+		
+        $('html').bind('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        game.achievements.domInit();
     },
     
     init: function() {
@@ -221,9 +262,99 @@ game.options = {
     isBlink: false
 };
 
+game.buy = function(from) {
+    if (from == "sp") {
+        game.console.print('error', game.console.errors.buyNoArgs);
+        
+        return;
+    };
+    
+    if (from == "serv") {
+        game.console.print('error', game.console.errors.buyNoArgsServ);
+        
+        return;
+    };
+    
+    if (from == "help") {
+        game.console.print('help', game.console.help.buy);
+        return;
+    };
+    
+    if (from == "info") {
+        var persServMult = game.getPersServerMult(),
+            proServMult = game.getProServerMult(),
+            speedhackMult = game.getSpeedhackMult(),
+            persCost = game.getPersServerCost(),
+            proCost = game.getProServerCost(),
+            speedhackCost = game.getSpeedhackCost();
+        
+        game.console.print('log', 'Servers info:<br>' +
+            '<b>Personal servers</b>: ' + fix(game.player.serverPers, 0) + ' , mutiplier:  x' + fix(persServMult, 2) + ', next cost: $' + fix(persCost) + '.<br>' +
+            '<b>Professional servers</b>: ' + fix(game.player.serverPro, 0) + ', mutiplier: x' + fix(proServMult, 2) + ', next cost: $' + fix(proCost) + '.<br>' + 
+            '<b>VM servers</b>: ' + fix(game.player.serverSpeedHack, 0) + ', divider: /' + fix(speedhackMult, 2) + ', next cost: $' + fix(speedhackCost) + '.');
+        
+        return;
+    };
+    
+    if (from == "serv-help") {
+        game.console.print('help', game.console.help.buyServer);
+        
+        return;
+    };
+    
+    if (from == "serv-pers") {
+        var cost = game.getPersServerCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.player.serverPers++;
+            
+            var newCost = game.getPersServerCost();
+            game.console.print('gain', 'You successfully bought a personal server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+        }
+        else
+            game.console.print('error', 'Not enough money to buy a personal server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+        
+        return;
+    };
+    
+    if (from == "serv-pro") {
+        var cost = game.getProServerCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.player.serverPro++;
+            
+            var newCost = game.getProServerCost();
+            game.console.print('gain', 'You successfully bought a professional server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+        }
+        else
+            game.console.print('error', 'Not enough money to buy a professional server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+        
+        return;
+    };
+    
+    if (from == "serv-speedhack") {
+        var cost = game.getSpeedhackCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.player.serverSpeedHack++;
+            
+            var newCost = game.getSpeedhackCost();
+            game.console.print('gain', 'You successfully bought a VM server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+        }
+        else
+            game.console.print('error', 'Not enough money to buy a VM server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+
+        return;
+    };
+};
+
 game.config = function(from) {
     if (from == "sp") {
         game.console.print('error', game.console.errors.configNoArgs);
+        
         return;
     };
     
@@ -231,6 +362,7 @@ game.config = function(from) {
         game.console.print('log', 'Sounds have been turned off.');
         game.options.sounds = false;
         game.sounds.disableSounds();
+        
         return;
     };
     
@@ -238,23 +370,27 @@ game.config = function(from) {
         game.console.print('log', 'Sounds have been turned on.');
         game.options.sounds = true;
         game.sounds.enableSounds();
+        
         return;
     };
     
     if (from == "background-off") {
         game.console.print('log', 'Background have been turned off.');
         game.options.background = false;
+        
         return;
     };
     
     if (from == "background-on") {
         game.console.print('log', 'Background have been turned on');
         game.options.background = true;
+        
         return;
     };
     
     if (from == "help") {
         game.console.print('help', game.console.help.config);
+        
         return;
     };
 };
@@ -275,6 +411,14 @@ game.hack = function(from) {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax);
 
+        // first apply all money/exp rewards effects
+        if (game.player.serverPers > 0)
+            moneyReward *= (game.player.serverPersReward * game.player.serverPers);
+        
+        if (game.player.serverPro > 0)
+            moneyReward *= (game.player.serverProReward * game.player.serverPro);
+
+        // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
             moneyReward /= game.player.clickReducer;
             expReward /= game.player.clickReducer;
@@ -282,6 +426,7 @@ game.hack = function(from) {
         
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
+        game.player.timesHacked++;
 
         if (from == 'sp-click')
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. (reward divided by ' + game.player.clickReducer + ' when clicking button)');
@@ -293,9 +438,10 @@ game.hack = function(from) {
     
     if (from == "stats") {
         var thisPlayer = game.player;
-        game.console.print('log', '<b>Hack stats</b>: $' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
+        game.console.print('log', '<b>Hack stats</b>: basic reward $' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
             fix(thisPlayer.randExpMin) + ' exp ~ ' + fix(thisPlayer.randExpMax) + ' exp, ' +
-            'hack click reducer: /' + thisPlayer.clickReducer);
+            'hack click reducer: /' + thisPlayer.clickReducer + ', ' +
+            'hack reward multiplier: ' + fix(thisPlayer.serverPers, 0) + ' personal servers, ' + fix(thisPlayer.serverPro, 0) + ' professional servers.');
         
         return;
     };
@@ -309,7 +455,7 @@ game.hack = function(from) {
         return;
     };
 
-    if (from == 'mini-market' || from == 'market' || from == 'bank' || from == 'jewelry' || from == 'trading-center') {
+    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center') {
         var thisPlace = game.console.cmds.hack.places[from];
 
         if (!game.player.isHacking) {
@@ -358,9 +504,28 @@ game.player = {
     
     clickReducer: 16,
     
+    achievementsPoints: 0,
+    
+    timesHacked: 0,
+    
     isHacking: false,
     hackingWhat: undefined,
-    hackingProgress: 0
+    hackingProgress: 0,
+    
+    serverPers: 0,
+    serverPersReward: 1.10,
+    serverPersCost: 500,
+    serverPersInflation: 1.08,
+    
+    serverPro: 0,
+    serverProReward: 1.25,
+    serverProCost: 133337,
+    serverProInflation: 1.06,
+    
+    serverSpeedHack: 0,
+    serverSpeedHackAccelerator: 1.01,
+    serverSpeedHackCost: 5000,
+    serverSpeedHackInflation: 1.50
 };;
 
 game.console = {
@@ -424,6 +589,9 @@ game.console.cmds = {
             // places
             ['hack', '-place', 'mini-market'],
             ['hack', '-place', 'market'],
+            ['hack', '-place', 'jewelry'],
+            ['hack', '-place', 'bank'],
+            ['hack', '-place', 'trading-center'],
             ['hack', '-place', '-list']
         ],
         exec: [
@@ -433,6 +601,9 @@ game.console.cmds = {
             // places
             'game.hack("mini-market")',
             'game.hack("market")',
+            'game.hack("jewelry")',
+            'game.hack("bank")',
+            'game.hack("trading-center")',
             'game.hack("list")'
         ]
     },
@@ -480,26 +651,91 @@ game.console.cmds = {
             'game.config("background-off")',
             'game.config("background-on")'
         ]
+    },
+    
+    'buy': {
+        name: 'buy',
+        desc: 'buy a server to increase hack income.',
+        args: [
+            ['buy'],
+            ['buy', '-server'],
+            ['buy', '-help'],
+            ['buy', '-info'],
+            ['buy', '-server', '-help'],
+            ['buy', '-server', 'personal'],
+            ['buy', '-server', 'professional'],
+            ['buy', '-server', 'vm']
+        ],
+        exec: [
+            'game.buy("sp")',
+            'game.buy("serv")',
+            'game.buy("help")',
+            'game.buy("info")',
+            'game.buy("serv-help")',
+            'game.buy("serv-pers")',
+            'game.buy("serv-pro")',
+            'game.buy("serv-speedhack")'
+        ]
+    },
+    
+    'achievements': {
+        name: 'achievements',
+        desc: 'see all game achievements here.',
+        args: [
+            ['achievements'],
+            ['achievements', '-help'],
+            ['achievements', '-list']
+        ],
+        exec: [
+            'game.achievements.exec("sp")',
+            'game.achievements.exec("help")',
+            'game.achievements.exec("list")'
+        ]
     }
 };;
 
 game.console.errors = {
     // clasics errors
     unknownCmd: 'Unknown command. Type <b>help</b> for a list of commands.',
-    unknownArgs: 'Unknown arguments. Type <b>yourCommand -help</b> for more information.',
+    unknownArgs: 'Unknown arguments. Type <b>yourCommand -help</b> for more informations.',
     
     // hack errors
     levelLow: 'Level too low. Level-up to hack this area.',
     hackInProgress: 'You are already hacking a place. Wait for your hack to finish.',
     
     // config errors
-    configNoArgs: 'You must use <b>config</b> with arguments. Type <b>config -help</b> for more information.'
-};
+    configNoArgs: 'You must use <b>config</b> with arguments. Type <b>config -help</b> for more informations.',
+    
+    // buy errors
+    buyNoArgs: 'You must use <b>buy</b> with arguments. Type <b>buy -help</b> for more informations.',
+    buyNoArgsServ: 'You must use <b>buy -server</b> with arguments. Type <b>buy -server -help</b> for more informations.',
+    
+    // achievements errors
+    achNoArgs: 'You must use <b>achievements</b> with arguments. Type <b>achievements -help</b> for more informations.'
+};;
 
 game.console.help = {
-    hack: "<b>hack</b> can use with arguments.<br><b>hack -stats</b>: Print the information the potential hacks gains.<br><b>hack -place <i>nameOfPlace</i></b>: Hack a place.<br><b>hack -place -list</b>: Print a list of places can be hacked, their conditions and their potential gain",
-    config: "You must use <b>config</b> with arguments.<br><b>config -sounds <i>value</i></b>: Enable (1) or disable (0) the sound of the game. (defaut 0)<br><b>config -background <i>value</i></b>: Enable (1) or disable (0) the background animation. (defaut 0)",
-    clear: "<b>clear</b> don't accept any arguments."
+    hack: "<b>hack</b> can be used with arguments.<br>" + 
+        "<b>hack -stats</b>: stats for the simple hack.<br>" +
+        "<b>hack -place <i>nameOfPlace</i></b>: hack a place.<br> "+
+        "<b>hack -place -list</b>: print a list of places with their respective informations.",
+
+    config: "You must use <b>config</b> with arguments.<br>" +
+        "<b>config -sounds <i>value</i></b>: enable (1) or disable (0) the sound of the game. (default 0)<br>" +
+        "<b>config -background <i>value</i></b>: enable (1) or disable (0) the background animation. (defaut 0)",
+
+    clear: "<b>clear</b> don't accept any arguments.",
+    
+    buy: "<b>buy</b> must be used with arguments.<br>" +
+        "<b>buy -server</b>: buy a server. Get a list of server with <b>buy -server -help</b>.<br>" +
+        "<b>buy -info</b>: print all your server status (reward, owned, next price, ...).",
+        
+    buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase hack income.<br>" + 
+        "<b>buy -server professional</b>: better than low-cost servers, greatly increase hack income.<br>" + 
+        "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.",
+    
+    achievements: "<b>achievements</b> must be used with arguments.<br>" +
+        "<b>achievements -list</b>: print a list of all achievements."
 };;
 
 game.console.cmds.hack.places = {
@@ -510,7 +746,7 @@ game.console.cmds.hack.places = {
         minExpReward: 50,
         maxExpReward: 150,
         time: 5,
-        reqLevel: 0
+        reqLevel: 5
     },
     'market': {
         name: 'market',
@@ -519,25 +755,25 @@ game.console.cmds.hack.places = {
         minExpReward: 200,
         maxExpReward: 450,
         time: 40,
-        reqLevel: 0
+        reqLevel: 10
     },
-    'bank': {
-        name: 'bank',
+    'jewelry': {
+        name: 'jewelry',
         minMoneyReward: 240000,
         maxMoneyReward: 800000,
         minExpReward: 500,
         maxExpReward: 850,
         time: 80,
-        reqLevel: 0
+        reqLevel: 25
     },
-    'jewelry': {
-        name: 'jewelry',
+    'bank': {
+        name: 'bank',
         minMoneyReward: 9600000,
         maxMoneyReward: 31968000,
         minExpReward: 1000,
         maxExpReward: 1750,
         time: 160,
-        reqLevel: 0
+        reqLevel: 15
     },
     'trading-center': {
         name: 'trading-center',
@@ -546,7 +782,7 @@ game.console.cmds.hack.places = {
         minExpReward: 2500,
         maxExpReward: 5000,
         time: 280,
-        reqLevel: 0
+        reqLevel: 50
     }
 };;
 
@@ -570,6 +806,10 @@ game.console.print = function(type, text) {
 
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
+            break;
+            
+        case '':
+            $('#console-content').append('<p>' + text + '</p>');
             break;
         
         case 'hack-bar':
@@ -604,6 +844,17 @@ game.console.clear = function(from) {
 
 game.sounds = {
     ambient: new Audio('app/assets/sounds/server-room.mp3'),
+    bip1: new Audio('app/assets/sounds/computer-bip-1.mp3'),
+    bip2: new Audio('app/assets/sounds/computer-bip-2.mp3'),
+    bip3: new Audio('app/assets/sounds/computer-bip-3.mp3'),
+    bip4: new Audio('app/assets/sounds/computer-bip-4.mp3'),
+    bip5: new Audio('app/assets/sounds/computer-bip-5.mp3'),
+    bip6: new Audio('app/assets/sounds/computer-bip-6.mp3'),
+    errorsBep: new Audio('app/assets/sounds/error-beep.mp3'),
+    HDD1: new Audio('app/assets/sounds/hard-disk-writing-1.mp3'),
+    HDD2: new Audio('app/assets/sounds/hard-disk-writing-2.mp3'),
+    HDD3: new Audio('app/assets/sounds/hard-disk-writing-3.mp3'),
+    HDD4: new Audio('app/assets/sounds/hard-disk-writing-4.mp3'),
     button: new Audio('app/assets/sounds/button.mp3'),
     
     enableSounds: function() {
@@ -619,4 +870,73 @@ game.sounds = {
     },
 
     varInit: function() {},
+};;
+
+game.achievements = {
+    owned: new Array(),
+    list: new Array(),
+    
+    create: function(name, desc, reqName, reqNum, reward) {
+        this.name = name;
+        this.desc = desc;
+        this.reqName = reqName;
+        this.reqNum = reqNum;
+        this.reward = reward;
+    },
+    
+    check: function() {
+        for (var i = 0; i < game.achievements.list.length; i++) {
+            var thisAch = game.achievements.list[i],
+                playerValue = eval(game.achievements.list[i].reqName);
+            
+            if (playerValue >= thisAch.reqNum && !game.achievements.owned[i]) {
+                game.player.achievementsPoints += thisAch.reward;
+                game.achievements.owned[i] = true;
+                
+                game.console.print('gain', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
+            };
+        };
+    },
+    
+    exec: function(from) {
+        if (from == "sp") {
+            game.console.print('error', game.console.errors.achNoArgs);
+            
+            return;
+        };
+        
+        if (from == "help") {
+            game.console.print('help', game.console.help.achievements);
+            
+            return;
+        };
+        
+        if (from == "list") {
+            game.console.print('log', 'Achievements points: ' + fix(game.player.achievementsPoints));
+            
+            for (var i = 0; i < game.achievements.list.length; i++)
+                game.console.print('log', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
+                    'Reward: +' + game.achievements.list[i].reward + ' ach. points, owned: ' + !!game.achievements.owned[i] + '.');
+            
+            return;
+        };
+    },
+    
+    varInit: function() {
+        game.achievements.list = [
+            new game.achievements.create('Hacker I', 'Hack 100 times (click or via console).',
+                'game.player.timesHacked', 100, 10),
+            new game.achievements.create('Hacker II', 'Hack 1,000 times (click or via console).',
+                'game.player.timesHacked', 1000, 25),
+            new game.achievements.create('Hacker III', 'Hack 10,000 times (click or via console).',
+                'game.player.timesHacked', 10000, 50),
+            new game.achievements.create('Hacker IV', 'Hack 100,000 times (click or via console).',
+                'game.player.timesHacked', 100000, 75)
+        ];
+        
+        for (var i = 0; i < game.achievements.list.length; i++)
+            game.achievements.owned.push(false);
+    },
+    
+    domInit: function() {}
 };

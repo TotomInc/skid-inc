@@ -109,7 +109,10 @@ var game = {
         $('#well-resources').html(
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
-            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0)
+            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
+            'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
+            'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
+            'VM servers: ' + fix(game.player.serverSpeedHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -135,7 +138,9 @@ var game = {
         game.options.interval = (1000 / game.options.fps);
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
+        game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
         
+        game.achievements.varInit();
         game.sounds.varInit();
     },
     
@@ -165,6 +170,8 @@ var game = {
             e.preventDefault();
             return false;
         });
+        
+        game.achievements.domInit();
     },
     
     init: function() {

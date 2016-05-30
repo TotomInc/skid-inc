@@ -9,6 +9,9 @@ game.console.cmds = {
             // places
             ['hack', '-place', 'mini-market'],
             ['hack', '-place', 'market'],
+            ['hack', '-place', 'jewelry'],
+            ['hack', '-place', 'bank'],
+            ['hack', '-place', 'trading-center'],
             ['hack', '-place', '-list']
         ],
         exec: [
@@ -18,6 +21,9 @@ game.console.cmds = {
             // places
             'game.hack("mini-market")',
             'game.hack("market")',
+            'game.hack("jewelry")',
+            'game.hack("bank")',
+            'game.hack("trading-center")',
             'game.hack("list")'
         ]
     },
@@ -69,7 +75,7 @@ game.console.cmds = {
     
     'buy': {
         name: 'buy',
-        desc: 'buy a server to increase hack income',
+        desc: 'buy a server to increase hack income.',
         args: [
             ['buy'],
             ['buy', '-server'],
@@ -89,6 +95,21 @@ game.console.cmds = {
             'game.buy("serv-pers")',
             'game.buy("serv-pro")',
             'game.buy("serv-speedhack")'
+        ]
+    },
+    
+    'achievements': {
+        name: 'achievements',
+        desc: 'see all game achievements here.',
+        args: [
+            ['achievements'],
+            ['achievements', '-help'],
+            ['achievements', '-list']
+        ],
+        exec: [
+            'game.achievements.exec("sp")',
+            'game.achievements.exec("help")',
+            'game.achievements.exec("list")'
         ]
     }
 };

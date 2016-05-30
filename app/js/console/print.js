@@ -19,6 +19,10 @@ game.console.print = function(type, text) {
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
             break;
+            
+        case '':
+            $('#console-content').append('<p>' + text + '</p>');
+            break;
         
         case 'hack-bar':
             $('#console-content').append('<p id="hacking-progress"></p>');
