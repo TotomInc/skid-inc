@@ -27,13 +27,42 @@ var game = {
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
+            game.console.print('gain', 'Level-up!');
         };
+    },
+    
+    getPlaceTime: function(thisPlace) {
+        return thisPlace.time / (1 + (game.player.serverSpeedHack * game.player.serverSpeedHackAccelerator));
+    },
+    
+    getProServerMult: function() {
+        return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
+    },
+    
+    getProServerCost: function() {
+        return Math.floor(game.player.serverProCost * Math.pow(game.player.serverProInflation, game.player.serverPro));
+    },
+    
+    getPersServerMult: function() {
+        return (1 + (game.player.serverPers * (game.player.serverPersReward - 1)));
+    },
+    
+    getPersServerCost: function() {
+        return Math.floor(game.player.serverPersCost * Math.pow(game.player.serverPersInflation, game.player.serverPers));
+    },
+    
+    getSpeedhackMult: function() {
+        return (1 + (game.player.serverSpeedHack * (game.player.serverSpeedHackAccelerator - 1)));
+    },
+    
+    getSpeedhackCost: function() {
+        return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
     },
     
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
-                time = thisPlace.time,
+                time = game.getPlaceTime(thisPlace),
                 fps = game.options.fps,
                 barStatus = '|',
                 maxBar = 50,
@@ -131,6 +160,11 @@ var game = {
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
 		});
+		
+        $('html').bind('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
     },
     
     init: function() {

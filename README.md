@@ -22,3 +22,5 @@ Otherwise if you want to code:
 - Emiel: ideas.
 
 [Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc")
+
+[Skid-Inc subreddit!](https://www.reddit.com/r/skidinc "Skid-Inc subreddit")

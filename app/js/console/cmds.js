@@ -65,5 +65,30 @@ game.console.cmds = {
             'game.config("background-off")',
             'game.config("background-on")'
         ]
+    },
+    
+    'buy': {
+        name: 'buy',
+        desc: 'buy a server to increase hack income',
+        args: [
+            ['buy'],
+            ['buy', '-server'],
+            ['buy', '-help'],
+            ['buy', '-info'],
+            ['buy', '-server', '-help'],
+            ['buy', '-server', 'personal'],
+            ['buy', '-server', 'professional'],
+            ['buy', '-server', 'vm']
+        ],
+        exec: [
+            'game.buy("sp")',
+            'game.buy("serv")',
+            'game.buy("help")',
+            'game.buy("info")',
+            'game.buy("serv-help")',
+            'game.buy("serv-pers")',
+            'game.buy("serv-pro")',
+            'game.buy("serv-speedhack")'
+        ]
     }
 };
