@@ -3,6 +3,14 @@ game.hack = function(from) {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax);
 
+        // first apply all money/exp rewards effects
+        if (game.player.serverPers > 0)
+            moneyReward *= (game.player.serverPersReward * game.player.serverPers);
+        
+        if (game.player.serverPro > 0)
+            moneyReward *= (game.player.serverProReward * game.player.serverPro);
+
+        // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
             moneyReward /= game.player.clickReducer;
             expReward /= game.player.clickReducer;
@@ -21,9 +29,10 @@ game.hack = function(from) {
     
     if (from == "stats") {
         var thisPlayer = game.player;
-        game.console.print('log', '<b>Hack stats</b>: $' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
+        game.console.print('log', '<b>Hack stats</b>: basic reward $' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
             fix(thisPlayer.randExpMin) + ' exp ~ ' + fix(thisPlayer.randExpMax) + ' exp, ' +
-            'hack click reducer: /' + thisPlayer.clickReducer);
+            'hack click reducer: /' + thisPlayer.clickReducer + ', ' +
+            'hack reward multiplier: ' + fix(thisPlayer.serverPers, 0) + ' personal servers, ' + fix(thisPlayer.serverPro, 0) + ' professional servers.');
         
         return;
     };

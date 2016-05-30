@@ -32,7 +32,7 @@
 .nav>li>a:focus,
 .nav>li>a:hover {
 	transition: all 0.1s;
-	background-color: #333;
+	background-color: #2D2D2D !important;
 	border: 1px solid #222;
 }
 
