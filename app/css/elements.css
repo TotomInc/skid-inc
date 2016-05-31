@@ -77,3 +77,18 @@
 	font-size: 18px;
 	color: #27ae60;
 }
+
+.btn-default {
+	transition: all 0.2s;
+	color: #9d9d9d;
+	background-color: #3A3A3C;
+	border-color: #1F1F1F;
+}
+
+.btn-default:hover,
+.btn-default:active {
+	transition: all 0.2s;
+	color: #9d9d9d;
+	background-color: #343435;
+	border-color: #1F1F1F;
+}

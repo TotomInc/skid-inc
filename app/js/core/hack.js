@@ -20,8 +20,10 @@ game.hack = function(from) {
         game.earnExp(expReward);
         game.player.timesHacked++;
 
-        if (from == 'sp-click')
+        if (from == 'sp-click') {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. (reward divided by ' + game.player.clickReducer + ' when clicking button)');
+            floating.addFloating('hack-button', '+$' + fix(moneyReward));
+        }
         else
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
 

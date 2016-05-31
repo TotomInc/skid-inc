@@ -19,6 +19,8 @@
 	<link rel="stylesheet" href="app/css/navbar.css">
 	<link rel="stylesheet" href="app/css/console.css">
 	<link rel="stylesheet" href="app/css/no-select.css">
+	<link rel="stylesheet" href="app/css/animations.css">
+	<link rel="stylesheet" href="app/css/floating.css">
 	
 	<!-- GAME PROD CSS -->
 	<!--<link rel="stylesheet" href="app/prod/skid-inc.min.css">-->
@@ -36,7 +38,7 @@
 			
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a id="navbar-save" href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a>
+					<a id="navbar-save" href="#" onclick="game.save.save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a>
 				</li>
 				
 				<li>
@@ -102,8 +104,17 @@
 					<!-- OPTIONS -->
 					<div role="tabpanel" class="tab-pane fade" id="options">
 						<div class="well">
-							<p><u><b>OPTIONS :</b></u><br>
-								<button onclick="game.save.reset()" type="button" class="btn btn-danger">save reset</button></p>
+							<div class="row">
+								<div class="col-md-4">
+									<a id="options-reset" class="btn btn-default btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i> Reset save</a>
+								</div>
+								<div class="col-md-4">
+									<a id="options-load" class="btn btn-default btn-block"><i class="fa fa-download" aria-hidden="true"></i> Load save</a>
+								</div>
+								<div class="col-md-4">
+									<a id="options-save" class="btn btn-default btn-block"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save game</a>
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -127,6 +138,7 @@
 	<!-- GAME SCRIPTS -->
 	<script src="app/js/helpers/beautify.js"></script>
 	<script src="app/js/helpers/capitalize.js"></script>
+	<script src="app/js/helpers/floating.js"></script>
 
 	<script src="app/js/core/core.js"></script>
 	<script src="app/js/core/player.js"></script>

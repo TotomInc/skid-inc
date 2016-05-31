@@ -79,6 +79,7 @@
 }
 
 .console.input {
+	transition: all 0.2s;
 	float: left;
 	margin-left: 4px;
 	width: calc(100% - 36px);

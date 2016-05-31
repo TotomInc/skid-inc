@@ -59,7 +59,7 @@ var game = {
     getSpeedhackCost: function() {
         return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
     },
-    
+   
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
@@ -156,6 +156,18 @@ var game = {
         
         $('#navbar-save').on('click', function() {
             game.save.save('user');
+        });
+        
+        $('#options-reset').on('click', function() {
+            game.save.reset();
+        });
+        
+        $('#options-load').on('click', function() {
+            game.save.load('user');
+        });
+        
+        $('#options-save').on('click', function() {
+            game.save.save();
         });
         
         $('#hack-button').on('click', function() {
