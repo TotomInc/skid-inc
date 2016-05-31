@@ -19,6 +19,10 @@ game.console.print = function(type, text) {
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
             break;
+            
+        case 'guide':
+            $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
+            break;
         
         case 'ascii':
             $('#console-content').append('<div class="console ascii"><pre>' + text + '</pre></div>');
@@ -59,5 +63,7 @@ game.console.clear = function(from) {
 };
 
 game.console.printGuide = function() {
-    game.console.print('.');
+    game.console.print('guide', 'Welcome to Skid-Inc. Start making money by clicking the <b>\'hack\'</b> button or by typing <b>hack</b> command in the console. ' +
+        'Type <b>help</b> for a list of commands, use <b>arguments</b> (like -help for example) to use all the potential of the command (like <b>hack -help</b>). ' +
+        'Try all commands: <b>buy servers</b> to increase your income, <b>hack places</b> to earn a lot more $$$ and experience, <b>earn achievements</b> and exclusive rewards!');
 };
