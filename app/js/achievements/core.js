@@ -41,7 +41,7 @@ game.achievements = {
             game.console.print('log', 'Achievements points: ' + fix(game.player.achievementsPoints));
             
             for (var i = 0; i < game.achievements.list.length; i++)
-                game.console.print('log', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
+                game.console.print('', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
                     'Reward: +' + game.achievements.list[i].reward + ' ach. points, owned: ' + !!game.achievements.owned[i] + '.');
             
             return;
@@ -50,14 +50,23 @@ game.achievements = {
     
     varInit: function() {
         game.achievements.list = [
-            new game.achievements.create('Hacker I', 'Hack 100 times (click or via console).',
+            new game.achievements.create('Script Kid I', 'Hack 100 times (click or via console).',
                 'game.player.timesHacked', 100, 10),
-            new game.achievements.create('Hacker II', 'Hack 1,000 times (click or via console).',
+            new game.achievements.create('Script Kid II', 'Hack 1,000 times (click or via console).',
                 'game.player.timesHacked', 1000, 25),
-            new game.achievements.create('Hacker III', 'Hack 10,000 times (click or via console).',
+            new game.achievements.create('Script Kid III', 'Hack 10,000 times (click or via console).',
                 'game.player.timesHacked', 10000, 50),
-            new game.achievements.create('Hacker IV', 'Hack 100,000 times (click or via console).',
-                'game.player.timesHacked', 100000, 75)
+            new game.achievements.create('Script Kid IV', 'Hack 100,000 times (click or via console).',
+                'game.player.timesHacked', 100000, 75),
+            
+            new game.achievements.create('Hacker I', 'Hack 10 times a place.',
+                'game.player.timesPlacesHacked', 10, 10),
+            new game.achievements.create('Hacker II', 'Hack 1,00 times a place.',
+                'game.player.timesPlacesHacked', 100, 25),
+            new game.achievements.create('Hacker III', 'Hack 1,000 times a place.',
+                'game.player.timesPlacesHacked', 1000, 50),
+            new game.achievements.create('Hacker IV', 'Hack 10,000 times a place.',
+                'game.player.timesPlacesHacked', 10000, 75)
         ];
         
         for (var i = 0; i < game.achievements.list.length; i++)

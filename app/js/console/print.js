@@ -19,6 +19,10 @@ game.console.print = function(type, text) {
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
             break;
+        
+        case 'ascii':
+            $('#console-content').append('<div class="console ascii"><pre>' + text + '</pre></div>');
+            break;
             
         case '':
             $('#console-content').append('<p>' + text + '</p>');
@@ -52,4 +56,8 @@ game.console.clear = function(from) {
         game.console.print('help', game.console.help.clear);
         return;
     };
+};
+
+game.console.printGuide = function() {
+    game.console.print('.');
 };

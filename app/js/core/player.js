@@ -23,6 +23,7 @@ game.player = {
     achievementsPoints: 0,
     
     timesHacked: 0,
+    timesPlacesHacked: 0,
     
     isHacking: false,
     hackingWhat: undefined,
@@ -32,14 +33,17 @@ game.player = {
     serverPersReward: 1.10,
     serverPersCost: 500,
     serverPersInflation: 1.08,
+    canBuyServerPers: false,
     
     serverPro: 0,
     serverProReward: 1.25,
     serverProCost: 133337,
     serverProInflation: 1.06,
+    canBuyServerPro: false,
     
     serverSpeedHack: 0,
     serverSpeedHackAccelerator: 1.01,
     serverSpeedHackCost: 5000,
-    serverSpeedHackInflation: 1.50
+    serverSpeedHackInflation: 1.50,
+    canBuyServerSpeedHack: false
 };

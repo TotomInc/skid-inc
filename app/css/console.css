@@ -107,6 +107,11 @@
 	margin: 4px 6px;
 }
 
+.console.ascii {
+	display: table;
+	margin: 0 auto;
+}
+
 .console-warn {
 	color: #d35400;
 }

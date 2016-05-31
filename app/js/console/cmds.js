@@ -98,6 +98,17 @@ game.console.cmds = {
         ]
     },
     
+    'guide': {
+        name: "guide",
+        desc: "learn the basics of the game",
+        args: [
+            ['guide']
+        ],
+        exec: [
+            'game.console.printGuide()'
+        ]
+    },
+    
     'achievements': {
         name: 'achievements',
         desc: 'see all game achievements here.',

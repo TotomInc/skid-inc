@@ -13,6 +13,6 @@ input:focus {
 pre {
 	border: none;
 	color: #9d9d9d;
-	text-align: center;
 	background-color: transparent;
+	font-size: 12px;
 }

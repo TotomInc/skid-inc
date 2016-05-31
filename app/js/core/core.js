@@ -27,7 +27,8 @@ var game = {
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
-            game.console.print('gain', 'Level-up!');
+            game.console.print('gain', '');
+            game.console.print('ascii', game.console.ascii.levelUp);
         };
     },
     
@@ -99,6 +100,7 @@ var game = {
                 
                 game.earnMoney(moneyReward);
                 game.earnExp(expReward);
+                game.player.timesPlacesHacked++;
                 
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
             };
@@ -139,18 +141,21 @@ var game = {
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
         game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 1000);
         
         game.achievements.varInit();
         game.sounds.varInit();
     },
     
     domInit: function() {
+        $('#navbar-version').html('v' + game.options.version);
+        
         $('#navbar-mute').on('click', function() {
             game.console.print('warn', 'GAME MUTE ONCLICK TODO');
         });
         
         $('#navbar-save').on('click', function() {
-            game.console.print('warn', 'GAME SAVE ONCLICK TODO');
+            game.save.save('user');
         });
         
         $('#hack-button').on('click', function() {
@@ -184,6 +189,9 @@ var game = {
     
     init: function() {
         game.varInit();
+        game.save.load();
         game.domInit();
+        
+        game.options.isInit = true;
     }
 };

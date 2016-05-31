@@ -5,7 +5,7 @@ game.options = {
     bindTime: 500,
     sounds: false,
     background: false,
-    version: 0.001,
+    version: 0.02,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -16,5 +16,7 @@ game.options = {
     isIE: false,
     isEdge: false,
     isChrome: false,
-    isBlink: false
+    isBlink: false,
+    
+    isInit: false
 }

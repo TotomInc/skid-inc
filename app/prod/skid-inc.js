@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-05-30 */
+/*! skid-inc - v1.0.0 - 2016-05-31 */
 var beautify = {
 	prefixes: [
 	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
@@ -88,7 +88,8 @@ var game = {
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
-            game.console.print('gain', 'Level-up!');
+            game.console.print('gain', '');
+            game.console.print('ascii', game.console.ascii.levelUp);
         };
     },
     
@@ -160,6 +161,7 @@ var game = {
                 
                 game.earnMoney(moneyReward);
                 game.earnExp(expReward);
+                game.player.timesPlacesHacked++;
                 
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
             };
@@ -200,12 +202,23 @@ var game = {
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
         game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 1000);
         
         game.achievements.varInit();
         game.sounds.varInit();
     },
     
     domInit: function() {
+        $('#navbar-version').html('v' + game.options.version);
+        
+        $('#navbar-mute').on('click', function() {
+            game.console.print('warn', 'GAME MUTE ONCLICK TODO');
+        });
+        
+        $('#navbar-save').on('click', function() {
+            game.save.save('user');
+        });
+        
         $('#hack-button').on('click', function() {
             game.hack('sp-click');
         });
@@ -237,7 +250,10 @@ var game = {
     
     init: function() {
         game.varInit();
+        game.save.load();
         game.domInit();
+        
+        game.options.isInit = true;
     }
 };;
 
@@ -248,7 +264,7 @@ game.options = {
     bindTime: 500,
     sounds: false,
     background: false,
-    version: 0.001,
+    version: 0.02,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -259,7 +275,9 @@ game.options = {
     isIE: false,
     isEdge: false,
     isChrome: false,
-    isBlink: false
+    isBlink: false,
+    
+    isInit: false
 };
 
 game.buy = function(from) {
@@ -507,6 +525,7 @@ game.player = {
     achievementsPoints: 0,
     
     timesHacked: 0,
+    timesPlacesHacked: 0,
     
     isHacking: false,
     hackingWhat: undefined,
@@ -516,16 +535,76 @@ game.player = {
     serverPersReward: 1.10,
     serverPersCost: 500,
     serverPersInflation: 1.08,
+    canBuyServerPers: false,
     
     serverPro: 0,
     serverProReward: 1.25,
     serverProCost: 133337,
     serverProInflation: 1.06,
+    canBuyServerPro: false,
     
     serverSpeedHack: 0,
     serverSpeedHackAccelerator: 1.01,
     serverSpeedHackCost: 5000,
-    serverSpeedHackInflation: 1.50
+    serverSpeedHackInflation: 1.50,
+    canBuyServerSpeedHack: false
+};;
+
+game.save = {
+    key: 'SK-Inc',
+    toSave: {
+        'gp': game.player,
+        'go': game.options
+    },
+    
+    save: function(from) {
+        localStorage.setItem(game.save.key, JSON.stringify(game.save.toSave));
+        
+        if (from == "user")
+            game.console.print('log', 'Game successfully saved to local-storage.');
+        else
+            console.log('Game saved.');
+    },
+    
+    reset: function() {
+        clearInterval(game.options.intervals.save);
+        localStorage.removeItem(game.save.key);
+        location.reload();
+    },
+    
+    load: function() {
+        if (localStorage.getItem(game.save.key) == null)
+            game.console.printGuide();
+        else {
+            var s = JSON.parse(localStorage.getItem(game.save.key)),
+                sgp = s.gp,
+                sgo = s.go,
+                g = game,
+                gp = game.player,
+                go = game.options;
+
+            gp.money = sgp.money;
+            gp.totalMoney = sgp.totalMoney;
+            gp.level = sgp.level;
+            gp.exp = sgp.exp;
+            gp.maxExp = sgp.maxExp;
+            gp.moneyMult = sgp.moneyMult;
+            gp.expMult = sgp.expMult;
+            gp.achievementsPoints = sgp.achievementsPoints;
+
+            gp.serverPers = sgp.serverPers;
+            gp.serverPro = sgp.serverPro;
+            gp.serverSpeedHack = sgp.serverSpeedHack;
+
+            gp.timesHacked = sgp.timesHacked;
+            gp.timesPlacesHacked = sgp.timesPlacesHacked;
+
+            go.before = sgo.before;
+            
+            console.log('Game loaded.');
+            game.console.print('log', 'Save-game successfully loaded.');
+        }
+    }
 };;
 
 game.console = {
@@ -678,6 +757,17 @@ game.console.cmds = {
         ]
     },
     
+    'guide': {
+        name: "guide",
+        desc: "learn the basics of the game",
+        args: [
+            ['guide']
+        ],
+        exec: [
+            'game.console.printGuide()'
+        ]
+    },
+    
     'achievements': {
         name: 'achievements',
         desc: 'see all game achievements here.',
@@ -692,6 +782,18 @@ game.console.cmds = {
             'game.achievements.exec("list")'
         ]
     }
+};;
+
+game.console.ascii = {
+    levelUp: '' +
+    ' /$$                                     /$$         /$$   /$$ /$$$$$$$<br>' +
+    '| $$                                    | $$        | $$  | $$| $$__  $$<br>' +
+    '| $$        /$$$$$$  /$$    /$$ /$$$$$$ | $$        | $$  | $$| $$  \\ $$<br>' +
+    '| $$       /$$__  $$|  $$  /$$//$$__  $$| $$ /$$$$$$| $$  | $$| $$$$$$$/<br>' +
+    '| $$      | $$$$$$$$ \\  $$/$$/| $$$$$$$$| $$|______/| $$  | $$| $$____/<br>' +
+    '| $$      | $$_____/  \\  $$$/ | $$_____/| $$        | $$  | $$| $$<br>' +
+    '| $$$$$$$$|  $$$$$$$   \\  $/  |  $$$$$$$| $$        |  $$$$$$/| $$<br>' +
+    '|________/ \\_______/    \\_/    \\_______/|__/         \\______/ |__/'
 };;
 
 game.console.errors = {
@@ -741,8 +843,8 @@ game.console.help = {
 game.console.cmds.hack.places = {
     'mini-market': {
         name: 'mini-market',
-        minMoneyReward: 150,
-        maxMoneyReward: 500,
+        minMoneyReward: 200,
+        maxMoneyReward: 750,
         minExpReward: 50,
         maxExpReward: 150,
         time: 5,
@@ -750,7 +852,7 @@ game.console.cmds.hack.places = {
     },
     'market': {
         name: 'market',
-        minMoneyReward: 6000,
+        minMoneyReward: 4000,
         maxMoneyReward: 20000,
         minExpReward: 200,
         maxExpReward: 450,
@@ -759,7 +861,7 @@ game.console.cmds.hack.places = {
     },
     'jewelry': {
         name: 'jewelry',
-        minMoneyReward: 240000,
+        minMoneyReward: 66000,
         maxMoneyReward: 800000,
         minExpReward: 500,
         maxExpReward: 850,
@@ -768,17 +870,17 @@ game.console.cmds.hack.places = {
     },
     'bank': {
         name: 'bank',
-        minMoneyReward: 9600000,
-        maxMoneyReward: 31968000,
+        minMoneyReward: 2666000,
+        maxMoneyReward: 32000000,
         minExpReward: 1000,
         maxExpReward: 1750,
         time: 160,
-        reqLevel: 15
+        reqLevel: 35
     },
     'trading-center': {
         name: 'trading-center',
-        minMoneyReward: 115200000,
-        maxMoneyReward: 383616000,
+        minMoneyReward: 106000000,
+        maxMoneyReward: 1280000000,
         minExpReward: 2500,
         maxExpReward: 5000,
         time: 280,
@@ -806,6 +908,10 @@ game.console.print = function(type, text) {
 
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
+            break;
+        
+        case 'ascii':
+            $('#console-content').append('<div class="console ascii"><pre>' + text + '</pre></div>');
             break;
             
         case '':
@@ -840,26 +946,20 @@ game.console.clear = function(from) {
         game.console.print('help', game.console.help.clear);
         return;
     };
+};
+
+game.console.printGuide = function() {
+    game.console.print('.');
 };;
 
 game.sounds = {
-    ambient: new Audio('app/assets/sounds/server-room.mp3'),
-    bip1: new Audio('app/assets/sounds/computer-bip-1.mp3'),
-    bip2: new Audio('app/assets/sounds/computer-bip-2.mp3'),
-    bip3: new Audio('app/assets/sounds/computer-bip-3.mp3'),
-    bip4: new Audio('app/assets/sounds/computer-bip-4.mp3'),
-    bip5: new Audio('app/assets/sounds/computer-bip-5.mp3'),
-    bip6: new Audio('app/assets/sounds/computer-bip-6.mp3'),
-    errorsBep: new Audio('app/assets/sounds/error-beep.mp3'),
-    HDD1: new Audio('app/assets/sounds/hard-disk-writing-1.mp3'),
-    HDD2: new Audio('app/assets/sounds/hard-disk-writing-2.mp3'),
-    HDD3: new Audio('app/assets/sounds/hard-disk-writing-3.mp3'),
-    HDD4: new Audio('app/assets/sounds/hard-disk-writing-4.mp3'),
     button: new Audio('app/assets/sounds/button.mp3'),
+    ambient: new Audio('app/assets/sounds/server-room.mp3'),
     
     enableSounds: function() {
         game.sounds.ambient.volume = 0.25;
         game.sounds.ambient.currentTime = 0;
+        game.sounds.ambient.loop = true;
         game.sounds.ambient.play();
     },
     
@@ -869,7 +969,23 @@ game.sounds = {
         game.sounds.ambient.pause();
     },
 
-    varInit: function() {},
+    varInit: function() {
+        game.sounds.bip = [
+            new Audio('app/assets/sounds/computer-bip-1.mp3'),
+            new Audio('app/assets/sounds/computer-bip-2.mp3'),
+            new Audio('app/assets/sounds/computer-bip-3.mp3'),
+            new Audio('app/assets/sounds/computer-bip-4.mp3'),
+            new Audio('app/assets/sounds/computer-bip-5.mp3'),
+            new Audio('app/assets/sounds/computer-bip-6.mp3'),
+            new Audio('app/assets/sounds/error-beep.mp3')
+        ];
+        game.sounds.hdd = [
+            new Audio('app/assets/sounds/hard-disk-writing-1.mp3'),
+            new Audio('app/assets/sounds/hard-disk-writing-2.mp3'),
+            new Audio('app/assets/sounds/hard-disk-writing-3.mp3'),
+            new Audio('app/assets/sounds/hard-disk-writing-4.mp3'),
+        ];
+    },
 };;
 
 game.achievements = {
@@ -915,7 +1031,7 @@ game.achievements = {
             game.console.print('log', 'Achievements points: ' + fix(game.player.achievementsPoints));
             
             for (var i = 0; i < game.achievements.list.length; i++)
-                game.console.print('log', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
+                game.console.print('', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
                     'Reward: +' + game.achievements.list[i].reward + ' ach. points, owned: ' + !!game.achievements.owned[i] + '.');
             
             return;
@@ -924,14 +1040,23 @@ game.achievements = {
     
     varInit: function() {
         game.achievements.list = [
-            new game.achievements.create('Hacker I', 'Hack 100 times (click or via console).',
+            new game.achievements.create('Script Kid I', 'Hack 100 times (click or via console).',
                 'game.player.timesHacked', 100, 10),
-            new game.achievements.create('Hacker II', 'Hack 1,000 times (click or via console).',
+            new game.achievements.create('Script Kid II', 'Hack 1,000 times (click or via console).',
                 'game.player.timesHacked', 1000, 25),
-            new game.achievements.create('Hacker III', 'Hack 10,000 times (click or via console).',
+            new game.achievements.create('Script Kid III', 'Hack 10,000 times (click or via console).',
                 'game.player.timesHacked', 10000, 50),
-            new game.achievements.create('Hacker IV', 'Hack 100,000 times (click or via console).',
-                'game.player.timesHacked', 100000, 75)
+            new game.achievements.create('Script Kid IV', 'Hack 100,000 times (click or via console).',
+                'game.player.timesHacked', 100000, 75),
+            
+            new game.achievements.create('Hacker I', 'Hack 10 times a place.',
+                'game.player.timesPlacesHacked', 10, 10),
+            new game.achievements.create('Hacker II', 'Hack 1,00 times a place.',
+                'game.player.timesPlacesHacked', 100, 25),
+            new game.achievements.create('Hacker III', 'Hack 1,000 times a place.',
+                'game.player.timesPlacesHacked', 1000, 50),
+            new game.achievements.create('Hacker IV', 'Hack 10,000 times a place.',
+                'game.player.timesPlacesHacked', 10000, 75)
         ];
         
         for (var i = 0; i < game.achievements.list.length; i++)
