@@ -24,11 +24,14 @@ var game = {
         game.player.exp += amount;
         
         while (game.player.exp >= game.player.maxExp) {
+            var randAscii = Math.ceil(game.randomInclusive(0, game.console.ascii.levelUp.length - 1));
+            
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
+            
             game.console.print('gain', '');
-            game.console.print('ascii', game.console.ascii.levelUp);
+            game.console.print('ascii', game.console.ascii.levelUp[randAscii]);
         };
     },
     
@@ -38,6 +41,10 @@ var game = {
     
     getProServerMult: function() {
         return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
+    },
+    
+    getProServerMultExp: function() {
+        return (1 + (game.player.serverPro * (game.player.serverProRewardExp - 1)));
     },
     
     getProServerCost: function() {
@@ -58,6 +65,14 @@ var game = {
     
     getSpeedhackCost: function() {
         return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
+    },
+    
+    getQuickhackCost: function() {
+        return Math.floor(game.player.serverQuickHackCost * Math.pow(game.player.serverQuickHackInflation, game.player.serverQuickHack));
+    },
+    
+    getClickDivider: function() {
+        return Math.floor(16 - game.player.serverQuickHack);
     },
    
     hackProgress: function(times) {
@@ -114,7 +129,8 @@ var game = {
             'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
             'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
             'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
-            'VM servers: ' + fix(game.player.serverSpeedHack, 0)
+            'VM servers: ' + fix(game.player.serverSpeedHack, 0) + '<br>' +
+            'QuickHack servers: ' + fix(game.player.serverQuickHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -151,7 +167,7 @@ var game = {
         $('#navbar-version').html('v' + game.options.version);
         
         $('#navbar-mute').on('click', function() {
-            game.console.print('warn', 'GAME MUTE ONCLICK TODO');
+            game.sounds.switchSounds();
         });
         
         $('#navbar-save').on('click', function() {
@@ -183,18 +199,13 @@ var game = {
 				game.console.executer();
 		});
 
-		$('#console-input').bind('copy paste', function(e) {
-			e.preventDefault();
-		});
+// 		$('#console-input').bind('copy paste', function(e) {
+// 			e.preventDefault();
+// 		});
 		
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
 		});
-		
-        $('html').bind('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
         
         game.achievements.domInit();
     },

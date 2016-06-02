@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="app/css/no-select.css">
 	<link rel="stylesheet" href="app/css/animations.css">
 	<link rel="stylesheet" href="app/css/floating.css">
-	
+
 	<!-- GAME PROD CSS -->
 	<!--<link rel="stylesheet" href="app/prod/skid-inc.min.css">-->
 
@@ -35,12 +35,12 @@
 			<div class="navbar-header">
 				<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(<span id="navbar-version"></span>)</i></small></a>
 			</div>
-			
+
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a id="navbar-save" href="#" onclick="game.save.save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a>
+					<a id="navbar-save" href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now!</a>
 				</li>
-				
+
 				<li>
 					<a id="navbar-mute" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i> Sounds on/off</a>
 				</li>
@@ -54,22 +54,20 @@
 				<div class="well">
 					<p id="well-resources"></p>
 				</div>
-
+				
 				<div id="hack-button" class="hack-button">
 					<p>Hack!</p>
 				</div>
 			</div>
-
+			
 			<div class="col-md-9">
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li class="active">
 						<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
 					</li>
-
+			
 					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
-					      More <span class="caret"></span>
-					    </a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
 								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
@@ -80,13 +78,14 @@
 						</ul>
 					</li>
 				</ul>
-
+			
 				<div class="tab-content">
-					<!-- CONSOLE -->
 					<div role="tabpanel" class="tab-pane fade in active" id="console">
 						<div class="console-container">
 							<div class="console logo"></div>
+					
 							<div id="console-content" class="console content"></div>
+					
 							<div class="console input-container">
 								<div class="console input-logo">
 									<i class="fa fa-angle-right"></i>
@@ -100,8 +99,7 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- OPTIONS -->
+					
 					<div role="tabpanel" class="tab-pane fade" id="options">
 						<div class="well">
 							<div class="row">
@@ -117,18 +115,18 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- CREDITS -->
+					
 					<div role="tabpanel" class="tab-pane fade" id="credits">
 						<div class="well">
 							<p>
-								Project management : <a target="_blank" href="http://totominc.github.io">TotomInc</a><br>
-								Coding : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a><br>
-								Assets designer : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a><br>
-								Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a><br>
-								Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
+								Project management : <a target="_blank" href="http://totominc.github.io">TotomInc</a>
+								<br> Coding : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a>
+								<br> Assets designer : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a>
+								<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>
+								<br> Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
 							</p>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -139,6 +137,7 @@
 	<script src="app/js/helpers/beautify.js"></script>
 	<script src="app/js/helpers/capitalize.js"></script>
 	<script src="app/js/helpers/floating.js"></script>
+	<script src="app/js/helpers/msToTime.js"></script>
 
 	<script src="app/js/core/core.js"></script>
 	<script src="app/js/core/player.js"></script>
@@ -158,9 +157,9 @@
 	<script src="app/js/console/ascii.js"></script>
 
 	<script src="app/js/achievements/core.js"></script>
-	
+
 	<script src="app/js/sounds/core.js"></script>
-	
+
 	<!-- PRODUCTION GAME SCRIPT -->
 	<!--<script src="app/prod/skid-inc.min.js"></script>-->
 

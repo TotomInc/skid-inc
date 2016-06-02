@@ -1,19 +1,23 @@
 game.hack = function(from) {
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
-            expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax);
+            expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
+            divider = game.getClickDivider();
 
         // first apply all money/exp rewards effects
-        if (game.player.serverPers > 0)
+        if (game.player.serverPers > 0) {
             moneyReward *= (game.player.serverPersReward * game.player.serverPers);
+        };
         
-        if (game.player.serverPro > 0)
+        if (game.player.serverPro > 0) {
             moneyReward *= (game.player.serverProReward * game.player.serverPro);
+            expReward *= (game.player.serverProRewardExp * game.player.serverPro);
+        };
 
         // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
-            moneyReward /= game.player.clickReducer;
-            expReward /= game.player.clickReducer;
+            moneyReward /= divider;
+            expReward /= divider;
         };
         
         game.earnMoney(moneyReward);
@@ -21,7 +25,7 @@ game.hack = function(from) {
         game.player.timesHacked++;
 
         if (from == 'sp-click') {
-            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. (reward divided by ' + game.player.clickReducer + ' when clicking button)');
+            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
             floating.addFloating('hack-button', '+$' + fix(moneyReward));
         }
         else

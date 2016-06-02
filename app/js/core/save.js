@@ -26,6 +26,7 @@ game.save = {
         else {
             var s = JSON.parse(localStorage.getItem(game.save.key)),
                 sgp = s.gp,
+                sga = s.ga,
                 sgo = s.go,
                 g = game,
                 gp = game.player,
@@ -43,6 +44,7 @@ game.save = {
             gp.serverPers = sgp.serverPers;
             gp.serverPro = sgp.serverPro;
             gp.serverSpeedHack = sgp.serverSpeedHack;
+            gp.serverQuickHack = sgp.serverQuickHack;
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;

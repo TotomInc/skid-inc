@@ -1,3 +1,4 @@
+
 .console-container {
 	width: 100%;
 	height: 500px;
@@ -48,7 +49,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	opacity: 0.04;
+	opacity: 0.02;
 	width: 590px;
 	height: 193px;
 	background-image: url('../assets/images/console-logo-alt.png');
@@ -79,6 +80,7 @@
 }
 
 .console.input {
+	transition: all 0.2s;
 	float: left;
 	margin-left: 4px;
 	width: calc(100% - 36px);
@@ -209,6 +211,28 @@
 	text-align: center;
 	font-size: 18px;
 	color: #27ae60;
+}
+
+.btn-default {
+	transition: all 0.2s;
+	color: #9d9d9d;
+	background-color: #3A3A3C;
+	border-color: #1F1F1F;
+}
+
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus,
+.btn-default:hover:active {
+	transition: all 0.2s;
+	color: #9d9d9d;
+	background-color: #343435;
+	border-color: #1F1F1F;
+}
+.floating-text {
+    position: absolute;
+    color: #27ae60;
+    text-shadow: 0 0 3px #2ecc71;
 }
 .footer {
     bottom: 0px;
@@ -351,6 +375,18 @@ pre {
 	border-left: 1px solid #222;
 	border-right: 1px solid #222;
 	color: #333;
+}
+
+.nav.navbar-nav>li>a {
+	transition: all 0.1s;
+}
+
+.nav.navbar-nav>li>a:focus,
+.nav.navbar-nav>li>a:hover {
+	transition: all 0.1s;
+	color: #ddd;
+	border: none !important;
+	background-color: inherit !important;
 }
 /* from stackoverflow : http://stackoverflow.com/a/4407335 */
 

@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-05-31 */
+/*! skid-inc - v1.0.0 - 2016-06-02 */
 var beautify = {
 	prefixes: [
 	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
@@ -59,6 +59,29 @@ String.prototype.cap = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };;
 
+var floating = {
+    addFloating: function(where, text) {
+        var floatingText = document.createElement('div'),
+            divWidth = $('#' + where).width() - 35,
+            randWidth = game.randomInclusive(0, divWidth);
+        
+        $(floatingText).addClass('floating-text')
+            .html(text)
+            .css({
+                'margin-top': '-62px',
+                'margin-left': randWidth + 'px'
+            })
+            .animate({
+                'opacity': 0,
+                'margin-top': '-85px'
+            }, 750, function() {
+                $(this).remove();
+            });
+        
+        $('#' + where).append(floatingText);
+    }
+};;
+
 var game = {
     randomInclusive: function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -85,11 +108,14 @@ var game = {
         game.player.exp += amount;
         
         while (game.player.exp >= game.player.maxExp) {
+            var randAscii = Math.ceil(game.randomInclusive(0, game.console.ascii.levelUp.length - 1));
+            
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
+            
             game.console.print('gain', '');
-            game.console.print('ascii', game.console.ascii.levelUp);
+            game.console.print('ascii', game.console.ascii.levelUp[randAscii]);
         };
     },
     
@@ -99,6 +125,10 @@ var game = {
     
     getProServerMult: function() {
         return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
+    },
+    
+    getProServerMultExp: function() {
+        return (1 + (game.player.serverPro * (game.player.serverProRewardExp - 1)));
     },
     
     getProServerCost: function() {
@@ -121,6 +151,10 @@ var game = {
         return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
     },
     
+    getQuickhackCost: function() {
+        return Math.floor(game.player.serverQuickHackCost * Math.pow(game.player.serverQuickHackInflation, game.player.serverQuickHack));
+    },
+   
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
@@ -175,10 +209,17 @@ var game = {
             'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
             'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
             'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
-            'VM servers: ' + fix(game.player.serverSpeedHack, 0)
+            'VM servers: ' + fix(game.player.serverSpeedHack, 0) + '<br>' +
+            'QuickHack level: ' + fix(game.player.serverQuickHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
+    },
+    
+    displayButton1: function(name, fun) {
+        $('#allButtons').html(
+            'test'
+        )
     },
     
     loop: function() {
@@ -212,11 +253,23 @@ var game = {
         $('#navbar-version').html('v' + game.options.version);
         
         $('#navbar-mute').on('click', function() {
-            game.console.print('warn', 'GAME MUTE ONCLICK TODO');
+            game.sounds.switchSounds();
         });
         
         $('#navbar-save').on('click', function() {
             game.save.save('user');
+        });
+        
+        $('#options-reset').on('click', function() {
+            game.save.reset();
+        });
+        
+        $('#options-load').on('click', function() {
+            game.save.load('user');
+        });
+        
+        $('#options-save').on('click', function() {
+            game.save.save();
         });
         
         $('#hack-button').on('click', function() {
@@ -239,11 +292,6 @@ var game = {
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
 		});
-		
-        $('html').bind('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
         
         game.achievements.domInit();
     },
@@ -262,9 +310,8 @@ game.options = {
     interval: undefined,
     fps: 10,
     bindTime: 500,
-    sounds: false,
-    background: false,
-    version: 0.02,
+    sounds: true,
+    version: 0.03,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -301,6 +348,7 @@ game.buy = function(from) {
     if (from == "info") {
         var persServMult = game.getPersServerMult(),
             proServMult = game.getProServerMult(),
+            proServMultExp = game.getProServerMultExp(),
             speedhackMult = game.getSpeedhackMult(),
             persCost = game.getPersServerCost(),
             proCost = game.getProServerCost(),
@@ -308,7 +356,7 @@ game.buy = function(from) {
         
         game.console.print('log', 'Servers info:<br>' +
             '<b>Personal servers</b>: ' + fix(game.player.serverPers, 0) + ' , mutiplier:  x' + fix(persServMult, 2) + ', next cost: $' + fix(persCost) + '.<br>' +
-            '<b>Professional servers</b>: ' + fix(game.player.serverPro, 0) + ', mutiplier: x' + fix(proServMult, 2) + ', next cost: $' + fix(proCost) + '.<br>' + 
+            '<b>Professional servers</b>: ' + fix(game.player.serverPro, 0) + ', money mutiplier: x' + fix(proServMult, 2) + ', experience mutiplier: x' + proServMultExp + ', next cost: $' + fix(proCost) + '.<br>' + 
             '<b>VM servers</b>: ' + fix(game.player.serverSpeedHack, 0) + ', divider: /' + fix(speedhackMult, 2) + ', next cost: $' + fix(speedhackCost) + '.');
         
         return;
@@ -367,6 +415,30 @@ game.buy = function(from) {
 
         return;
     };
+    
+    if (from == "serv-quickhack") {
+        var cost = game.getQuickhackCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.player.serverQuickHack++;
+            
+            var newCost = game.getQuickhackCost();
+            game.console.print('gain', 'You successfully bought a QuickHack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+        }
+        else
+            game.console.print('error', 'Not enough money to buy a QuickHack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+        
+        return;
+    };
+    
+    if (from == "button1") {
+        game.console.print('log', 'TODO')
+        
+        
+        
+        return;
+    }
 };
 
 game.config = function(from) {
@@ -430,11 +502,14 @@ game.hack = function(from) {
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax);
 
         // first apply all money/exp rewards effects
-        if (game.player.serverPers > 0)
+        if (game.player.serverPers > 0) {
             moneyReward *= (game.player.serverPersReward * game.player.serverPers);
+        };
         
-        if (game.player.serverPro > 0)
+        if (game.player.serverPro > 0) {
             moneyReward *= (game.player.serverProReward * game.player.serverPro);
+            expReward *= (game.player.serverProRewardExp * game.player.serverPro);
+        };
 
         // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
@@ -446,8 +521,10 @@ game.hack = function(from) {
         game.earnExp(expReward);
         game.player.timesHacked++;
 
-        if (from == 'sp-click')
-            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. (reward divided by ' + game.player.clickReducer + ' when clicking button)');
+        if (from == 'sp-click') {
+            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(game.player.clickReducer, 0) + ' when clicking button)');
+            floating.addFloating('hack-button', '+$' + fix(moneyReward));
+        }
         else
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
 
@@ -532,22 +609,34 @@ game.player = {
     hackingProgress: 0,
     
     serverPers: 0,
-    serverPersReward: 1.10,
+    serverPersReward: 1.20,
     serverPersCost: 500,
     serverPersInflation: 1.08,
-    canBuyServerPers: false,
     
     serverPro: 0,
-    serverProReward: 1.25,
-    serverProCost: 133337,
+    serverProReward: 1.40,
+    serverProRewardExp: 1.40,
+    serverProCost: 7500,
     serverProInflation: 1.06,
-    canBuyServerPro: false,
     
     serverSpeedHack: 0,
     serverSpeedHackAccelerator: 1.01,
     serverSpeedHackCost: 5000,
     serverSpeedHackInflation: 1.50,
-    canBuyServerSpeedHack: false
+    
+    serverQuickHack: 0,
+    serverQuickHackAccelerator: 1.5,
+    serverQuickHackCost: 1000000,
+    serverQuickHackInflation: 1e3
+    
+    
+    //var level = 1,
+    //    initial = 1e3;
+    //    
+    //for (var i = 0; i < 16; i++) {
+    //    console.log(fix(Math.pow(1e3, level)));
+    //    level++;
+    //};
 };;
 
 game.save = {
@@ -578,6 +667,7 @@ game.save = {
         else {
             var s = JSON.parse(localStorage.getItem(game.save.key)),
                 sgp = s.gp,
+                sga = s.ga,
                 sgo = s.go,
                 g = game,
                 gp = game.player,
@@ -595,6 +685,7 @@ game.save = {
             gp.serverPers = sgp.serverPers;
             gp.serverPro = sgp.serverPro;
             gp.serverSpeedHack = sgp.serverSpeedHack;
+            gp.serverQuickHack = sgp.serverQuickHack;
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
@@ -743,7 +834,9 @@ game.console.cmds = {
             ['buy', '-server', '-help'],
             ['buy', '-server', 'personal'],
             ['buy', '-server', 'professional'],
-            ['buy', '-server', 'vm']
+            ['buy', '-server', 'vm'],
+            ['buy', '-server', 'quick-hack'],
+            ['buy', '-button', '1']
         ],
         exec: [
             'game.buy("sp")',
@@ -753,7 +846,9 @@ game.console.cmds = {
             'game.buy("serv-help")',
             'game.buy("serv-pers")',
             'game.buy("serv-pro")',
-            'game.buy("serv-speedhack")'
+            'game.buy("serv-speedhack")',
+            'game.buy("serv-quickhack")',
+            'game.buy("button1")'
         ]
     },
     
@@ -785,15 +880,34 @@ game.console.cmds = {
 };;
 
 game.console.ascii = {
-    levelUp: '' +
-    ' /$$                                     /$$         /$$   /$$ /$$$$$$$<br>' +
-    '| $$                                    | $$        | $$  | $$| $$__  $$<br>' +
-    '| $$        /$$$$$$  /$$    /$$ /$$$$$$ | $$        | $$  | $$| $$  \\ $$<br>' +
-    '| $$       /$$__  $$|  $$  /$$//$$__  $$| $$ /$$$$$$| $$  | $$| $$$$$$$/<br>' +
-    '| $$      | $$$$$$$$ \\  $$/$$/| $$$$$$$$| $$|______/| $$  | $$| $$____/<br>' +
-    '| $$      | $$_____/  \\  $$$/ | $$_____/| $$        | $$  | $$| $$<br>' +
-    '| $$$$$$$$|  $$$$$$$   \\  $/  |  $$$$$$$| $$        |  $$$$$$/| $$<br>' +
-    '|________/ \\_______/    \\_/    \\_______/|__/         \\______/ |__/'
+    levelUp: [
+        ' /$$                                     /$$         /$$   /$$ /$$$$$$$<br>' +
+        '| $$                                    | $$        | $$  | $$| $$__  $$<br>' +
+        '| $$        /$$$$$$  /$$    /$$ /$$$$$$ | $$        | $$  | $$| $$  \\ $$<br>' +
+        '| $$       /$$__  $$|  $$  /$$//$$__  $$| $$ /$$$$$$| $$  | $$| $$$$$$$/<br>' +
+        '| $$      | $$$$$$$$ \\  $$/$$/| $$$$$$$$| $$|______/| $$  | $$| $$____/<br>' +
+        '| $$      | $$_____/  \\  $$$/ | $$_____/| $$        | $$  | $$| $$<br>' +
+        '| $$$$$$$$|  $$$$$$$   \\  $/  |  $$$$$$$| $$        |  $$$$$$/| $$<br>' +
+        '|________/ \\_______/    \\_/    \\_______/|__/         \\______/ |__/',
+
+         ' _                        _          _    _          _ <br>' +
+         '| |                      | |        | |  | |        | |<br>' +
+         '| |      ___ __   __ ___ | | ______ | |  | | _ __   | |<br>' +
+         '| |     / _ \\\\ \\ / // _ \\| ||______|| |  | || \'_ \\  | |<br>' +
+         '| |____|  __/ \\ V /|  __/| |        | |__| || |_) | |_|<br>' +
+         '|______|\\___|  \\_/  \\___||_|         \\____/ | .__/  (_)<br>' +
+         '                                            | |        <br>' +
+         '                                            |_|        ',
+
+         '#                                         #     #           ###<br>' + 
+         '#       ###### #    # ###### #            #     # #####     ###<br>' + 
+         '#       #      #    # #      #            #     # #    #    ###<br>' + 
+         '#       #####  #    # #####  #      ##### #     # #    #     # <br>' + 
+         '#       #      #    # #      #            #     # #####        <br>' + 
+         '#       #       #  #  #      #            #     # #         ###<br>' + 
+         '####### ######   ##   ###### ######        #####  #         ###<br>' 
+    ]
+
 };;
 
 game.console.errors = {
@@ -832,12 +946,12 @@ game.console.help = {
         "<b>buy -server</b>: buy a server. Get a list of server with <b>buy -server -help</b>.<br>" +
         "<b>buy -info</b>: print all your server status (reward, owned, next price, ...).",
         
-    buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase hack income.<br>" + 
-        "<b>buy -server professional</b>: better than low-cost servers, greatly increase hack income.<br>" + 
+    buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase money hack income.<br>" + 
+        "<b>buy -server professional</b>: better than low-cost servers, greatly increase money and experience hack income.<br>" + 
         "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.",
     
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
-        "<b>achievements -list</b>: print a list of all achievements."
+        "<b>achievements -list</b>: print a list of all achievements.",
 };;
 
 game.console.cmds.hack.places = {
@@ -909,6 +1023,10 @@ game.console.print = function(type, text) {
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
             break;
+            
+        case 'guide':
+            $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
+            break;
         
         case 'ascii':
             $('#console-content').append('<div class="console ascii"><pre>' + text + '</pre></div>');
@@ -949,36 +1067,89 @@ game.console.clear = function(from) {
 };
 
 game.console.printGuide = function() {
-    game.console.print('.');
+    game.console.print('guide', 'Welcome to Skid-Inc. Start making money by clicking the <b>\'hack\'</b> button or by typing <b>hack</b> command in the console. ' +
+        'Type <b>help</b> for a list of commands, use <b>arguments</b> (like -help for example) to use all the potential of the command (like <b>hack -help</b>). ' +
+        'Try all commands: <b>buy servers</b> to increase your income, <b>hack places</b> to earn a lot more $$$ and experience, <b>earn achievements</b> and exclusive rewards!');
 };;
 
 game.sounds = {
     button: new Audio('app/assets/sounds/button.mp3'),
     ambient: new Audio('app/assets/sounds/server-room.mp3'),
     
+    switchSounds: function() {
+        if (!game.options.sounds)
+            game.config("sound-on");
+        else if (game.options.sounds)
+            game.config("sound-off");
+    },
+
     enableSounds: function() {
-        game.sounds.ambient.volume = 0.25;
+        console.log('sounds enabled')
+        game.options.sounds = true;
         game.sounds.ambient.currentTime = 0;
-        game.sounds.ambient.loop = true;
         game.sounds.ambient.play();
+
+        game.options.intervals.ambientLoop = setInterval(function() {
+            game.sounds.ambient.currentTime = 0;
+            game.sounds.ambient.play();
+        }, 90000);
+        
+        game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);
+    },
+
+    disableSounds: function() {
+        console.log('sounds disabled')
+        game.options.sounds = false;
+        
+        game.sounds.ambient.pause();
+        clearInterval(game.options.intervals.ambientLoop);
+        clearInterval(game.options.intervals.randomSound);
     },
     
-    disableSounds: function() {
-        game.sounds.ambient.volume = 0;
-        game.sounds.ambient.currentTime = 0;
-        game.sounds.ambient.pause();
+    randomSound: function() {
+        var gotSound = Math.floor(Math.random() * 100),
+            soundType = Math.floor(Math.random() * 100),
+            audio = undefined;
+        
+        if (gotSound >= 25 && game.options.sounds) {
+            if (soundType >= 50) {
+                var rand = Math.ceil(Math.floor(game.randomInclusive(0, game.sounds.bip.length - 1)));
+                
+                game.sounds.bip[rand].volume = 0.30;
+                game.sounds.bip[rand].play();
+            }
+            else if (soundType < 50) {
+                var rand = Math.ceil(Math.floor(game.randomInclusive(0, game.sounds.hdd.length - 1)));
+                
+                game.sounds.hdd[rand].volume = 0.30;
+                game.sounds.hdd[rand].play();
+            };
+        };
     },
 
     varInit: function() {
+        game.sounds.ambient.volume = 0.30;
+        
+        if (game.options.sounds) {
+            game.sounds.ambient.play();
+
+            game.options.intervals.ambientLoop = setInterval(function() {
+                game.sounds.ambient.currentTime = 0;
+                game.sounds.ambient.play();
+            }, 90000);
+            
+            game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);
+        };
+        
         game.sounds.bip = [
             new Audio('app/assets/sounds/computer-bip-1.mp3'),
             new Audio('app/assets/sounds/computer-bip-2.mp3'),
             new Audio('app/assets/sounds/computer-bip-3.mp3'),
             new Audio('app/assets/sounds/computer-bip-4.mp3'),
             new Audio('app/assets/sounds/computer-bip-5.mp3'),
-            new Audio('app/assets/sounds/computer-bip-6.mp3'),
-            new Audio('app/assets/sounds/error-beep.mp3')
+            new Audio('app/assets/sounds/computer-bip-6.mp3')
         ];
+        
         game.sounds.hdd = [
             new Audio('app/assets/sounds/hard-disk-writing-1.mp3'),
             new Audio('app/assets/sounds/hard-disk-writing-2.mp3'),

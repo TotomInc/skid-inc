@@ -14,10 +14,11 @@ game.console.help = {
         "<b>buy -server</b>: buy a server. Get a list of server with <b>buy -server -help</b>.<br>" +
         "<b>buy -info</b>: print all your server status (reward, owned, next price, ...).",
         
-    buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase hack income.<br>" + 
-        "<b>buy -server professional</b>: better than low-cost servers, greatly increase hack income.<br>" + 
-        "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.",
+    buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase money hack income.<br>" + 
+        "<b>buy -server professional</b>: better than low-cost servers, greatly increase money and experience hack income.<br>" + 
+        "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.<br>" +
+        "<b>buy -server quickhack</b>: a quickhack server reduce by 1 the divided reward when clicking.",
     
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
-        "<b>achievements -list</b>: print a list of all achievements."
+        "<b>achievements -list</b>: print a list of all achievements.",
 };

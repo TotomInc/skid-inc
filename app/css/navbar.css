@@ -29,3 +29,15 @@
 	border-right: 1px solid #222;
 	color: #333;
 }
+
+.nav.navbar-nav>li>a {
+	transition: all 0.1s;
+}
+
+.nav.navbar-nav>li>a:focus,
+.nav.navbar-nav>li>a:hover {
+	transition: all 0.1s;
+	color: #ddd;
+	border: none !important;
+	background-color: inherit !important;
+}

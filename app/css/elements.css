@@ -86,7 +86,9 @@
 }
 
 .btn-default:hover,
-.btn-default:active {
+.btn-default:active,
+.btn-default:focus,
+.btn-default:hover:active {
 	transition: all 0.2s;
 	color: #9d9d9d;
 	background-color: #343435;

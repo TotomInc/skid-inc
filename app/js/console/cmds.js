@@ -84,7 +84,8 @@ game.console.cmds = {
             ['buy', '-server', '-help'],
             ['buy', '-server', 'personal'],
             ['buy', '-server', 'professional'],
-            ['buy', '-server', 'vm']
+            ['buy', '-server', 'vm'],
+            ['buy', '-server', 'quickhack']
         ],
         exec: [
             'game.buy("sp")',
@@ -94,7 +95,8 @@ game.console.cmds = {
             'game.buy("serv-help")',
             'game.buy("serv-pers")',
             'game.buy("serv-pro")',
-            'game.buy("serv-speedhack")'
+            'game.buy("serv-speedhack")',
+            'game.buy("serv-quickhack")'
         ]
     },
     
