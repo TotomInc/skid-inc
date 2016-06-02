@@ -48,7 +48,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	opacity: 0.04;
+	opacity: 0.02;
 	width: 590px;
 	height: 193px;
 	background-image: url('../assets/images/console-logo-alt.png');
@@ -79,6 +79,7 @@
 }
 
 .console.input {
+	transition: all 0.2s;
 	float: left;
 	margin-left: 4px;
 	width: calc(100% - 36px);
@@ -105,6 +106,11 @@
 
 .console.enter > i {
 	margin: 4px 6px;
+}
+
+.console.ascii {
+	display: table;
+	margin: 0 auto;
 }
 
 .console-warn {

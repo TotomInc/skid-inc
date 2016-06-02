@@ -1,9 +1,9 @@
 var beautify = {
 	prefixes: [
-	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
-		"D ", "UD ", "DD ", "TD ", "qD ", "QD ", "sD ", "SD ", "OD ", "ND ",
-		"V ", "UV ", "DV ", "TV ", "qV ", "QV ", "sV ", "SV ", "OV ", "NV ",
-		"T ", "UT ", "DT ", "TT ", "qT ", "QT ", "sT ", "ST ", "OT ", "NT "
+	    "m", "b", "t", "q", "Q", "s", "S", "o", "n",
+		"D", "UD", "DD", "TD", "qD", "QD", "sD", "SD", "OD", "ND",
+		"V", "UV", "DV", "TV", "qV", "QV", "sV", "SV", "OV", "NV",
+		"T", "UT", "DT", "TT", "qT", "QT", "sT", "ST", "OT", "NT"
 	],
 
 	beautify: function(x, n) {

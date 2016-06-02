@@ -24,10 +24,14 @@ var game = {
         game.player.exp += amount;
         
         while (game.player.exp >= game.player.maxExp) {
+            var randAscii = Math.ceil(game.randomInclusive(0, game.console.ascii.levelUp.length - 1));
+            
             game.player.exp -= game.player.maxExp;
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
-            game.console.print('gain', 'Level-up!');
+            
+            game.console.print('gain', '');
+            game.console.print('ascii', game.console.ascii.levelUp[randAscii]);
         };
     },
     
@@ -37,6 +41,10 @@ var game = {
     
     getProServerMult: function() {
         return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
+    },
+    
+    getProServerMultExp: function() {
+        return (1 + (game.player.serverPro * (game.player.serverProRewardExp - 1)));
     },
     
     getProServerCost: function() {
@@ -59,6 +67,14 @@ var game = {
         return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
     },
     
+    getQuickhackCost: function() {
+        return Math.floor(game.player.serverQuickHackCost * Math.pow(game.player.serverQuickHackInflation, game.player.serverQuickHack));
+    },
+    
+    getClickDivider: function() {
+        return Math.floor(16 - game.player.serverQuickHack);
+    },
+   
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
@@ -99,6 +115,7 @@ var game = {
                 
                 game.earnMoney(moneyReward);
                 game.earnExp(expReward);
+                game.player.timesPlacesHacked++;
                 
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
             };
@@ -109,7 +126,11 @@ var game = {
         $('#well-resources').html(
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
-            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0)
+            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
+            'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
+            'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
+            'VM servers: ' + fix(game.player.serverSpeedHack, 0) + '<br>' +
+            'QuickHack servers: ' + fix(game.player.serverQuickHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -135,11 +156,36 @@ var game = {
         game.options.interval = (1000 / game.options.fps);
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
+        game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 1000);
         
+        game.achievements.varInit();
         game.sounds.varInit();
     },
     
     domInit: function() {
+        $('#navbar-version').html('v' + game.options.version);
+        
+        $('#navbar-mute').on('click', function() {
+            game.sounds.switchSounds();
+        });
+        
+        $('#navbar-save').on('click', function() {
+            game.save.save('user');
+        });
+        
+        $('#options-reset').on('click', function() {
+            game.save.reset();
+        });
+        
+        $('#options-load').on('click', function() {
+            game.save.load('user');
+        });
+        
+        $('#options-save').on('click', function() {
+            game.save.save();
+        });
+        
         $('#hack-button').on('click', function() {
             game.hack('sp-click');
         });
@@ -153,22 +199,22 @@ var game = {
 				game.console.executer();
 		});
 
-		$('#console-input').bind('copy paste', function(e) {
-			e.preventDefault();
-		});
+// 		$('#console-input').bind('copy paste', function(e) {
+// 			e.preventDefault();
+// 		});
 		
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
 		});
-		
-        $('html').bind('contextmenu', function(e) {
-            e.preventDefault();
-            return false;
-        });
+        
+        game.achievements.domInit();
     },
     
     init: function() {
         game.varInit();
+        game.save.load();
         game.domInit();
+        
+        game.options.isInit = true;
     }
 };
