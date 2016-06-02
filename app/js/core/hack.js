@@ -2,19 +2,13 @@ game.hack = function(from) {
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
-            divider = game.getClickDivider();
+            globalMoneyMult = game.getGlobalMoneyMult(),
+            globalExpMult = game.getGlobalExpMult(),
+            divider = game.servers.getClickDivider();
 
-        // first apply all money/exp rewards effects
-        if (game.player.serverPers > 0) {
-            moneyReward *= (game.player.serverPersReward * game.player.serverPers);
-        };
-        
-        if (game.player.serverPro > 0) {
-            moneyReward *= (game.player.serverProReward * game.player.serverPro);
-            expReward *= (game.player.serverProRewardExp * game.player.serverPro);
-        };
+        moneyReward *= globalMoneyMult;
+        expReward *= globalExpMult;
 
-        // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
             moneyReward /= divider;
             expReward /= divider;

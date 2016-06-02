@@ -19,7 +19,7 @@ game.achievements = {
                 game.player.achievementsPoints += thisAch.reward;
                 game.achievements.owned[i] = true;
                 
-                game.console.print('gain', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
+                game.console.print('success', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
             };
         };
     },

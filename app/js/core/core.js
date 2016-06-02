@@ -28,53 +28,30 @@ var game = {
             
             game.player.exp -= game.player.maxExp;
             game.player.level++;
-            game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * 100);
+            game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * (100 * (game.player.level * 1.01)));
             
-            game.console.print('gain', '');
+            game.console.print('levelup', 'You are now at level ' + game.player.level);
             game.console.print('ascii', game.console.ascii.levelUp[randAscii]);
         };
     },
     
+    getGlobalMoneyMult: function() {
+        var persMult = game.servers.getPersReward(),
+            proMult = game.servers.getProReward().money;
+        
+        return (1 - persMult + proMult);
+    },
+    
+    getGlobalExpMult: function() {
+        var proMult = game.servers.getProReward().exp;
+        
+        return proMult;
+    },
+    
     getPlaceTime: function(thisPlace) {
-        return thisPlace.time / (1 + (game.player.serverSpeedHack * game.player.serverSpeedHackAccelerator));
+        return thisPlace.time / (1 + (game.servers.vm.owned * game.servers.vm.accelerator));
     },
     
-    getProServerMult: function() {
-        return (1 + (game.player.serverPro * (game.player.serverProReward - 1)));
-    },
-    
-    getProServerMultExp: function() {
-        return (1 + (game.player.serverPro * (game.player.serverProRewardExp - 1)));
-    },
-    
-    getProServerCost: function() {
-        return Math.floor(game.player.serverProCost * Math.pow(game.player.serverProInflation, game.player.serverPro));
-    },
-    
-    getPersServerMult: function() {
-        return (1 + (game.player.serverPers * (game.player.serverPersReward - 1)));
-    },
-    
-    getPersServerCost: function() {
-        return Math.floor(game.player.serverPersCost * Math.pow(game.player.serverPersInflation, game.player.serverPers));
-    },
-    
-    getSpeedhackMult: function() {
-        return (1 + (game.player.serverSpeedHack * (game.player.serverSpeedHackAccelerator - 1)));
-    },
-    
-    getSpeedhackCost: function() {
-        return Math.floor(game.player.serverSpeedHackCost * Math.pow(game.player.serverSpeedHackInflation, game.player.serverSpeedHack));
-    },
-    
-    getQuickhackCost: function() {
-        return Math.floor(game.player.serverQuickHackCost * Math.pow(game.player.serverQuickHackInflation, game.player.serverQuickHack));
-    },
-    
-    getClickDivider: function() {
-        return Math.floor(16 - game.player.serverQuickHack);
-    },
-   
     hackProgress: function(times) {
         if (game.player.isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
@@ -198,10 +175,6 @@ var game = {
 			if (e.which == 13)
 				game.console.executer();
 		});
-
-// 		$('#console-input').bind('copy paste', function(e) {
-// 			e.preventDefault();
-// 		});
 		
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();

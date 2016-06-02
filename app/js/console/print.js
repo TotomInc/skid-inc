@@ -15,6 +15,14 @@ game.console.print = function(type, text) {
         case 'warn':
             $('#console-content').append('<p><span class="console-warn">[WARN]</span> ' + text + '</p>');
             break;
+        
+        case 'success':
+            $('#console-content').append('<p><span class="console-warn">[ACHIEVEMENT]</span> ' + text + '</p>');
+            break;
+        
+        case 'levelup':
+            $('#console-content').append('<p><span class="console-warn">[LEVEL-UP]</span> ' + text + '</p>');
+            break;
 
         case 'help':
             $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');

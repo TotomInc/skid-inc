@@ -41,11 +41,6 @@ game.save = {
             gp.expMult = sgp.expMult;
             gp.achievementsPoints = sgp.achievementsPoints;
 
-            gp.serverPers = sgp.serverPers;
-            gp.serverPro = sgp.serverPro;
-            gp.serverSpeedHack = sgp.serverSpeedHack;
-            gp.serverQuickHack = sgp.serverQuickHack;
-
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
 

@@ -6,17 +6,13 @@ game.player = {
 
     exp: 0,
     maxExp: 100,
-    expInflation: 1.10,
+    expInflation: 1.15,
 
-    moneyMult: 1,
+    randMoneyMax: 30,
+    randMoneyMin: 15,
 
-    randMoneyMax: 7,
-    randMoneyMin: 3,
-
-    expMult: 1,
-
-    randExpMax: 5,
-    randExpMin: 1,
+    randExpMax: 25,
+    randExpMin: 10,
     
     clickReducer: 16,
     
