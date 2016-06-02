@@ -30,7 +30,7 @@ game.buy = function(from) {
         game.console.print('log', '<b>Servers infos</b>:<br>' +
             '<b>Personal servers</b>: ' + fix(game.servers.personal.owned, 0) + ', money multiplier: x' + fix(persReward, 2) + ', next cost: $' + fix(persCost) + '<br>' +
             '<b>Professional servers</b>: ' + fix(game.servers.professional.owned, 0) + ', money multiplier: x' + fix(proReward.money, 2) + ', experience reward: x' + fix(proReward.exp, 2) + ', next cost: $' + fix(proCost) + '<br>' +
-            '<b>Virtual machines (VM) servers</b>: ' + fix(game.servers.vm.owned, 0) + ', place hack time divider: /' + fix(VMReward, 0) + ', next cost: $' + fix(VMCost, 2) + '<br>' +
+            '<b>Virtual machines (VM) servers</b>: ' + fix(game.servers.vm.owned, 0) + ', place hack time divider: /' + fix(VMReward, 2) + ', next cost: $' + fix(VMCost, 2) + '<br>' +
             '<b>Quickhack servers</b>: ' + fix(game.servers.quickhack.owned, 0) + ', click divider: /' + fix(clickDivider, 0) + ', next cost: $' + fix(quickCost));
         
         return;
@@ -82,10 +82,10 @@ game.buy = function(from) {
             game.servers.vm.owned++;
             
             var newCost = game.servers.getVMCost();
-            game.console.print('gain', 'You successfully bought a speedhack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+            game.console.print('gain', 'You successfully bought a VirtualMachine for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
         else
-            game.console.print('error', 'Not enough money to buy a speedhack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+            game.console.print('error', 'Not enough money to buy a VirtualMachine, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
 
         return;
     };

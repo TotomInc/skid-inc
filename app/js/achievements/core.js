@@ -48,6 +48,15 @@ game.achievements = {
         };
     },
     
+    checkLoaded: function() {
+        if (game.achievements.owned.length !== game.achievements.list.length) {
+            var diff = game.achievements.list.length - game.achievements.owned.length;
+            
+            for (var i = 0; i < diff; i++)
+                game.achievements.owned.push(false);
+        };
+    },
+    
     varInit: function() {
         game.achievements.list = [
             new game.achievements.create('Script Kid I', 'Hack 100 times (click or via console).',
@@ -71,7 +80,7 @@ game.achievements = {
         
         for (var i = 0; i < game.achievements.list.length; i++)
             game.achievements.owned.push(false);
-    },
-    
-    domInit: function() {}
+        
+        console.log('ach init finished')
+    }
 };

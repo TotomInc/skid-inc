@@ -30,7 +30,7 @@ var game = {
             game.player.level++;
             game.player.maxExp = Math.floor(Math.pow(game.player.expInflation, game.player.level) * (100 * (game.player.level * 1.01)));
             
-            game.console.print('levelup', 'You are now at level ' + game.player.level);
+            game.console.print('levelup', 'You are now level ' + game.player.level + '!');
             game.console.print('ascii', game.console.ascii.levelUp[randAscii]);
         };
     },
@@ -104,10 +104,10 @@ var game = {
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
             'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
-            'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
-            'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
-            'VM servers: ' + fix(game.player.serverSpeedHack, 0) + '<br>' +
-            'QuickHack servers: ' + fix(game.player.serverQuickHack, 0)
+            'Pers. servers: ' + fix(game.servers.personal.owned, 0) + '<br>' +
+            'Pro. servers: ' + fix(game.servers.professional.owned, 0) + '<br>' +
+            'VM servers: ' + fix(game.servers.vm.owned, 0) + '<br>' +
+            'QuickHack servers: ' + fix(game.servers.quickhack.owned, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
@@ -129,7 +129,7 @@ var game = {
         game.display();
     },
     
-    varInit: function() {
+    varInit: function(callback) {
         game.options.interval = (1000 / game.options.fps);
         
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
@@ -138,6 +138,9 @@ var game = {
         
         game.achievements.varInit();
         game.sounds.varInit();
+        game.save.varInit();
+        
+        console.info('Var init finished.');
     },
     
     domInit: function() {
@@ -163,6 +166,10 @@ var game = {
             game.save.save();
         });
         
+        $('#options-background').on('click', function() {
+            console.warn('TODO')
+        });
+        
         $('#hack-button').on('click', function() {
             game.hack('sp-click');
         });
@@ -180,7 +187,7 @@ var game = {
 		    e.preventDefault();
 		});
         
-        game.achievements.domInit();
+        console.info('Dom init finished.');
     },
     
     init: function() {

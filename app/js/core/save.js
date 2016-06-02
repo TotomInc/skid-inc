@@ -1,15 +1,11 @@
 game.save = {
     key: 'SK-Inc',
-    toSave: {
-        'gp': game.player,
-        'go': game.options
-    },
     
     save: function(from) {
         localStorage.setItem(game.save.key, JSON.stringify(game.save.toSave));
         
         if (from == "user")
-            game.console.print('log', 'Game successfully saved to local-storage.');
+            game.console.print('save', 'Game successfully saved to local-storage.');
         else
             console.log('Game saved.');
     },
@@ -28,9 +24,11 @@ game.save = {
                 sgp = s.gp,
                 sga = s.ga,
                 sgo = s.go,
+                sga = s.ga,
                 g = game,
                 gp = game.player,
-                go = game.options;
+                go = game.options,
+                ga = game.achievements;
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;
@@ -43,11 +41,23 @@ game.save = {
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
+            
+            ga.owned = sga.owned;
 
             go.before = sgo.before;
             
+            game.achievements.checkLoaded();
+            
             console.log('Game loaded.');
-            game.console.print('log', 'Save-game successfully loaded.');
+            game.console.print('save', 'Save-game successfully loaded.');
         }
+    },
+    
+    varInit: function() {
+        game.save.toSave = {
+            'gp': game.player,
+            'go': game.options,
+            'ga': game.achievements
+        };
     }
 };

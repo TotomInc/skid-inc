@@ -7,6 +7,10 @@ game.console.print = function(type, text) {
         case 'log':
             $('#console-content').append('<p><span class="console-log">[LOG]</span> ' + text + '</p>');
             break;
+            
+        case 'save':
+            $('#console-content').append('<p><span class="console-log">[SAVE]</span> ' + text + '</p>');
+            break;
 
         case 'error':
             $('#console-content').append('<p><span class="console-error">[ERROR]</span> ' + text + '</p>');
@@ -29,7 +33,7 @@ game.console.print = function(type, text) {
             break;
             
         case 'guide':
-            $('#console-content').append('<p><span class="console-help">[HELP]</span> ' + text + '</p>');
+            $('#console-content').append('<p><span class="console-help">[GUIDE]</span> ' + text + '</p>');
             break;
         
         case 'ascii':
