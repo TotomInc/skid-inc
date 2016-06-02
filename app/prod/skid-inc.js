@@ -1,10 +1,10 @@
 /*! skid-inc - v1.0.0 - 2016-06-02 */
 var beautify = {
 	prefixes: [
-	    "m ", "b ", "t ", "q ", "Q ", "s ", "S ", "o ", "n ",
-		"D ", "UD ", "DD ", "TD ", "qD ", "QD ", "sD ", "SD ", "OD ", "ND ",
-		"V ", "UV ", "DV ", "TV ", "qV ", "QV ", "sV ", "SV ", "OV ", "NV ",
-		"T ", "UT ", "DT ", "TT ", "qT ", "QT ", "sT ", "ST ", "OT ", "NT "
+	    "m", "b", "t", "q", "Q", "s", "S", "o", "n",
+		"D", "UD", "DD", "TD", "qD", "QD", "sD", "SD", "OD", "ND",
+		"V", "UV", "DV", "TV", "qV", "QV", "sV", "SV", "OV", "NV",
+		"T", "UT", "DT", "TT", "qT", "QT", "sT", "ST", "OT", "NT"
 	],
 
 	beautify: function(x, n) {
@@ -82,6 +82,20 @@ var floating = {
     }
 };;
 
+function msToTime(duration) {
+    var duration = new Date().getTime(),
+        milliseconds = parseInt((duration % 1000) / 100),
+        seconds = parseInt((duration / 1000) % 60),
+        minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
+};;
+
 var game = {
     randomInclusive: function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -154,6 +168,10 @@ var game = {
     getQuickhackCost: function() {
         return Math.floor(game.player.serverQuickHackCost * Math.pow(game.player.serverQuickHackInflation, game.player.serverQuickHack));
     },
+    
+    getClickDivider: function() {
+        return Math.floor(16 - game.player.serverQuickHack);
+    },
    
     hackProgress: function(times) {
         if (game.player.isHacking) {
@@ -210,16 +228,10 @@ var game = {
             'Pers. servers: ' + fix(game.player.serverPers, 0) + '<br>' +
             'Pro. servers: ' + fix(game.player.serverPro, 0) + '<br>' +
             'VM servers: ' + fix(game.player.serverSpeedHack, 0) + '<br>' +
-            'QuickHack level: ' + fix(game.player.serverQuickHack, 0)
+            'QuickHack servers: ' + fix(game.player.serverQuickHack, 0)
         );
         
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
-    },
-    
-    displayButton1: function(name, fun) {
-        $('#allButtons').html(
-            'test'
-        )
     },
     
     loop: function() {
@@ -285,9 +297,9 @@ var game = {
 				game.console.executer();
 		});
 
-		$('#console-input').bind('copy paste', function(e) {
-			e.preventDefault();
-		});
+// 		$('#console-input').bind('copy paste', function(e) {
+// 			e.preventDefault();
+// 		});
 		
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();
@@ -311,7 +323,7 @@ game.options = {
     fps: 10,
     bindTime: 500,
     sounds: true,
-    version: 0.03,
+    version: 0.02,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -352,12 +364,14 @@ game.buy = function(from) {
             speedhackMult = game.getSpeedhackMult(),
             persCost = game.getPersServerCost(),
             proCost = game.getProServerCost(),
-            speedhackCost = game.getSpeedhackCost();
+            speedhackCost = game.getSpeedhackCost(),
+            clickDivider = game.getClickDivider();
         
         game.console.print('log', 'Servers info:<br>' +
             '<b>Personal servers</b>: ' + fix(game.player.serverPers, 0) + ' , mutiplier:  x' + fix(persServMult, 2) + ', next cost: $' + fix(persCost) + '.<br>' +
             '<b>Professional servers</b>: ' + fix(game.player.serverPro, 0) + ', money mutiplier: x' + fix(proServMult, 2) + ', experience mutiplier: x' + proServMultExp + ', next cost: $' + fix(proCost) + '.<br>' + 
-            '<b>VM servers</b>: ' + fix(game.player.serverSpeedHack, 0) + ', divider: /' + fix(speedhackMult, 2) + ', next cost: $' + fix(speedhackCost) + '.');
+            '<b>VM servers</b>: ' + fix(game.player.serverSpeedHack, 0) + ', divider: /' + fix(speedhackMult, 2) + ', next cost: $' + fix(speedhackCost) + '.<br>' +
+            '<b>Quickhack servers</b>: ' + fix(game.player.serverQuickHack, 0) + ', click divider: /' + fix(clickDivider, 0) + '.');
         
         return;
     };
@@ -408,10 +422,10 @@ game.buy = function(from) {
             game.player.serverSpeedHack++;
             
             var newCost = game.getSpeedhackCost();
-            game.console.print('gain', 'You successfully bought a VM server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+            game.console.print('gain', 'You successfully bought a speedhack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
         else
-            game.console.print('error', 'Not enough money to buy a VM server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+            game.console.print('error', 'Not enough money to buy a speedhack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
 
         return;
     };
@@ -419,23 +433,23 @@ game.buy = function(from) {
     if (from == "serv-quickhack") {
         var cost = game.getQuickhackCost();
         
-        if (game.player.money >= cost) {
+        if (game.player.money >= cost && game.player.serverQuickHack < 15) {
             game.player.money -= cost;
             game.player.serverQuickHack++;
-            
+
             var newCost = game.getQuickhackCost();
-            game.console.print('gain', 'You successfully bought a QuickHack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
+            game.console.print('gain', 'You successfully bought a quickhack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
         }
+        else if (game.player.serverQuickHack >= 15)
+            game.console.print('error', 'You already bought the maximum of speedhack servers (15).');
         else
-            game.console.print('error', 'Not enough money to buy a QuickHack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-        
+            game.console.print('error', 'Not enough money to buy a quickhack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
+
         return;
     };
     
     if (from == "button1") {
         game.console.print('log', 'TODO')
-        
-        
         
         return;
     }
@@ -499,7 +513,8 @@ if (game.options.isIE || game.options.isEdge)
 game.hack = function(from) {
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
-            expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax);
+            expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
+            divider = game.getClickDivider();
 
         // first apply all money/exp rewards effects
         if (game.player.serverPers > 0) {
@@ -513,8 +528,8 @@ game.hack = function(from) {
 
         // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
-            moneyReward /= game.player.clickReducer;
-            expReward /= game.player.clickReducer;
+            moneyReward /= divider;
+            expReward /= divider;
         };
         
         game.earnMoney(moneyReward);
@@ -522,7 +537,7 @@ game.hack = function(from) {
         game.player.timesHacked++;
 
         if (from == 'sp-click') {
-            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(game.player.clickReducer, 0) + ' when clicking button)');
+            game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
             floating.addFloating('hack-button', '+$' + fix(moneyReward));
         }
         else
@@ -628,15 +643,6 @@ game.player = {
     serverQuickHackAccelerator: 1.5,
     serverQuickHackCost: 1000000,
     serverQuickHackInflation: 1e3
-    
-    
-    //var level = 1,
-    //    initial = 1e3;
-    //    
-    //for (var i = 0; i < 16; i++) {
-    //    console.log(fix(Math.pow(1e3, level)));
-    //    level++;
-    //};
 };;
 
 game.save = {
@@ -835,8 +841,7 @@ game.console.cmds = {
             ['buy', '-server', 'personal'],
             ['buy', '-server', 'professional'],
             ['buy', '-server', 'vm'],
-            ['buy', '-server', 'quick-hack'],
-            ['buy', '-button', '1']
+            ['buy', '-server', 'quickhack']
         ],
         exec: [
             'game.buy("sp")',
@@ -847,8 +852,7 @@ game.console.cmds = {
             'game.buy("serv-pers")',
             'game.buy("serv-pro")',
             'game.buy("serv-speedhack")',
-            'game.buy("serv-quickhack")',
-            'game.buy("button1")'
+            'game.buy("serv-quickhack")'
         ]
     },
     
@@ -948,7 +952,8 @@ game.console.help = {
         
     buyServer: "<b>buy -server personal</b>: low-cost server, slightly increase money hack income.<br>" + 
         "<b>buy -server professional</b>: better than low-cost servers, greatly increase money and experience hack income.<br>" + 
-        "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.",
+        "<b>buy -server vm</b>: virtual machines can reduce the time when hacking a place.<br>" +
+        "<b>buy -server quickhack</b>: a quickhack server reduce by 1 the divided reward when clicking.",
     
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
         "<b>achievements -list</b>: print a list of all achievements.",
