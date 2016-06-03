@@ -39,7 +39,7 @@ var game = {
         var persMult = game.servers.getPersReward(),
             proMult = game.servers.getProReward().money;
         
-        return (1 - persMult + proMult);
+        return (persMult + proMult) - 1;
     },
     
     getGlobalExpMult: function() {
@@ -63,7 +63,9 @@ var game = {
                 left = Math.ceil(maxBar - filled),
                 percent = Math.floor(game.player.hackingProgress / time * 100),
                 moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
-                expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward);
+                expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
+                globalMoneyMult = game.getGlobalMoneyMult(),
+                globalExpMult = game.getGlobalExpMult();
             
             game.player.hackingProgress += times / fps;
             
@@ -90,6 +92,9 @@ var game = {
                 
                 $('#hacking-progress').html(barStatus).removeAttr('id');
                 
+                moneyReward *= globalMoneyMult;
+                expReward *= globalExpMult;
+                
                 game.earnMoney(moneyReward);
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
@@ -104,6 +109,10 @@ var game = {
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
             'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
+            '<br>' +
+            'Money mult: x' + fix(game.getGlobalMoneyMult(), 2) + '<br>' +
+            'Exp. mult: x' + fix(game.getGlobalExpMult(), 2) + '<br>' +
+            '<br>' +
             'Pers. servers: ' + fix(game.servers.personal.owned, 0) + '<br>' +
             'Pro. servers: ' + fix(game.servers.professional.owned, 0) + '<br>' +
             'VM servers: ' + fix(game.servers.vm.owned, 0) + '<br>' +
@@ -182,6 +191,19 @@ var game = {
 			if (e.which == 13)
 				game.console.executer();
 		});
+		
+		$('#console-input').bind('copy paste', function(e) {
+			e.preventDefault();
+		});
+		
+		$('#console-input').bind('cut paste', function(e) {
+			e.preventDefault();
+		});
+		
+        $('html').bind('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
 		
 		$('img').on('dragstart', function(e) {
 		    e.preventDefault();

@@ -3,54 +3,63 @@ game.console.cmds.hack.places = {
         name: 'mini-market',
         minMoneyReward: 200,
         maxMoneyReward: 750,
-        minExpReward: 200,
-        maxExpReward: 500,
+        minExpReward: 150,
+        maxExpReward: 300,
         time: 20,
         reqLevel: 2
     },
     'market': {
         name: 'market',
-        minMoneyReward: 4000,
-        maxMoneyReward: 20000,
-        minExpReward: 750,
-        maxExpReward: 1000,
-        time: 60,
+        minMoneyReward: 2000,
+        maxMoneyReward: 5000,
+        minExpReward: 400,
+        maxExpReward: 800,
+        time: 40,
         reqLevel: 10
     },
     'jewelry': {
         name: 'jewelry',
-        minMoneyReward: 66000,
-        maxMoneyReward: 800000,
-        minExpReward: 2000,
-        maxExpReward: 5000,
-        time: 180,
-        reqLevel: 15
+        minMoneyReward: 10000,
+        maxMoneyReward: 40000,
+        minExpReward: 1500,
+        maxExpReward: 3000,
+        time: 320, // 5min
+        reqLevel: 20
     },
     'bank': {
         name: 'bank',
-        minMoneyReward: 2666000,
-        maxMoneyReward: 32000000,
-        minExpReward: 10000,
-        maxExpReward: 20000,
-        time: 540,
-        reqLevel: 20
+        minMoneyReward: 75000,
+        maxMoneyReward: 200000,
+        minExpReward: 7500,
+        maxExpReward: 15000,
+        time: 1280, // 21min
+        reqLevel: 30
     },
     'trading-center': {
         name: 'trading-center',
-        minMoneyReward: 106000000,
-        maxMoneyReward: 1280000000,
-        minExpReward: 75000,
-        maxExpReward: 150000,
-        time: 1620,
-        reqLevel: 30
+        minMoneyReward: 750000,
+        maxMoneyReward: 2500000,
+        minExpReward: 50000,
+        maxExpReward: 100000,
+        time: 5120, // 1,42h
+        reqLevel: 40
     },
     'anonymous-hideout': {
         name: 'anonymous-hideout',
-        minMoneyReward: 145750000,
-        maxMoneyReward: 1749000000,
-        minExpReward: 300000,
-        maxExpReward: 650000,
-        time: 4860,
-        reqLevel: 40
+        minMoneyReward: 5000000,
+        maxMoneyReward: 12500000,
+        minExpReward: 250000,
+        maxExpReward: 1000000,
+        time: 20480, // 5,68h
+        reqLevel: 50
+    },
+    'hack-blackmarket': {
+        name: 'hack-blackmarket',
+        minMoneyReward: 50000000,
+        maxMoneyReward: 100000000,
+        minExpReward: 3500000,
+        maxExpReward: 9500000,
+        time: 81920, // 22,75h
+        reqLevel: 60
     }
 };

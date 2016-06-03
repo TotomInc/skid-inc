@@ -25,10 +25,12 @@ game.save = {
                 sga = s.ga,
                 sgo = s.go,
                 sga = s.ga,
+                sgs = s.gs,
                 g = game,
                 gp = game.player,
                 go = game.options,
-                ga = game.achievements;
+                ga = game.achievements,
+                gs = game.servers;
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;
@@ -41,6 +43,11 @@ game.save = {
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
+            
+            gs.personal.owned = sgs.personal.owned;
+            gs.professional.owned = sgs.professional.owned;
+            gs.vm.owned = sgs.vm.owned;
+            gs.quickhack.owned = sgs.quickhack.owned;
             
             ga.owned = sga.owned;
 
@@ -57,7 +64,8 @@ game.save = {
         game.save.toSave = {
             'gp': game.player,
             'go': game.options,
-            'ga': game.achievements
+            'ga': game.achievements,
+            'gs': game.servers
         };
     }
 };

@@ -39,7 +39,7 @@ game.servers = {
         owned: 0,
         cost: 750,
         inflation: 1.12,
-        moneyReward: 1.20
+        moneyReward: 1.05
     },
     
     // increase money/exp income for hack cmd/button
@@ -47,16 +47,16 @@ game.servers = {
         owned: 0,
         cost: 150000,
         inflation: 1.12,
-        moneyReward: 1.80,
-        expReward: 1.20
+        moneyReward: 1.20,
+        expReward: 1.05
     },
     
     // reduce place hack time
     vm: {
         owned: 0,
         cost: 5000,
-        inflation: 1.50,
-        accelerator: 1.01
+        inflation: 1.40,
+        accelerator: 1.02
     },
     
     // reduce click divider (default 16)
