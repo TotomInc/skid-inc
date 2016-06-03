@@ -2,27 +2,23 @@ game.hack = function(from) {
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
-            divider = game.getClickDivider();
+            globalMoneyMult = game.getGlobalMoneyMult(),
+            globalExpMult = game.getGlobalExpMult(),
+            divider = game.servers.getClickDivider();
 
-        // first apply all money/exp rewards effects
-        if (game.player.serverPers > 0) {
-            moneyReward *= (game.player.serverPersReward * game.player.serverPers);
-        };
-        
-        if (game.player.serverPro > 0) {
-            moneyReward *= (game.player.serverProReward * game.player.serverPro);
-            expReward *= (game.player.serverProRewardExp * game.player.serverPro);
-        };
+        moneyReward *= globalMoneyMult;
+        expReward *= globalExpMult;
 
-        // then divide money/exp rewards if clicking on the button
         if (from == 'sp-click') {
             moneyReward /= divider;
             expReward /= divider;
-        };
+            game.player.timesHacked++;
+        }
+        else
+            game.player.timesHacked += 16;
         
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
-        game.player.timesHacked++;
 
         if (from == 'sp-click') {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
@@ -35,19 +31,31 @@ game.hack = function(from) {
     };
     
     if (from == "stats") {
-        var thisPlayer = game.player;
-        game.console.print('log', '<b>Hack stats</b>: basic reward $' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
-            fix(thisPlayer.randExpMin) + ' exp ~ ' + fix(thisPlayer.randExpMax) + ' exp, ' +
-            'hack click reducer: /' + thisPlayer.clickReducer + ', ' +
-            'hack reward multiplier: ' + fix(thisPlayer.serverPers, 0) + ' personal servers, ' + fix(thisPlayer.serverPro, 0) + ' professional servers.');
+        var thisPlayer = game.player,
+            globalMoneyMult = game.getGlobalMoneyMult(),
+            globalExpMult = game.getGlobalExpMult();
+        
+        game.console.print('log', '<b>Hack stats</b>:<br>' +
+            'Basic reward <b>$' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
+            fix(thisPlayer.randExpMin) + ' exp ~ ' + fix(thisPlayer.randExpMax) + ' exp</b>, ' +
+            'hack click reducer: <b>/' + thisPlayer.clickReducer + '</b>, ' +
+            'global money multiplier: x<b>' + fix(globalMoneyMult, 0) + '</b>, global exp. multiplier: x<b>' + fix(globalExpMult, 0) + '</b>.');
         
         return;
     };
 
     if (from == "list") {
+        var vmEffect = game.servers.getVMReward(),
+            globalExpMult = game.getGlobalExpMult(),
+            globalMoneyMult = game.getGlobalMoneyMult();
+        
         for (var place in game.console.cmds.hack.places) {
-            var thisPlace = game.console.cmds.hack.places[place];
-            game.console.print('help', '<b>' + thisPlace.name + '</b>: $' + fix(thisPlace.maxMoneyReward) + ' max, ' + fix(thisPlace.maxExpReward) + ' max exp, take ' + fix(thisPlace.time, 0) + ' sec, require level ' + fix(thisPlace.reqLevel, 0));
+            var thisPlace = game.console.cmds.hack.places[place],
+                maxExpReward = thisPlace.maxExpReward * globalExpMult,
+                maxMoneyReward = thisPlace.maxMoneyReward * globalMoneyMult,
+                time = thisPlace.time / vmEffect;
+            
+            game.console.print('help', '<b>' + thisPlace.name + '</b>: $' + fix(maxMoneyReward) + ' max, ' + fix(maxExpReward) + ' max exp, take ' + fix(time, 0) + ' sec, require level ' + fix(thisPlace.reqLevel, 0));
         };
         
         return;

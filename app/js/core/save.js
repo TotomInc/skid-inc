@@ -1,15 +1,11 @@
 game.save = {
     key: 'SK-Inc',
-    toSave: {
-        'gp': game.player,
-        'go': game.options
-    },
     
     save: function(from) {
         localStorage.setItem(game.save.key, JSON.stringify(game.save.toSave));
         
         if (from == "user")
-            game.console.print('log', 'Game successfully saved to local-storage.');
+            game.console.print('save', 'Game successfully saved to local-storage.');
         else
             console.log('Game saved.');
     },
@@ -28,9 +24,13 @@ game.save = {
                 sgp = s.gp,
                 sga = s.ga,
                 sgo = s.go,
+                sga = s.ga,
+                sgs = s.gs,
                 g = game,
                 gp = game.player,
-                go = game.options;
+                go = game.options,
+                ga = game.achievements,
+                gs = game.servers;
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;
@@ -41,18 +41,31 @@ game.save = {
             gp.expMult = sgp.expMult;
             gp.achievementsPoints = sgp.achievementsPoints;
 
-            gp.serverPers = sgp.serverPers;
-            gp.serverPro = sgp.serverPro;
-            gp.serverSpeedHack = sgp.serverSpeedHack;
-            gp.serverQuickHack = sgp.serverQuickHack;
-
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
+            
+            gs.personal.owned = sgs.personal.owned;
+            gs.professional.owned = sgs.professional.owned;
+            gs.vm.owned = sgs.vm.owned;
+            gs.quickhack.owned = sgs.quickhack.owned;
+            
+            ga.owned = sga.owned;
 
             go.before = sgo.before;
             
+            game.achievements.checkLoaded();
+            
             console.log('Game loaded.');
-            game.console.print('log', 'Save-game successfully loaded.');
+            game.console.print('save', 'Save-game successfully loaded.');
         }
+    },
+    
+    varInit: function() {
+        game.save.toSave = {
+            'gp': game.player,
+            'go': game.options,
+            'ga': game.achievements,
+            'gs': game.servers
+        };
     }
 };
