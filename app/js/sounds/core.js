@@ -3,17 +3,25 @@ game.sounds = {
     ambient: new Audio('app/assets/sounds/server-room.mp3'),
     
     switchSounds: function() {
-        if (!game.options.sounds)
+        if (!game.options.sounds) {
             game.config("sound-on");
-        else if (game.options.sounds)
+            $('#navbar-mute').html(
+                '<i class="fa fa-volume-up" aria-hidden="true"></i> Sounds on'
+            );
+        }
+        else if (game.options.sounds) {
             game.config("sound-off");
+            $('#navbar-mute').html(
+                '<i class="fa fa-volume-off" aria-hidden="true"></i> Sounds off'
+            );
+        };
     },
 
     enableSounds: function() {
         console.log('sounds enabled')
         game.options.sounds = true;
         game.sounds.ambient.currentTime = 0;
-        game.sounds.ambient.play();
+        // game.sounds.ambient.play();
 
         game.options.intervals.ambientLoop = setInterval(function() {
             game.sounds.ambient.currentTime = 0;
@@ -61,7 +69,7 @@ game.sounds = {
 
             game.options.intervals.ambientLoop = setInterval(function() {
                 game.sounds.ambient.currentTime = 0;
-                game.sounds.ambient.play();
+                // game.sounds.ambient.play();
             }, 90000);
             
             game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);

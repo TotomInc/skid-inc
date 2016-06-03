@@ -38,15 +38,15 @@ game.servers = {
     personal: {
         owned: 0,
         cost: 750,
-        inflation: 1.12,
-        moneyReward: 1.05
+        inflation: 1.08,
+        moneyReward: 1.08
     },
     
     // increase money/exp income for hack cmd/button
     professional: {
         owned: 0,
         cost: 150000,
-        inflation: 1.12,
+        inflation: 1.08,
         moneyReward: 1.20,
         expReward: 1.05
     },

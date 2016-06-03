@@ -10,6 +10,7 @@
 
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="lib/Ionicons/css/ionicons.min.css">
 
 	<!-- GAME CSS -->
 	<link rel="stylesheet" href="app/css/scrollbar.css">
@@ -21,6 +22,7 @@
 	<link rel="stylesheet" href="app/css/no-select.css">
 	<link rel="stylesheet" href="app/css/animations.css">
 	<link rel="stylesheet" href="app/css/floating.css">
+	<link rel="stylesheet" href="app/css/matrix.css">
 
 	<!-- GAME PROD CSS -->
 	<!--<link rel="stylesheet" href="app/prod/skid-inc.min.css">-->
@@ -30,7 +32,7 @@
 </head>
 
 <body class="noselect">
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(<span id="navbar-version"></span>)</i></small></a>
@@ -42,11 +44,15 @@
 				</li>
 
 				<li>
-					<a id="navbar-mute" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i> Sounds on/off</a>
+					<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Sounds off</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
+
+	<div id="matrix-effect" class="background-matrix" style="display: none;">
+		<canvas id="canvas"></canvas>
+	</div>
 
 	<div class="container">
 		<div class="row">
@@ -56,7 +62,7 @@
 				</div>
 				
 				<div id="hack-button" class="hack-button">
-					<p>Hack!</p>
+					<p><i class="fa fa-keyboard-o fa-lg" aria-hidden="true"></i> Hack!</p>
 				</div>
 			</div>
 			
@@ -115,8 +121,13 @@
 								<div class="col-md-4">
 									<a id="options-save" class="btn btn-default btn-block"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save game</a>
 								</div>
-								<div class="col-md-4">
-									<a id="options-background" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Enable effects</a>
+							</div>
+							
+							<br>
+							
+							<div class="row">
+								<div class="col-md-4 col-md-offset-4">
+									<a id="options-effect" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Disable effects</a>
 								</div>
 							</div>
 						</div>
@@ -125,10 +136,11 @@
 					<div role="tabpanel" class="tab-pane fade" id="credits">
 						<div class="well">
 							<p>
-								Project management : <a target="_blank" href="http://totominc.github.io">TotomInc</a>
-								<br> Coding : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a>
-								<br> Assets designer : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a>
-								<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>
+								Project management <i class="fa fa-user" aria-hidden="true"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a>
+								<br> Coding <i class="fa fa-code"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a>
+								<br> Assets designer <i class="fa fa-pencil"></i> : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a>
+								<br>
+								<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>.
 								<br> Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
 							</p>
 						</div>
@@ -162,12 +174,12 @@
 	<script src="app/js/console/help.js"></script>
 	<script src="app/js/console/places.js"></script>
 	<script src="app/js/console/ascii.js"></script>
-	
-	<script src="app/js/core/touchepas.js"></script>
 
 	<script src="app/js/achievements/core.js"></script>
 
 	<script src="app/js/sounds/core.js"></script>
+	
+	<script src="app/js/matrix/core.js"></script>
 
 	<!-- PRODUCTION GAME SCRIPT -->
 	<!--<script src="app/prod/skid-inc.min.js"></script>-->

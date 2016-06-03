@@ -208,7 +208,7 @@
 	height: 36px;
 	border: 1px solid #27ae60;
 	border-radius: 4px;
-	background-color: transparent;
+	background-color: rgba(56, 56, 56, 0.70);
 	cursor: pointer;
 	line-height: 36px;
 	margin-bottom: 20px;
@@ -216,7 +216,7 @@
 
 .hack-button:hover {
 	transition: all 0.1s;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(56, 56, 56, 0.95);
 }
 
 .hack-button > p {
@@ -268,6 +268,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	padding-top: 80px;
 	font-family: 'Fira Mono', 'Consolas', 'Arial';
 	background-color: #3A3A3C;
 	margin-bottom: 20px;
@@ -283,9 +284,19 @@ pre {
 	background-color: transparent;
 	font-size: 12px;
 }
+@font-face {
+  font-family: 'matrix-code';
+  src: url("../fonts/matrix-code.eot?#iefix") format("embedded-opentype"), url("../fonts/matrix-code.woff") format("woff"), url("../fonts/matrix-code.ttf") format("truetype"), url("../fonts/matrix-code.svg#svgFontName") format("svg");
+}
 
-.btn-line {
-	margin-top: 14px;
+.background-matrix canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    font-family: 'matrix-code';
 }
 .nav.nav-tabs {
 	border-bottom: 0 !important;

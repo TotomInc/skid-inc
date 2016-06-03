@@ -1,10 +1,10 @@
 game.console.cmds.hack.places = {
     'mini-market': {
         name: 'mini-market',
-        minMoneyReward: 200,
-        maxMoneyReward: 750,
-        minExpReward: 150,
-        maxExpReward: 300,
+        minMoneyReward: 450,
+        maxMoneyReward: 1500,
+        minExpReward: 250,
+        maxExpReward: 650,
         time: 20,
         reqLevel: 2
     },
@@ -12,8 +12,8 @@ game.console.cmds.hack.places = {
         name: 'market',
         minMoneyReward: 2000,
         maxMoneyReward: 5000,
-        minExpReward: 400,
-        maxExpReward: 800,
+        minExpReward: 250,
+        maxExpReward: 600,
         time: 40,
         reqLevel: 10
     },
@@ -53,8 +53,8 @@ game.console.cmds.hack.places = {
         time: 20480, // 5,68h
         reqLevel: 50
     },
-    'hack-blackmarket': {
-        name: 'hack-blackmarket',
+    'deepweb': {
+        name: 'deepweb',
         minMoneyReward: 50000000,
         maxMoneyReward: 100000000,
         minExpReward: 3500000,

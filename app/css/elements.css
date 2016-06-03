@@ -60,7 +60,7 @@
 	height: 36px;
 	border: 1px solid #27ae60;
 	border-radius: 4px;
-	background-color: transparent;
+	background-color: rgba(56, 56, 56, 0.70);
 	cursor: pointer;
 	line-height: 36px;
 	margin-bottom: 20px;
@@ -68,7 +68,7 @@
 
 .hack-button:hover {
 	transition: all 0.1s;
-	background-color: rgba(0, 0, 0, 0.1);
+	background-color: rgba(56, 56, 56, 0.95);
 }
 
 .hack-button > p {

@@ -39,7 +39,7 @@ game.hack = function(from) {
             'Basic reward <b>$' + fix(thisPlayer.randMoneyMin) + ' ~ $' + fix(thisPlayer.randMoneyMax) + ', ' +
             fix(thisPlayer.randExpMin) + ' exp ~ ' + fix(thisPlayer.randExpMax) + ' exp</b>, ' +
             'hack click reducer: <b>/' + thisPlayer.clickReducer + '</b>, ' +
-            'global money multiplier: x<b>' + fix(globalMoneyMult, 0) + '</b>, global exp. multiplier: x<b>' + fix(globalExpMult, 0) + '</b>.');
+            'global money multiplier: x<b>' + fix(globalMoneyMult, 2) + '</b>, global exp. multiplier: x<b>' + fix(globalExpMult, 2) + '</b>.');
         
         return;
     };

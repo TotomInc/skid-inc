@@ -80,7 +80,5 @@ game.achievements = {
         
         for (var i = 0; i < game.achievements.list.length; i++)
             game.achievements.owned.push(false);
-        
-        console.log('ach init finished')
     }
 };
