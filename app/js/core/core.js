@@ -78,7 +78,9 @@ var game = {
     },
 
     hackProgress: function(times) {
-        if (game.player.isHacking) {
+        var isHacking = (game.player.isHacking == true ? true : false);
+        
+        if (isHacking) {
             var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
                 time = game.getPlaceTime(thisPlace),
                 fps = game.options.fps,
@@ -131,7 +133,34 @@ var game = {
 
                 game.player.hackingWhat = undefined;
             };
-        };
+        }
+        else if (!isHacking) {
+            for (var hacker in game.team.list) {
+                if (game.team.list[hacker].owned) {
+                    var thisHacker = game.team.list[hacker],
+                        thisPlace = game.console.cmds.hack.places[thisHacker.effect],
+                        time = game.getPlaceTime(thisPlace),
+                        fps = game.options.fps,
+                        moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
+                        expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
+                        globalMoneyMult = game.getGlobalMoneyMult(),
+                        globalExpMult = game.getGlobalExpMult();
+                    
+                    thisHacker.progress += times / fps;
+                    
+                    if (thisHacker.progress >= time) {
+                        moneyReward *= globalMoneyMult;
+                        expReward *= globalExpMult;
+                        
+                        game.earnMoney(moneyReward);
+                        game.earnExp(expReward);
+                        
+                        thisHacker.progress = 0;
+                        thisHacker.done++;
+                    };
+                }
+            }
+        }
     },
 
     display: function() {
@@ -142,6 +171,8 @@ var game = {
             '<br>' +
             'Money mult: x' + fix(game.getGlobalMoneyMult(), 2) + '<br>' +
             'Exp. mult: x' + fix(game.getGlobalExpMult(), 2) + '<br>' +
+            'Hack time div: /' + fix(game.servers.getVMReward(), 2) + '<br>' +
+            'Click div: /' + fix(game.servers.getClickDivider(), 0) + '<br>' +
             '<br>' +
             'Pers. servers: ' + fix(game.servers.personal.owned, 0) + '<br>' +
             'Pro. servers: ' + fix(game.servers.professional.owned, 0) + '<br>' +
@@ -161,6 +192,18 @@ var game = {
         elapsed > game.options.interval ? game.updateGame(times) : game.updateGame(1);
 
         game.options.before = new Date().getTime();
+    },
+    
+    newButton: function(name, color, cmd, icon) {
+        $('#custom-button1').fadeIn('slow');
+        $('#custom-button1').html(
+            '<p style="color: ' + color + ' !important;">' + name + ' <i class="fa fa-' + icon + ' fa-lg" aria-hidden="true"></i></p>'
+        );
+        $('#custom-button1').css('border', '1px solid ' + color);
+        $('#custom-button1').on('click', function() {
+            console.log(cmd);
+        });
+        console.log("new button called : name " + name + ", color " + color + ", cmd " + cmd + ", icon " + icon + ".");
     },
 
     updateGame: function(times) {
@@ -191,6 +234,11 @@ var game = {
     },
 
     domInit: function() {
+        $('#tab-container').css({
+            'max-height': '600px',
+            'overflow-y': 'auto'
+        })
+        
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {

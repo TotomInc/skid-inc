@@ -331,5 +331,6 @@ var M = {
 window.onload = function() {
 	M.init();
 	
-	$('#matrix-effect').fadeIn('slow');
+	if (game.options.effectEnabled)
+		$('#matrix-effect').fadeIn('slow');
 };

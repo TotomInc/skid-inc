@@ -10,7 +10,7 @@ game.options = {
     before: new Date().getTime(),
     
     gotFocus: true,
-    effectEnabled: true,
+    effectEnabled: false,
     
     isOpera: false,
     isFirefox: false,
@@ -27,19 +27,11 @@ game.options = {
             $('#matrix-effect').fadeOut('slow', function() {
                 game.options.effectEnabled = false;
             });
-            
-            $('#options-effect').html(
-                '<i class="fa fa-eye" aria-hidden="true"></i> Enable effects'
-            );
         }
         else {
             $('#matrix-effect').fadeIn('slow', function() {
                 game.options.effectEnabled = true;
             });
-            
-            $('#options-effect').html(
-                '<i class="fa fa-eye-slash" aria-hidden="true"></i> Disable effects'
-            );
         };
     }
 }

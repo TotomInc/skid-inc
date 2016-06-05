@@ -61,11 +61,17 @@ game.hack = function(from) {
         return;
     };
 
-    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center') {
+    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center' || from == 'anonymous-hideout' || from == 'deepweb') {
         var thisPlace = game.console.cmds.hack.places[from];
 
         if (!game.player.isHacking) {
-            if (game.player.level >= thisPlace.reqLevel) {
+            console.log('h')
+            console.log(from)
+            console.log(game.team.list[from])
+            
+            if (game.team.list[from].owned)
+                game.console.print('error', 'You already have a hacker to hack this place.');
+            else if (game.player.level >= thisPlace.reqLevel) {
                 game.player.isHacking = true;
                 game.player.hackingWhat = from;
                 game.console.print('log', 'Hack in progress...');
@@ -76,7 +82,6 @@ game.hack = function(from) {
         }
         else
             game.console.print('error', game.console.errors.hackInProgress);
-
 
         return;
     };

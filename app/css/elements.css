@@ -94,3 +94,17 @@
 	background-color: #343435;
 	border-color: #1F1F1F;
 }
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th,
+.table>thead>tr>th {
+	border-color: #4A4848;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+	background-color: rgba(35,35,35,0.4);
+}

@@ -7,7 +7,6 @@ game.console = {
             argsExists = false;
         
         if (typeof game.console.cmds[cmd[0]] == 'object') {
-            
             for (var i = 0; i < thisCmd.args.length; i++) {
                 var argsCheck = [];
                 

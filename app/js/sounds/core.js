@@ -25,7 +25,7 @@ game.sounds = {
 
         game.options.intervals.ambientLoop = setInterval(function() {
             game.sounds.ambient.currentTime = 0;
-            game.sounds.ambient.play();
+            // game.sounds.ambient.play();
         }, 90000);
         
         game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);
