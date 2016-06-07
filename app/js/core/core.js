@@ -11,6 +11,11 @@ var game = {
             $('#console-input').bind('keydown', function(e) {
                 if (e.which == 13)
                     game.console.executer();
+            }).keydown(function(e) {
+                if (e.which == 38) {
+                    e.preventDefault();
+                    game.console.typeLast();
+                };
             });
         }, game.options.bindTime);
     },
@@ -128,7 +133,7 @@ var game = {
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
 
-                game.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/NAS.png');
+                game.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned <b>$' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.</b>');
 
                 game.player.hackingWhat = undefined;
@@ -181,6 +186,13 @@ var game = {
         );
 
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
+    },
+    
+    hackerOwned: function(name) {
+        if (game.team.list[name].owned)
+            return 'yes';
+        else
+            return 'no';
     },
 
     loop: function() {
@@ -237,7 +249,7 @@ var game = {
         $('#tab-container').css({
             'max-height': '600px',
             'overflow-y': 'auto'
-        })
+        });
         
         $('#navbar-version').html('v' + game.options.version);
 
@@ -276,6 +288,11 @@ var game = {
         $('#console-input').bind('keydown', function(e) {
             if (e.which == 13)
                 game.console.executer();
+        }).keydown(function(e) {
+            if (e.which == 38) {
+                e.preventDefault();
+                game.console.typeLast();
+            };
         });
 
         $('#console-input').bind('copy paste', function(e) {
@@ -288,7 +305,7 @@ var game = {
 
         $('html').bind('contextmenu', function(e) {
             e.preventDefault();
-            return false;
+            return;
         });
 
         $('img').on('dragstart', function(e) {

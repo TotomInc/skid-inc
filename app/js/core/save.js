@@ -29,12 +29,14 @@ game.save = {
                 sga = s.ga,
                 sgs = s.gs,
                 sgt = s.gt,
+                sga = s.ga,
                 g = game,
                 gp = game.player,
                 go = game.options,
                 ga = game.achievements,
                 gs = game.servers,
-                gt = game.team;
+                gt = game.team,
+                ga = game.abilities;
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;
@@ -75,6 +77,8 @@ game.save = {
             gt.list['anonymous-hideout'].progress = sgt.list['anonymous-hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
             
+            ga.list['up-key'].owned = sga.list['up-key'].owned;
+            
             game.achievements.checkLoaded();
             
             console.info('Game loaded.');
@@ -88,7 +92,8 @@ game.save = {
             'go': game.options,
             'ga': game.achievements,
             'gs': game.servers,
-            'gt': game.team
+            'gt': game.team,
+            'ga': game.abilities
         };
     }
 };

@@ -24,7 +24,7 @@ game.buy = function(from) {
     };
     
     if (from == "ability") {
-        game.console.print('error', game.console.errors.abilityNoArgs);
+        game.console.print('error', game.console.errors.buyNoArgsAbility);
         
         return;
     };
@@ -134,7 +134,7 @@ game.buy = function(from) {
     };
     
     if (from == "ability-help") {
-        game.console.print('help', game.console.help.ability);
+        game.console.print('help', game.console.help.buyAbility);
         
         return;
     };

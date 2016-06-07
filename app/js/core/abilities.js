@@ -12,12 +12,23 @@ game.abilities = {
     buy: function(who) {
         var thisAbility = game.abilities.list[who];
         
-        if (game.player.money >= thisAbility.price && !thisAbility.owned) {
-            game.player.money -= thisAbility.price;
+        console.log(thisAbility)
+        console.log(game.player.money >= thisAbility.cost)
+        console.log(!thisAbility.owned)
+        console.log(game.player.level >= thisAbility.reqLevel)
+        
+        if (game.player.money >= thisAbility.cost && !thisAbility.owned && game.player.level >= thisAbility.reqLevel) {
+            game.player.money -= thisAbility.cost;
             thisAbility.owned = true;
             
             game.console.print('log', 'You successfully bought the ' + thisAbility.name + ' ability.');
-        };
+        }
+        else if (game.player.level < thisAbility.reqLevel)
+            game.console.print('error', 'You don\'t have the required level to buy this ability.');
+        else if (game.player.money < thisAbility.price)
+            game.console.print('error', 'Not enough money to buy this ability!');
+        else if (thisAbility.owned)
+            game.console.print('error', 'You already own this ability.');
     },
     
     exec: function(from) {
@@ -29,6 +40,8 @@ game.abilities = {
         
         if (from == 'help') {
             game.console.print('help', game.console.help.ability);
+            
+            return;
         };
         
         if (from == 'list') {

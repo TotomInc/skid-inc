@@ -37,7 +37,7 @@ game.team = {
         },
         
         'trading-center': {
-            name: 'trading-hacker',
+            name: 'trading-center-hacker',
             effect: 'trading-center',
             price: 12500000,
             owned: false,
@@ -46,7 +46,7 @@ game.team = {
         },
         
         'anonymous-hideout': {
-            name: 'anonymous-hacker',
+            name: 'anonymous-hideout-hacker',
             effect: 'anonymous-hideout',
             price: 37500000,
             owned: false,
@@ -65,14 +65,19 @@ game.team = {
     },
     
     buy: function(who) {
-        var thisHacker = game.team.list[who];
+        var thisHacker = game.team.list[who],
+            thisPlace = game.console.cmds.hack.places[who];
         
-        if (game.player.money >= thisHacker.price && !thisHacker.owned) {
+        if (game.player.money >= thisHacker.price && !thisHacker.owned && game.player.level >= thisPlace.reqLevel) {
             game.player.money -= thisHacker.price;
             thisHacker.owned = true;
             
             game.console.print('log', 'You successfully engaged a <b>' + thisHacker.name + '</b> working for the ' + thisHacker.effect + ' hack.');
-        };
+        }
+        else if (game.player.level < thisPlace.reqLevel)
+            game.console.print('error', 'You don\'t have the required level to buy this hacker.');
+        else if (thisHacker.owned)
+            game.console.print('error', 'You already engaged this hacker.');
     },
     
     exec: function(from) {

@@ -24,13 +24,17 @@ game.console.help = {
     buyHacker: "<b>buy -hacker <i>nameOfHacker</i></b>: buy the specified hacker.<br>" +
         "<b>buy -hacker -list</b>: print a list of all hackers available.",
     
+    buyAbility: "<b>buy -ability <i>nameOfAbility</i></b>: buy the specified ability.<br>" +
+        "<b>buy -ability -list</b>: print a list of all abilities available.",
+    
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
         "<b>achievements -list</b>: print a list of all achievements.",
     
-    hackers: "<b>hack</b> must be used with arguments.<br>" +
-        '<b>hacker -list</b>: print a list of all hackers available.<br>' +
-        'You can buy hackers with the <b>buy</b> command. Look at <b>buy -help</b> command.',
+    hackers: "<b>hackers</b> must be used with arguments.<br>" +
+        '<b>hackers -status</b>: print a list of all hackers available.<br>' +
+        'You can buy hackers with the <b>buy</b> command. Look at <b>buy -hacker -help</b> command.',
     
     ability: '<b>ability</b> must be used with arguments.<br>' +
-        '<b>ability -list</b>: print a list of all abilities available.'
+        '<b>ability -list</b>: print a list of all abilities available.<br>' +
+        'To buy an ability, you must use the <b>buy</b> command. Type <b>buy -ability -help</b> for more informations.'
 };

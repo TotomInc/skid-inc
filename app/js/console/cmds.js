@@ -32,51 +32,6 @@ game.console.cmds = {
         ]
     },
 
-    'help': {
-        name: 'help',
-        desc: 'print a list of all the commands.',
-        args: [
-            ['help']
-        ],
-        exec: [
-            'game.console.printHelp()'
-        ]
-    },
-
-    'clear': {
-        name: 'clear',
-        desc: 'clear console output',
-        args: [
-            ['clear'],
-            ['clear', '-help']
-        ],
-        exec: [
-            'game.console.clear()',
-            'game.console.clear("help")'
-        ]
-    },
-
-    'config': {
-        name: 'config',
-        desc: 'configure game settings.',
-        args: [
-            ['config'],
-            ['config', '-help'],
-            ['config', '-sounds', '0'],
-            ['config', '-sounds', '1'],
-            ['config', '-background', '0'],
-            ['config', '-background', '1']
-        ],
-        exec: [
-            'game.config("sp")',
-            'game.config("help")',
-            'game.config("sound-off")',
-            'game.config("sound-on")',
-            'game.config("background-off")',
-            'game.config("background-on")'
-        ]
-    },
-    
     'buy': {
         name: 'buy',
         desc: 'buy a server to increase hack income.',
@@ -98,8 +53,8 @@ game.console.cmds = {
             ['buy', '-hacker', 'market-hacker'],
             ['buy', '-hacker', 'jewelry-hacker'],
             ['buy', '-hacker', 'bank-hacker'],
-            ['buy', '-hacker', 'trading-hacker'],
-            ['buy', '-hacker', 'anonymous-hacker'],
+            ['buy', '-hacker', 'trading-center-hacker'],
+            ['buy', '-hacker', 'anonymous-hideout-hacker'],
             ['buy', '-hacker', 'deepweb-hacker'],
             ['buy', '-ability', '-list'],
             ['buy', '-ability', '-help'],
@@ -152,11 +107,13 @@ game.console.cmds = {
         desc: 'abilities are special skills to buy to enhance your hacker power.',
         args: [
             ['ability'],
-            ['ability', '-help']
+            ['ability', '-help'],
+            ['ability', '-list']
         ],
         exec: [
             'game.abilities.exec("sp")',
-            'game.abilities.exec("help")'
+            'game.abilities.exec("help")',
+            'game.abilities.exec("list")'
         ]
     },
     
@@ -183,6 +140,64 @@ game.console.cmds = {
             'game.achievements.exec("sp")',
             'game.achievements.exec("help")',
             'game.achievements.exec("list")'
+        ]
+    },
+    
+    'config': {
+        name: 'config',
+        desc: 'configure game settings.',
+        args: [
+            ['config'],
+            ['config', '-help'],
+            ['config', '-sounds', '0'],
+            ['config', '-sounds', '1'],
+            ['config', '-background', '0'],
+            ['config', '-background', '1']
+        ],
+        exec: [
+            'game.config("sp")',
+            'game.config("help")',
+            'game.config("sound-off")',
+            'game.config("sound-on")',
+            'game.config("background-off")',
+            'game.config("background-on")'
+        ]
+    },
+    
+    'clear': {
+        name: 'clear',
+        desc: 'clear console output',
+        args: [
+            ['clear'],
+            ['clear', '-help']
+        ],
+        exec: [
+            'game.console.clear()',
+            'game.console.clear("help")'
+        ]
+    },
+    
+    'help': {
+        name: 'help',
+        desc: 'print a list of all the commands.',
+        args: [
+            ['help']
+        ],
+        exec: [
+            'game.console.printHelp()'
+        ]
+    },
+    
+    'cheat': {
+        name: 'cheat',
+        desc: 'dev mode cheats.',
+        args: [
+            ['cheat', '-level'],
+            ['cheat', '-money']
+        ],
+        exec: [
+            'game.player.level = 100',
+            'game.player.money = 1e12'
         ]
     }
 };
