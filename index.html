@@ -10,6 +10,7 @@
 
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="lib/Ionicons/css/ionicons.min.css">
 
 	<!-- GAME CSS -->
 	<link rel="stylesheet" href="app/css/scrollbar.css">
@@ -19,8 +20,8 @@
 	<link rel="stylesheet" href="app/css/navbar.css">
 	<link rel="stylesheet" href="app/css/console.css">
 	<link rel="stylesheet" href="app/css/no-select.css">
-	<link rel="stylesheet" href="app/css/animations.css">
 	<link rel="stylesheet" href="app/css/floating.css">
+	<link rel="stylesheet" href="app/css/matrix.css">
 
 	<!-- GAME PROD CSS -->
 	<!--<link rel="stylesheet" href="app/prod/skid-inc.min.css">-->
@@ -30,7 +31,7 @@
 </head>
 
 <body class="noselect">
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(<span id="navbar-version"></span>)</i></small></a>
@@ -42,11 +43,15 @@
 				</li>
 
 				<li>
-					<a id="navbar-mute" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i> Sounds on/off</a>
+					<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Sounds off</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
+
+	<div id="matrix-effect" class="background-matrix" style="display: none;">
+		<canvas id="canvas"></canvas>
+	</div>
 
 	<div class="container">
 		<div class="row">
@@ -54,41 +59,41 @@
 				<div class="well">
 					<p id="well-resources"></p>
 				</div>
-				
+
 				<div id="hack-button" class="hack-button">
-					<p>Hack!</p>
+					<p>Hack! <i class="fa fa-keyboard-o fa-lg" aria-hidden="true"></i></p>
 				</div>
+
+				<div id="custom-button1" class="hack-button" style="display: none;"></div>
 			</div>
-			
+
 			<div class="col-md-9">
 				<ul class="nav nav-tabs nav-justified" role="tablist">
 					<li class="active">
 						<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
 					</li>
-			
+
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
 								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
 							</li>
+							
 							<li>
-								<a href="#credits" data-toggle="tab"><i class="fa fa-align-left" aria-hidden="true"></i> Credits</a>
-							</li>
-							<li>
-								<a href="#glossary" data-toggle="tab"></a>
+								<a href="#notes" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Patch-notes</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
-			
-				<div class="tab-content">
+
+				<div id="tab-container" class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="console">
 						<div class="console-container">
 							<div class="console logo"></div>
-					
+
 							<div id="console-content" class="console content"></div>
-					
+
 							<div class="console input-container">
 								<div class="console input-logo">
 									<i class="fa fa-angle-right"></i>
@@ -102,7 +107,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div role="tabpanel" class="tab-pane fade" id="options">
 						<div class="well">
 							<div class="row">
@@ -115,24 +120,81 @@
 								<div class="col-md-4">
 									<a id="options-save" class="btn btn-default btn-block"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save game</a>
 								</div>
-								<div class="col-md-4">
-									<a id="options-background" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Enable effects</a>
+							</div>
+
+							<br>
+
+							<div class="row">
+								<div class="col-md-4 col-md-offset-4">
+									<a id="options-effect" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Switch effects</a>
+								</div>
+							</div>
+							
+							<br>
+							
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2">
+									<p class="text-center">
+										Project management <i class="fa fa-user" aria-hidden="true"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a>
+										<br> Coding <i class="fa fa-code"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a>
+										<br> Assets designer <i class="fa fa-pencil"></i> : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a>
+										<br>
+										<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>.
+										<br> Matrix effect made by <a target="_blank" href="https://github.com/neilcarpenter/Matrix-code-rain">Neil Carpenter</a>
+										<br> Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
+										<br>
+										<br> Thank you to : Ultorval, Roger and Yuntek for their support and beta-testing. <i class="fa fa-heart" aria-hidden="true"></i>
+									</p>
 								</div>
 							</div>
 						</div>
 					</div>
 					
-					<div role="tabpanel" class="tab-pane fade" id="credits">
+					<div role="tabpanel" class="tab-pane fade" id="notes">
 						<div class="well">
+							<h1 class="text-center">Patch-notes:</h1>
+							
 							<p>
-								Project management : <a target="_blank" href="http://totominc.github.io">TotomInc</a>
-								<br> Coding : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and <a target="_blank" href="http://mrpinkcat.github.io">Mr. Pink</a>
-								<br> Assets designer : <a target="_blank" href="http://steamcommunity.com/id/tim089">Tim</a>
-								<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>
-								<br> Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
+								v0.04 <small>(TBD)</small>:<br>
+								<ul>
+									<li>Added hackers to automatically hack places for you.</li>
+									<li>Added abilities to enhance your hacking power.</li>
+									<li>Added a notifiaction system (will alert you when you are not in browser).</li>
+									<li>Added Matrix background effect (this effect is really beautiful, take a look at it!).</li>
+									<li>More balancing to the game.</li>
+								</ul>
+							</p>
+							
+							<p>
+								v0.03 <small>(3 june 2016)</small>:<br>
+								<ul>
+									<li>Added save system to the game (seems stable and will persists through all versions).</li>
+									<li>Big balancing update: game is now a lot harder.</li>
+									<li>Servers code totally redone (it was a spaghetti code!).</li>
+									<li>Lot of bugs are fixed.</li>
+								</ul>
+							</p>
+							
+							<p>
+								v0.02 <small>(2 june 2016)</small>:<br>
+								<ul>
+									<li>Added sounds and ambient background music/sound.</li>
+									<li>Added achievements with achievements points.</li>
+									<li>Added more places to hack, new servers types.</li>
+									<li>Better UI.</li>
+									<li>Some backend changes.</li>
+									<li>Fixed lot of bugs.</li>
+								</ul>
+							</p>
+							
+							<p>
+								v0.01 <small>(30 may 2016)</small>:<br>
+								<ul>
+									<li>First prototype release, at least playable but buggy!</li>
+									<li>Include simple hacking, place hacking and servers.</li>
+								</ul>
 							</p>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>
@@ -153,6 +215,8 @@
 	<script src="app/js/core/config.js"></script>
 	<script src="app/js/core/buy.js"></script>
 	<script src="app/js/core/servers.js"></script>
+	<script src="app/js/core/abilities.js"></script>
+	<script src="app/js/core/team.js"></script>
 	<script src="app/js/core/save.js"></script>
 
 	<script src="app/js/console/core.js"></script>
@@ -162,12 +226,12 @@
 	<script src="app/js/console/help.js"></script>
 	<script src="app/js/console/places.js"></script>
 	<script src="app/js/console/ascii.js"></script>
-	
-	<script src="app/js/core/touchepas.js"></script>
 
 	<script src="app/js/achievements/core.js"></script>
 
 	<script src="app/js/sounds/core.js"></script>
+
+	<script src="app/js/matrix/core.js"></script>
 
 	<!-- PRODUCTION GAME SCRIPT -->
 	<!--<script src="app/prod/skid-inc.min.js"></script>-->

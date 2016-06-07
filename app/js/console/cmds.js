@@ -12,6 +12,8 @@ game.console.cmds = {
             ['hack', '-place', 'jewelry'],
             ['hack', '-place', 'bank'],
             ['hack', '-place', 'trading-center'],
+            ['hack', '-place', 'anonymous-hideout'],
+            ['hack', '-place', 'deepweb'],
             ['hack', '-place', '-list']
         ],
         exec: [
@@ -24,55 +26,12 @@ game.console.cmds = {
             'game.hack("jewelry")',
             'game.hack("bank")',
             'game.hack("trading-center")',
+            'game.hack("anonymous-hideout")',
+            'game.hack("deepweb")',
             'game.hack("list")'
         ]
     },
 
-    'help': {
-        name: 'help',
-        desc: 'print a list of all the commands.',
-        args: [
-            ['help']
-        ],
-        exec: [
-            'game.console.printHelp()'
-        ]
-    },
-
-    'clear': {
-        name: 'clear',
-        desc: 'clear console output',
-        args: [
-            ['clear'],
-            ['clear', '-help']
-        ],
-        exec: [
-            'game.console.clear()',
-            'game.console.clear("help")'
-        ]
-    },
-
-    'config': {
-        name: 'config',
-        desc: 'configure game settings.',
-        args: [
-            ['config'],
-            ['config', '-help'],
-            ['config', '-sounds', '0'],
-            ['config', '-sounds', '1'],
-            ['config', '-background', '0'],
-            ['config', '-background', '1']
-        ],
-        exec: [
-            'game.config("sp")',
-            'game.config("help")',
-            'game.config("sound-off")',
-            'game.config("sound-on")',
-            'game.config("background-off")',
-            'game.config("background-on")'
-        ]
-    },
-    
     'buy': {
         name: 'buy',
         desc: 'buy a server to increase hack income.',
@@ -81,22 +40,80 @@ game.console.cmds = {
             ['buy', '-server'],
             ['buy', '-help'],
             ['buy', '-info'],
+            ['buy', '-hacker'],
+            ['buy', '-ability'],
             ['buy', '-server', '-help'],
             ['buy', '-server', 'personal'],
             ['buy', '-server', 'professional'],
             ['buy', '-server', 'vm'],
-            ['buy', '-server', 'quickhack']
+            ['buy', '-server', 'quickhack'],
+            ['buy', '-hacker', '-help'],
+            ['buy', '-hacker', '-list'],
+            ['buy', '-hacker', 'mini-market-hacker'],
+            ['buy', '-hacker', 'market-hacker'],
+            ['buy', '-hacker', 'jewelry-hacker'],
+            ['buy', '-hacker', 'bank-hacker'],
+            ['buy', '-hacker', 'trading-center-hacker'],
+            ['buy', '-hacker', 'anonymous-hideout-hacker'],
+            ['buy', '-hacker', 'deepweb-hacker'],
+            ['buy', '-ability', '-list'],
+            ['buy', '-ability', '-help'],
+            ['buy', '-ability', 'up-key']
         ],
         exec: [
             'game.buy("sp")',
             'game.buy("serv")',
             'game.buy("help")',
             'game.buy("info")',
+            'game.buy("hacker")',
+            'game.buy("ability")',
             'game.buy("serv-help")',
             'game.buy("serv-pers")',
             'game.buy("serv-pro")',
             'game.buy("serv-speedhack")',
-            'game.buy("serv-quickhack")'
+            'game.buy("serv-quickhack")',
+            'game.buy("hacker-help")',
+            'game.buy("hacker-list")',
+            'game.team.buy("mini-market")',
+            'game.team.buy("market")',
+            'game.team.buy("jewelry")',
+            'game.team.buy("bank")',
+            'game.team.buy("trading-center")',
+            'game.team.buy("anonymous-hideout")',
+            'game.team.buy("deepweb")',
+            'game.buy("ability-list")',
+            'game.buy("ability-help")',
+            'game.abilities.buy("up-key")'
+        ]
+    },
+    
+    'hackers': {
+        name: 'hackers',
+        desc: 'used to perform actions for your hackers.',
+        args: [
+            ['hackers'],
+            ['hackers', '-help'],
+            ['hackers', '-status']
+        ],
+        exec: [
+            'game.team.exec("sp")',
+            'game.team.exec("help")',
+            'game.team.exec("status")'
+        ]
+    },
+    
+    'ability': {
+        name: 'ability',
+        desc: 'abilities are special skills to buy to enhance your hacker power.',
+        args: [
+            ['ability'],
+            ['ability', '-help'],
+            ['ability', '-list']
+        ],
+        exec: [
+            'game.abilities.exec("sp")',
+            'game.abilities.exec("help")',
+            'game.abilities.exec("list")'
         ]
     },
     
@@ -123,6 +140,64 @@ game.console.cmds = {
             'game.achievements.exec("sp")',
             'game.achievements.exec("help")',
             'game.achievements.exec("list")'
+        ]
+    },
+    
+    'config': {
+        name: 'config',
+        desc: 'configure game settings.',
+        args: [
+            ['config'],
+            ['config', '-help'],
+            ['config', '-sounds', '0'],
+            ['config', '-sounds', '1'],
+            ['config', '-background', '0'],
+            ['config', '-background', '1']
+        ],
+        exec: [
+            'game.config("sp")',
+            'game.config("help")',
+            'game.config("sound-off")',
+            'game.config("sound-on")',
+            'game.config("background-off")',
+            'game.config("background-on")'
+        ]
+    },
+    
+    'clear': {
+        name: 'clear',
+        desc: 'clear console output',
+        args: [
+            ['clear'],
+            ['clear', '-help']
+        ],
+        exec: [
+            'game.console.clear()',
+            'game.console.clear("help")'
+        ]
+    },
+    
+    'help': {
+        name: 'help',
+        desc: 'print a list of all the commands.',
+        args: [
+            ['help']
+        ],
+        exec: [
+            'game.console.printHelp()'
+        ]
+    },
+    
+    'cheat': {
+        name: 'cheat',
+        desc: 'dev mode cheats.',
+        args: [
+            ['cheat', '-level'],
+            ['cheat', '-money']
+        ],
+        exec: [
+            'game.player.level = 100',
+            'game.player.money = 1e12'
         ]
     }
 };

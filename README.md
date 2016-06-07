@@ -34,3 +34,5 @@ Once we reach a milestone on this secondary branch, we can merge it to gh-pages 
 [Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc")
 
 [Skid-Inc subreddit!](https://www.reddit.com/r/skidinc "Skid-Inc subreddit")
+
+[Skid-Inc twiter!]( "Skid-Inc subreddit")

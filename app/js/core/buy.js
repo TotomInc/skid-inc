@@ -17,6 +17,18 @@ game.buy = function(from) {
         return;
     };
     
+    if (from == "hacker") {
+        game.console.print('error', game.console.errors.buyNoArgsHacker);
+        
+        return;
+    };
+    
+    if (from == "ability") {
+        game.console.print('error', game.console.errors.buyNoArgsAbility);
+        
+        return;
+    };
+    
     if (from == "info") {
         var persReward = game.servers.getPersReward(),
             persCost = game.servers.getPersCost(),
@@ -108,9 +120,29 @@ game.buy = function(from) {
         return;
     };
     
-    if (from == "button1") {
-        game.console.print('log', 'TODO')
+    if (from == "hacker-list") {
+        for (var hacker in game.team.list)
+            game.console.print('help', '<b>' + game.team.list[hacker].name + '</b>: cost $' + fix(game.team.list[hacker].price) + ', manage ' + game.team.list[hacker].effect + ', owned: ' + game.team.list[hacker].owned);
+    
+        return;
+    };
+    
+    if (from == "hacker-help") {
+        game.console.print('help', game.console.help.buyHacker);
         
+        return;
+    };
+    
+    if (from == "ability-help") {
+        game.console.print('help', game.console.help.buyAbility);
+        
+        return;
+    };
+    
+    if (from == "ability-list") {
+        for (var ability in game.abilities.list)
+            game.console.print('help', '<b>' + game.abilities.list[ability].name + '</b>: cost $' + fix(game.abilities.list[ability].cost) + ', require level ' + game.abilities.list[ability].reqLevel + '. Effect: ' + game.abilities.list[ability].desc);
+    
         return;
     };
 }

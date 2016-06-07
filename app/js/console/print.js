@@ -3,6 +3,10 @@ game.console.print = function(type, text) {
         case 'gain':
             $('#console-content').append('<p><span class="console-gain">[GAIN]</span> ' + text + '</p>');
             break;
+        
+        case 'hack':
+            $('#console-content').append('<p><span class="console-gain">[HACK]</span> ' + text + '</p>');
+            break;
 
         case 'log':
             $('#console-content').append('<p><span class="console-log">[LOG]</span> ' + text + '</p>');

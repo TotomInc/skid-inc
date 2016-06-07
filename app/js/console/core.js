@@ -1,4 +1,17 @@
 game.console = {
+    latest: undefined,
+    
+    typeLast: function() {
+        var last = String(game.console.latest);
+        console.log('last: ' + last);
+        console.log('typeLast called');
+        
+        if (game.abilities.list['up-key'].owned) {
+            console.log('condition passed');
+            $('#console-input').val(last);
+        };
+    },
+    
     executer: function() {
         var input = $('#console-input').val(),
             cmd = input.split(' '),
@@ -7,7 +20,6 @@ game.console = {
             argsExists = false;
         
         if (typeof game.console.cmds[cmd[0]] == 'object') {
-            
             for (var i = 0; i < thisCmd.args.length; i++) {
                 var argsCheck = [];
                 
@@ -21,6 +33,7 @@ game.console = {
                             
                             argsExists = true;
                             eval(thisCmd.exec[execIndex]);
+                            game.console.latest = input;
                             game.setInputTimeout();
                             
                             if (game.options.sounds)

@@ -13,7 +13,15 @@ game.console.errors = {
     // buy errors
     buyNoArgs: 'You must use <b>buy</b> with arguments. Type <b>buy -help</b> for more informations.',
     buyNoArgsServ: 'You must use <b>buy -server</b> with arguments. Type <b>buy -server -help</b> for more informations.',
+    buyNoArgsHacker: 'You must use <b>buy -hacker</b> with arguments. Type <b>buy -hacker -help</b> for more informations.',
+    buyNoArgsAbility: 'You must use <b>buy -ability</b> with arguments. Tpye <b>buy -ability -help</b> for more informations.',
     
     // achievements errors
-    achNoArgs: 'You must use <b>achievements</b> with arguments. Type <b>achievements -help</b> for more informations.'
+    achNoArgs: 'You must use <b>achievements</b> with arguments. Type <b>achievements -help</b> for more informations.',
+    
+    // hacker errors
+    hackerNoArgs: 'You must use <b>hackers</b> with arguments. Type <b>hackers -help</b> for more informations.',
+    
+    // abilities errors
+    abilityNoArgs: 'You must use <b>ability</b> with arguments. Type <b>ability -help</b> for more informations.'
 };

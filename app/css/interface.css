@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	padding-top: 80px;
 	font-family: 'Fira Mono', 'Consolas', 'Arial';
 	background-color: #3A3A3C;
 	margin-bottom: 20px;
@@ -17,6 +18,6 @@ pre {
 	font-size: 12px;
 }
 
-.btn-line {
-	margin-top: 14px;
+h1 {
+	font-size: 24px;
 }

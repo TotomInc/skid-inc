@@ -24,6 +24,7 @@ game.config = function(from) {
     if (from == "background-off") {
         game.console.print('log', 'Background have been turned off.');
         game.options.background = false;
+        game.options.triggerBackground();
         
         return;
     };
@@ -31,6 +32,7 @@ game.config = function(from) {
     if (from == "background-on") {
         game.console.print('log', 'Background have been turned on');
         game.options.background = true;
+        game.options.triggerBackground();
         
         return;
     };

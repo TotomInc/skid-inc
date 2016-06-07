@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'matrix-code';
+  src: url("../fonts/matrix-code.eot?#iefix") format("embedded-opentype"), url("../fonts/matrix-code.woff") format("woff"), url("../fonts/matrix-code.ttf") format("truetype"), url("../fonts/matrix-code.svg#svgFontName") format("svg");
+}
+
+.background-matrix canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    font-family: 'matrix-code';
+}
