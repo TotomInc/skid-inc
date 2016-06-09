@@ -186,18 +186,5 @@ game.console.cmds = {
         exec: [
             'game.console.printHelp()'
         ]
-    },
-    
-    'cheat': {
-        name: 'cheat',
-        desc: 'dev mode cheats.',
-        args: [
-            ['cheat', '-level'],
-            ['cheat', '-money']
-        ],
-        exec: [
-            'game.player.level = 100',
-            'game.player.money = 1e12'
-        ]
     }
 };

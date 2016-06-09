@@ -29,14 +29,17 @@ game.save = {
                 sga = s.ga,
                 sgs = s.gs,
                 sgt = s.gt,
-                sga = s.ga,
+                sgab = s.gab,
                 g = game,
                 gp = game.player,
                 go = game.options,
                 ga = game.achievements,
                 gs = game.servers,
                 gt = game.team,
-                ga = game.abilities;
+                gab = game.abilities;
+            
+            if (go.version !== sgo.version)
+                console.warn('Loading savegame from an older version.');
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;
@@ -51,11 +54,14 @@ game.save = {
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
             
             gs.personal.owned = sgs.personal.owned;
+            gs.personal.mult = sgs.personal.mult;
             gs.professional.owned = sgs.professional.owned;
+            gs.professional.mult = sgs.professional.mult;
             gs.vm.owned = sgs.vm.owned;
             gs.quickhack.owned = sgs.quickhack.owned;
             
             ga.owned = sga.owned;
+            ga.printed = sga.printed;
 
             go.before = sgo.before;
             go.sounds = sgo.sounds;
@@ -77,7 +83,7 @@ game.save = {
             gt.list['anonymous-hideout'].progress = sgt.list['anonymous-hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
             
-            ga.list['up-key'].owned = sga.list['up-key'].owned;
+            gab.list['up-key'].owned = sgab.list['up-key'].owned;
             
             game.achievements.checkLoaded();
             
@@ -93,7 +99,7 @@ game.save = {
             'ga': game.achievements,
             'gs': game.servers,
             'gt': game.team,
-            'ga': game.abilities
+            'gab': game.abilities
         };
     }
 };

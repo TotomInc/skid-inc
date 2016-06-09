@@ -57,31 +57,6 @@ var game = {
         return thisPlace.time / (1 + (game.servers.vm.owned * game.servers.vm.accelerator));
     },
 
-    requestPermission: function() {
-        if (window.Notification && Notification.permission !== "granted") {
-            Notification.requestPermission(function(status) {
-                if (Notification.permission !== status)
-                    Notification.permission = status;
-            });
-        };
-    },
-
-    showNotif: function(title, content, iconAccess) {
-        if (window.Notification && Notification.permission === "granted" && !game.options.gotFocus) {
-            var notif = new Notification(title, {
-                body: content,
-                icon: iconAccess
-            });
-
-            notif.onclick = function() {
-                window.focus();
-                this.close();
-            };
-
-            setTimeout(notif.close(), 10000);
-        };
-    },
-
     hackProgress: function(times) {
         var isHacking = (game.player.isHacking == true ? true : false);
         
@@ -133,7 +108,7 @@ var game = {
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
 
-                game.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
+                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned <b>$' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.</b>');
 
                 game.player.hackingWhat = undefined;
@@ -206,18 +181,6 @@ var game = {
         game.options.before = new Date().getTime();
     },
     
-    newButton: function(name, color, cmd, icon) {
-        $('#custom-button1').fadeIn('slow');
-        $('#custom-button1').html(
-            '<p style="color: ' + color + ' !important;">' + name + ' <i class="fa fa-' + icon + ' fa-lg" aria-hidden="true"></i></p>'
-        );
-        $('#custom-button1').css('border', '1px solid ' + color);
-        $('#custom-button1').on('click', function() {
-            console.log(cmd);
-        });
-        console.log("new button called : name " + name + ", color " + color + ", cmd " + cmd + ", icon " + icon + ".");
-    },
-
     updateGame: function(times) {
         game.hackProgress(times);
         game.display();
@@ -233,6 +196,7 @@ var game = {
         game.achievements.varInit();
         game.sounds.varInit();
         game.save.varInit();
+        game.notif.requestPermission();
         
         window.onfocus = function() {
             game.options.gotFocus = true;
@@ -311,8 +275,6 @@ var game = {
         $('img').on('dragstart', function(e) {
             e.preventDefault();
         });
-
-        game.requestPermission();
 
         console.info('Dom init finished.');
     },

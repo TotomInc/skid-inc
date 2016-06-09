@@ -2,9 +2,9 @@ game.options = {
     intervals: {},
     interval: undefined,
     fps: 10,
-    bindTime: 500,
+    bindTime: 350,
     sounds: false,
-    version: 0.04,
+    version: 0.05,
     
     now: new Date().getTime(),
     before: new Date().getTime(),

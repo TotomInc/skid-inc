@@ -1,6 +1,7 @@
 game.achievements = {
     owned: new Array(),
     list: new Array(),
+    printed: new Array(),
     
     create: function(name, desc, reqName, reqNum, reward) {
         this.name = name;
@@ -19,7 +20,13 @@ game.achievements = {
                 game.player.achievementsPoints += thisAch.reward;
                 game.achievements.owned[i] = true;
                 
-                game.console.print('success', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
+                console.log(game.achievements.printed[i])
+                
+                if (!game.achievements.printed[i]) {
+                    game.achievements.printed[i] = true;
+                    
+                    game.console.print('success', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
+                };
             };
         };
     },
@@ -38,7 +45,7 @@ game.achievements = {
         };
         
         if (from == "list") {
-            game.console.print('log', 'Achievements points: ' + fix(game.player.achievementsPoints));
+            game.console.print('log', 'Achievements points: <b>' + fix(game.player.achievementsPoints, 0) + '</b>');
             
             for (var i = 0; i < game.achievements.list.length; i++)
                 game.console.print('', '<b>' + game.achievements.list[i].name + '</b>: ' + game.achievements.list[i].desc + ' ' +
@@ -52,8 +59,10 @@ game.achievements = {
         if (game.achievements.owned.length !== game.achievements.list.length) {
             var diff = game.achievements.list.length - game.achievements.owned.length;
             
-            for (var i = 0; i < diff; i++)
+            for (var i = 0; i < diff; i++) {
                 game.achievements.owned.push(false);
+                game.achievements.printed.push(false);
+            };
         };
     },
     
@@ -67,6 +76,8 @@ game.achievements = {
                 'game.player.timesHacked', 10000, 50),
             new game.achievements.create('Script Kid IV', 'Hack 100,000 times (click or via console).',
                 'game.player.timesHacked', 100000, 75),
+            new game.achievements.create('Script Kid V', 'Hack 1,000,000 times (click or via console).',
+                'game.player.timesHacked', 1000000, 250),
             
             new game.achievements.create('Hacker I', 'Hack 10 times a place.',
                 'game.player.timesPlacesHacked', 10, 10),
@@ -75,10 +86,36 @@ game.achievements = {
             new game.achievements.create('Hacker III', 'Hack 1,000 times a place.',
                 'game.player.timesPlacesHacked', 1000, 50),
             new game.achievements.create('Hacker IV', 'Hack 10,000 times a place.',
-                'game.player.timesPlacesHacked', 10000, 75)
+                'game.player.timesPlacesHacked', 10000, 75),
+            new game.achievements.create('Hacker V', 'Hack 100,000 times a place.',
+                'game.player.timesPlacesHacked', 100000, 250),
+            
+            new game.achievements.create('Personal servers I', 'Buy your first personal server.',
+                'game.servers.personal.owned', 1, 10),
+            new game.achievements.create('Personal servers II', 'Buy 50 personal servers.',
+                'game.servers.personal.owned', 50, 20),
+            new game.achievements.create('Personal servers III', 'Buy 250 personal servers.',
+                'game.servers.personal.owned', 250, 40),
+            new game.achievements.create('Personal servers IV', 'Buy 1,000 personal servers.',
+                'game.servers.personal.owned', 1000, 80),
+            new game.achievements.create('Personal servers IV', 'Buy 25,000 personal servers.',
+                'game.servers.personal.owned', 25000, 160),
+
+            new game.achievements.create('Professional servers I', 'Buy your first professional server.',
+                'game.servers.professional.owned', 1, 10),
+            new game.achievements.create('Professional servers II', 'Buy 50 professional servers.',
+                'game.servers.professional.owned', 50, 20),
+            new game.achievements.create('Professional servers III', 'Buy 250 professional servers.',
+                'game.servers.professional.owned', 250, 40),
+            new game.achievements.create('Professional servers IV', 'Buy 1,000 professional servers.',
+                'game.servers.professional.owned', 1000, 80),
+            new game.achievements.create('Professional servers IV', 'Buy 25,000 professional servers.',
+                'game.servers.professional.owned', 25000, 160)
         ];
         
-        for (var i = 0; i < game.achievements.list.length; i++)
+        for (var i = 0; i < game.achievements.list.length; i++) {
             game.achievements.owned.push(false);
+            game.achievements.printed.push(false);
+        };
     }
 };
