@@ -23,5 +23,8 @@ game.console.errors = {
     hackerNoArgs: 'You must use <b>hackers</b> with arguments. Type <b>hackers -help</b> for more informations.',
     
     // abilities errors
-    abilityNoArgs: 'You must use <b>ability</b> with arguments. Type <b>ability -help</b> for more informations.'
+    abilityNoArgs: 'You must use <b>ability</b> with arguments. Type <b>ability -help</b> for more informations.',
+    
+    // upgrade errors
+    upgradeNoArgs: 'You must use <b>upgrade</b> with arguments. Type <b>upgrade -help</b> for more informations.'
 };

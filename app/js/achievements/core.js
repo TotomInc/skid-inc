@@ -25,7 +25,7 @@ game.achievements = {
                 if (!game.achievements.printed[i]) {
                     game.achievements.printed[i] = true;
                     
-                    game.console.print('success', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc);
+                    game.console.print('success', 'Achievement earned: <b>' + thisAch.name + '</b>, ' + thisAch.desc + ', +' + fix(thisAch.reward, 0) + ' ach. points.');
                 };
             };
         };

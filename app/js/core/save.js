@@ -55,8 +55,10 @@ game.save = {
             
             gs.personal.owned = sgs.personal.owned;
             gs.personal.mult = sgs.personal.mult;
+            gs.personal.level = sgs.personal.level;
             gs.professional.owned = sgs.professional.owned;
             gs.professional.mult = sgs.professional.mult;
+            gs.professional.level = sgs.professional.level;
             gs.vm.owned = sgs.vm.owned;
             gs.quickhack.owned = sgs.quickhack.owned;
             

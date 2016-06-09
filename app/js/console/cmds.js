@@ -31,6 +31,25 @@ game.console.cmds = {
             'game.hack("list")'
         ]
     },
+    
+    'upgrade': {
+        name: 'upgrade',
+        desc: 'upgrade a type of server.',
+        args: [
+            ['upgrade'],
+            ['upgrade', '-help'],
+            ['upgrade', '-info'],
+            ['upgrade', 'personal'],
+            ['upgrade', 'professional']
+        ],
+        exec: [
+            'game.upgrade("sp")',
+            'game.upgrade("help")',
+            'game.upgrade("info")',
+            'game.upgrade("personal")',
+            'game.upgrade("professional")'
+        ]
+    },
 
     'buy': {
         name: 'buy',
