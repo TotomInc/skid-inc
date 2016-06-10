@@ -6,13 +6,43 @@ game.console = {
     // wow
     pressUpArrow: function() {
       var history = game.console.history;
-      var lastCommand = history[history.length - 1];
-      console.log('up');
-      $('#console-input').val(lastCommand);
+      var historyNum = game.console.historyNum;
+
+      if(game.console.arrowPressed === false) {
+        game.console.arrowPressed = true;
+        game.console.historyNum = history.length;
+        console.log(game.console.historyNum);
+        if(game.console.historyNum < 0) {
+          game.console.historyNum = 0;
+        }
+      }
+
+      if(game.console.historyNum > 0) {
+        game.console.historyNum -= 1;
+      } else {
+        game.console.historyNum = 0;
+      }
+
+      var command = history[game.console.historyNum];
+
+      console.log(game.console.historyNum);
+      $('#console-input').val(command);
     },
 
     pressDownArrow: function() {
-      console.log('down');
+      var history = game.console.history;
+      var historyNum = game.console.historyNum;
+
+      if(game.console.historyNum >= history.length) {
+        game.console.historyNum = history.length;
+      } else {
+        game.console.historyNum += 1;
+      }
+
+      var command = history[game.console.historyNum];
+
+      console.log(game.console.historyNum);
+      $('#console-input').val(command);
     },
 
     executer: function() {
@@ -51,7 +81,7 @@ game.console = {
 
         game.console.history.push(input);
         console.log(game.console.history);
-
+        game.console.arrowPressed = false;
         $('#console-input').val('');
     }
 };
