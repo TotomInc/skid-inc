@@ -28,6 +28,7 @@
 
 	<script src="lib/jquery/js/jquery.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="lib/lz-string/lz-string.min.js"></script>
 </head>
 
 <body class="noselect">
@@ -79,7 +80,7 @@
 							<li>
 								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
 							</li>
-							
+
 							<li>
 								<a href="#notes" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Patch-notes</a>
 							</li>
@@ -91,7 +92,7 @@
 					<div role="tabpanel" class="tab-pane fade in active" id="console">
 						<div class="console-container">
 							<div id="console-content" class="console content"></div>
-							
+
 							<div class="console logo"></div>
 
 							<div class="console input-container">
@@ -129,9 +130,9 @@
 									<a id="options-effect" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Switch effects</a>
 								</div>
 							</div>
-							
+
 							<br>
-							
+
 							<div class="row">
 								<div class="col-md-8 col-md-offset-2">
 									<p class="text-center">
@@ -148,11 +149,11 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div role="tabpanel" class="tab-pane fade" id="notes">
 						<div class="well">
 							<h1 class="text-center">Patch-notes:</h1>
-							
+
 							<p>
 								v0.05 <small>(TBD)</small>:<br>
 								<ul>
@@ -160,7 +161,7 @@
 									<li>Better tutorial.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.04 <small>(7 june 2016)</small>:<br>
 								<ul>
@@ -171,7 +172,7 @@
 									<li>More balancing to the game.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.03 <small>(3 june 2016)</small>:<br>
 								<ul>
@@ -181,7 +182,7 @@
 									<li>Lot of bugs are fixed.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.02 <small>(2 june 2016)</small>:<br>
 								<ul>
@@ -193,7 +194,7 @@
 									<li>Fixed lot of bugs.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.01 <small>(30 may 2016)</small>:<br>
 								<ul>
@@ -263,10 +264,10 @@
 			a.async = 1;
 			a.src = g;
 			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'analytics');
 
-		ga('create', 'UA-54540685-19', 'auto');
-		ga('send', 'pageview');
+		analytics('create', 'UA-54540685-19', 'auto');
+		analytics('send', 'pageview');
 	</script>
 </body>
 
