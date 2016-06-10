@@ -9,7 +9,7 @@ You don't need to program if you want to help up, you can create issues for any 
 Otherwise if you want to code:
 
 1. Clone the repo.
-2. Install all dev dependencies (`npm i`). We recommend you to test your changes on a local server, using `http-server`.
+2. Install all dev dependencies `npm i`. We recommend you to test your changes on a local server, using `http-server`.
 3. Run `grunt` when you finished your code changes. Otherwise, the pull request will not be merged.
 4. Create a new branch and make your changes on it.
 5. Create a pull request.
@@ -31,8 +31,5 @@ Once we reach a milestone on this secondary branch, we can merge it to gh-pages 
 
 ### Links:
 
-[Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc")
-
+[Play it here!](https://totominc.github.io/skid-inc/ "Skid-Inc game")
 [Skid-Inc subreddit!](https://www.reddit.com/r/skidinc "Skid-Inc subreddit")
-
-[Skid-Inc twiter!]( "Skid-Inc subreddit")

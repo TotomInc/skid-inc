@@ -28,6 +28,7 @@
 
 	<script src="lib/jquery/js/jquery.min.js"></script>
 	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="lib/lz-string/lz-string.min.js"></script>
 </head>
 
 <body class="noselect">
@@ -43,7 +44,7 @@
 				</li>
 
 				<li>
-					<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Sounds off</a>
+					<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Trigger sounds</a>
 				</li>
 			</ul>
 		</div>
@@ -79,7 +80,7 @@
 							<li>
 								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
 							</li>
-							
+
 							<li>
 								<a href="#notes" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Patch-notes</a>
 							</li>
@@ -90,9 +91,9 @@
 				<div id="tab-container" class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="console">
 						<div class="console-container">
-							<div class="console logo"></div>
-
 							<div id="console-content" class="console content"></div>
+
+							<div class="console logo"></div>
 
 							<div class="console input-container">
 								<div class="console input-logo">
@@ -129,9 +130,9 @@
 									<a id="options-effect" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Switch effects</a>
 								</div>
 							</div>
-							
+
 							<br>
-							
+
 							<div class="row">
 								<div class="col-md-8 col-md-offset-2">
 									<p class="text-center">
@@ -141,21 +142,32 @@
 										<br>
 										<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>.
 										<br> Matrix effect made by <a target="_blank" href="https://github.com/neilcarpenter/Matrix-code-rain">Neil Carpenter</a>
-										<br> Art assets style mainly based on <a target="_blank" href="https://icons8.com">Icons8</a> style.
 										<br>
-										<br> Thank you to : Ultorval, Roger and Yuntek for their support and beta-testing. <i class="fa fa-heart" aria-hidden="true"></i>
+										<br> Thank you to : Ultorval, Roger and Yuntek for their support and beta-testing.
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
-					
+
 					<div role="tabpanel" class="tab-pane fade" id="notes">
 						<div class="well">
 							<h1 class="text-center">Patch-notes:</h1>
-							
+
 							<p>
-								v0.04 <small>(TBD)</small>:<br>
+								v0.05 <small>(10 june 2016)</small>:<br>
+								<ul>
+									<li>Added server upgrades.</li>
+									<li>Redone code for commands.</li>
+									<li>Reduced auto-save time (from 1 sec to 30 sec).</li>
+									<li>Compressed save to local-storage (thanks to Pullingour), using LZString.</li>
+									<li>Reduced cooldown time between two commands.</li>
+									<li>Better tutorial.</li>
+								</ul>
+							</p>
+
+							<p>
+								v0.04 <small>(7 june 2016)</small>:<br>
 								<ul>
 									<li>Added hackers to automatically hack places for you.</li>
 									<li>Added abilities to enhance your hacking power.</li>
@@ -164,7 +176,7 @@
 									<li>More balancing to the game.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.03 <small>(3 june 2016)</small>:<br>
 								<ul>
@@ -174,7 +186,7 @@
 									<li>Lot of bugs are fixed.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.02 <small>(2 june 2016)</small>:<br>
 								<ul>
@@ -186,7 +198,7 @@
 									<li>Fixed lot of bugs.</li>
 								</ul>
 							</p>
-							
+
 							<p>
 								v0.01 <small>(30 may 2016)</small>:<br>
 								<ul>
@@ -206,6 +218,7 @@
 	<script src="app/js/helpers/capitalize.js"></script>
 	<script src="app/js/helpers/floating.js"></script>
 	<script src="app/js/helpers/msToTime.js"></script>
+	<script src="app/js/helpers/executer-helpers.js"></script>
 
 	<script src="app/js/core/core.js"></script>
 	<script src="app/js/core/player.js"></script>
@@ -215,8 +228,10 @@
 	<script src="app/js/core/config.js"></script>
 	<script src="app/js/core/buy.js"></script>
 	<script src="app/js/core/servers.js"></script>
+	<script src="app/js/core/upgrade.js"></script>
 	<script src="app/js/core/abilities.js"></script>
 	<script src="app/js/core/team.js"></script>
+	<script src="app/js/core/notif.js"></script>
 	<script src="app/js/core/save.js"></script>
 
 	<script src="app/js/console/core.js"></script>
@@ -253,10 +268,10 @@
 			a.async = 1;
 			a.src = g;
 			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'analytics');
 
-		ga('create', 'UA-54540685-19', 'auto');
-		ga('send', 'pageview');
+		analytics('create', 'UA-54540685-19', 'auto');
+		analytics('send', 'pageview');
 	</script>
 </body>
 

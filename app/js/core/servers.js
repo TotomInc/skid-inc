@@ -4,7 +4,7 @@ game.servers = {
     },
     
     getPersReward: function() {
-        return (1 + (game.servers.personal.owned * (game.servers.personal.moneyReward - 1)));
+        return (1 + (game.servers.personal.owned * (game.servers.personal.moneyReward - 1)) + (game.servers.personal.mult * game.servers.personal.owned - game.servers.personal.owned));
     },
     
     getProCost: function() {
@@ -13,8 +13,8 @@ game.servers = {
     
     getProReward: function() {
         return {
-            money: (1 + (game.servers.professional.owned * (game.servers.professional.moneyReward - 1))),
-            exp: (1 + (game.servers.professional.owned * (game.servers.professional.expReward - 1)))
+            money: (1 + (game.servers.professional.owned * (game.servers.professional.moneyReward - 1)) + (game.servers.professional.mult * game.servers.professional.owned - game.servers.professional.owned)),
+            exp: (1 + (game.servers.professional.owned * (game.servers.professional.expReward - 1)) + (game.servers.professional.mult * game.servers.professional.owned - game.servers.professional.owned))
         };
     },
     
@@ -39,7 +39,11 @@ game.servers = {
         owned: 0,
         cost: 750,
         inflation: 1.08,
-        moneyReward: 1.08
+        moneyReward: 1.08,
+        mult: 1,
+        level: 0,
+        upInflation: 10,
+        multAdd: 0.05
     },
     
     // increase money/exp income for hack cmd/button
@@ -48,7 +52,11 @@ game.servers = {
         cost: 150000,
         inflation: 1.08,
         moneyReward: 1.20,
-        expReward: 1.05
+        expReward: 1.05,
+        mult: 1,
+        level: 0,
+        upInflation: 50,
+        multAdd: 0.10
     },
     
     // reduce place hack time
@@ -56,7 +64,7 @@ game.servers = {
         owned: 0,
         cost: 5000,
         inflation: 1.40,
-        accelerator: 1.02
+        accelerator: 1.01
     },
     
     // reduce click divider (default 16)

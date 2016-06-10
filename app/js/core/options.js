@@ -2,9 +2,10 @@ game.options = {
     intervals: {},
     interval: undefined,
     fps: 10,
-    bindTime: 500,
+    bindTime: 350,
+    upkeyBindTime: 750,
     sounds: false,
-    version: 0.04,
+    version: 0.05,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -22,16 +23,46 @@ game.options = {
     
     isInit: false,
     
-    triggerBackground: function() {
-        if (game.options.effectEnabled) {
-            $('#matrix-effect').fadeOut('slow', function() {
-                game.options.effectEnabled = false;
-            });
+    triggerSounds: function(option) {
+        if (option !== undefined) {
+            if (option == 'true')
+                game.options.sounds = true;
+            else if (option == 'false')
+                game.options.sounds = false;
+
+            game.console.print('warn', 'Sounds have been turned to ' + game.options.sounds + '.');
         }
         else {
-            $('#matrix-effect').fadeIn('slow', function() {
-                game.options.effectEnabled = true;
-            });
+            game.options.sounds = !game.options.sounds;
+
+            game.console.print('warn', 'Sounds have been turned to ' + game.options.sounds + '.');
         };
+    },
+    
+    triggerBackground: function(option) {
+        if (option !== undefined) {
+            if (option == 'true') {
+                $('#matrix-effect').fadeIn('slow', function() {
+                    game.options.effectEnabled = true;
+                });
+            }
+            else if (option == 'false') {
+                $('#matrix-effect').fadeOut('slow', function() {
+                    game.options.effectEnabled = false;
+                });
+            }
+        }
+        else {
+            if (game.options.effectEnabled) {
+                $('#matrix-effect').fadeOut('slow', function() {
+                    game.options.effectEnabled = false;
+                });
+            }
+            else {
+                $('#matrix-effect').fadeIn('slow', function() {
+                    game.options.effectEnabled = true;
+                });
+            };
+        }
     }
 }

@@ -5,8 +5,8 @@ game.console.help = {
         "<b>hack -place -list</b>: print a list of places with their respective informations.",
 
     config: "You must use <b>config</b> with arguments.<br>" +
-        "<b>config -sounds <i>value</i></b>: enable (1) or disable (0) the sound of the game. (default 0)<br>" +
-        "<b>config -background <i>value</i></b>: enable (1) or disable (0) the background animation. (defaut 0)",
+        "<b>config -sounds <i>value</i></b>: enable (true) or disable (false) the sound of the game. (default to false)<br>" +
+        "<b>config -background <i>value</i></b>: enable (true) or disable (false) the background animation. (default to false)",
 
     clear: "<b>clear</b> don't accept any arguments.",
     
@@ -36,5 +36,9 @@ game.console.help = {
     
     ability: '<b>ability</b> must be used with arguments.<br>' +
         '<b>ability -list</b>: print a list of all abilities available.<br>' +
-        'To buy an ability, you must use the <b>buy</b> command. Type <b>buy -ability -help</b> for more informations.'
+        'To buy an ability, you must use the <b>buy</b> command. Type <b>buy -ability -help</b> for more informations.',
+    
+    upgrade: '<b>upgrade</b> must be used with arguments.<br>' +
+        '<b>upgrade nameOfServer</b>: upgrade the specified server.<br>' +
+        '<b>upgrade -info</b>: print stats of current and next servers upgrades.'
 };

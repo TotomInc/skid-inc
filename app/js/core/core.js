@@ -57,36 +57,11 @@ var game = {
         return thisPlace.time / (1 + (game.servers.vm.owned * game.servers.vm.accelerator));
     },
 
-    requestPermission: function() {
-        if (window.Notification && Notification.permission !== "granted") {
-            Notification.requestPermission(function(status) {
-                if (Notification.permission !== status)
-                    Notification.permission = status;
-            });
-        };
-    },
-
-    showNotif: function(title, content, iconAccess) {
-        if (window.Notification && Notification.permission === "granted" && !game.options.gotFocus) {
-            var notif = new Notification(title, {
-                body: content,
-                icon: iconAccess
-            });
-
-            notif.onclick = function() {
-                window.focus();
-                this.close();
-            };
-
-            setTimeout(notif.close(), 10000);
-        };
-    },
-
     hackProgress: function(times) {
         var isHacking = (game.player.isHacking == true ? true : false);
-        
+
         if (isHacking) {
-            var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
+            var thisPlace = game.console.cmds[0].places[game.player.hackingWhat],
                 time = game.getPlaceTime(thisPlace),
                 fps = game.options.fps,
                 barStatus = '|',
@@ -133,7 +108,7 @@ var game = {
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
 
-                game.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
+                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned <b>$' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.</b>');
 
                 game.player.hackingWhat = undefined;
@@ -143,23 +118,23 @@ var game = {
             for (var hacker in game.team.list) {
                 if (game.team.list[hacker].owned) {
                     var thisHacker = game.team.list[hacker],
-                        thisPlace = game.console.cmds.hack.places[thisHacker.effect],
+                        thisPlace = game.console.cmds[0].places[thisHacker.effect],
                         time = game.getPlaceTime(thisPlace),
                         fps = game.options.fps,
                         moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
                         expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
                         globalMoneyMult = game.getGlobalMoneyMult(),
                         globalExpMult = game.getGlobalExpMult();
-                    
+
                     thisHacker.progress += times / fps;
-                    
+
                     if (thisHacker.progress >= time) {
                         moneyReward *= globalMoneyMult;
                         expReward *= globalExpMult;
-                        
+
                         game.earnMoney(moneyReward);
                         game.earnExp(expReward);
-                        
+
                         thisHacker.progress = 0;
                         thisHacker.done++;
                     };
@@ -187,7 +162,7 @@ var game = {
 
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
     },
-    
+
     hackerOwned: function(name) {
         if (game.team.list[name].owned)
             return 'yes';
@@ -205,39 +180,28 @@ var game = {
 
         game.options.before = new Date().getTime();
     },
-    
-    newButton: function(name, color, cmd, icon) {
-        $('#custom-button1').fadeIn('slow');
-        $('#custom-button1').html(
-            '<p style="color: ' + color + ' !important;">' + name + ' <i class="fa fa-' + icon + ' fa-lg" aria-hidden="true"></i></p>'
-        );
-        $('#custom-button1').css('border', '1px solid ' + color);
-        $('#custom-button1').on('click', function() {
-            console.log(cmd);
-        });
-        console.log("new button called : name " + name + ", color " + color + ", cmd " + cmd + ", icon " + icon + ".");
-    },
 
     updateGame: function(times) {
         game.hackProgress(times);
         game.display();
     },
 
-    varInit: function(callback) {
+    varInit: function() {
         game.options.interval = (1000 / game.options.fps);
 
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
         game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
-        game.options.intervals.save = setInterval(game.save.save, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 30000);
 
         game.achievements.varInit();
         game.sounds.varInit();
         game.save.varInit();
-        
+        game.notif.requestPermission();
+
         window.onfocus = function() {
             game.options.gotFocus = true;
         };
-        
+
         window.onblur = function() {
             game.options.gotFocus = false;
         };
@@ -250,11 +214,11 @@ var game = {
             'max-height': '600px',
             'overflow-y': 'auto'
         });
-        
+
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {
-            game.sounds.switchSounds();
+            game.options.triggerSounds();
         });
 
         $('#navbar-save').on('click', function() {
@@ -311,8 +275,6 @@ var game = {
         $('img').on('dragstart', function(e) {
             e.preventDefault();
         });
-
-        game.requestPermission();
 
         console.info('Dom init finished.');
     },
