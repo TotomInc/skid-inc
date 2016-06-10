@@ -1,209 +1,241 @@
-game.console.cmds = {
-    'hack': {
+game.console.cmds = [
+    {
+        // DON'T CHANGE HACK COMMAND PLACE IN THIS ARRAY!
+        // IT MUST BE IN INDEX 0!
         name: 'hack',
         desc: 'hack a place to earn money and experience.',
-        args: [
-            ['hack'],
-            ['hack', '-stats'],
-            ['hack', '-help'],
-            // places
-            ['hack', '-place', 'mini-market'],
-            ['hack', '-place', 'market'],
-            ['hack', '-place', 'jewelry'],
-            ['hack', '-place', 'bank'],
-            ['hack', '-place', 'trading-center'],
-            ['hack', '-place', 'anonymous-hideout'],
-            ['hack', '-place', 'deepweb'],
-            ['hack', '-place', '-list']
-        ],
-        exec: [
-            'game.hack("sp")',
-            'game.hack("stats")',
-            'game.hack("help")',
-            // places
-            'game.hack("mini-market")',
-            'game.hack("market")',
-            'game.hack("jewelry")',
-            'game.hack("bank")',
-            'game.hack("trading-center")',
-            'game.hack("anonymous-hideout")',
-            'game.hack("deepweb")',
-            'game.hack("list")'
+        pattern: '^hack',
+        commandRegex: [
+            {
+                'pattern': '^hack[\\s]*$',
+                'exec': 'game.hack("sp")',
+                'options': false
+            }, {
+                'pattern': '^hack[\\s]+-help*$',
+                'exec': 'game.hack("help")',
+                'options': false
+            }, {
+                'pattern': '^hack[\\s]+-stats*$',
+                'exec': 'game.hack("stats")',
+                'options': false
+            }, {
+                'pattern': '^hack[\\s]+-list*$',
+                'exec': 'game.hack("list")',
+                'options': false
+            }, {
+                'pattern': '^hack[\\s]+-place[\\s]+[\\w]*$',
+                'exec': 'game.hack("place", option)',
+                'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+            }
         ]
     },
     
-    'upgrade': {
+    {
         name: 'upgrade',
-        desc: 'upgrade a type of server.',
-        args: [
-            ['upgrade'],
-            ['upgrade', '-help'],
-            ['upgrade', '-info'],
-            ['upgrade', 'personal'],
-            ['upgrade', 'professional']
-        ],
-        exec: [
-            'game.upgrade("sp")',
-            'game.upgrade("help")',
-            'game.upgrade("info")',
-            'game.upgrade("personal")',
-            'game.upgrade("professional")'
+        desc: 'upgrade your servers for an higher income.',
+        pattern: '^upgrade',
+        commandRegex: [
+            {
+                'pattern': '^upgrade[\\s]*$',
+                'exec': 'game.upgrade("sp")',
+                'options': false
+            }, {
+                'pattern': '^upgrade[\\s]+-help*$',
+                'exec': 'game.upgrade("help")',
+                'options': false
+            }, {
+                'pattern': '^upgrade[\\s]+-info*$',
+                'exec': 'game.upgrade("info")',
+                'options': false
+            }, {
+                'pattern': '^upgrade[\\s]+[\\w]*$',
+                'exec': 'game.upgrade("server", option)',
+                'options': '(personal|professional)'
+            }
         ]
     },
-
-    'buy': {
+    
+    {
         name: 'buy',
-        desc: 'buy a server to increase hack income.',
-        args: [
-            ['buy'],
-            ['buy', '-server'],
-            ['buy', '-help'],
-            ['buy', '-info'],
-            ['buy', '-hacker'],
-            ['buy', '-ability'],
-            ['buy', '-server', '-help'],
-            ['buy', '-server', 'personal'],
-            ['buy', '-server', 'professional'],
-            ['buy', '-server', 'vm'],
-            ['buy', '-server', 'quickhack'],
-            ['buy', '-hacker', '-help'],
-            ['buy', '-hacker', '-list'],
-            ['buy', '-hacker', 'mini-market-hacker'],
-            ['buy', '-hacker', 'market-hacker'],
-            ['buy', '-hacker', 'jewelry-hacker'],
-            ['buy', '-hacker', 'bank-hacker'],
-            ['buy', '-hacker', 'trading-center-hacker'],
-            ['buy', '-hacker', 'anonymous-hideout-hacker'],
-            ['buy', '-hacker', 'deepweb-hacker'],
-            ['buy', '-ability', '-list'],
-            ['buy', '-ability', '-help'],
-            ['buy', '-ability', 'up-key']
-        ],
-        exec: [
-            'game.buy("sp")',
-            'game.buy("serv")',
-            'game.buy("help")',
-            'game.buy("info")',
-            'game.buy("hacker")',
-            'game.buy("ability")',
-            'game.buy("serv-help")',
-            'game.buy("serv-pers")',
-            'game.buy("serv-pro")',
-            'game.buy("serv-speedhack")',
-            'game.buy("serv-quickhack")',
-            'game.buy("hacker-help")',
-            'game.buy("hacker-list")',
-            'game.team.buy("mini-market")',
-            'game.team.buy("market")',
-            'game.team.buy("jewelry")',
-            'game.team.buy("bank")',
-            'game.team.buy("trading-center")',
-            'game.team.buy("anonymous-hideout")',
-            'game.team.buy("deepweb")',
-            'game.buy("ability-list")',
-            'game.buy("ability-help")',
-            'game.abilities.buy("up-key")'
+        desc: 'buy servers, abilities or hire hackers to increase your hack income.',
+        pattern: '^buy',
+        commandRegex: [
+            {
+                'pattern': '^buy[\\s]*$',
+                'exec': 'game.buy("sp")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]-help*$',
+                'exec': 'game.buy("help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-info*$',
+                'exec': 'game.buy("info")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-server[\\s]+-help*$',
+                'exec': 'game.buy("server-help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-server[\\s]+[\\w]*$',
+                'exec': 'game.buy("server", option)',
+                'options': '(personal|professional|vm|quickhack)'
+            }, {
+                'pattern': '^buy[\\s]+-hacker[\\s]+[\\w]*$',
+                'exec': 'game.buy("hacker", option)',
+                'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+            }, {
+                'pattern': '^buy[\\s]+-hacker[\\s]+-help*$',
+                'exec': 'game.buy("hacker-help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-hacker[\\s]+-list*$',
+                'exec': 'game.buy("hacker-list")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-ability[\\s]+-help*$',
+                'exec': 'game.buy("ability-help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-ability[\\s]+[\\w]*$',
+                'exec': 'game.buy("ability", option)',
+                'options': '(key_up)'
+            }, {
+                'pattern': '^buy[\\s]+-ability[\\s]+-list*$',
+                'exec': 'game.buy("ability-list")',
+                'options': false
+            }
         ]
     },
     
-    'hackers': {
+    {
         name: 'hackers',
-        desc: 'used to perform actions for your hackers.',
-        args: [
-            ['hackers'],
-            ['hackers', '-help'],
-            ['hackers', '-status']
-        ],
-        exec: [
-            'game.team.exec("sp")',
-            'game.team.exec("help")',
-            'game.team.exec("status")'
+        desc: 'used to perform actions on your hackers.',
+        pattern: '^hackers',
+        commandRegex: [
+            {
+                'pattern': '^hackers[\\s]*$',
+                'exec': 'game.team.exec("sp")',
+                'options': false
+            }, {
+                'pattern': '^hackers[\\s]+-help*$',
+                'exec': 'game.team.exec("help")',
+                'options': false
+            }, {
+                'pattern': '^hackers[\\s]+-status*$',
+                'exec': 'game.team.exec("status")',
+                'options': false
+            }
         ]
     },
     
-    'ability': {
+    {
         name: 'ability',
         desc: 'abilities are special skills to buy to enhance your hacker power.',
-        args: [
-            ['ability'],
-            ['ability', '-help'],
-            ['ability', '-list']
-        ],
-        exec: [
-            'game.abilities.exec("sp")',
-            'game.abilities.exec("help")',
-            'game.abilities.exec("list")'
+        pattern: '^ability',
+        commandRegex: [
+            {
+                'pattern': '^ability[\\s]*$',
+                'exec': 'game.abilities.exec("sp")',
+                'options': false
+            }, {
+                'pattern': '^ability[\\s]+-help*$',
+                'exec': 'game.abilities.exec("help")',
+                'options': false
+            }, {
+                'pattern': '^ability[\\s]+-list*$',
+                'exec': 'game.abilities.exec("list")',
+                'options': false
+            }
         ]
     },
     
-    'guide': {
-        name: "guide",
-        desc: "learn the basics of the game",
-        args: [
-            ['guide']
-        ],
-        exec: [
-            'game.console.printGuide()'
-        ]
-    },
-    
-    'achievements': {
+    {
         name: 'achievements',
-        desc: 'see all game achievements here.',
-        args: [
-            ['achievements'],
-            ['achievements', '-help'],
-            ['achievements', '-list']
-        ],
-        exec: [
-            'game.achievements.exec("sp")',
-            'game.achievements.exec("help")',
-            'game.achievements.exec("list")'
+        desc: 'track your progress through the game.',
+        pattern: '^achievements',
+        commandRegex: [
+            {
+                'pattern': '^achievements[\\s]*$',
+                'exec': 'game.achievements.exec("sp")',
+                'options': false
+            }, {
+                'pattern': '^achievements[\\s]+-help[\\s]*$',
+                'exec': 'game.achievements.exec("help")',
+                'options': false
+            }, {
+                'pattern': '^achievements[\\s]+-list[\\s]*$',
+                'exec': 'game.achievements.exec("list")',
+                'options': false
+            }
         ]
     },
     
-    'config': {
+    {
         name: 'config',
         desc: 'configure game settings.',
-        args: [
-            ['config'],
-            ['config', '-help'],
-            ['config', '-sounds', '0'],
-            ['config', '-sounds', '1'],
-            ['config', '-background', '0'],
-            ['config', '-background', '1']
-        ],
-        exec: [
-            'game.config("sp")',
-            'game.config("help")',
-            'game.config("sound-off")',
-            'game.config("sound-on")',
-            'game.config("background-off")',
-            'game.config("background-on")'
+        pattern: '^config',
+        commandRegex: [
+            {
+                'pattern': '^config[\\s]*$',
+                'exec': 'game.config("sp")',
+                'options': false
+            }, {
+                'pattern': '^config[\\s]+-help[\\s]*$',
+                'exec': 'game.config("help")',
+                'options': false
+            }, {
+                'pattern': '^config[\\s]+-sounds[\\s]+[\\w]+[\\s]*$',
+                'exec': 'game.config("triggerSounds")',
+                'options': '(true|false)'
+            }, {
+                'pattern': '^config[\\s]+-background[\\s]+[\\w]+[\\s]*$',
+                'exec': 'game.config("triggerBackground", option)',
+                'options': '(true|false)'
+            }
         ]
     },
     
-    'clear': {
+    {
         name: 'clear',
-        desc: 'clear console output',
-        args: [
-            ['clear'],
-            ['clear', '-help']
-        ],
-        exec: [
-            'game.console.clear()',
-            'game.console.clear("help")'
+        desc: 'clear console output.',
+        pattern: '^clear',
+        commandRegex: [
+            {
+                "pattern": "^clear[\\s]*$",
+                "exec": "game.console.clear()",
+                "options": false
+            }, {
+                "pattern": "^clear[\\s]+-help[\\s]*$",
+                "exec": "game.console.clear('help')",
+                "options": false
+            }
         ]
     },
     
-    'help': {
+    {
         name: 'help',
         desc: 'print a list of all the commands.',
-        args: [
-            ['help']
-        ],
-        exec: [
-            'game.console.printHelp()'
+        pattern: '^help',
+        commandRegex: [
+            {
+                "pattern": "^help[\\s]*$",
+                "exec": 'game.console.printHelp()',
+                "options": false
+            }
+        ]
+    },
+    
+    {
+        name: 'guide',
+        desc: 'learn to play this game if you are not familiar with the command line interface.',
+        pattern: '^guide',
+        commandRegex: [
+            {
+                'pattern': '^guide[\\s]*$',
+                'exec': 'game.console.printGuide()',
+                'options': false
+            }
         ]
     }
-};
+];

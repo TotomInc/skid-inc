@@ -1,4 +1,32 @@
-game.hack = function(from) {
+game.hack = function(from, option) {
+    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center' || from == 'anonymous-hideout' || from == 'deepweb') {
+        var thisPlace = game.console.cmds.hack.places[from];
+
+        if (!game.player.isHacking) {
+            console.log('h')
+            console.log(from)
+            console.log(game.team.list[from])
+            
+            if (game.team.list[from].owned)
+                game.console.print('error', 'You already have a hacker to hack this place.');
+            else if (game.player.level >= thisPlace.reqLevel) {
+                game.player.isHacking = true;
+                game.player.hackingWhat = from;
+                game.console.print('log', 'Hack in progress...');
+                game.console.print('hack-bar');
+            }
+            else
+                game.console.print('error', game.console.errors.levelLow);
+        }
+        else
+            game.console.print('error', game.console.errors.hackInProgress);
+
+        return;
+    };
+    
+    
+    
+    
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
@@ -49,8 +77,8 @@ game.hack = function(from) {
             globalExpMult = game.getGlobalExpMult(),
             globalMoneyMult = game.getGlobalMoneyMult();
         
-        for (var place in game.console.cmds.hack.places) {
-            var thisPlace = game.console.cmds.hack.places[place],
+        for (var place in game.console.cmds[0].places) {
+            var thisPlace = game.console.cmds[0].places[place],
                 maxExpReward = thisPlace.maxExpReward * globalExpMult,
                 maxMoneyReward = thisPlace.maxMoneyReward * globalMoneyMult,
                 time = thisPlace.time / vmEffect;
@@ -60,34 +88,16 @@ game.hack = function(from) {
         
         return;
     };
-
-    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center' || from == 'anonymous-hideout' || from == 'deepweb') {
-        var thisPlace = game.console.cmds.hack.places[from];
-
-        if (!game.player.isHacking) {
-            console.log('h')
-            console.log(from)
-            console.log(game.team.list[from])
-            
-            if (game.team.list[from].owned)
-                game.console.print('error', 'You already have a hacker to hack this place.');
-            else if (game.player.level >= thisPlace.reqLevel) {
-                game.player.isHacking = true;
-                game.player.hackingWhat = from;
-                game.console.print('log', 'Hack in progress...');
-                game.console.print('hack-bar');
-            }
-            else
-                game.console.print('error', game.console.errors.levelLow);
-        }
-        else
-            game.console.print('error', game.console.errors.hackInProgress);
-
-        return;
-    };
     
     if (from == "help") {
         game.console.print('help', game.console.help.hack);
+        
+        return;
+    };
+    
+    if (from == 'place') {
+        console.log('want to hack ' + option);
+        game.console.print('TODO');
         
         return;
     };

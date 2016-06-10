@@ -61,7 +61,7 @@ var game = {
         var isHacking = (game.player.isHacking == true ? true : false);
         
         if (isHacking) {
-            var thisPlace = game.console.cmds.hack.places[game.player.hackingWhat],
+            var thisPlace = game.console.cmds[0].places[game.player.hackingWhat],
                 time = game.getPlaceTime(thisPlace),
                 fps = game.options.fps,
                 barStatus = '|',
@@ -118,7 +118,7 @@ var game = {
             for (var hacker in game.team.list) {
                 if (game.team.list[hacker].owned) {
                     var thisHacker = game.team.list[hacker],
-                        thisPlace = game.console.cmds.hack.places[thisHacker.effect],
+                        thisPlace = game.console.cmds[0].places[thisHacker.effect],
                         time = game.getPlaceTime(thisPlace),
                         fps = game.options.fps,
                         moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),

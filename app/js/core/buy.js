@@ -1,30 +1,12 @@
-game.buy = function(from) {
+game.buy = function(from, option) {
     if (from == "sp") {
         game.console.print('error', game.console.errors.buyNoArgs);
         
         return;
     };
     
-    if (from == "serv") {
-        game.console.print('error', game.console.errors.buyNoArgsServ);
-        
-        return;
-    };
-    
     if (from == "help") {
         game.console.print('help', game.console.help.buy);
-        
-        return;
-    };
-    
-    if (from == "hacker") {
-        game.console.print('error', game.console.errors.buyNoArgsHacker);
-        
-        return;
-    };
-    
-    if (from == "ability") {
-        game.console.print('error', game.console.errors.buyNoArgsAbility);
         
         return;
     };
@@ -44,12 +26,6 @@ game.buy = function(from) {
             '<b>Professional servers</b>: ' + fix(game.servers.professional.owned, 0) + ', money multiplier: x' + fix(proReward.money, 2) + ', experience reward: x' + fix(proReward.exp, 2) + ', next cost: $' + fix(proCost) + '<br>' +
             '<b>Virtual machines (VM) servers</b>: ' + fix(game.servers.vm.owned, 0) + ', place hack time divider: /' + fix(VMReward, 2) + ', next cost: $' + fix(VMCost, 2) + '<br>' +
             '<b>Quickhack servers</b>: ' + fix(game.servers.quickhack.owned, 0) + ', click divider: /' + fix(clickDivider, 0) + ', next cost: $' + fix(quickCost));
-        
-        return;
-    };
-    
-    if (from == "serv-help") {
-        game.console.print('help', game.console.help.buyServer);
         
         return;
     };
@@ -119,6 +95,35 @@ game.buy = function(from) {
 
         return;
     };
+
+    
+    
+    
+    if (from == 'server') {
+        console.log('want a ' + option + ' server.');
+        game.console.print('warn', 'TODO');
+        
+        return;
+    };
+    
+    if (from == "server-help") {
+        game.console.print('help', game.console.help.buyServer);
+        
+        return;
+    };
+    
+    if (from == 'hacker') {
+        console.log('want ' + option + ' hacker.');
+        game.console.print('warn', 'TODO');
+        
+        return;
+    };
+    
+    if (from == "hacker-help") {
+        game.console.print('help', game.console.help.buyHacker);
+        
+        return;
+    };
     
     if (from == "hacker-list") {
         for (var hacker in game.team.list)
@@ -127,8 +132,9 @@ game.buy = function(from) {
         return;
     };
     
-    if (from == "hacker-help") {
-        game.console.print('help', game.console.help.buyHacker);
+    if (from == 'ability') {
+        console.log('want ' + option + ' ability.');
+        game.console.print('warn', 'TODO');
         
         return;
     };

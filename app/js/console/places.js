@@ -1,6 +1,6 @@
-game.console.cmds.hack.places = {
-    'mini-market': {
-        name: 'mini-market',
+game.console.cmds[0].places = {
+    'mini_market': {
+        name: 'mini_market',
         minMoneyReward: 450,
         maxMoneyReward: 1500,
         minExpReward: 250,
@@ -35,8 +35,8 @@ game.console.cmds.hack.places = {
         time: 1280, // 21min
         reqLevel: 30
     },
-    'trading-center': {
-        name: 'trading-center',
+    'trading_center': {
+        name: 'trading_center',
         minMoneyReward: 750000,
         maxMoneyReward: 2500000,
         minExpReward: 50000,
@@ -44,8 +44,8 @@ game.console.cmds.hack.places = {
         time: 5120, // 1,42h
         reqLevel: 40
     },
-    'anonymous-hideout': {
-        name: 'anonymous-hideout',
+    'anonymous_hideout': {
+        name: 'anonymous_hideout',
         minMoneyReward: 5000000,
         maxMoneyReward: 12500000,
         minExpReward: 250000,

@@ -1,7 +1,7 @@
 game.team = {
     list: {
-        'mini-market': {
-            name: 'mini-market-hacker',
+        'mini_market': {
+            name: 'mini_market',
             effect: 'mini-market',
             price: 10000,
             owned: false,
@@ -10,7 +10,7 @@ game.team = {
         },
         
         'market': {
-            name: 'market-hacker',
+            name: 'market',
             effect: 'market',
             price: 75000,
             owned: false,
@@ -19,7 +19,7 @@ game.team = {
         },
         
         'jewelry': {
-            name: 'jewelry-hacker',
+            name: 'jewelry',
             effect: 'jewelry',
             price: 600000,
             owned: false,
@@ -28,7 +28,7 @@ game.team = {
         },
         
         'bank': {
-            name: 'bank-hacker',
+            name: 'bank',
             effect: 'bank',
             price: 1000000,
             owned: false,
@@ -36,8 +36,8 @@ game.team = {
             done: 0
         },
         
-        'trading-center': {
-            name: 'trading-center-hacker',
+        'trading_center': {
+            name: 'trading_center',
             effect: 'trading-center',
             price: 12500000,
             owned: false,
@@ -45,8 +45,8 @@ game.team = {
             done: 0
         },
         
-        'anonymous-hideout': {
-            name: 'anonymous-hideout-hacker',
+        'anonymous_hideout': {
+            name: 'anonymous_hideout',
             effect: 'anonymous-hideout',
             price: 37500000,
             owned: false,
@@ -55,7 +55,7 @@ game.team = {
         },
         
         'deepweb': {
-            name: 'deepweb-hacker',
+            name: 'deepweb',
             effect: 'deepweb',
             price: 250000000,
             owned: false,

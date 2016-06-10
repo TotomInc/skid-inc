@@ -1,4 +1,4 @@
-game.upgrade = function(from) {
+game.upgrade = function(from, option) {
     if (from == 'sp') {
         game.console.print('errors', game.console.errors.upgradeNoArgs);
         
@@ -29,6 +29,16 @@ game.upgrade = function(from) {
 
         return;
     };
+    
+    if (from == 'server') {
+        console.log('want to upgrade a ' + option + ' server.');
+        game.console.print('warn', 'TODO');
+        
+        return;
+    };
+    
+    
+    
     
     if (from == 'personal') {
         var cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));

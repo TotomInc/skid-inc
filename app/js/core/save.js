@@ -69,20 +69,20 @@ game.save = {
             go.sounds = sgo.sounds;
             go.effectEnabled = sgo.effectEnabled;
             
-            gt.list['mini-market'].owned = sgt.list['mini-market'].owned;
+            gt.list['mini_market'].owned = sgt.list['mini_market'].owned;
             gt.list['market'].owned = sgt.list['market'].owned;
             gt.list['jewelry'].owned = sgt.list['jewelry'].owned;
             gt.list['bank'].owned = sgt.list['bank'].owned;
-            gt.list['trading-center'].owned = sgt.list['trading-center'].owned;
-            gt.list['anonymous-hideout'].owned = sgt.list['anonymous-hideout'].owned;
+            gt.list['trading_center'].owned = sgt.list['trading_center'].owned;
+            gt.list['anonymous_hideout'].owned = sgt.list['anonymous_hideout'].owned;
             gt.list['deepweb'].owned = sgt.list['deepweb'].owned;
             
-            gt.list['mini-market'].progress = sgt.list['mini-market'].progress;
+            gt.list['mini_market'].progress = sgt.list['mini_market'].progress;
             gt.list['market'].progress = sgt.list['market'].progress;
             gt.list['jewelry'].progress = sgt.list['jewelry'].progress;
             gt.list['bank'].progress = sgt.list['bank'].progress;
-            gt.list['trading-center'].progress = sgt.list['trading-center'].progress;
-            gt.list['anonymous-hideout'].progress = sgt.list['anonymous-hideout'].progress;
+            gt.list['trading_center'].progress = sgt.list['trading_center'].progress;
+            gt.list['anonymous_hideout'].progress = sgt.list['anonymous_hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
             
             gab.list['up-key'].owned = sgab.list['up-key'].owned;
