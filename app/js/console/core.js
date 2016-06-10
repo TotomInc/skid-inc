@@ -3,7 +3,7 @@ game.console = {
     historyNum: null,
     arrowPressed: false,
 
-    // wow
+    // these code needs refactoring !!
     pressUpArrow: function() {
       var history = game.console.history;
       var historyNum = game.console.historyNum;
@@ -25,7 +25,7 @@ game.console = {
 
       var command = history[game.console.historyNum];
 
-      console.log(game.console.historyNum);
+      console.log(game.console.historyNum); // test
       $('#console-input').val(command);
     },
 
@@ -41,15 +41,30 @@ game.console = {
 
       var command = history[game.console.historyNum];
 
-      console.log(game.console.historyNum);
+      console.log(game.console.historyNum); // test
       $('#console-input').val(command);
+    },
+
+    // need change the method name
+    ability_00: function() {
+      if(game.abilities.list['up-key'].owned === false) {
+        console.log('up-key owned false');
+        return false;
+      }
+
+      var command = game.console.history[game.console.history.length - 1];
+      $('#console-input').val(command);
+      game.console.executer();
     },
 
     executer: function() {
         var input = $('#console-input').val();
         var results = filterArrayOnRegexPattern(input, game.console.cmds);
 
-        if(input === '') return false;
+        if(input === '') {
+          return false;
+        }
+
         if (results.length == 1) {
             var result = results[0],
                 instances = filterArrayOnRegexPattern(input, result.commandRegex);
@@ -80,7 +95,7 @@ game.console = {
 
 
         game.console.history.push(input);
-        console.log(game.console.history);
+        console.log(game.console.history); // test
         game.console.arrowPressed = false;
         $('#console-input').val('');
     }

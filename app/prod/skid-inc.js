@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-06-10 */
+/*! skid-inc - v1.0.0 - 2016-06-11 */
 var beautify = {
 	prefixes: [
 	    "m", "b", "t", "q", "Q", "s", "S", "o", "n",
@@ -363,14 +363,32 @@ var game = {
         });
 
         $('#console-input').bind('keydown', function(e) {
-            if (e.which == 13)
-                game.console.executer();
-        }).keydown(function(e) {
-            if (e.which == 38) {
-                e.preventDefault();
-                game.console.typeLast();
-            };
+          switch(e.which) {
+            case 13:
+              e.preventDefault();
+              game.console.executer();
+              break;
+            case 38:
+              e.preventDefault();
+              game.console.pressUpArrow();
+              break;
+            case 40:
+              e.preventDefault();
+              game.console.pressDownArrow();
+              break;
+            }
         });
+
+        // abilities
+        $('#console-input').keydown(function(e){
+            if(event.ctrlKey){
+              if(e.keyCode === 13){
+                e.preventDefault();
+//                console.log('call ability');
+                game.console.ability_00();
+              }
+            }
+          });
 
         $('#console-input').bind('copy paste', function(e) {
             e.preventDefault();
@@ -441,6 +459,7 @@ game.options = {
 };
 
 game.abilities = {
+  // name and description needs change
     list: {
         'up-key': {
             name: 'up-key',
@@ -450,19 +469,19 @@ game.abilities = {
             owned: false
         }
     },
-    
+
     buy: function(who) {
         var thisAbility = game.abilities.list[who];
-        
+
         console.log(thisAbility)
         console.log(game.player.money >= thisAbility.cost)
         console.log(!thisAbility.owned)
         console.log(game.player.level >= thisAbility.reqLevel)
-        
+
         if (game.player.money >= thisAbility.cost && !thisAbility.owned && game.player.level >= thisAbility.reqLevel) {
             game.player.money -= thisAbility.cost;
             thisAbility.owned = true;
-            
+
             game.console.print('log', 'You successfully bought the ' + thisAbility.name + ' ability.');
         }
         else if (game.player.level < thisAbility.reqLevel)
@@ -472,31 +491,32 @@ game.abilities = {
         else if (thisAbility.owned)
             game.console.print('error', 'You already own this ability.');
     },
-    
+
     exec: function(from) {
         if (from == 'sp') {
             game.console.print('error', game.console.errors.abilityNoArgs);
-            
+
             return;
         };
-        
+
         if (from == 'help') {
             game.console.print('help', game.console.help.ability);
-            
+
             return;
         };
-        
+
         if (from == 'list') {
             for (var ability in game.abilities.list) {
                 var thisAbility = game.abilities.list[ability];
-                
+
                 game.console.print('help', '<b>' + thisAbility.name + '</b>: cost $' + fix(thisAbility.cost) + ', owned: ' + thisAbility.owned + '. Effect: ' + thisAbility.desc);
             };
-            
+
             return;
         };
     }
-};;
+};
+;
 
 game.buy = function(from, option) {
     if (from == "sp") {
@@ -1258,35 +1278,84 @@ game.upgrade = function(from, option) {
 };;
 
 game.console = {
-    latest: undefined,
-    
-    typeLast: function() {
-        var last = String(game.console.latest);
-        console.log('last: ' + last);
-        console.log('typeLast called');
-        
-        if (game.abilities.list['up-key'].owned) {
-            console.log('condition passed');
-            $('#console-input').val(last);
-        };
+    history: [],
+    historyNum: null,
+    arrowPressed: false,
+
+    // these code needs refactoring !!
+    pressUpArrow: function() {
+      var history = game.console.history;
+      var historyNum = game.console.historyNum;
+
+      if(game.console.arrowPressed === false) {
+        game.console.arrowPressed = true;
+        game.console.historyNum = history.length;
+        console.log(game.console.historyNum);
+        if(game.console.historyNum < 0) {
+          game.console.historyNum = 0;
+        }
+      }
+
+      if(game.console.historyNum > 0) {
+        game.console.historyNum -= 1;
+      } else {
+        game.console.historyNum = 0;
+      }
+
+      var command = history[game.console.historyNum];
+
+      console.log(game.console.historyNum); // test
+      $('#console-input').val(command);
     },
-    
+
+    pressDownArrow: function() {
+      var history = game.console.history;
+      var historyNum = game.console.historyNum;
+
+      if(game.console.historyNum >= history.length) {
+        game.console.historyNum = history.length;
+      } else {
+        game.console.historyNum += 1;
+      }
+
+      var command = history[game.console.historyNum];
+
+      console.log(game.console.historyNum); // test
+      $('#console-input').val(command);
+    },
+
+    // need change the method name
+    ability_00: function() {
+      if(game.abilities.list['up-key'].owned === false) {
+        console.log('up-key owned false');
+        return false;
+      }
+
+      var command = game.console.history[game.console.history.length - 1];
+      $('#console-input').val(command);
+      game.console.executer();
+    },
+
     executer: function() {
         var input = $('#console-input').val();
         var results = filterArrayOnRegexPattern(input, game.console.cmds);
-        
+
+        if(input === '') {
+          return false;
+        }
+
         if (results.length == 1) {
             var result = results[0],
                 instances = filterArrayOnRegexPattern(input, result.commandRegex);
-            
+
             if (instances.length == 1) {
                 var instance = instances[0],
                     option = '';
-                
+
                 if (instance.options) {
                     var optionRegex = new RegExp(instance.options, 'g'),
                         matches = input.match(optionRegex);
-                    
+
                     if (matches.length == 1) {
                         var option = matches[0];
                         eval(instance.exec);
@@ -1302,10 +1371,15 @@ game.console = {
         }
         else
             game.console.print('error', 'Unknown command.');
-        
+
+
+        game.console.history.push(input);
+        console.log(game.console.history); // test
+        game.console.arrowPressed = false;
         $('#console-input').val('');
     }
-};;
+};
+;
 
 game.console.cmds = [
     {

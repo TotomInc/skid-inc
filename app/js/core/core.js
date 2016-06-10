@@ -267,10 +267,15 @@ var game = {
         });
 
         // abilities
-        $(document).keypress("c",function(e) {
-          if(e.ctrlKey) alert(" test ");
-        });
-
+        $('#console-input').keydown(function(e){
+            if(event.ctrlKey){
+              if(e.keyCode === 13){
+                e.preventDefault();
+//                console.log('call ability');
+                game.console.ability_00();
+              }
+            }
+          });
 
         $('#console-input').bind('copy paste', function(e) {
             e.preventDefault();
