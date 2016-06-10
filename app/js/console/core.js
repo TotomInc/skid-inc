@@ -5,14 +5,10 @@ game.console = {
 
     // wow
     pressUpArrow: function() {
-      if(game.console.arrowPressed === false || game.console.history.length > 0) {
-        var num = game.console.historyNum;
-        game.console.arrowPressed = true;
-        game.console.historyNum = num[num.length - 1];
-        console.log(game.console.historyNum);
-      }
+      var history = game.console.history;
+      var lastCommand = history[history.length - 1];
       console.log('up');
-      $('#console-input').val();
+      $('#console-input').val(lastCommand);
     },
 
     pressDownArrow: function() {
