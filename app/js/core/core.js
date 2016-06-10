@@ -59,7 +59,7 @@ var game = {
 
     hackProgress: function(times) {
         var isHacking = (game.player.isHacking == true ? true : false);
-        
+
         if (isHacking) {
             var thisPlace = game.console.cmds[0].places[game.player.hackingWhat],
                 time = game.getPlaceTime(thisPlace),
@@ -125,16 +125,16 @@ var game = {
                         expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
                         globalMoneyMult = game.getGlobalMoneyMult(),
                         globalExpMult = game.getGlobalExpMult();
-                    
+
                     thisHacker.progress += times / fps;
-                    
+
                     if (thisHacker.progress >= time) {
                         moneyReward *= globalMoneyMult;
                         expReward *= globalExpMult;
-                        
+
                         game.earnMoney(moneyReward);
                         game.earnExp(expReward);
-                        
+
                         thisHacker.progress = 0;
                         thisHacker.done++;
                     };
@@ -162,7 +162,7 @@ var game = {
 
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
     },
-    
+
     hackerOwned: function(name) {
         if (game.team.list[name].owned)
             return 'yes';
@@ -180,7 +180,7 @@ var game = {
 
         game.options.before = new Date().getTime();
     },
-    
+
     updateGame: function(times) {
         game.hackProgress(times);
         game.display();
@@ -191,17 +191,17 @@ var game = {
 
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
         game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
-        game.options.intervals.save = setInterval(game.save.save, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 30000);
 
         game.achievements.varInit();
         game.sounds.varInit();
         game.save.varInit();
         game.notif.requestPermission();
-        
+
         window.onfocus = function() {
             game.options.gotFocus = true;
         };
-        
+
         window.onblur = function() {
             game.options.gotFocus = false;
         };
@@ -214,7 +214,7 @@ var game = {
             'max-height': '600px',
             'overflow-y': 'auto'
         });
-        
+
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {
