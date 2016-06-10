@@ -250,14 +250,27 @@ var game = {
         });
 
         $('#console-input').bind('keydown', function(e) {
-            if (e.which == 13)
-                game.console.executer();
-        }).keydown(function(e) {
-            if (e.which == 38) {
-                e.preventDefault();
-                game.console.typeLast();
-            };
+          switch(e.which) {
+            case 13:
+              e.preventDefault();
+              game.console.executer();
+              break;
+            case 38:
+              e.preventDefault();
+              game.console.pressUpArrow();
+              break;
+            case 40:
+              e.preventDefault();
+              game.console.pressDownArrow();
+              break;
+            }
         });
+
+        // abilities
+        $(document).keypress("c",function(e) {
+          if(e.ctrlKey) alert(" test ");
+        });
+
 
         $('#console-input').bind('copy paste', function(e) {
             e.preventDefault();
