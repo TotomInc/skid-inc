@@ -172,7 +172,7 @@ var game = {
 
     hackProgress: function(times) {
         var isHacking = (game.player.isHacking == true ? true : false);
-        
+
         if (isHacking) {
             var thisPlace = game.console.cmds[0].places[game.player.hackingWhat],
                 time = game.getPlaceTime(thisPlace),
@@ -238,16 +238,16 @@ var game = {
                         expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
                         globalMoneyMult = game.getGlobalMoneyMult(),
                         globalExpMult = game.getGlobalExpMult();
-                    
+
                     thisHacker.progress += times / fps;
-                    
+
                     if (thisHacker.progress >= time) {
                         moneyReward *= globalMoneyMult;
                         expReward *= globalExpMult;
-                        
+
                         game.earnMoney(moneyReward);
                         game.earnExp(expReward);
-                        
+
                         thisHacker.progress = 0;
                         thisHacker.done++;
                     };
@@ -275,7 +275,7 @@ var game = {
 
         document.title = '$' + fix(game.player.money) + ' - SkidInc.';
     },
-    
+
     hackerOwned: function(name) {
         if (game.team.list[name].owned)
             return 'yes';
@@ -293,7 +293,7 @@ var game = {
 
         game.options.before = new Date().getTime();
     },
-    
+
     updateGame: function(times) {
         game.hackProgress(times);
         game.display();
@@ -304,17 +304,17 @@ var game = {
 
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
         game.options.intervals.achievements = setInterval(game.achievements.check, 1000);
-        game.options.intervals.save = setInterval(game.save.save, 1000);
+        game.options.intervals.save = setInterval(game.save.save, 30000);
 
         game.achievements.varInit();
         game.sounds.varInit();
         game.save.varInit();
         game.notif.requestPermission();
-        
+
         window.onfocus = function() {
             game.options.gotFocus = true;
         };
-        
+
         window.onblur = function() {
             game.options.gotFocus = false;
         };
@@ -327,7 +327,7 @@ var game = {
             'max-height': '600px',
             'overflow-y': 'auto'
         });
-        
+
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {
@@ -399,7 +399,8 @@ var game = {
 
         game.options.isInit = true;
     }
-};;
+};
+;
 
 game.options = {
     intervals: {},
@@ -883,29 +884,29 @@ game.player = {
 
 game.save = {
     key: 'SK-Inc',
-    
+
     save: function(from) {
-        localStorage.setItem(game.save.key, JSON.stringify(game.save.toSave));
-        
+      localStorage.setItem(game.save.key, LZString.compressToBase64(JSON.stringify(game.save.toSave)));
+
         if (from == "user")
             game.console.print('save', 'Game successfully saved to local-storage.');
         else
             console.log('Game saved.');
     },
-    
+
     reset: function() {
         clearInterval(game.options.intervals.save);
         localStorage.removeItem(game.save.key);
         location.reload();
     },
-    
+
     load: function() {
         if (localStorage.getItem(game.save.key) == null) {
             game.console.printGuide();
             console.warn('No save found!');
         }
         else {
-            var s = JSON.parse(localStorage.getItem(game.save.key)),
+          var s = JSON.parse(LZString.decompressFromBase64(localStorage.getItem(game.save.key)));
                 sgp = s.gp,
                 sga = s.ga,
                 sgo = s.go,
@@ -920,7 +921,7 @@ game.save = {
                 gs = game.servers,
                 gt = game.team,
                 gab = game.abilities;
-            
+
             if (go.version !== sgo.version)
                 console.warn('Loading savegame from an older version.');
 
@@ -935,7 +936,7 @@ game.save = {
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
-            
+
             gs.personal.owned = sgs.personal.owned;
             gs.personal.mult = sgs.personal.mult;
             gs.personal.level = sgs.personal.level;
@@ -944,14 +945,14 @@ game.save = {
             gs.professional.level = sgs.professional.level;
             gs.vm.owned = sgs.vm.owned;
             gs.quickhack.owned = sgs.quickhack.owned;
-            
+
             ga.owned = sga.owned;
             ga.printed = sga.printed;
 
             go.before = sgo.before;
             go.sounds = sgo.sounds;
             go.effectEnabled = sgo.effectEnabled;
-            
+
             gt.list['mini_market'].owned = sgt.list['mini_market'].owned;
             gt.list['market'].owned = sgt.list['market'].owned;
             gt.list['jewelry'].owned = sgt.list['jewelry'].owned;
@@ -959,7 +960,7 @@ game.save = {
             gt.list['trading_center'].owned = sgt.list['trading_center'].owned;
             gt.list['anonymous_hideout'].owned = sgt.list['anonymous_hideout'].owned;
             gt.list['deepweb'].owned = sgt.list['deepweb'].owned;
-            
+
             gt.list['mini_market'].progress = sgt.list['mini_market'].progress;
             gt.list['market'].progress = sgt.list['market'].progress;
             gt.list['jewelry'].progress = sgt.list['jewelry'].progress;
@@ -967,16 +968,16 @@ game.save = {
             gt.list['trading_center'].progress = sgt.list['trading_center'].progress;
             gt.list['anonymous_hideout'].progress = sgt.list['anonymous_hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
-            
+
             gab.list['up-key'].owned = sgab.list['up-key'].owned;
-            
+
             game.achievements.checkLoaded();
-            
+
             console.info('Game loaded.');
             game.console.print('save', 'Save-game successfully loaded.');
         }
     },
-    
+
     varInit: function() {
         game.save.toSave = {
             'gp': game.player,
@@ -987,7 +988,8 @@ game.save = {
             'gab': game.abilities
         };
     }
-};;
+};
+;
 
 game.servers = {
     getPersCost: function() {
@@ -1303,47 +1305,6 @@ game.console = {
         
         $('#console-input').val('');
     }
-    
-    // executer: function() {
-    //     var input = $('#console-input').val(),
-    //         cmd = input.split(' '),
-    //         thisCmd = game.console.cmds[cmd[0]],
-    //         execIndex = undefined,
-    //         argsExists = false;
-        
-    //     if (typeof game.console.cmds[cmd[0]] == 'object') {
-    //         for (var i = 0; i < thisCmd.args.length; i++) {
-    //             var argsCheck = [];
-                
-    //             for (var e = 0; e < thisCmd.args[i].length; e++) {
-    //                 if (cmd.length == thisCmd.args[i].length && cmd[e] == thisCmd.args[i][e] && argsCheck.length < cmd.length) {
-    //                     argsCheck.push(true);
-    //                     execIndex = i;
-
-    //                     if (argsCheck.length == cmd.length) {
-    //                         var thisCmdArgs = thisCmd.exec[i].substring(thisCmd.exec[i].indexOf('"') + 1, thisCmd.exec[i].length - 2);
-                            
-    //                         argsExists = true;
-    //                         eval(thisCmd.exec[execIndex]);
-    //                         game.console.latest = input;
-    //                         game.setInputTimeout();
-                            
-    //                         if (game.options.sounds)
-    //                             game.sounds.button.play();
-                            
-    //                         return;
-    //                     };
-    //                 };
-    //             };
-    //         };
-            
-    //         if (!argsExists)
-    //             game.console.print('error', game.console.errors.unknownArgs);
-    //     } else
-    //         game.console.print('error', game.console.errors.unknownCmd);
-        
-    //     $('#console-input').val('');
-    // }
 };;
 
 game.console.cmds = [
@@ -1359,15 +1320,15 @@ game.console.cmds = [
                 'exec': 'game.hack("sp")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-help*$',
+                'pattern': '^hack[\\s]+-help[\\s]*$',
                 'exec': 'game.hack("help")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-stats*$',
+                'pattern': '^hack[\\s]+-stats[\\s]*$',
                 'exec': 'game.hack("stats")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-list*$',
+                'pattern': '^hack[\\s]+-list[\\s]*$',
                 'exec': 'game.hack("list")',
                 'options': false
             }, {
@@ -1388,15 +1349,15 @@ game.console.cmds = [
                 'exec': 'game.upgrade("sp")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+-help*$',
+                'pattern': '^upgrade[\\s]+-help[\\s]*$',
                 'exec': 'game.upgrade("help")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+-info*$',
+                'pattern': '^upgrade[\\s]+-info[\\s]*$',
                 'exec': 'game.upgrade("info")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+[\\w]*$',
+                'pattern': '^upgrade[\\s]+[\\w]+[\\s]*$',
                 'exec': 'game.upgrade("server", option)',
                 'options': '(personal|professional)'
             }
@@ -1413,15 +1374,15 @@ game.console.cmds = [
                 'exec': 'game.buy("sp")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]-help*$',
+                'pattern': '^buy[\\s]-help[\\s]*$',
                 'exec': 'game.buy("help")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-info*$',
+                'pattern': '^buy[\\s]+-info[\\s]*$',
                 'exec': 'game.buy("info")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-server[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-server[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("server-help")',
                 'options': false
             }, {
