@@ -11,15 +11,15 @@ game.console.cmds = [
                 'exec': 'game.hack("sp")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-help*$',
+                'pattern': '^hack[\\s]+-help[\\s]*$',
                 'exec': 'game.hack("help")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-stats*$',
+                'pattern': '^hack[\\s]+-stats[\\s]*$',
                 'exec': 'game.hack("stats")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-list*$',
+                'pattern': '^hack[\\s]+-list[\\s]*$',
                 'exec': 'game.hack("list")',
                 'options': false
             }, {
@@ -40,15 +40,15 @@ game.console.cmds = [
                 'exec': 'game.upgrade("sp")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+-help*$',
+                'pattern': '^upgrade[\\s]+-help[\\s]*$',
                 'exec': 'game.upgrade("help")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+-info*$',
+                'pattern': '^upgrade[\\s]+-info[\\s]*$',
                 'exec': 'game.upgrade("info")',
                 'options': false
             }, {
-                'pattern': '^upgrade[\\s]+[\\w]*$',
+                'pattern': '^upgrade[\\s]+[\\w]+[\\s]*$',
                 'exec': 'game.upgrade("server", option)',
                 'options': '(personal|professional)'
             }
@@ -65,15 +65,15 @@ game.console.cmds = [
                 'exec': 'game.buy("sp")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]-help*$',
+                'pattern': '^buy[\\s]-help[\\s]*$',
                 'exec': 'game.buy("help")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-info*$',
+                'pattern': '^buy[\\s]+-info[\\s]*$',
                 'exec': 'game.buy("info")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-server[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-server[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("server-help")',
                 'options': false
             }, {
