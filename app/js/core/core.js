@@ -186,7 +186,7 @@ var game = {
         game.display();
     },
 
-    varInit: function(callback) {
+    varInit: function() {
         game.options.interval = (1000 / game.options.fps);
 
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
@@ -218,7 +218,7 @@ var game = {
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {
-            game.sounds.switchSounds();
+            game.options.triggerSounds();
         });
 
         $('#navbar-save').on('click', function() {

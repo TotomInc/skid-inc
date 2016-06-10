@@ -29,79 +29,27 @@ game.buy = function(from, option) {
         
         return;
     };
-    
-    if (from == "serv-pers") {
-        var cost = game.servers.getPersCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.personal.owned++;
-            
-            var newCost = game.servers.getPersCost();
-            game.console.print('gain', 'You successfully bought a personal server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a personal server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-        
-        return;
-    };
-    
-    if (from == "serv-pro") {
-        var cost = game.servers.getProCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.professional.owned++;
-            
-            var newCost = game.servers.getProCost();
-            game.console.print('gain', 'You successfully bought a professional server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a professional server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-        
-        return;
-    };
-    
-    if (from == "serv-speedhack") {
-        var cost = game.servers.getVMCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.vm.owned++;
-            
-            var newCost = game.servers.getVMCost();
-            game.console.print('gain', 'You successfully bought a VirtualMachine for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a VirtualMachine, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
 
-        return;
-    };
-    
-    if (from == "serv-quickhack") {
-        var cost = game.servers.getQuickhackCost();
-        
-        if (game.player.money >= cost && game.servers.quickhack.owned < 15) {
-            game.player.money -= cost;
-            game.servers.quickhack.owned++;
-
-            var newCost = game.servers.getQuickhackCost();
-            game.console.print('gain', 'You successfully bought a quickhack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else if (game.servers.quickhack.owned >= 15)
-            game.console.print('error', 'You already bought the maximum of speedhack servers (15).');
-        else
-            game.console.print('error', 'Not enough money to buy a quickhack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-
-        return;
-    };
-
-    
-    
-    
     if (from == 'server') {
-        console.log('want a ' + option + ' server.');
-        game.console.print('warn', 'TODO');
+        var cost = undefined;
+        
+        if (option == 'personal')
+            cost = game.servers.getPersCost();
+        else if (option == 'professional')
+            cost = game.servers.getProCost();
+        else if (option == 'vm')
+            cost = game.servers.getVMCost();
+        else if (option == 'quickhack')
+            cost = game.servers.getQuickhackCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.servers[option].owned++;
+            
+            game.console.print('gain', 'You successfully bought a ' + option + ' server for $' + fix(cost) + '.');
+        }
+        else
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };
@@ -113,8 +61,19 @@ game.buy = function(from, option) {
     };
     
     if (from == 'hacker') {
-        console.log('want ' + option + ' hacker.');
-        game.console.print('warn', 'TODO');
+        var thisHacker = game.team.list[option],
+            cost = game.team.list[option].price;
+        
+        if (game.player.money >= cost && !thisHacker.owned) {
+            game.player.money -= cost
+            thisHacker.owned = true;
+            
+            game.console.print('gain', 'You successfully hired ' + thisHacker.effect + ' hacker for $' + fix(cost) + '.');
+        }
+        else if (thisHacker.owned)
+            game.console.print('error', 'You already own this hacker!');
+        else if (game.player.money < cost)
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };
@@ -133,8 +92,21 @@ game.buy = function(from, option) {
     };
     
     if (from == 'ability') {
-        console.log('want ' + option + ' ability.');
-        game.console.print('warn', 'TODO');
+        var thisAbility = game.abilities.list[option],
+            cost = thisAbility.cost;
+        
+        if (game.player.money >= cost && !thisAbility.owned && game.player.level >= thisAbility.reqLevel) {
+            game.player.money -= cost;
+            thisAbility.owned = true;
+            
+            game.console.print('gain', 'You successfully bought the ' + thisAbility.name + ' ability for $' + fix(cost) + '.');
+        }
+        else if (thisAbility.owned)
+            game.console.print('error', 'You already own this ability!');
+        else if (game.player.level < thisAbility.reqLevel)
+            game.console.print('error', 'You don\'t have the required level.');
+        else if (game.player.money < cost)
+            game.console.print('error', 'Not enough money, cost $ ' + fix(cost) + '.');
         
         return;
     };

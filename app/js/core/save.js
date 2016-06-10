@@ -85,7 +85,7 @@ game.save = {
             gt.list['anonymous_hideout'].progress = sgt.list['anonymous_hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
 
-            gab.list['up-key'].owned = sgab.list['up-key'].owned;
+            gab.list['up_key'].owned = sgab.list['up_key'].owned;
 
             game.achievements.checkLoaded();
 

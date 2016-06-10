@@ -1,15 +1,18 @@
 game.console = {
     latest: undefined,
+    canUseUpkey: true,
     
     typeLast: function() {
         var last = String(game.console.latest);
-        console.log('last: ' + last);
-        console.log('typeLast called');
         
-        if (game.abilities.list['up-key'].owned) {
-            console.log('condition passed');
+        if (game.abilities.list['up_key'].owned && game.console.canUseUpkey) {
+            game.console.canUseUpkey = false;
             $('#console-input').val(last);
-        };
+            
+            window.setTimeout(function() {
+                game.console.canUseUpkey = true;
+            }, game.options.upkeyBindTime);
+        }
     },
     
     executer: function() {
@@ -28,12 +31,12 @@ game.console = {
                     var optionRegex = new RegExp(instance.options, 'g'),
                         matches = input.match(optionRegex);
                     
-                    if (matches.length == 1) {
+                    if (matches == null)
+                        game.console.print('error', 'Unknown argument value.');
+                    else if (matches.length == 1) {
                         var option = matches[0];
                         eval(instance.exec);
                     }
-                    else
-                        game.console.print('error', 'Unknown argument value.');
                 }
                 else
                     eval(instance.exec);
@@ -44,6 +47,10 @@ game.console = {
         else
             game.console.print('error', 'Unknown command.');
         
+        if (game.options.sounds)
+            game.sounds.button.play();
+        
+        game.console.latest = input;
         $('#console-input').val('');
     }
 };

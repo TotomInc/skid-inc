@@ -19,7 +19,7 @@ game.console.cmds = [
                 'exec': 'game.hack("stats")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-list[\\s]*$',
+                'pattern': '^hack[\\s]+-place[\\s]+-list[\\s]*$',
                 'exec': 'game.hack("list")',
                 'options': false
             }, {
@@ -85,23 +85,23 @@ game.console.cmds = [
                 'exec': 'game.buy("hacker", option)',
                 'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
             }, {
-                'pattern': '^buy[\\s]+-hacker[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-hacker[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("hacker-help")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-hacker[\\s]+-list*$',
+                'pattern': '^buy[\\s]+-hacker[\\s]+-list[\\s]*$',
                 'exec': 'game.buy("hacker-list")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-ability[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-ability[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("ability-help")',
                 'options': false
             }, {
                 'pattern': '^buy[\\s]+-ability[\\s]+[\\w]*$',
                 'exec': 'game.buy("ability", option)',
-                'options': '(key_up)'
+                'options': '(up_key)'
             }, {
-                'pattern': '^buy[\\s]+-ability[\\s]+-list*$',
+                'pattern': '^buy[\\s]+-ability[\\s]+-list[\\s]*$',
                 'exec': 'game.buy("ability-list")',
                 'options': false
             }
@@ -109,20 +109,20 @@ game.console.cmds = [
     },
     
     {
-        name: 'hackers',
-        desc: 'used to perform actions on your hackers.',
-        pattern: '^hackers',
+        name: 'team',
+        desc: 'used to perform actions on your hackers, also know as a team.',
+        pattern: '^team',
         commandRegex: [
             {
-                'pattern': '^hackers[\\s]*$',
+                'pattern': '^team[\\s]*$',
                 'exec': 'game.team.exec("sp")',
                 'options': false
             }, {
-                'pattern': '^hackers[\\s]+-help*$',
+                'pattern': '^team[\\s]+-help[\\s]*$',
                 'exec': 'game.team.exec("help")',
                 'options': false
             }, {
-                'pattern': '^hackers[\\s]+-status*$',
+                'pattern': '^team[\\s]+-status[\\s]*$',
                 'exec': 'game.team.exec("status")',
                 'options': false
             }
@@ -186,7 +186,7 @@ game.console.cmds = [
                 'options': false
             }, {
                 'pattern': '^config[\\s]+-sounds[\\s]+[\\w]+[\\s]*$',
-                'exec': 'game.config("triggerSounds")',
+                'exec': 'game.config("triggerSounds", option)',
                 'options': '(true|false)'
             }, {
                 'pattern': '^config[\\s]+-background[\\s]+[\\w]+[\\s]*$',
