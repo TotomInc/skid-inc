@@ -31,47 +31,22 @@ game.upgrade = function(from, option) {
     };
     
     if (from == 'server') {
-        console.log('want to upgrade a ' + option + ' server.');
-        game.console.print('warn', 'TODO');
+        var cost = undefined;
         
-        return;
-    };
-    
-    
-    
-    
-    if (from == 'personal') {
-        var cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
+        if (option == 'personal')
+            cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
+        else if (option == 'professional')
+            cost = Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
         
         if (game.player.money >= cost) {
             game.player.money -= cost;
-            game.servers.personal.level++;
-            game.servers.personal.mult += game.servers.personal.multAdd;
+            game.servers[option].level++;
+            game.servers[option].mult += game.servers[option].multAdd;
             
-            var newCost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
-            
-            game.console.print('log', 'You successfully upgraded your personal server. Next one cost: $' + fix(newCost));
+            game.console.print('gain', 'You successfully upgraded your ' + option + ' server for $' + fix(cost) + '.');
         }
         else
-            game.console.print('error', 'Not enough money to upgrade this server.');
-        
-        return;
-    };
-    
-    if (from == 'professional') {
-        var cost = Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.professional.level++;
-            game.servers.professional.mult += game.servers.professional.multAdd;
-            
-            var newCost = Math.floor(100000 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
-            
-            game.console.print('log', 'You successfully upgraded your professional server. Next one cost: $' + fix(newCost));
-        }
-        else
-            game.console.print('error', 'Not enough money to upgrade this server.');
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };

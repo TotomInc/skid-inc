@@ -299,7 +299,7 @@ var game = {
         game.display();
     },
 
-    varInit: function(callback) {
+    varInit: function() {
         game.options.interval = (1000 / game.options.fps);
 
         game.options.intervals.loop = setInterval(game.loop, game.options.interval);
@@ -331,7 +331,7 @@ var game = {
         $('#navbar-version').html('v' + game.options.version);
 
         $('#navbar-mute').on('click', function() {
-            game.sounds.switchSounds();
+            game.options.triggerSounds();
         });
 
         $('#navbar-save').on('click', function() {
@@ -407,6 +407,7 @@ game.options = {
     interval: undefined,
     fps: 10,
     bindTime: 350,
+    upkeyBindTime: 750,
     sounds: false,
     version: 0.05,
     
@@ -426,51 +427,59 @@ game.options = {
     
     isInit: false,
     
-    triggerBackground: function() {
-        if (game.options.effectEnabled) {
-            $('#matrix-effect').fadeOut('slow', function() {
-                game.options.effectEnabled = false;
-            });
+    triggerSounds: function(option) {
+        if (option !== undefined) {
+            if (option == 'true')
+                game.options.sounds = true;
+            else if (option == 'false')
+                game.options.sounds = false;
+
+            game.console.print('warn', 'Sounds have been turned to ' + game.options.sounds + '.');
         }
         else {
-            $('#matrix-effect').fadeIn('slow', function() {
-                game.options.effectEnabled = true;
-            });
+            game.options.sounds = !game.options.sounds;
+
+            game.console.print('warn', 'Sounds have been turned to ' + game.options.sounds + '.');
         };
+    },
+    
+    triggerBackground: function(option) {
+        if (option !== undefined) {
+            if (option == 'true') {
+                $('#matrix-effect').fadeIn('slow', function() {
+                    game.options.effectEnabled = true;
+                });
+            }
+            else if (option == 'false') {
+                $('#matrix-effect').fadeOut('slow', function() {
+                    game.options.effectEnabled = false;
+                });
+            }
+        }
+        else {
+            if (game.options.effectEnabled) {
+                $('#matrix-effect').fadeOut('slow', function() {
+                    game.options.effectEnabled = false;
+                });
+            }
+            else {
+                $('#matrix-effect').fadeIn('slow', function() {
+                    game.options.effectEnabled = true;
+                });
+            };
+        }
     }
 };
 
 game.abilities = {
     list: {
-        'up-key': {
-            name: 'up-key',
+        'up_key': {
+            name: 'up_key',
             desc: 'press your up-key to type the latest command entered.',
             cost: 1e6,
             reqLevel: 20,
             owned: false
         }
-    },
-    
-    buy: function(who) {
-        var thisAbility = game.abilities.list[who];
-        
-        console.log(thisAbility)
-        console.log(game.player.money >= thisAbility.cost)
-        console.log(!thisAbility.owned)
-        console.log(game.player.level >= thisAbility.reqLevel)
-        
-        if (game.player.money >= thisAbility.cost && !thisAbility.owned && game.player.level >= thisAbility.reqLevel) {
-            game.player.money -= thisAbility.cost;
-            thisAbility.owned = true;
-            
-            game.console.print('log', 'You successfully bought the ' + thisAbility.name + ' ability.');
-        }
-        else if (game.player.level < thisAbility.reqLevel)
-            game.console.print('error', 'You don\'t have the required level to buy this ability.');
-        else if (game.player.money < thisAbility.price)
-            game.console.print('error', 'Not enough money to buy this ability!');
-        else if (thisAbility.owned)
-            game.console.print('error', 'You already own this ability.');
     },
     
     exec: function(from) {
@@ -529,79 +538,27 @@ game.buy = function(from, option) {
         
         return;
     };
-    
-    if (from == "serv-pers") {
-        var cost = game.servers.getPersCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.personal.owned++;
-            
-            var newCost = game.servers.getPersCost();
-            game.console.print('gain', 'You successfully bought a personal server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a personal server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-        
-        return;
-    };
-    
-    if (from == "serv-pro") {
-        var cost = game.servers.getProCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.professional.owned++;
-            
-            var newCost = game.servers.getProCost();
-            game.console.print('gain', 'You successfully bought a professional server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a professional server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-        
-        return;
-    };
-    
-    if (from == "serv-speedhack") {
-        var cost = game.servers.getVMCost();
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.vm.owned++;
-            
-            var newCost = game.servers.getVMCost();
-            game.console.print('gain', 'You successfully bought a VirtualMachine for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else
-            game.console.print('error', 'Not enough money to buy a VirtualMachine, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
 
-        return;
-    };
-    
-    if (from == "serv-quickhack") {
-        var cost = game.servers.getQuickhackCost();
-        
-        if (game.player.money >= cost && game.servers.quickhack.owned < 15) {
-            game.player.money -= cost;
-            game.servers.quickhack.owned++;
-
-            var newCost = game.servers.getQuickhackCost();
-            game.console.print('gain', 'You successfully bought a quickhack server for $' + fix(cost) + ', next cost: $' + fix(newCost) + '. For more info type <b>buy -info</b>.');
-        }
-        else if (game.servers.quickhack.owned >= 15)
-            game.console.print('error', 'You already bought the maximum of speedhack servers (15).');
-        else
-            game.console.print('error', 'Not enough money to buy a quickhack server, cost $' + fix(cost) + '. For more info type <b>buy -info</b>.');
-
-        return;
-    };
-
-    
-    
-    
     if (from == 'server') {
-        console.log('want a ' + option + ' server.');
-        game.console.print('warn', 'TODO');
+        var cost = undefined;
+        
+        if (option == 'personal')
+            cost = game.servers.getPersCost();
+        else if (option == 'professional')
+            cost = game.servers.getProCost();
+        else if (option == 'vm')
+            cost = game.servers.getVMCost();
+        else if (option == 'quickhack')
+            cost = game.servers.getQuickhackCost();
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.servers[option].owned++;
+            
+            game.console.print('gain', 'You successfully bought a ' + option + ' server for $' + fix(cost) + '.');
+        }
+        else
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };
@@ -613,8 +570,19 @@ game.buy = function(from, option) {
     };
     
     if (from == 'hacker') {
-        console.log('want ' + option + ' hacker.');
-        game.console.print('warn', 'TODO');
+        var thisHacker = game.team.list[option],
+            cost = game.team.list[option].price;
+        
+        if (game.player.money >= cost && !thisHacker.owned) {
+            game.player.money -= cost
+            thisHacker.owned = true;
+            
+            game.console.print('gain', 'You successfully hired ' + thisHacker.effect + ' hacker for $' + fix(cost) + '.');
+        }
+        else if (thisHacker.owned)
+            game.console.print('error', 'You already own this hacker!');
+        else if (game.player.money < cost)
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };
@@ -633,8 +601,21 @@ game.buy = function(from, option) {
     };
     
     if (from == 'ability') {
-        console.log('want ' + option + ' ability.');
-        game.console.print('warn', 'TODO');
+        var thisAbility = game.abilities.list[option],
+            cost = thisAbility.cost;
+        
+        if (game.player.money >= cost && !thisAbility.owned && game.player.level >= thisAbility.reqLevel) {
+            game.player.money -= cost;
+            thisAbility.owned = true;
+            
+            game.console.print('gain', 'You successfully bought the ' + thisAbility.name + ' ability for $' + fix(cost) + '.');
+        }
+        else if (thisAbility.owned)
+            game.console.print('error', 'You already own this ability!');
+        else if (game.player.level < thisAbility.reqLevel)
+            game.console.print('error', 'You don\'t have the required level.');
+        else if (game.player.money < cost)
+            game.console.print('error', 'Not enough money, cost $ ' + fix(cost) + '.');
         
         return;
     };
@@ -656,59 +637,27 @@ game.buy = function(from, option) {
 game.config = function(from, option) {
     if (from == "sp") {
         game.console.print('error', game.console.errors.configNoArgs);
-        
+
         return;
     };
-    
+
     if (from == "help") {
         game.console.print('help', game.console.help.config);
-        
+
         return;
     };
-    
+
     if (from == 'triggerSounds') {
-        game.console.print('warn', 'TODO');
-        
+        game.options.triggerSounds(option);
+
         return;
     };
-    
+
     if (from == "triggerBackground") {
-        game.console.print('warn', 'TODO');
-        
+        game.options.triggerBackground(option);
+
         return;
     };
-    
-    // if (from == "sound-off") {
-    //     game.console.print('log', 'Sounds have been turned off.');
-    //     game.options.sounds = false;
-    //     game.sounds.disableSounds();
-        
-    //     return;
-    // };
-    
-    // if (from == "sound-on") {
-    //     game.console.print('log', 'Sounds have been turned on.');
-    //     game.options.sounds = true;
-    //     game.sounds.enableSounds();
-        
-    //     return;
-    // };
-    
-    // if (from == "background-off") {
-    //     game.console.print('log', 'Background have been turned off.');
-    //     game.options.background = false;
-    //     game.options.triggerBackground();
-        
-    //     return;
-    // };
-    
-    // if (from == "background-on") {
-    //     game.console.print('log', 'Background have been turned on');
-    //     game.options.background = true;
-    //     game.options.triggerBackground();
-        
-    //     return;
-    // };
 };
 
 game.options.isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -723,34 +672,6 @@ if (game.options.isIE || game.options.isEdge)
     alert('Skid-Inc is not fully supported on Internet Explorer and Edge. We recommend you to play with Chrome or Firefox.');;
 
 game.hack = function(from, option) {
-    if (from == 'mini-market' || from == 'market' || from == 'jewelry' || from == 'bank' || from == 'trading-center' || from == 'anonymous-hideout' || from == 'deepweb') {
-        var thisPlace = game.console.cmds.hack.places[from];
-
-        if (!game.player.isHacking) {
-            console.log('h')
-            console.log(from)
-            console.log(game.team.list[from])
-            
-            if (game.team.list[from].owned)
-                game.console.print('error', 'You already have a hacker to hack this place.');
-            else if (game.player.level >= thisPlace.reqLevel) {
-                game.player.isHacking = true;
-                game.player.hackingWhat = from;
-                game.console.print('log', 'Hack in progress...');
-                game.console.print('hack-bar');
-            }
-            else
-                game.console.print('error', game.console.errors.levelLow);
-        }
-        else
-            game.console.print('error', game.console.errors.hackInProgress);
-
-        return;
-    };
-    
-    
-    
-    
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
@@ -820,8 +741,22 @@ game.hack = function(from, option) {
     };
     
     if (from == 'place') {
-        console.log('want to hack ' + option);
-        game.console.print('TODO');
+        var thisPlace = game.console.cmds[0].places[option];
+        
+        if (!game.player.isHacking) {
+            if (game.team.list[option].owned)
+                game.console.print('error', 'You already have a hacker to hack this place.');
+            else if (game.player.level >= thisPlace.reqLevel) {
+                game.player.isHacking = true;
+                game.player.hackingWhat = option;
+                game.console.print('log', 'Hack in progress...');
+                game.console.print('hack-bar');
+            }
+            else
+                game.console.print('error', game.console.errors.levelLow);
+        }
+        else
+            game.console.print('error', game.console.errors.hackInProgress);
         
         return;
     };
@@ -969,7 +904,7 @@ game.save = {
             gt.list['anonymous_hideout'].progress = sgt.list['anonymous_hideout'].progress;
             gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
 
-            gab.list['up-key'].owned = sgab.list['up-key'].owned;
+            gab.list['up_key'].owned = sgab.list['up_key'].owned;
 
             game.achievements.checkLoaded();
 
@@ -1073,7 +1008,7 @@ game.team = {
     list: {
         'mini_market': {
             name: 'mini_market',
-            effect: 'mini-market',
+            effect: 'mini_market',
             price: 10000,
             owned: false,
             progress: 0,
@@ -1109,7 +1044,7 @@ game.team = {
         
         'trading_center': {
             name: 'trading_center',
-            effect: 'trading-center',
+            effect: 'trading_center',
             price: 12500000,
             owned: false,
             progress: 0,
@@ -1118,7 +1053,7 @@ game.team = {
         
         'anonymous_hideout': {
             name: 'anonymous_hideout',
-            effect: 'anonymous-hideout',
+            effect: 'anonymous_hideout',
             price: 37500000,
             owned: false,
             progress: 0,
@@ -1135,23 +1070,7 @@ game.team = {
         }
     },
     
-    buy: function(who) {
-        var thisHacker = game.team.list[who],
-            thisPlace = game.console.cmds.hack.places[who];
-        
-        if (game.player.money >= thisHacker.price && !thisHacker.owned && game.player.level >= thisPlace.reqLevel) {
-            game.player.money -= thisHacker.price;
-            thisHacker.owned = true;
-            
-            game.console.print('log', 'You successfully engaged a <b>' + thisHacker.name + '</b> working for the ' + thisHacker.effect + ' hack.');
-        }
-        else if (game.player.level < thisPlace.reqLevel)
-            game.console.print('error', 'You don\'t have the required level to buy this hacker.');
-        else if (thisHacker.owned)
-            game.console.print('error', 'You already engaged this hacker.');
-    },
-    
-    exec: function(from) {
+    exec: function(from, option) {
         if (from == 'sp') {
             game.console.print('error', game.console.errors.hackerNoArgs);
             
@@ -1167,7 +1086,7 @@ game.team = {
         if (from == 'status') {
             for (var hacker in game.team.list) {
                 var thisHacker = game.team.list[hacker],
-                    thisPlace = game.console.cmds.hack.places[thisHacker.effect],
+                    thisPlace = game.console.cmds[0].places[thisHacker.effect],
                     time = game.getPlaceTime(thisPlace);
                 
                 game.console.print('log', '<b>' + thisHacker.name + '</b>: hack ' + thisHacker.effect + ', current progress at ' + fix(thisHacker.progress, 2) + '/' + fix(time, 2) + ' sec, engaged: ' + thisHacker.owned);
@@ -1211,47 +1130,22 @@ game.upgrade = function(from, option) {
     };
     
     if (from == 'server') {
-        console.log('want to upgrade a ' + option + ' server.');
-        game.console.print('warn', 'TODO');
+        var cost = undefined;
         
-        return;
-    };
-    
-    
-    
-    
-    if (from == 'personal') {
-        var cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
+        if (option == 'personal')
+            cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
+        else if (option == 'professional')
+            cost = Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
         
         if (game.player.money >= cost) {
             game.player.money -= cost;
-            game.servers.personal.level++;
-            game.servers.personal.mult += game.servers.personal.multAdd;
+            game.servers[option].level++;
+            game.servers[option].mult += game.servers[option].multAdd;
             
-            var newCost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
-            
-            game.console.print('log', 'You successfully upgraded your personal server. Next one cost: $' + fix(newCost));
+            game.console.print('gain', 'You successfully upgraded your ' + option + ' server for $' + fix(cost) + '.');
         }
         else
-            game.console.print('error', 'Not enough money to upgrade this server.');
-        
-        return;
-    };
-    
-    if (from == 'professional') {
-        var cost = Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers.professional.level++;
-            game.servers.professional.mult += game.servers.professional.multAdd;
-            
-            var newCost = Math.floor(100000 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
-            
-            game.console.print('log', 'You successfully upgraded your professional server. Next one cost: $' + fix(newCost));
-        }
-        else
-            game.console.print('error', 'Not enough money to upgrade this server.');
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
         return;
     };
@@ -1259,16 +1153,19 @@ game.upgrade = function(from, option) {
 
 game.console = {
     latest: undefined,
+    canUseUpkey: true,
     
     typeLast: function() {
         var last = String(game.console.latest);
-        console.log('last: ' + last);
-        console.log('typeLast called');
         
-        if (game.abilities.list['up-key'].owned) {
-            console.log('condition passed');
+        if (game.abilities.list['up_key'].owned && game.console.canUseUpkey) {
+            game.console.canUseUpkey = false;
             $('#console-input').val(last);
-        };
+            
+            window.setTimeout(function() {
+                game.console.canUseUpkey = true;
+            }, game.options.upkeyBindTime);
+        }
     },
     
     executer: function() {
@@ -1287,12 +1184,12 @@ game.console = {
                     var optionRegex = new RegExp(instance.options, 'g'),
                         matches = input.match(optionRegex);
                     
-                    if (matches.length == 1) {
+                    if (matches == null)
+                        game.console.print('error', 'Unknown argument value.');
+                    else if (matches.length == 1) {
                         var option = matches[0];
                         eval(instance.exec);
                     }
-                    else
-                        game.console.print('error', 'Unknown argument value.');
                 }
                 else
                     eval(instance.exec);
@@ -1303,6 +1200,10 @@ game.console = {
         else
             game.console.print('error', 'Unknown command.');
         
+        if (game.options.sounds)
+            game.sounds.button.play();
+        
+        game.console.latest = input;
         $('#console-input').val('');
     }
 };;
@@ -1328,7 +1229,7 @@ game.console.cmds = [
                 'exec': 'game.hack("stats")',
                 'options': false
             }, {
-                'pattern': '^hack[\\s]+-list[\\s]*$',
+                'pattern': '^hack[\\s]+-place[\\s]+-list[\\s]*$',
                 'exec': 'game.hack("list")',
                 'options': false
             }, {
@@ -1394,23 +1295,23 @@ game.console.cmds = [
                 'exec': 'game.buy("hacker", option)',
                 'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
             }, {
-                'pattern': '^buy[\\s]+-hacker[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-hacker[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("hacker-help")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-hacker[\\s]+-list*$',
+                'pattern': '^buy[\\s]+-hacker[\\s]+-list[\\s]*$',
                 'exec': 'game.buy("hacker-list")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-ability[\\s]+-help*$',
+                'pattern': '^buy[\\s]+-ability[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("ability-help")',
                 'options': false
             }, {
                 'pattern': '^buy[\\s]+-ability[\\s]+[\\w]*$',
                 'exec': 'game.buy("ability", option)',
-                'options': '(key_up)'
+                'options': '(up_key)'
             }, {
-                'pattern': '^buy[\\s]+-ability[\\s]+-list*$',
+                'pattern': '^buy[\\s]+-ability[\\s]+-list[\\s]*$',
                 'exec': 'game.buy("ability-list")',
                 'options': false
             }
@@ -1418,20 +1319,20 @@ game.console.cmds = [
     },
     
     {
-        name: 'hackers',
-        desc: 'used to perform actions on your hackers.',
-        pattern: '^hackers',
+        name: 'team',
+        desc: 'used to perform actions on your hackers, also know as a team.',
+        pattern: '^team',
         commandRegex: [
             {
-                'pattern': '^hackers[\\s]*$',
+                'pattern': '^team[\\s]*$',
                 'exec': 'game.team.exec("sp")',
                 'options': false
             }, {
-                'pattern': '^hackers[\\s]+-help*$',
+                'pattern': '^team[\\s]+-help[\\s]*$',
                 'exec': 'game.team.exec("help")',
                 'options': false
             }, {
-                'pattern': '^hackers[\\s]+-status*$',
+                'pattern': '^team[\\s]+-status[\\s]*$',
                 'exec': 'game.team.exec("status")',
                 'options': false
             }
@@ -1495,7 +1396,7 @@ game.console.cmds = [
                 'options': false
             }, {
                 'pattern': '^config[\\s]+-sounds[\\s]+[\\w]+[\\s]*$',
-                'exec': 'game.config("triggerSounds")',
+                'exec': 'game.config("triggerSounds", option)',
                 'options': '(true|false)'
             }, {
                 'pattern': '^config[\\s]+-background[\\s]+[\\w]+[\\s]*$',
@@ -1617,8 +1518,8 @@ game.console.help = {
         "<b>hack -place -list</b>: print a list of places with their respective informations.",
 
     config: "You must use <b>config</b> with arguments.<br>" +
-        "<b>config -sounds <i>value</i></b>: enable (1) or disable (0) the sound of the game. (default 0)<br>" +
-        "<b>config -background <i>value</i></b>: enable (1) or disable (0) the background animation. (defaut 0)",
+        "<b>config -sounds <i>value</i></b>: enable (true) or disable (false) the sound of the game. (default to false)<br>" +
+        "<b>config -background <i>value</i></b>: enable (true) or disable (false) the background animation. (default to false)",
 
     clear: "<b>clear</b> don't accept any arguments.",
     
@@ -1815,24 +1716,8 @@ game.console.printGuide = function() {
 game.sounds = {
     button: new Audio('app/assets/sounds/button.mp3'),
     ambient: new Audio('app/assets/sounds/server-room.mp3'),
-    
-    switchSounds: function() {
-        if (!game.options.sounds) {
-            game.config("sound-on");
-            $('#navbar-mute').html(
-                '<i class="fa fa-volume-up" aria-hidden="true"></i> Sounds on'
-            );
-        }
-        else if (game.options.sounds) {
-            game.config("sound-off");
-            $('#navbar-mute').html(
-                '<i class="fa fa-volume-off" aria-hidden="true"></i> Sounds off'
-            );
-        };
-    },
 
     enableSounds: function() {
-        console.log('sounds enabled')
         game.options.sounds = true;
         game.sounds.ambient.currentTime = 0;
         // game.sounds.ambient.play();
@@ -1846,7 +1731,6 @@ game.sounds = {
     },
 
     disableSounds: function() {
-        console.log('sounds disabled')
         game.options.sounds = false;
         
         game.sounds.ambient.pause();
