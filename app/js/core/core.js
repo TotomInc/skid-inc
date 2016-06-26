@@ -108,7 +108,7 @@ var game = {
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
 
-                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
+                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif-x158.png');
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned <b>$' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.</b>');
 
                 game.player.hackingWhat = undefined;

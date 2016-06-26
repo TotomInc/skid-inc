@@ -1,4 +1,25 @@
 game.hack = function(from, option) {
+    if (from == 'cancel') {
+        if (game.player.isHacking) {
+            $('#hacking-progress').remove();
+            
+            game.console.print('warn', game.player.hackingWhat + ' hack cancelled.');
+            
+            game.player.isHacking = false;
+            game.player.hackingWhat = undefined;
+        }
+        else
+            game.console.print('error', 'You can\'t cancel a place hack because you are currently hacking nothing. Try <b>hack -place -list</b>!');
+    
+        return;
+    };
+    
+    if (game.player.isHacking) {
+        game.console.print('error', 'You are currently hacking a place, you can\'t do a hack. Wait for your hack to finish or cancel it with <b>hack -place -cancel</b>.');
+        
+        return;
+    };
+    
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
@@ -12,17 +33,16 @@ game.hack = function(from, option) {
         if (from == 'sp-click') {
             moneyReward /= divider;
             expReward /= divider;
-            game.player.timesHacked++;
         }
-        else
-            game.player.timesHacked += 16;
+        
+        game.player.timesHacked++;
         
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
 
         if (from == 'sp-click') {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
-            floating.addFloating('hack-button', '+$' + fix(moneyReward));
+            floating.addFloating('hack-button', '+ $' + fix(moneyReward));
         }
         else
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');

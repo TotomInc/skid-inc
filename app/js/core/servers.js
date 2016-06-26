@@ -71,7 +71,7 @@ game.servers = {
     quickhack: {
         owned: 0,
         cost: 1e6,
-        inflation: 1e3,
+        inflation: 100,
         accelerator: 1.5
     }
 };

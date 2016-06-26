@@ -3,63 +3,63 @@ game.console.cmds[0].places = {
         name: 'mini_market',
         minMoneyReward: 450,
         maxMoneyReward: 1500,
-        minExpReward: 250,
-        maxExpReward: 650,
-        time: 20,
+        minExpReward: 150,
+        maxExpReward: 350,
+        time: 25,
         reqLevel: 2
     },
     'market': {
         name: 'market',
         minMoneyReward: 2000,
         maxMoneyReward: 5000,
-        minExpReward: 250,
-        maxExpReward: 600,
-        time: 40,
+        minExpReward: 225,
+        maxExpReward: 550,
+        time: 60,
         reqLevel: 10
     },
     'jewelry': {
         name: 'jewelry',
         minMoneyReward: 10000,
         maxMoneyReward: 40000,
-        minExpReward: 1500,
-        maxExpReward: 3000,
-        time: 320, // 5min
+        minExpReward: 500,
+        maxExpReward: 1300,
+        time: 480,
         reqLevel: 20
     },
     'bank': {
         name: 'bank',
         minMoneyReward: 75000,
         maxMoneyReward: 200000,
-        minExpReward: 7500,
-        maxExpReward: 15000,
-        time: 1280, // 21min
+        minExpReward: 2000,
+        maxExpReward: 9500,
+        time: 2880,
         reqLevel: 30
     },
     'trading_center': {
         name: 'trading_center',
         minMoneyReward: 750000,
         maxMoneyReward: 2500000,
-        minExpReward: 50000,
-        maxExpReward: 100000,
-        time: 5120, // 1,42h
+        minExpReward: 15000,
+        maxExpReward: 40000,
+        time: 11520,
         reqLevel: 40
     },
     'anonymous_hideout': {
         name: 'anonymous_hideout',
         minMoneyReward: 5000000,
         maxMoneyReward: 12500000,
-        minExpReward: 250000,
-        maxExpReward: 1000000,
-        time: 20480, // 5,68h
+        minExpReward: 75000,
+        maxExpReward: 200000,
+        time: 34560,
         reqLevel: 50
     },
     'deepweb': {
         name: 'deepweb',
         minMoneyReward: 50000000,
         maxMoneyReward: 100000000,
-        minExpReward: 3500000,
-        maxExpReward: 9500000,
-        time: 81920, // 22,75h
+        minExpReward: 750000,
+        maxExpReward: 2000000,
+        time: 81920,
         reqLevel: 60
     }
 };
