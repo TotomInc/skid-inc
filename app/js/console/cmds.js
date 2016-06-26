@@ -26,6 +26,10 @@ game.console.cmds = [
                 'pattern': '^hack[\\s]+-place[\\s]+[\\w]*$',
                 'exec': 'game.hack("place", option)',
                 'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+            }, {
+                'pattern': '^hack[\\s]+-place[\\s]+-cancel*$',
+                'exec': 'game.hack("cancel")',
+                'options': false
             }
         ]
     },

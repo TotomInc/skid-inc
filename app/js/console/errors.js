@@ -20,7 +20,7 @@ game.console.errors = {
     achNoArgs: 'You must use <b>achievements</b> with arguments. Type <b>achievements -help</b> for more informations.',
     
     // hacker errors
-    hackerNoArgs: 'You must use <b>hackers</b> with arguments. Type <b>hackers -help</b> for more informations.',
+    hackerNoArgs: 'You must use <b>team</b> with arguments. Type <b>team -help</b> for more informations.',
     
     // abilities errors
     abilityNoArgs: 'You must use <b>ability</b> with arguments. Type <b>ability -help</b> for more informations.',

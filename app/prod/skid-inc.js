@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-06-10 */
+/*! skid-inc - v1.0.0 - 2016-06-26 */
 var beautify = {
 	prefixes: [
 	    "m", "b", "t", "q", "Q", "s", "S", "o", "n",
@@ -221,7 +221,7 @@ var game = {
                 game.earnExp(expReward);
                 game.player.timesPlacesHacked++;
 
-                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif.png');
+                game.notif.showNotif('Skid-Inc', 'You have successfully hacked ' + game.player.hackingWhat + ', and earned $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.', 'app/assets/images/icons/logonotif-x158.png');
                 game.console.print('gain', cap(thisPlace.name) + ' hack finished: you earned <b>$' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.</b>');
 
                 game.player.hackingWhat = undefined;
@@ -409,7 +409,7 @@ game.options = {
     bindTime: 350,
     upkeyBindTime: 750,
     sounds: false,
-    version: 0.05,
+    version: 0.06,
     
     now: new Date().getTime(),
     before: new Date().getTime(),
@@ -424,6 +424,8 @@ game.options = {
     isEdge: false,
     isChrome: false,
     isBlink: false,
+    
+    whatOS: undefined,
     
     isInit: false,
     
@@ -668,10 +670,36 @@ game.options.isEdge = !game.options.isIE && !!window.StyleMedia;
 game.options.isChrome = !!window.chrome && !!window.chrome.webstore;
 game.options.isBlink = (game.options.isChrome || game.options.isOpera) && !!window.CSS;
 
+if (navigator.appVersion.indexOf("Win")!=-1) game.options.whatOS="win";
+if (navigator.appVersion.indexOf("Mac")!=-1) game.options.whatOS="mac";
+if (navigator.appVersion.indexOf("X11")!=-1) game.options.whatOS="unix";
+if (navigator.appVersion.indexOf("Linux")!=-1) game.options.whatOS="linux";
+
 if (game.options.isIE || game.options.isEdge)
     alert('Skid-Inc is not fully supported on Internet Explorer and Edge. We recommend you to play with Chrome or Firefox.');;
 
 game.hack = function(from, option) {
+    if (from == 'cancel') {
+        if (game.player.isHacking) {
+            $('#hacking-progress').remove();
+            
+            game.console.print('warn', game.player.hackingWhat + ' hack cancelled.');
+            
+            game.player.isHacking = false;
+            game.player.hackingWhat = undefined;
+        }
+        else
+            game.console.print('error', 'You can\'t cancel a place hack because you are currently hacking nothing. Try <b>hack -place -list</b>!');
+    
+        return;
+    };
+    
+    if (game.player.isHacking) {
+        game.console.print('error', 'You are currently hacking a place, you can\'t do a hack. Wait for your hack to finish or cancel it with <b>hack -place -cancel</b>.');
+        
+        return;
+    };
+    
     if (from == 'sp' || from == 'sp-click') {
         var moneyReward = game.randomInclusive(game.player.randMoneyMin, game.player.randMoneyMax),
             expReward = game.randomInclusive(game.player.randExpMin, game.player.randExpMax),
@@ -685,17 +713,16 @@ game.hack = function(from, option) {
         if (from == 'sp-click') {
             moneyReward /= divider;
             expReward /= divider;
-            game.player.timesHacked++;
         }
-        else
-            game.player.timesHacked += 16;
+        
+        game.player.timesHacked++;
         
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
 
         if (from == 'sp-click') {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
-            floating.addFloating('hack-button', '+$' + fix(moneyReward));
+            floating.addFloating('hack-button', '+ $' + fix(moneyReward));
         }
         else
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
@@ -999,7 +1026,7 @@ game.servers = {
     quickhack: {
         owned: 0,
         cost: 1e6,
-        inflation: 1e3,
+        inflation: 100,
         accelerator: 1.5
     }
 };;
@@ -1236,6 +1263,10 @@ game.console.cmds = [
                 'pattern': '^hack[\\s]+-place[\\s]+[\\w]*$',
                 'exec': 'game.hack("place", option)',
                 'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+            }, {
+                'pattern': '^hack[\\s]+-place[\\s]+-cancel*$',
+                'exec': 'game.hack("cancel")',
+                'options': false
             }
         ]
     },
@@ -1502,7 +1533,7 @@ game.console.errors = {
     achNoArgs: 'You must use <b>achievements</b> with arguments. Type <b>achievements -help</b> for more informations.',
     
     // hacker errors
-    hackerNoArgs: 'You must use <b>hackers</b> with arguments. Type <b>hackers -help</b> for more informations.',
+    hackerNoArgs: 'You must use <b>team</b> with arguments. Type <b>team -help</b> for more informations.',
     
     // abilities errors
     abilityNoArgs: 'You must use <b>ability</b> with arguments. Type <b>ability -help</b> for more informations.',
@@ -1515,7 +1546,8 @@ game.console.help = {
     hack: "<b>hack</b> can be used with arguments.<br>" + 
         "<b>hack -stats</b>: stats for the simple hack.<br>" +
         "<b>hack -place <i>nameOfPlace</i></b>: hack a place.<br> "+
-        "<b>hack -place -list</b>: print a list of places with their respective informations.",
+        "<b>hack -place -list</b>: print a list of places with their respective informations.<br>" +
+        "<b>hack -place -cancel</b>: cancel the current place hack.",
 
     config: "You must use <b>config</b> with arguments.<br>" +
         "<b>config -sounds <i>value</i></b>: enable (true) or disable (false) the sound of the game. (default to false)<br>" +
@@ -1543,8 +1575,8 @@ game.console.help = {
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
         "<b>achievements -list</b>: print a list of all achievements.",
     
-    hackers: "<b>hackers</b> must be used with arguments.<br>" +
-        '<b>hackers -status</b>: print a list of all hackers available.<br>' +
+    hackers: "<b>team</b> must be used with arguments.<br>" +
+        '<b>team -status</b>: print a list of all hackers available.<br>' +
         'You can buy hackers with the <b>buy</b> command. Look at <b>buy -hacker -help</b> command.',
     
     ability: '<b>ability</b> must be used with arguments.<br>' +
@@ -1561,63 +1593,63 @@ game.console.cmds[0].places = {
         name: 'mini_market',
         minMoneyReward: 450,
         maxMoneyReward: 1500,
-        minExpReward: 250,
-        maxExpReward: 650,
-        time: 20,
+        minExpReward: 150,
+        maxExpReward: 350,
+        time: 25,
         reqLevel: 2
     },
     'market': {
         name: 'market',
         minMoneyReward: 2000,
         maxMoneyReward: 5000,
-        minExpReward: 250,
-        maxExpReward: 600,
-        time: 40,
+        minExpReward: 225,
+        maxExpReward: 550,
+        time: 60,
         reqLevel: 10
     },
     'jewelry': {
         name: 'jewelry',
         minMoneyReward: 10000,
         maxMoneyReward: 40000,
-        minExpReward: 1500,
-        maxExpReward: 3000,
-        time: 320, // 5min
+        minExpReward: 500,
+        maxExpReward: 1300,
+        time: 480,
         reqLevel: 20
     },
     'bank': {
         name: 'bank',
         minMoneyReward: 75000,
         maxMoneyReward: 200000,
-        minExpReward: 7500,
-        maxExpReward: 15000,
-        time: 1280, // 21min
+        minExpReward: 2000,
+        maxExpReward: 9500,
+        time: 2880,
         reqLevel: 30
     },
     'trading_center': {
         name: 'trading_center',
         minMoneyReward: 750000,
         maxMoneyReward: 2500000,
-        minExpReward: 50000,
-        maxExpReward: 100000,
-        time: 5120, // 1,42h
+        minExpReward: 15000,
+        maxExpReward: 40000,
+        time: 11520,
         reqLevel: 40
     },
     'anonymous_hideout': {
         name: 'anonymous_hideout',
         minMoneyReward: 5000000,
         maxMoneyReward: 12500000,
-        minExpReward: 250000,
-        maxExpReward: 1000000,
-        time: 20480, // 5,68h
+        minExpReward: 75000,
+        maxExpReward: 200000,
+        time: 34560,
         reqLevel: 50
     },
     'deepweb': {
         name: 'deepweb',
         minMoneyReward: 50000000,
         maxMoneyReward: 100000000,
-        minExpReward: 3500000,
-        maxExpReward: 9500000,
-        time: 81920, // 22,75h
+        minExpReward: 750000,
+        maxExpReward: 2000000,
+        time: 81920,
         reqLevel: 60
     }
 };;
@@ -1874,7 +1906,7 @@ game.achievements = {
             
             new game.achievements.create('Hacker I', 'Hack 10 times a place.',
                 'game.player.timesPlacesHacked', 10, 10),
-            new game.achievements.create('Hacker II', 'Hack 1,00 times a place.',
+            new game.achievements.create('Hacker II', 'Hack 100 times a place.',
                 'game.player.timesPlacesHacked', 100, 25),
             new game.achievements.create('Hacker III', 'Hack 1,000 times a place.',
                 'game.player.timesPlacesHacked', 1000, 50),

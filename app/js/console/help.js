@@ -2,7 +2,8 @@ game.console.help = {
     hack: "<b>hack</b> can be used with arguments.<br>" + 
         "<b>hack -stats</b>: stats for the simple hack.<br>" +
         "<b>hack -place <i>nameOfPlace</i></b>: hack a place.<br> "+
-        "<b>hack -place -list</b>: print a list of places with their respective informations.",
+        "<b>hack -place -list</b>: print a list of places with their respective informations.<br>" +
+        "<b>hack -place -cancel</b>: cancel the current place hack.",
 
     config: "You must use <b>config</b> with arguments.<br>" +
         "<b>config -sounds <i>value</i></b>: enable (true) or disable (false) the sound of the game. (default to false)<br>" +
@@ -30,8 +31,8 @@ game.console.help = {
     achievements: "<b>achievements</b> must be used with arguments.<br>" +
         "<b>achievements -list</b>: print a list of all achievements.",
     
-    hackers: "<b>hackers</b> must be used with arguments.<br>" +
-        '<b>hackers -status</b>: print a list of all hackers available.<br>' +
+    hackers: "<b>team</b> must be used with arguments.<br>" +
+        '<b>team -status</b>: print a list of all hackers available.<br>' +
         'You can buy hackers with the <b>buy</b> command. Look at <b>buy -hacker -help</b> command.',
     
     ability: '<b>ability</b> must be used with arguments.<br>' +

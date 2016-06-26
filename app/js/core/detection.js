@@ -6,5 +6,10 @@ game.options.isEdge = !game.options.isIE && !!window.StyleMedia;
 game.options.isChrome = !!window.chrome && !!window.chrome.webstore;
 game.options.isBlink = (game.options.isChrome || game.options.isOpera) && !!window.CSS;
 
+if (navigator.appVersion.indexOf("Win")!=-1) game.options.whatOS="win";
+if (navigator.appVersion.indexOf("Mac")!=-1) game.options.whatOS="mac";
+if (navigator.appVersion.indexOf("X11")!=-1) game.options.whatOS="unix";
+if (navigator.appVersion.indexOf("Linux")!=-1) game.options.whatOS="linux";
+
 if (game.options.isIE || game.options.isEdge)
     alert('Skid-Inc is not fully supported on Internet Explorer and Edge. We recommend you to play with Chrome or Firefox.');
