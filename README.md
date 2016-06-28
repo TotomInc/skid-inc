@@ -22,6 +22,7 @@ If you have problems with `http-server .` command, we suggest you to install `ht
 - MrPinkCat: coding.
 - Tim: art assets.
 - Emiel: ideas.
+- Thanks to all GitHub contributors for their help!
 
 ### Workflow:
 

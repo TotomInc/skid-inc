@@ -5,7 +5,7 @@ game.save = {
       localStorage.setItem(game.save.key, LZString.compressToBase64(JSON.stringify(game.save.toSave)));
 
         if (from == "user")
-            game.console.print('save', 'Game successfully saved to local-storage.');
+            game.console.print('save', 'Game successfully saved.');
         else
             console.log('Game saved.');
     },
@@ -90,7 +90,7 @@ game.save = {
             game.achievements.checkLoaded();
 
             console.info('Game loaded.');
-            game.console.print('save', 'Save-game successfully loaded.');
+            game.console.print('save', 'Welcome back!');
         }
     },
 
