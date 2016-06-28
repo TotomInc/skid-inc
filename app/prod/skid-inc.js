@@ -1,4 +1,4 @@
-/*! skid-inc - v1.0.0 - 2016-06-26 */
+/*! skid-inc - v1.0.0 - 2016-06-28 */
 var beautify = {
 	prefixes: [
 	    "m", "b", "t", "q", "Q", "s", "S", "o", "n",
@@ -1995,7 +1995,6 @@ var M = {
 	ctx: null,
 
 	lineC: null,
-	ctx2: null,
 
 	video: null,
 
@@ -2049,8 +2048,6 @@ var M = {
 			M.animation = null;
 			M.ctx.clearRect(0, 0, M.WIDTH, M.HEIGHT);
 			M.codesCounter = 0;
-
-			M.ctx2.clearRect(0, 0, M.WIDTH, M.HEIGHT);
 
 			M.WIDTH = window.innerWidth;
 			M.HEIGHT = window.innerHeight;
@@ -2277,7 +2274,7 @@ var M = {
 
 window.onload = function() {
 	M.init();
-	
+
 	if (game.options.effectEnabled)
 		$('#matrix-effect').fadeIn('slow');
 };

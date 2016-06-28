@@ -48,7 +48,6 @@ var M = {
 	ctx: null,
 
 	lineC: null,
-	ctx2: null,
 
 	video: null,
 
@@ -102,8 +101,6 @@ var M = {
 			M.animation = null;
 			M.ctx.clearRect(0, 0, M.WIDTH, M.HEIGHT);
 			M.codesCounter = 0;
-
-			M.ctx2.clearRect(0, 0, M.WIDTH, M.HEIGHT);
 
 			M.WIDTH = window.innerWidth;
 			M.HEIGHT = window.innerHeight;
@@ -330,7 +327,7 @@ var M = {
 
 window.onload = function() {
 	M.init();
-	
+
 	if (game.options.effectEnabled)
 		$('#matrix-effect').fadeIn('slow');
 };
