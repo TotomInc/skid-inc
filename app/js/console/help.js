@@ -11,7 +11,7 @@ game.console.help = {
 
     clear: "<b>clear</b> don't accept any arguments.",
     
-    buy: "<b>buy</b> must be used with arguments.<br>" +
+    buy: "<b>buy</b> must be used with arguments. Try the <b>-help</b> argument for a list of commands for the specified resources.<br>" +
         "<b>buy -server</b>: buy a server. Get a list of server with <b>buy -server -help</b>.<br>" +
         "<b>buy -info</b>: print all your server status (reward, owned, next price, ...).<br>" +
         "<b>buy -hacker</b>: buy a hacker to automatically hack places.<br>" +

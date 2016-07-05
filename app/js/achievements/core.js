@@ -20,8 +20,6 @@ game.achievements = {
                 game.player.achievementsPoints += thisAch.reward;
                 game.achievements.owned[i] = true;
                 
-                console.log(game.achievements.printed[i])
-                
                 if (!game.achievements.printed[i]) {
                     game.achievements.printed[i] = true;
                     

@@ -3,19 +3,21 @@ game.team = {
         'mini_market': {
             name: 'mini_market',
             effect: 'mini_market',
-            price: 10000,
+            price: 2000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 2
         },
         
         'market': {
             name: 'market',
             effect: 'market',
-            price: 75000,
+            price: 25000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 10
         },
         
         'jewelry': {
@@ -24,7 +26,8 @@ game.team = {
             price: 600000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 20
         },
         
         'bank': {
@@ -33,7 +36,8 @@ game.team = {
             price: 1000000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 30
         },
         
         'trading_center': {
@@ -42,7 +46,8 @@ game.team = {
             price: 12500000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 40
         },
         
         'anonymous_hideout': {
@@ -51,7 +56,8 @@ game.team = {
             price: 37500000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 50
         },
         
         'deepweb': {
@@ -60,7 +66,8 @@ game.team = {
             price: 250000000,
             owned: false,
             progress: 0,
-            done: 0
+            done: 0,
+            levelReq: 50
         }
     },
     

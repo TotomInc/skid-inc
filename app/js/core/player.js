@@ -14,7 +14,7 @@ game.player = {
     randExpMax: 25,
     randExpMin: 10,
     
-    clickReducer: 16,
+    clickReducer: 5,
     
     achievementsPoints: 0,
     

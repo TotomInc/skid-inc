@@ -80,11 +80,11 @@ game.console.clear = function(from) {
 
 game.console.printGuide = function() {
     game.console.print('guide',
-        'Welcome to Skid-Inc, you\'re a poor script-kid trying to make money with your hacking skills.<br>' +
-        'Start making money by clicking the <b>hack</b> button or by typing <b>hack</b> command in the console.<br>' +
-        'Buy different servers to increase your money and experience income.<br>' +
-        'Hack different places to earn even more money and experience.<br>' +
+        'Welcome to <b>Skid-Inc<b>, an incremental-game where you are a poor script-kid, trying to make money with your little knowledge in hacking.<br><br>' +
+        'Start making some $$$ by clicking the <b>hack</b> button or by typing the <b>hack</b> command in the console.<br>' +
+        'Buy different servers to increase your money and experience income (buy -server -help to get started).<br>' +
+        'Hack different places to earn even more money and experience (hack -place -help or hack -place -list).<br><br>' +
         'Type <b>help</b> for a list of commands, use <b>arguments</b> (like -help for example) to use all the potential of the command (like <b>hack -help</b>).<br>' +
-        'Try some commands: <b>buy server -help</b>, <b>hack -help</b> or even <b>config -help</b> to change game settings.<br>' +
+        'Try some commands: <b>buy server -help</b>, <b>hack -help</b> or even <b>config -help</b> to change game settings.<br><br>' +
         'Good luck in your hacking adventure!');
 };
