@@ -32,7 +32,7 @@ game.console = {
                         matches = input.match(optionRegex);
                     
                     if (matches == null)
-                        game.console.print('error', 'Unknown argument value.');
+                        game.console.print('error', '<b>' + input + '</b>: unknown argument(s) value(s).');
                     else if (matches.length == 1) {
                         var option = matches[0];
                         eval(instance.exec);
@@ -42,10 +42,10 @@ game.console = {
                     eval(instance.exec);
             }
             else
-                game.console.print('error', 'Unknown arguments.');
+                game.console.print('error', '<b>' + input + '</b>: unknown argument(s).');
         }
         else
-            game.console.print('error', 'Unknown command.');
+            game.console.print('error', '<b>' + input + '</b>: unknown command.');
         
         if (game.options.sounds)
             game.sounds.button.play();

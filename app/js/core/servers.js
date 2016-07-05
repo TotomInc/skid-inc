@@ -31,7 +31,7 @@ game.servers = {
     },
     
     getClickDivider: function() {
-        return Math.floor(16 - game.servers.quickhack.owned);
+        return Math.floor(5 - game.servers.quickhack.owned);
     },
     
     // increase money income for hack cmd/button
@@ -71,7 +71,7 @@ game.servers = {
     quickhack: {
         owned: 0,
         cost: 1e6,
-        inflation: 100,
+        inflation: 10000,
         accelerator: 1.5
     }
 };

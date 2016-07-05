@@ -4,7 +4,7 @@ game.abilities = {
             name: 'up_key',
             desc: 'press your up-key to type the latest command entered.',
             cost: 1e6,
-            reqLevel: 20,
+            reqLevel: 10,
             owned: false
         }
     },

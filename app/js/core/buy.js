@@ -39,8 +39,10 @@ game.buy = function(from, option) {
             cost = game.servers.getProCost();
         else if (option == 'vm')
             cost = game.servers.getVMCost();
-        else if (option == 'quickhack')
+        else if (option == 'quickhack' && game.servers.quickhack.owned < 5)
             cost = game.servers.getQuickhackCost();
+        else
+            return;
         
         if (game.player.money >= cost) {
             game.player.money -= cost;
@@ -64,7 +66,7 @@ game.buy = function(from, option) {
         var thisHacker = game.team.list[option],
             cost = game.team.list[option].price;
         
-        if (game.player.money >= cost && !thisHacker.owned) {
+        if (game.player.money >= cost && game.player.level >= thisHacker.levelReq && !thisHacker.owned) {
             game.player.money -= cost
             thisHacker.owned = true;
             
@@ -72,6 +74,8 @@ game.buy = function(from, option) {
         }
         else if (thisHacker.owned)
             game.console.print('error', 'You already own this hacker!');
+        else if (game.player.level < thisHacker.levelReq)
+            game.console.print('error', 'You don\'t have the requried level to buy this hacker (lvl. ' + thisHacker.levelReq + ').');
         else if (game.player.money < cost)
             game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
         
@@ -86,7 +90,7 @@ game.buy = function(from, option) {
     
     if (from == "hacker-list") {
         for (var hacker in game.team.list)
-            game.console.print('help', '<b>' + game.team.list[hacker].name + '</b>: cost $' + fix(game.team.list[hacker].price) + ', manage ' + game.team.list[hacker].effect + ', owned: ' + game.team.list[hacker].owned);
+            game.console.print('help', '<b>' + game.team.list[hacker].name + '</b>: cost $' + fix(game.team.list[hacker].price) + ', manage ' + game.team.list[hacker].effect + ', required level: ' + game.team.list[hacker].levelReq + ', owned: ' + game.team.list[hacker].owned);
     
         return;
     };
