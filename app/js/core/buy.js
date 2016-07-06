@@ -11,7 +11,28 @@ game.buy = function(from, option) {
         return;
     };
     
-    if (from == "info") {
+    if (from == 'server') {
+        var cost = game.servers.getCostOption(option);
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.servers[option].owned++;
+            
+            game.console.print('gain', 'You successfully bought a ' + option + ' server for $' + fix(cost) + '.');
+        }
+        else
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
+        
+        return;
+    };
+    
+    if (from == "server-help") {
+        game.console.print('help', game.console.help.buyServer);
+        
+        return;
+    };
+    
+    if (from == "server-info") {
         var persReward = game.servers.getPersReward(),
             persCost = game.servers.getPersCost(),
             proReward = game.servers.getProReward(),
@@ -29,35 +50,17 @@ game.buy = function(from, option) {
         
         return;
     };
-
-    if (from == 'server') {
-        var cost = undefined;
-        
-        if (option == 'personal')
-            cost = game.servers.getPersCost();
-        else if (option == 'professional')
-            cost = game.servers.getProCost();
-        else if (option == 'vm')
-            cost = game.servers.getVMCost();
-        else if (option == 'quickhack' && game.servers.quickhack.owned < 5)
-            cost = game.servers.getQuickhackCost();
-        else
-            return;
-        
-        if (game.player.money >= cost) {
-            game.player.money -= cost;
-            game.servers[option].owned++;
-            
-            game.console.print('gain', 'You successfully bought a ' + option + ' server for $' + fix(cost) + '.');
-        }
-        else
-            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
-        
-        return;
-    };
     
-    if (from == "server-help") {
-        game.console.print('help', game.console.help.buyServer);
+    if (from == "server-list") {
+        var servers = ['personal', 'professional', 'vm', 'quickhack'];
+        
+        for (var i = 0; i < servers.length; i++) {
+            var logType = (i == 0 ? 'log' : 'nothing'),
+                thisServer = game.servers[i],
+                cost = game.servers.getCostArray(i);
+            
+            game.console.log(logType, '<b>' + thisServer.name + '</b>: ' + thisServer.desc + ', currently ' + fix(thisServer.owned, 0) + ' owned, next cost $' + fix(cost));
+        }
         
         return;
     };
@@ -89,8 +92,16 @@ game.buy = function(from, option) {
     };
     
     if (from == "hacker-list") {
-        for (var hacker in game.team.list)
-            game.console.print('help', '<b>' + game.team.list[hacker].name + '</b>: cost $' + fix(game.team.list[hacker].price) + ', manage ' + game.team.list[hacker].effect + ', required level: ' + game.team.list[hacker].levelReq + ', owned: ' + game.team.list[hacker].owned);
+        var i = 0;
+        
+        for (var hacker in game.team.list) {
+            var logType = (i == 0 ? 'log' : 'nothing'),
+                thisHacker = game.team.list[hacker];
+            
+            i++;
+            
+            game.console.print(logType, '<b>' + thisHacker.name + '</b>: cost $' + fix(thisHacker.price) + ', manage ' + thisHacker.effect + ', required level: ' + thisHacker.levelReq + ', owned: ' + thisHacker.owned);
+        }
     
         return;
     };
@@ -125,6 +136,57 @@ game.buy = function(from, option) {
         for (var ability in game.abilities.list)
             game.console.print('help', '<b>' + game.abilities.list[ability].name + '</b>: cost $' + fix(game.abilities.list[ability].cost) + ', require level ' + game.abilities.list[ability].reqLevel + '. Effect: ' + game.abilities.list[ability].desc);
     
+        return;
+    };
+
+    if (from == "upgrade") {
+        var cost = undefined;
+        
+        if (option == 'personal')
+            cost = Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level));
+        else if (option == 'professional')
+            cost = Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level));
+        
+        if (game.player.money >= cost) {
+            game.player.money -= cost;
+            game.servers[option].level++;
+            game.servers[option].mult += game.servers[option].multAdd;
+            
+            game.console.print('gain', 'You successfully upgraded your ' + option + ' server for $' + fix(cost) + '.');
+        }
+        else
+            game.console.print('error', 'Not enough money, cost $' + fix(cost) + '.');
+        
+        return;
+    };
+    
+    if (from == "upgrade-help") {
+        game.console.print('help', game.console.help.buyUpgrade);
+        
+        return;
+    };
+    
+    if (from == "upgrade-info") {
+        var types = ['personal', 'professional'],
+            costs = [
+                Math.floor(10000 * Math.pow(game.servers.personal.upInflation, game.servers.personal.level)),
+                Math.floor(1e6 * Math.pow(game.servers.professional.upInflation, game.servers.professional.level))
+            ],
+            addMults = [
+                1 + game.servers.personal.multAdd * game.servers.personal.level,
+                1 + game.servers.professional.multAdd * game.servers.professional.level
+            ];
+        
+        game.console.print('log', 'Upgrade servers infos:');
+        
+        for (var i = 0; i < types.length; i++) {
+            var logType = (i == 0 ? 'log' : 'nothing'),
+                thisType = game.servers[types[i]];
+            
+            game.console.print(logType, '<b>' + types[i] + '</b>: current upgrade level ' + thisType.level + ', additionnal mult: x' + fix(addMults[i], 2) + ', cost $' + fix(costs[i]) + '.');
+        }
+            
+        
         return;
     };
 }

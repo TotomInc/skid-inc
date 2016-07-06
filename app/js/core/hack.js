@@ -96,7 +96,7 @@ game.hack = function(from, option) {
             else if (game.player.level >= thisPlace.reqLevel) {
                 game.player.isHacking = true;
                 game.player.hackingWhat = option;
-                game.console.print('log', 'Hack in progress...');
+                game.console.print('log', 'Hack in progress, type <b>hack -place -cancel</b> to stop the current hack.');
                 game.console.print('hack-bar');
             }
             else

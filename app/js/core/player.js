@@ -1,4 +1,6 @@
 game.player = {
+    setName: function() {},
+    
     money: 0,
     totalMoney: 0,
 
@@ -23,5 +25,7 @@ game.player = {
     
     isHacking: false,
     hackingWhat: undefined,
-    hackingProgress: 0
+    hackingProgress: 0,
+    
+    name: 'Hacker'
 };

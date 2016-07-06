@@ -5,7 +5,7 @@ game.options = {
     bindTime: 350,
     upkeyBindTime: 750,
     sounds: false,
-    version: 0.07,
+    version: 0.08,
     
     now: new Date().getTime(),
     before: new Date().getTime(),

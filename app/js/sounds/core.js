@@ -1,26 +1,14 @@
 game.sounds = {
     button: new Audio('app/assets/sounds/button.mp3'),
-    ambient: new Audio('app/assets/sounds/server-room.mp3'),
 
     enableSounds: function() {
         game.options.sounds = true;
-        game.sounds.ambient.currentTime = 0;
-        // game.sounds.ambient.play();
-
-        game.options.intervals.ambientLoop = setInterval(function() {
-            game.sounds.ambient.currentTime = 0;
-            // game.sounds.ambient.play();
-        }, 90000);
         
         game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);
     },
 
     disableSounds: function() {
         game.options.sounds = false;
-        
-        game.sounds.ambient.pause();
-        clearInterval(game.options.intervals.ambientLoop);
-        clearInterval(game.options.intervals.randomSound);
     },
     
     randomSound: function() {
@@ -45,18 +33,8 @@ game.sounds = {
     },
 
     varInit: function() {
-        game.sounds.ambient.volume = 0.30;
-        
-        if (game.options.sounds) {
-            game.sounds.ambient.play();
-
-            game.options.intervals.ambientLoop = setInterval(function() {
-                game.sounds.ambient.currentTime = 0;
-                // game.sounds.ambient.play();
-            }, 90000);
-            
+        if (game.options.sounds)
             game.options.intervals.randomSound = setInterval(game.sounds.randomSound, 20000);
-        };
         
         game.sounds.bip = [
             new Audio('app/assets/sounds/computer-bip-1.mp3'),

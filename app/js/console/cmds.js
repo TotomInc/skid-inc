@@ -35,31 +35,6 @@ game.console.cmds = [
     },
     
     {
-        name: 'upgrade',
-        desc: 'upgrade your servers for an higher income.',
-        pattern: '^upgrade',
-        commandRegex: [
-            {
-                'pattern': '^upgrade[\\s]*$',
-                'exec': 'game.upgrade("sp")',
-                'options': false
-            }, {
-                'pattern': '^upgrade[\\s]+-help[\\s]*$',
-                'exec': 'game.upgrade("help")',
-                'options': false
-            }, {
-                'pattern': '^upgrade[\\s]+-info[\\s]*$',
-                'exec': 'game.upgrade("info")',
-                'options': false
-            }, {
-                'pattern': '^upgrade[\\s]+[\\w]+[\\s]*$',
-                'exec': 'game.upgrade("server", option)',
-                'options': '(personal|professional)'
-            }
-        ]
-    },
-    
-    {
         name: 'buy',
         desc: 'buy servers, abilities or hire hackers to increase your hack income.',
         pattern: '^buy',
@@ -73,17 +48,21 @@ game.console.cmds = [
                 'exec': 'game.buy("help")',
                 'options': false
             }, {
-                'pattern': '^buy[\\s]+-info[\\s]*$',
-                'exec': 'game.buy("info")',
-                'options': false
-            }, {
                 'pattern': '^buy[\\s]+-server[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("server-help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-server[\\s]+-list[\\s]*$',
+                'exec': 'game.buy("server-list")',
                 'options': false
             }, {
                 'pattern': '^buy[\\s]+-server[\\s]+[\\w]*$',
                 'exec': 'game.buy("server", option)',
                 'options': '(personal|professional|vm|quickhack)'
+            }, {
+                'pattern': '^buy[\\s]+-server[\\s]+-info[\\s]*$',
+                'exec': 'game.buy("server-info")',
+                'options': false
             }, {
                 'pattern': '^buy[\\s]+-hacker[\\s]+[\\w]*$',
                 'exec': 'game.buy("hacker", option)',
@@ -108,6 +87,18 @@ game.console.cmds = [
                 'pattern': '^buy[\\s]+-ability[\\s]+-list[\\s]*$',
                 'exec': 'game.buy("ability-list")',
                 'options': false
+            }, {
+                'pattern': '^buy[\\s]+-upgrade[\\s]+-help[\\s]*$',
+                'exec': 'game.buy("upgrade-help")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-upgrade[\\s]+-info[\\s]*$',
+                'exec': 'game.buy("upgrade-info")',
+                'options': false
+            }, {
+                'pattern': '^buy[\\s]+-upgrade[\\s]+[\\w]+[\\s]*$',
+                'exec': 'game.buy("upgrade", option)',
+                'options': '(personal|professional)'
             }
         ]
     },

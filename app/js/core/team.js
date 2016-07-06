@@ -90,7 +90,8 @@ game.team = {
                     thisPlace = game.console.cmds[0].places[thisHacker.effect],
                     time = game.getPlaceTime(thisPlace);
                 
-                game.console.print('log', '<b>' + thisHacker.name + '</b>: hack ' + thisHacker.effect + ', current progress at ' + fix(thisHacker.progress, 2) + '/' + fix(time, 2) + ' sec, engaged: ' + thisHacker.owned);
+                if (thisHacker.owned)
+                    game.console.print('log', '<b>' + thisHacker.name + '</b>: hack ' + thisHacker.effect + ', current progress at ' + fix(thisHacker.progress, 2) + '/' + fix(time, 2) + ' sec, engaged: ' + thisHacker.owned);
             };
             
             return;
