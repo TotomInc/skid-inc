@@ -66,14 +66,19 @@ game.buy = function(from, option) {
     };
     
     if (from == 'hacker') {
+        console.log('here')
+        
         var thisHacker = game.team.list[option],
             cost = game.team.list[option].price;
+        
+        console.log(option)
+        console.log(thisHacker)
         
         if (game.player.money >= cost && game.player.level >= thisHacker.levelReq && !thisHacker.owned) {
             game.player.money -= cost
             thisHacker.owned = true;
             
-            game.console.print('gain', 'You successfully hired ' + thisHacker.effect + ' hacker for $' + fix(cost) + '.');
+            game.console.print('gain', 'You successfully hired <b>' + thisHacker.name + '</b> for ' + thisHacker.effect + ' at <b>$' + fix(cost) + '</b>.');
         }
         else if (thisHacker.owned)
             game.console.print('error', 'You already own this hacker!');

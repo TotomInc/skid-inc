@@ -13,6 +13,7 @@ game.save = {
     },
 
     reset: function() {
+        window.onbeforeunload = null;
         clearInterval(game.options.intervals.save);
         localStorage.removeItem(game.save.key);
         location.reload();
@@ -42,7 +43,8 @@ game.save = {
 
             if (go.version !== sgo.version) {
                 console.warn('Loading savegame from an older version.');
-                game.console.print('warn', 'A new version have been published: v' + game.options.version + '. Check on the patch-notes what it adds!');
+                game.console.print('warn', 'A new version have been published: v' + game.options.version + '. Check on the patch-notes what it adds!<br>' +
+                    'I also recommend you to restart your game (delete your save on the options tab) to test again the game with the new balancing changes. Thanks!');
             }
 
             gp.money = sgp.money;
@@ -73,21 +75,21 @@ game.save = {
             go.sounds = sgo.sounds;
             go.effectEnabled = sgo.effectEnabled;
 
-            gt.list['mini_market'].owned = sgt.list['mini_market'].owned;
-            gt.list['market'].owned = sgt.list['market'].owned;
-            gt.list['jewelry'].owned = sgt.list['jewelry'].owned;
-            gt.list['bank'].owned = sgt.list['bank'].owned;
-            gt.list['trading_center'].owned = sgt.list['trading_center'].owned;
-            gt.list['anonymous_hideout'].owned = sgt.list['anonymous_hideout'].owned;
-            gt.list['deepweb'].owned = sgt.list['deepweb'].owned;
+            gt.list['noob'].owned = sgt.list['noob'].owned;
+            gt.list['script_kiddie'].owned = sgt.list['script_kiddie'].owned;
+            gt.list['coder'].owned = sgt.list['coder'].owned;
+            gt.list['hax0r'].owned = sgt.list['hax0r'].owned;
+            gt.list['prodigy'].owned = sgt.list['prodigy'].owned;
+            gt.list['elite_hacker'].owned = sgt.list['elite_hacker'].owned;
+            gt.list['elite_skid'].owned = sgt.list['elite_skid'].owned;
 
-            gt.list['mini_market'].progress = sgt.list['mini_market'].progress;
-            gt.list['market'].progress = sgt.list['market'].progress;
-            gt.list['jewelry'].progress = sgt.list['jewelry'].progress;
-            gt.list['bank'].progress = sgt.list['bank'].progress;
-            gt.list['trading_center'].progress = sgt.list['trading_center'].progress;
-            gt.list['anonymous_hideout'].progress = sgt.list['anonymous_hideout'].progress;
-            gt.list['deepweb'].progress = sgt.list['deepweb'].progress;
+            gt.list['noob'].progress = sgt.list['noob'].progress;
+            gt.list['script_kiddie'].progress = sgt.list['script_kiddie'].progress;
+            gt.list['coder'].progress = sgt.list['coder'].progress;
+            gt.list['hax0r'].progress = sgt.list['hax0r'].progress;
+            gt.list['prodigy'].progress = sgt.list['prodigy'].progress;
+            gt.list['elite_hacker'].progress = sgt.list['elite_hacker'].progress;
+            gt.list['elite_skid'].progress = sgt.list['elite_skid'].progress;
 
             gab.list['up_key'].owned = sgab.list['up_key'].owned;
 

@@ -33,7 +33,7 @@ game.console.help = {
         "<b>achievements -list</b>: print a list of all achievements.",
     
     hackers: "<b>team</b> must be used with arguments.<br>" +
-        '<b>team -status</b>: print a list of all hackers available.<br>' +
+        '<b>team -status</b>: print a list of all hired hackers.<br>' +
         '<b>team -pause nameOfHacker</b>: stop the selected hacker.<br>' +
         'You can buy hackers with the <b>buy</b> command. Look at <b>buy -hacker -help</b> command.',
     

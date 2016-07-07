@@ -196,6 +196,10 @@ var game = {
         game.save.varInit();
         game.notif.requestPermission();
 
+        window.onbeforeunload = function() {
+            game.save.save();
+        };
+
         window.onfocus = function() {
             game.options.gotFocus = true;
         };

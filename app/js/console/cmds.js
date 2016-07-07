@@ -66,7 +66,7 @@ game.console.cmds = [
             }, {
                 'pattern': '^buy[\\s]+-hacker[\\s]+[\\w]*$',
                 'exec': 'game.buy("hacker", option)',
-                'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+                'options': '(noob|script_kiddie|coder|hax0r|prodigy|elite_hacker|elite_skid)'
             }, {
                 'pattern': '^buy[\\s]+-hacker[\\s]+-help[\\s]*$',
                 'exec': 'game.buy("hacker-help")',
@@ -123,7 +123,7 @@ game.console.cmds = [
             }, {
                 'pattern': '^team[\\s]+-pause[\\s]+[\\w]+[\\s]*$',
                 'exec': 'game.team.exec("pause", option)',
-                'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
+                'options': '(noob|script_kiddie|coder|hacker|prodigy|elite_hacker|elite_skid)'
             }
         ]
     },

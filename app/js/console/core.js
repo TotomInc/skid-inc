@@ -19,6 +19,12 @@ game.console = {
         var input = $('#console-input').val();
         var results = filterArrayOnRegexPattern(input, game.console.cmds);
         
+        if (input == '') {
+            game.console.print('error', 'You can\'t send empty commands.');
+            
+            return;
+        }
+        
         if (results.length == 1) {
             var result = results[0],
                 instances = filterArrayOnRegexPattern(input, result.commandRegex);
