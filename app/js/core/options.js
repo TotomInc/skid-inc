@@ -3,7 +3,7 @@ game.options = {
     interval: undefined,
     fps: 10,
     bindTime: 350,
-    upkeyBindTime: 750,
+    upkeyBindTime: 500,
     sounds: false,
     version: 0.08,
     

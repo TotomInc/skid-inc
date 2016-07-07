@@ -147,13 +147,11 @@ var game = {
         $('#well-resources').html(
             'Money: $' + fix(game.player.money) + '<br>' +
             'Level: ' + fix(game.player.level, 0) + '<br>' +
-            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br>' +
-            '<br>' +
+            'Exp: ' + fix(game.player.exp) + '/' + fix(game.player.maxExp, 0) + '<br><br>' +
             'Money mult: x' + fix(game.getGlobalMoneyMult(), 2) + '<br>' +
             'Exp. mult: x' + fix(game.getGlobalExpMult(), 2) + '<br>' +
             'Hack time div: /' + fix(game.servers.getVMReward(), 2) + '<br>' +
-            'Click div: /' + fix(game.servers.getClickDivider(), 0) + '<br>' +
-            '<br>' +
+            'Click div: /' + fix(game.servers.getClickDivider(), 0) + '<br><br>' +
             'Pers. servers: ' + fix(game.servers.personal.owned, 0) + '<br>' +
             'Pro. servers: ' + fix(game.servers.professional.owned, 0) + '<br>' +
             'VM servers: ' + fix(game.servers.vm.owned, 0) + '<br>' +

@@ -1,7 +1,7 @@
 var floating = {
     addFloating: function(where, text) {
         var floatingText = document.createElement('div'),
-            divWidth = $('#' + where).width() - 35,
+            divWidth = $('#' + where).width() - 100,
             randWidth = game.randomInclusive(0, divWidth);
         
         $(floatingText).addClass('floating-text')

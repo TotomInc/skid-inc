@@ -77,17 +77,6 @@ game.achievements = {
             new game.achievements.create('Script Kid V', 'Hack 1,000,000 times (click or via console).',
                 'game.player.timesHacked', 1000000, 250),
             
-            new game.achievements.create('Hacker I', 'Hack 10 times a place.',
-                'game.player.timesPlacesHacked', 10, 10),
-            new game.achievements.create('Hacker II', 'Hack 100 times a place.',
-                'game.player.timesPlacesHacked', 100, 25),
-            new game.achievements.create('Hacker III', 'Hack 1,000 times a place.',
-                'game.player.timesPlacesHacked', 1000, 50),
-            new game.achievements.create('Hacker IV', 'Hack 10,000 times a place.',
-                'game.player.timesPlacesHacked', 10000, 75),
-            new game.achievements.create('Hacker V', 'Hack 100,000 times a place.',
-                'game.player.timesPlacesHacked', 100000, 250),
-            
             new game.achievements.create('Personal servers I', 'Buy your first personal server.',
                 'game.servers.personal.owned', 1, 10),
             new game.achievements.create('Personal servers II', 'Buy 50 personal servers.',

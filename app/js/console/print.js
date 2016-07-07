@@ -62,22 +62,28 @@ game.console.print = function(type, text) {
 };
 
 game.console.printHelp = function() {
-    for (var cmd in game.console.cmds) {
-        var thisCmd = game.console.cmds[cmd];
-        game.console.print('help', '<b>' + thisCmd.name + '</b>: ' + thisCmd.desc);
-    };
+    var i = 0;
     
-    return;
+    for (var cmd in game.console.cmds) {
+        var thisCmd = game.console.cmds[cmd],
+            logType = (i == 0 ? 'help' : 'nothing');
+        
+        game.console.print(logType, '<b>' + thisCmd.name + '</b>: ' + thisCmd.desc);
+        
+        i++;
+    };
 };
 
 game.console.clear = function(from) {
     if (typeof from == 'undefined') {
         $('#console-content').empty();
+        
         return;
     };
     
     if (from == 'help') {
         game.console.print('help', game.console.help.clear);
+        
         return;
     };
 };

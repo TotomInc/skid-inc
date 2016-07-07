@@ -36,7 +36,7 @@ game.console.cmds = [
     
     {
         name: 'buy',
-        desc: 'buy servers, abilities or hire hackers to increase your hack income.',
+        desc: 'buy servers, abilities, hire hackers and even more!',
         pattern: '^buy',
         commandRegex: [
             {
@@ -105,7 +105,7 @@ game.console.cmds = [
     
     {
         name: 'team',
-        desc: 'used to perform actions on your hackers, also know as a team.',
+        desc: 'used to perform actions on your hackers.',
         pattern: '^team',
         commandRegex: [
             {
@@ -120,6 +120,10 @@ game.console.cmds = [
                 'pattern': '^team[\\s]+-status[\\s]*$',
                 'exec': 'game.team.exec("status")',
                 'options': false
+            }, {
+                'pattern': '^team[\\s]+-pause[\\s]+[\\w]+[\\s]*$',
+                'exec': 'game.team.exec("pause", option)',
+                'options': '(mini_market|market|jewelry|bank|trading_center|anonymous_hideout|deepweb)'
             }
         ]
     },

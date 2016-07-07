@@ -1,3 +1,5 @@
+/* global LZString */
+
 game.save = {
     key: 'SK-Inc',
 
@@ -23,23 +25,25 @@ game.save = {
         }
         else {
           var s = JSON.parse(LZString.decompressFromBase64(localStorage.getItem(game.save.key)));
-                sgp = s.gp,
-                sga = s.ga,
-                sgo = s.go,
-                sga = s.ga,
-                sgs = s.gs,
-                sgt = s.gt,
-                sgab = s.gab,
-                g = game,
-                gp = game.player,
-                go = game.options,
-                ga = game.achievements,
-                gs = game.servers,
-                gt = game.team,
-                gab = game.abilities;
+          var sgp = s.gp,
+              sga = s.ga,
+              sgo = s.go,
+              sga = s.ga,
+              sgs = s.gs,
+              sgt = s.gt,
+              sgab = s.gab,
+              g = game,
+              gp = game.player,
+              go = game.options,
+              ga = game.achievements,
+              gs = game.servers,
+              gt = game.team,
+              gab = game.abilities;
 
-            if (go.version !== sgo.version)
+            if (go.version !== sgo.version) {
                 console.warn('Loading savegame from an older version.');
+                game.console.print('warn', 'A new version have been published: v' + game.options.version + '. Check on the patch-notes what it adds!');
+            }
 
             gp.money = sgp.money;
             gp.totalMoney = sgp.totalMoney;

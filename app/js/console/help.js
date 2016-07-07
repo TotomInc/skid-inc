@@ -34,9 +34,10 @@ game.console.help = {
     
     hackers: "<b>team</b> must be used with arguments.<br>" +
         '<b>team -status</b>: print a list of all hackers available.<br>' +
+        '<b>team -pause nameOfHacker</b>: stop the selected hacker.<br>' +
         'You can buy hackers with the <b>buy</b> command. Look at <b>buy -hacker -help</b> command.',
     
     ability: '<b>ability</b> must be used with arguments.<br>' +
         '<b>ability -list</b>: print a list of all abilities available.<br>' +
-        'To buy an ability, you must use the <b>buy</b> command. Type <b>buy -ability -help</b> for more informations.',
+        'You can buy abilities with the <b>buy</b> command. Look at <b>buy -ability -help</b> command.',
 };
