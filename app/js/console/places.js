@@ -1,8 +1,8 @@
 game.console.cmds[0].places = {
     'mini_market': {
         name: 'mini_market',
-        minMoneyReward: 450,
-        maxMoneyReward: 1500,
+        minMoneyReward: 250,
+        maxMoneyReward: 750,
         minExpReward: 150,
         maxExpReward: 350,
         time: 25,
@@ -10,8 +10,8 @@ game.console.cmds[0].places = {
     },
     'market': {
         name: 'market',
-        minMoneyReward: 2000,
-        maxMoneyReward: 5000,
+        minMoneyReward: 650,
+        maxMoneyReward: 2250,
         minExpReward: 225,
         maxExpReward: 550,
         time: 60,
@@ -19,8 +19,8 @@ game.console.cmds[0].places = {
     },
     'jewelry': {
         name: 'jewelry',
-        minMoneyReward: 10000,
-        maxMoneyReward: 40000,
+        minMoneyReward: 7500,
+        maxMoneyReward: 15000,
         minExpReward: 500,
         maxExpReward: 1300,
         time: 480,
@@ -28,8 +28,8 @@ game.console.cmds[0].places = {
     },
     'bank': {
         name: 'bank',
-        minMoneyReward: 75000,
-        maxMoneyReward: 200000,
+        minMoneyReward: 30000,
+        maxMoneyReward: 75000,
         minExpReward: 2000,
         maxExpReward: 9500,
         time: 2880,
@@ -37,8 +37,8 @@ game.console.cmds[0].places = {
     },
     'trading_center': {
         name: 'trading_center',
-        minMoneyReward: 750000,
-        maxMoneyReward: 2500000,
+        minMoneyReward: 150000,
+        maxMoneyReward: 450000,
         minExpReward: 15000,
         maxExpReward: 40000,
         time: 11520,
@@ -46,8 +46,8 @@ game.console.cmds[0].places = {
     },
     'anonymous_hideout': {
         name: 'anonymous_hideout',
-        minMoneyReward: 5000000,
-        maxMoneyReward: 12500000,
+        minMoneyReward: 1000000,
+        maxMoneyReward: 10000000,
         minExpReward: 75000,
         maxExpReward: 200000,
         time: 34560,
@@ -56,7 +56,7 @@ game.console.cmds[0].places = {
     'deepweb': {
         name: 'deepweb',
         minMoneyReward: 50000000,
-        maxMoneyReward: 100000000,
+        maxMoneyReward: 150000000,
         minExpReward: 750000,
         maxExpReward: 2000000,
         time: 81920,

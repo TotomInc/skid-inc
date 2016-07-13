@@ -1,4 +1,6 @@
 game.hack = function(from, option) {
+    // don't change the orders of the 2 first if conditions
+    
     if (from == 'cancel') {
         if (game.player.isHacking) {
             $('#hacking-progress').remove();
@@ -7,6 +9,7 @@ game.hack = function(from, option) {
             
             game.player.isHacking = false;
             game.player.hackingWhat = undefined;
+            game.player.hackingProgress = 0;
         }
         else
             game.console.print('error', 'You can\'t cancel a place hack because you are currently hacking nothing. Try <b>hack -place -list</b>!');
@@ -42,7 +45,7 @@ game.hack = function(from, option) {
 
         if (from == 'sp-click') {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
-            floating.addFloating('hack-button', '+ $' + fix(moneyReward));
+            floating.addFloating('hack-button', '+$' + fix(moneyReward));
         }
         else
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp.');
@@ -96,7 +99,7 @@ game.hack = function(from, option) {
             else if (game.player.level >= thisPlace.reqLevel) {
                 game.player.isHacking = true;
                 game.player.hackingWhat = option;
-                game.console.print('log', 'Hack in progress...');
+                game.console.print('log', 'Hack in progress, type <b>hack -place -cancel</b> to stop the current hack.');
                 game.console.print('hack-bar');
             }
             else

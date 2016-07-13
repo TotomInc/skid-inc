@@ -1,4 +1,30 @@
 game.servers = {
+    getCostArray: function(i) {
+        if (i == 0)
+            return game.servers.getPersCost();
+        else if (i == 1)
+            return game.servers.getProCost();
+        else if (i == 2)
+            return game.servers.getVMCost();
+        else if (i == 3)
+            return game.servers.getQuickhackCost();
+        else
+            return;
+    },
+    
+    getCostOption: function(what) {
+        if (what == 'personal')
+            return game.servers.getPersCost();
+        else if (what == 'professional')
+            return game.servers.getProCost();
+        else if (what = 'vm')
+            return game.servers.getVMCost();
+        else if (what == 'quickhack')
+            return game.servers.getQuickhackCost();
+        else
+            return;
+    },
+    
     getPersCost: function() {
         return Math.floor(game.servers.personal.cost * Math.pow(game.servers.personal.inflation, game.servers.personal.owned));
     },
@@ -43,7 +69,8 @@ game.servers = {
         mult: 1,
         level: 0,
         upInflation: 10,
-        multAdd: 0.05
+        multAdd: 0.05,
+        desc: 'low-cost server, slightly increase money hack income'
     },
     
     // increase money/exp income for hack cmd/button
@@ -56,7 +83,8 @@ game.servers = {
         mult: 1,
         level: 0,
         upInflation: 50,
-        multAdd: 0.10
+        multAdd: 0.10,
+        desc: 'better than low-cost servers, greatly increase money and experience hack income'
     },
     
     // reduce place hack time
@@ -64,7 +92,8 @@ game.servers = {
         owned: 0,
         cost: 5000,
         inflation: 1.40,
-        accelerator: 1.01
+        accelerator: 1.01,
+        desc: 'virtual machines can reduce the time when hacking a place'
     },
     
     // reduce click divider (default 16)
@@ -72,6 +101,7 @@ game.servers = {
         owned: 0,
         cost: 1e6,
         inflation: 10000,
-        accelerator: 1.5
+        accelerator: 1.5,
+        desc: 'a quickhack server reduce by 1 the divided reward when clicking'
     }
 };

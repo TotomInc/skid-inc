@@ -1,5 +1,9 @@
 game.console.print = function(type, text) {
     switch (type) {
+        case 'nothing':
+            $('#console-content').append('<p>' + text + '</p>');
+            break;
+        
         case 'gain':
             $('#console-content').append('<p><span class="console-gain">[GAIN]</span> ' + text + '</p>');
             break;
@@ -58,33 +62,40 @@ game.console.print = function(type, text) {
 };
 
 game.console.printHelp = function() {
-    for (var cmd in game.console.cmds) {
-        var thisCmd = game.console.cmds[cmd];
-        game.console.print('help', '<b>' + thisCmd.name + '</b>: ' + thisCmd.desc);
-    };
+    var i = 0;
     
-    return;
+    for (var cmd in game.console.cmds) {
+        var thisCmd = game.console.cmds[cmd],
+            logType = (i == 0 ? 'help' : 'nothing');
+        
+        game.console.print(logType, '<b>' + thisCmd.name + '</b>: ' + thisCmd.desc);
+        
+        i++;
+    };
 };
 
 game.console.clear = function(from) {
     if (typeof from == 'undefined') {
         $('#console-content').empty();
+        
         return;
     };
     
     if (from == 'help') {
         game.console.print('help', game.console.help.clear);
+        
         return;
     };
 };
 
 game.console.printGuide = function() {
     game.console.print('guide',
-        'Welcome to <b>Skid-Inc<b>, an incremental-game where you are a poor script-kid, trying to make money with your little knowledge in hacking.<br><br>' +
+        'Welcome to <b>Skid-Inc</b>, an incremental-game where you are a poor script-kid, trying to make money with your little knowledge in hacking.<br><br>' +
         'Start making some $$$ by clicking the <b>hack</b> button or by typing the <b>hack</b> command in the console.<br>' +
-        'Buy different servers to increase your money and experience income (buy -server -help to get started).<br>' +
-        'Hack different places to earn even more money and experience (hack -place -help or hack -place -list).<br><br>' +
-        'Type <b>help</b> for a list of commands, use <b>arguments</b> (like -help for example) to use all the potential of the command (like <b>hack -help</b>).<br>' +
-        'Try some commands: <b>buy server -help</b>, <b>hack -help</b> or even <b>config -help</b> to change game settings.<br><br>' +
+        'Buy different servers to increase your money and experience income (buy <b>-server -help</b> to get started).<br>' +
+        'Hack different places to earn even more money and experience (<b>hack -help</b> or <b>hack -place -list</b>).<br><br>' +
+        'Type <b>help</b> for a list of commands, use <b>arguments</b> (like <b>-help</b> for example) to use all the potential of the command (like <b>hack -place placeToHack</b>).<br>' +
+        'Try some commands: <b>buy -server -help</b>, <b>hack</b> or even <b>config -help</b> to change in-game settings.<br><br>' +
+        'If you want to see this guide again, just type the <b>guide</b> command.<br><br>' +
         'Good luck in your hacking adventure!');
 };

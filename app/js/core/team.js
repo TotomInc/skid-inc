@@ -1,73 +1,73 @@
 game.team = {
     list: {
-        'mini_market': {
-            name: 'mini_market',
+        'noob': {
+            name: 'noob',
             effect: 'mini_market',
             price: 2000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 2
+            levelReq: 5
         },
         
-        'market': {
-            name: 'market',
+        'script_kiddie': {
+            name: 'script_kiddie',
             effect: 'market',
             price: 25000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 10
+            levelReq: 15
         },
         
-        'jewelry': {
-            name: 'jewelry',
+        'coder': {
+            name: 'coder',
             effect: 'jewelry',
             price: 600000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 20
+            levelReq: 25
         },
         
-        'bank': {
-            name: 'bank',
+        'hax0r': {
+            name: 'hax0r',
             effect: 'bank',
             price: 1000000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 30
+            levelReq: 35
         },
         
-        'trading_center': {
-            name: 'trading_center',
+        'prodigy': {
+            name: 'prodigy',
             effect: 'trading_center',
             price: 12500000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 40
+            levelReq: 45
         },
         
-        'anonymous_hideout': {
-            name: 'anonymous_hideout',
+        'elite_hacker': {
+            name: 'elite_hacker',
             effect: 'anonymous_hideout',
             price: 37500000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 50
+            levelReq: 55
         },
         
-        'deepweb': {
-            name: 'deepweb',
+        'elite_skid': {
+            name: 'elite_skid',
             effect: 'deepweb',
             price: 250000000,
             owned: false,
             progress: 0,
             done: 0,
-            levelReq: 50
+            levelReq: 65
         }
     },
     
@@ -85,13 +85,25 @@ game.team = {
         };
         
         if (from == 'status') {
+            var i = 0;
+            
             for (var hacker in game.team.list) {
                 var thisHacker = game.team.list[hacker],
                     thisPlace = game.console.cmds[0].places[thisHacker.effect],
-                    time = game.getPlaceTime(thisPlace);
+                    time = game.getPlaceTime(thisPlace),
+                    logType = (i == 0 ? 'log' : 'nothing');
                 
-                game.console.print('log', '<b>' + thisHacker.name + '</b>: hack ' + thisHacker.effect + ', current progress at ' + fix(thisHacker.progress, 2) + '/' + fix(time, 2) + ' sec, engaged: ' + thisHacker.owned);
+                if (thisHacker.owned)
+                    game.console.print(logType, '<b>' + thisHacker.name + '</b>: hack ' + thisHacker.effect + ', current progress at ' + fix(thisHacker.progress, 2) + '/' + fix(time, 2) + ' sec, engaged: ' + thisHacker.owned);
+
+                i++;
             };
+            
+            return;
+        };
+        
+        if (from == "pause") {
+            console.log(option)
             
             return;
         };

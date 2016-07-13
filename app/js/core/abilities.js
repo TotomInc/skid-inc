@@ -2,7 +2,7 @@ game.abilities = {
     list: {
         'up_key': {
             name: 'up_key',
-            desc: 'press your up-key to type the latest command entered.',
+            desc: 'Press your up-key to type the latest command entered. Ability got a small cooldown (500 ms).',
             cost: 1e6,
             reqLevel: 10,
             owned: false
@@ -23,10 +23,15 @@ game.abilities = {
         };
         
         if (from == 'list') {
+            var i = 0;
+            
             for (var ability in game.abilities.list) {
-                var thisAbility = game.abilities.list[ability];
+                var thisAbility = game.abilities.list[ability],
+                    logType = (i == 0 ? 'help' : 'nothing');
                 
-                game.console.print('help', '<b>' + thisAbility.name + '</b>: cost $' + fix(thisAbility.cost) + ', owned: ' + thisAbility.owned + '. Effect: ' + thisAbility.desc);
+                game.console.print(logType, '<b>' + thisAbility.name + '</b>: cost $' + fix(thisAbility.cost) + ', owned: ' + thisAbility.owned + '. ' + thisAbility.desc);
+
+                i++;
             };
             
             return;
