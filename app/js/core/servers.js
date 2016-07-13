@@ -60,8 +60,13 @@ game.servers = {
         return Math.floor(5 - game.servers.quickhack.owned);
     },
     
+    domInit: function() {
+        
+    },
+    
     // increase money income for hack cmd/button
     personal: {
+        name: 'personal',
         owned: 0,
         cost: 750,
         inflation: 1.08,
@@ -75,6 +80,7 @@ game.servers = {
     
     // increase money/exp income for hack cmd/button
     professional: {
+        name: 'professional',
         owned: 0,
         cost: 150000,
         inflation: 1.08,
@@ -89,6 +95,7 @@ game.servers = {
     
     // reduce place hack time
     vm: {
+        name: 'vm',
         owned: 0,
         cost: 5000,
         inflation: 1.40,
@@ -98,6 +105,7 @@ game.servers = {
     
     // reduce click divider (default 16)
     quickhack: {
+        name: 'quickhack',
         owned: 0,
         cost: 1e6,
         inflation: 10000,

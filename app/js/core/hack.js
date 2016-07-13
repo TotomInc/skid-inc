@@ -94,7 +94,7 @@ game.hack = function(from, option) {
         var thisPlace = game.console.cmds[0].places[option];
         
         if (!game.player.isHacking) {
-            if (game.team.list[option].owned)
+            if (game.team.list[thisPlace.hackerName].owned)
                 game.console.print('error', 'You already have a hacker to hack this place.');
             else if (game.player.level >= thisPlace.reqLevel) {
                 game.player.isHacking = true;

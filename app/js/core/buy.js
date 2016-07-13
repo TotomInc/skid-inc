@@ -56,30 +56,27 @@ game.buy = function(from, option) {
         
         for (var i = 0; i < servers.length; i++) {
             var logType = (i == 0 ? 'log' : 'nothing'),
-                thisServer = game.servers[i],
+                thisServer = game.servers[servers[i]],
                 cost = game.servers.getCostArray(i);
             
-            game.console.log(logType, '<b>' + thisServer.name + '</b>: ' + thisServer.desc + ', currently ' + fix(thisServer.owned, 0) + ' owned, next cost $' + fix(cost));
+            game.console.print(logType, '<b>' + thisServer.name + '</b>: ' + thisServer.desc + ', currently ' + fix(thisServer.owned, 0) + ' owned, next cost $' + fix(cost));
         }
         
         return;
     };
     
     if (from == 'hacker') {
-        console.log('here')
-        
         var thisHacker = game.team.list[option],
             cost = game.team.list[option].price;
         
-        console.log(option)
-        console.log(thisHacker)
-        
-        if (game.player.money >= cost && game.player.level >= thisHacker.levelReq && !thisHacker.owned) {
+        if (game.player.money >= cost && game.player.level >= thisHacker.levelReq && !thisHacker.owned && game.player.hackingWhat !== thisHacker.effect) {
             game.player.money -= cost
             thisHacker.owned = true;
             
             game.console.print('gain', 'You successfully hired <b>' + thisHacker.name + '</b> for ' + thisHacker.effect + ' at <b>$' + fix(cost) + '</b>.');
         }
+        else if (game.player.hackingWhat == thisHacker.effect)
+            game.console.print('error', 'Wait for your hack to finish to hire this hacker (this hacker hack the place you are currently hacking).');
         else if (thisHacker.owned)
             game.console.print('error', 'You already own this hacker!');
         else if (game.player.level < thisHacker.levelReq)
