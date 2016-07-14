@@ -35,7 +35,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">SkidInc. <small>Hack or be hacked <i>(<span id="navbar-version"></span>)</i></small></a>
+				<a class="navbar-brand">SkidInc. <small><span id="navbar-version"></span></small></a>
 			</div>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -74,13 +74,18 @@
 						<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
 					</li>
 					
-					<li>
-						<a href="#inventory" data-toggle="tab"><i class="fa fa-briefcase"></i> Inventory</a>
+					<li id="servers-tab">
+						<a href="#servers" data-toggle="tab"><i class="fa fa-server"></i> Servers</a>
 					</li>
 
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
 						<ul class="dropdown-menu">
+							<li>
+								<a href="#inventory" data-toggle="tab"><i class="fa fa-briefcase"></i> Inventory</a>
+							</li>
+							
+							<li class="divider"></li>
 							
 							<li>
 								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
@@ -112,6 +117,10 @@
 								</div>
 							</div>
 						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane fade" id="servers">
+						<div id="servers-well" class="well"></div>
 					</div>
 
 					<div role="tabpanel" class="tab-pane fade" id="inventory">
@@ -164,7 +173,17 @@
 					<div role="tabpanel" class="tab-pane fade" id="notes">
 						<div class="well">
 							<p>
-								<b>v0.08: kill these bugs! feedback update! <small>(13 july 2016)</small></b>
+								<b>v0.09: UI update <small>(TBD)</small></b>
+								<ul>
+									<li>Game was totally bugged (can't execute any hack on a place). Very sorry for this.</li>
+									<li>Quickhack servers now have a limit an fixed their cost.</li>
+									<li>Added a 'server tab' with some UI tweaks.</li>
+									<li>Added difficulties: hardcore and normal.</li>
+								</ul>
+							</p>
+							
+							<p>
+								<b>v0.08: kill these bugs! <small>(13 july 2016)</small></b>
 								<ul>
 									<li>Hackers now have names!</li>
 									<li>Removed some achievements.</li>
@@ -178,7 +197,7 @@
 							</p>
 
 							<p>
-								<b>v0.07: the first version released to alpha-testers! <small>(5 july 2016)</small></b>
+								<b>v0.07: first version released to alpha-testers <small>(5 july 2016)</small></b>
 								<ul>
 									<li>Better guide.</li>
 									<li>Start-game is now easier (the <i>click reducer</i> is now at 5), and automation is faster to get (hackers are less expensive).</li>
@@ -188,7 +207,7 @@
 							</p>
 
 							<p>
-								<b>v0.06: the first big balancing update! <small>(26 june 2016)</small></b>
+								<b>v0.06: big balancing update <small>(26 june 2016)</small></b>
 								<ul>
 									<li>Fixed bugs with team/hackers command.</li>
 									<li>Balancing changes: places give less exp and take slightly more time, quickhack server cost reduced.</li>
@@ -199,7 +218,7 @@
 							</p>
 
 							<p>
-								<b>v0.05: not important update. <small>(10 june 2016)</small><br></b>
+								<b>v0.05: server upgrades <small>(10 june 2016)</small><br></b>
 								<ul>
 									<li>Added server upgrades.</li>
 									<li>Redone code for commands.</li>
@@ -232,7 +251,7 @@
 							</p>
 
 							<p>
-								<b>v0.02: the sounds update. <small>(2 june 2016)</small><br></b>
+								<b>v0.02: sounds update <small>(2 june 2016)</small><br></b>
 								<ul>
 									<li>Added sounds and ambient background music/sound.</li>
 									<li>Added achievements with achievements points.</li>
@@ -244,7 +263,7 @@
 							</p>
 
 							<p>
-								<b>v0.01: hey, welcome Skid-Inc! <small>(30 may 2016)</small><br></b>
+								<b>v0.01: hello world! <small>(30 may 2016)</small><br></b>
 								<ul>
 									<li>First prototype release, at least playable but buggy!</li>
 									<li>Include simple hacking, place hacking and servers.</li>

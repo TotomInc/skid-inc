@@ -43,7 +43,7 @@ game.hack = function(from, option) {
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
 
-        if (from == 'sp-click') {
+        if (from == 'sp-click' && divider > 1) {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
             floating.addFloating('hack-button', '+$' + fix(moneyReward));
         }
@@ -94,7 +94,7 @@ game.hack = function(from, option) {
         var thisPlace = game.console.cmds[0].places[option];
         
         if (!game.player.isHacking) {
-            if (game.team.list[option].owned)
+            if (game.team.list[thisPlace.hackerName].owned)
                 game.console.print('error', 'You already have a hacker to hack this place.');
             else if (game.player.level >= thisPlace.reqLevel) {
                 game.player.isHacking = true;

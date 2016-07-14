@@ -17,7 +17,7 @@ game.servers = {
             return game.servers.getPersCost();
         else if (what == 'professional')
             return game.servers.getProCost();
-        else if (what = 'vm')
+        else if (what == 'vm')
             return game.servers.getVMCost();
         else if (what == 'quickhack')
             return game.servers.getQuickhackCost();
@@ -60,8 +60,54 @@ game.servers = {
         return Math.floor(5 - game.servers.quickhack.owned);
     },
     
+    domInit: function() {
+        var servers = ['personal', 'professional', 'vm', 'quickhack'];
+        
+        for (var i = 0; i < servers.length; i++) {
+            var thisServer = game.servers[servers[i]],
+                cost = game.servers.getCostArray(i);
+
+            $('#servers-well').append('<div id="server-' + thisServer.name + '" class="row">');
+            $('#server-' + thisServer.name).append('' +
+                '<div class="col-md-2">' +
+                    '<a href="#" class="thumbnail">' +
+                        '<img src="' + thisServer.iconURL + '" width="50">' +
+                    '</a>' +
+                '</div>' +
+                '<div class="col-md-5">' +
+                    '<p class="text-center"><b>' + thisServer.name.cap() + '</b>: ' + thisServer.desc + '.</p>' +
+                '</div>' +
+                '<div class="col-md-3">' +
+                    '<p id="text-' + thisServer.name + '" class="text-center">' + fix(thisServer.owned, 0) + ' owned<br>$' + fix(cost) + '</p>' +
+                '</div>' +
+                '<div class="col-md-2">' +
+                    '<a id="buy-' + thisServer.name + '" class="btn btn-default btn-block">Buy x1</a>' +
+                '</div>');
+
+            $('#buy-' + thisServer.name).on('click', function() {
+                var serverID = $(this).attr('id'),
+                    serverType = serverID.substring(4, serverID.length);
+
+                game.buy('server', serverType);
+                game.servers.refreshUI();
+            });
+        }
+    },
+    
+    refreshUI: function() {
+        var servers = ['personal', 'professional', 'vm', 'quickhack'];
+        
+        for (var i = 0; i < servers.length; i++) {
+            var thisServer = game.servers[servers[i]],
+                cost = game.servers.getCostArray(i);
+            
+            $('#text-' + servers[i]).html(fix(thisServer.owned, 0) + ' owned<br>$' + fix(cost));
+        } 
+    },
+    
     // increase money income for hack cmd/button
     personal: {
+        name: 'personal',
         owned: 0,
         cost: 750,
         inflation: 1.08,
@@ -70,11 +116,13 @@ game.servers = {
         level: 0,
         upInflation: 10,
         multAdd: 0.05,
-        desc: 'low-cost server, slightly increase money hack income'
+        desc: 'low-cost server, slightly increase money hack income',
+        iconURL: 'https://maxcdn.icons8.com/iOS7/PNG/75/Network/individual_server-75.png'
     },
     
     // increase money/exp income for hack cmd/button
     professional: {
+        name: 'professional',
         owned: 0,
         cost: 150000,
         inflation: 1.08,
@@ -84,24 +132,30 @@ game.servers = {
         level: 0,
         upInflation: 50,
         multAdd: 0.10,
-        desc: 'better than low-cost servers, greatly increase money and experience hack income'
+        desc: 'greatly increase money and experience hack income',
+        iconURL: 'https://maxcdn.icons8.com/iOS7/PNG/75/Network/root_server-75.png'
     },
     
     // reduce place hack time
     vm: {
+        name: 'vm',
         owned: 0,
         cost: 5000,
         inflation: 1.40,
         accelerator: 1.01,
-        desc: 'virtual machines can reduce the time when hacking a place'
+        desc: 'virtual machines can reduce the time when hacking a place',
+        iconURL: 'https://maxcdn.icons8.com/iOS7/PNG/75/Network/virtual_machine2-75.png'
     },
     
-    // reduce click divider (default 16)
+    // reduce click divider
     quickhack: {
+        name: 'quickhack',
         owned: 0,
+        maxOwned: 4,
         cost: 1e6,
-        inflation: 10000,
+        inflation: 100000,
         accelerator: 1.5,
-        desc: 'a quickhack server reduce by 1 the divided reward when clicking'
+        desc: 'a quickhack server reduce by 1 the divided reward when clicking',
+        iconURL: 'https://maxcdn.icons8.com/iOS7/PNG/75/Network/server-75.png'
     }
 };

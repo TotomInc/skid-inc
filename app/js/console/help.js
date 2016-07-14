@@ -7,7 +7,8 @@ game.console.help = {
 
     config: "You must use <b>config</b> with arguments.<br>" +
         "<b>config -sounds <i>value</i></b>: enable (true) or disable (false) the sound of the game. (default to false)<br>" +
-        "<b>config -background <i>value</i></b>: enable (true) or disable (false) the background animation. (default to false)",
+        "<b>config -background <i>value</i></b>: enable (true) or disable (false) the background animation. (default to false)<br>" +
+        '<b>config -gamemode <i>value</i></b>: switch to normal or hardcore mode (default to normal).',
 
     clear: "<b>clear</b> don't accept any arguments.",
     

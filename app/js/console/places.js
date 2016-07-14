@@ -6,7 +6,8 @@ game.console.cmds[0].places = {
         minExpReward: 150,
         maxExpReward: 350,
         time: 25,
-        reqLevel: 2
+        reqLevel: 2,
+        hackerName: 'noob'
     },
     'market': {
         name: 'market',
@@ -15,7 +16,8 @@ game.console.cmds[0].places = {
         minExpReward: 225,
         maxExpReward: 550,
         time: 60,
-        reqLevel: 10
+        reqLevel: 10,
+        hackerName: 'script_kiddie'
     },
     'jewelry': {
         name: 'jewelry',
@@ -24,7 +26,8 @@ game.console.cmds[0].places = {
         minExpReward: 500,
         maxExpReward: 1300,
         time: 480,
-        reqLevel: 20
+        reqLevel: 20,
+        hackerName: 'coder'
     },
     'bank': {
         name: 'bank',
@@ -33,7 +36,8 @@ game.console.cmds[0].places = {
         minExpReward: 2000,
         maxExpReward: 9500,
         time: 2880,
-        reqLevel: 30
+        reqLevel: 30,
+        hackerName: 'hax0r'
     },
     'trading_center': {
         name: 'trading_center',
@@ -42,7 +46,8 @@ game.console.cmds[0].places = {
         minExpReward: 15000,
         maxExpReward: 40000,
         time: 11520,
-        reqLevel: 40
+        reqLevel: 40,
+        hackerName: 'prodigy'
     },
     'anonymous_hideout': {
         name: 'anonymous_hideout',
@@ -51,7 +56,8 @@ game.console.cmds[0].places = {
         minExpReward: 75000,
         maxExpReward: 200000,
         time: 34560,
-        reqLevel: 50
+        reqLevel: 50,
+        hackerName: 'elite_hacker'
     },
     'deepweb': {
         name: 'deepweb',
@@ -60,6 +66,7 @@ game.console.cmds[0].places = {
         minExpReward: 750000,
         maxExpReward: 2000000,
         time: 81920,
-        reqLevel: 60
+        reqLevel: 60,
+        hackerName: 'elite_skid'
     }
 };
