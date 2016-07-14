@@ -277,6 +277,8 @@ var game = {
         $('img').on('dragstart', function(e) {
             e.preventDefault();
         });
+        
+        game.servers.domInit();
 
         console.info('Dom init finished.');
     },

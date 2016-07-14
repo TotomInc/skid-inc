@@ -14,7 +14,14 @@ game.buy = function(from, option) {
     if (from == 'server') {
         var cost = game.servers.getCostOption(option);
         
-        if (game.player.money >= cost) {
+        console.log(option)
+        console.log(cost)
+        
+        if (option == 'quickhack' && game.servers.quickhack.owned >= game.servers.quickhack.maxOwned) {
+            game.console.print('error', 'You have bought all quickhack servers.');
+            return;
+        }
+        else if (game.player.money >= cost) {
             game.player.money -= cost;
             game.servers[option].owned++;
             

@@ -43,7 +43,7 @@ game.hack = function(from, option) {
         game.earnMoney(moneyReward);
         game.earnExp(expReward);
 
-        if (from == 'sp-click') {
+        if (from == 'sp-click' && divider > 1) {
             game.console.print('gain', 'You successfully gained $' + fix(moneyReward) + ' and ' + fix(expReward) + ' exp. ' + '(reward divided by ' + fix(divider, 0) + ' when clicking button)');
             floating.addFloating('hack-button', '+$' + fix(moneyReward));
         }
