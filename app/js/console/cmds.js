@@ -184,13 +184,17 @@ game.console.cmds = [
                 'exec': 'game.config("help")',
                 'options': false
             }, {
-                'pattern': '^config[\\s]+-sounds[\\s]+[\\w]+[\\s]*$',
+                'pattern': '^config[\\s]+-sounds[\\s]+[\\w]*$',
                 'exec': 'game.config("triggerSounds", option)',
                 'options': '(true|false)'
             }, {
-                'pattern': '^config[\\s]+-background[\\s]+[\\w]+[\\s]*$',
+                'pattern': '^config[\\s]+-background[\\s]+[\\w]*$',
                 'exec': 'game.config("triggerBackground", option)',
                 'options': '(true|false)'
+            }, {
+                'pattern': '^config[\\s]+-gamemode[\\s]+[\\w]*$',
+                'exec': 'game.player.changeGamemode(option)',
+                'options': '(normal|hardcore)'
             }
         ]
     },

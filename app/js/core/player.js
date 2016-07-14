@@ -23,5 +23,21 @@ game.player = {
     
     isHacking: false,
     hackingWhat: undefined,
-    hackingProgress: 0
+    hackingProgress: 0,
+    
+    gamemode: 'normal',
+    difficultyMult: 1.5,
+    
+    changeGamemode: function(option) {
+        game.player.gamemode = option;
+        
+        if (option == 'hardcore') {
+            $('#servers-tab').fadeOut('slow');
+            game.console.print('log', 'Gamemode changed, now playing on ' + option + '. While playing on hardcore mode, you gain money faster (x' + game.player.difficultyMult + ' to money multiplier).');
+        }
+        else {
+            $('#servers-tab').fadeIn('slow');
+            game.console.print('log', 'Gamemode changed, now playing on ' + option + '. The hardcore money multiplier have been removed.');
+        }
+    }
 };

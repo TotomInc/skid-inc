@@ -42,9 +42,10 @@ var game = {
 
     getGlobalMoneyMult: function() {
         var persMult = game.servers.getPersReward(),
-            proMult = game.servers.getProReward().money;
+            proMult = game.servers.getProReward().money,
+            difficulty = (game.player.gamemode == 'hardcore' ? game.player.difficultyMult : 1);
 
-        return (persMult + proMult) - 1;
+        return ((persMult + proMult) - 1) * difficulty;
     },
 
     getGlobalExpMult: function() {
