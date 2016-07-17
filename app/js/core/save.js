@@ -55,6 +55,8 @@ game.save = {
             gp.moneyMult = sgp.moneyMult;
             gp.expMult = sgp.expMult;
             gp.achievementsPoints = sgp.achievementsPoints;
+            gp.gamemode = sgp.gamemode;
+            gp.isNew = sgp.isNew;
 
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;

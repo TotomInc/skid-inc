@@ -90,15 +90,12 @@ game.console.clear = function(from) {
 
 game.console.printGuide = function() {
     game.console.print('guide',
-        'Welcome to <b>Skid-Inc</b>, an incremental-game where you are a poor script-kid, trying to make money with your little knowledge in hacking.<br><br>' +
-        'Start making some <b>$$$</b> by clicking the <b>hack</b> button or by typing the <b>hack</b> command in the console.<br>' +
+        'Start making some <b>$$$</b> by clicking the <b>hack</b> button (available on normal only) or by typing the <b>hack</b> command in the console.<br>' +
         'Buy different servers to increase your money and experience income (buy <b>-server -help</b> to get started).<br>' +
         'Hack different places to earn even more money and experience (<b>hack -help</b> or <b>hack -place -list</b>).<br><br>' +
         'Type <b>help</b> for a list of commands, use <b>arguments</b> (like <b>-help</b> for example) to use all the potential of the command (like <b>hack -place placeToHack</b>).<br>' +
         'Try some commands: <b>buy -server -help</b>, <b>hack</b> or even <b>config -help</b> to change in-game settings.<br><br>' +
-        'By default, the game difficulty is set to normal. You can switch to hardcore mode with <b>config -gamemode hardcore</b>.<br>' +
-        'With hardcore mode, you will earn x' + game.player.difficultyMult + ' more money because you do everything in the console (hacking place, buying servers, ...)<br>' +
-        'On normal, you have UI tabs to help you to manage your hacking business.<br><br>' +
+        'You can switch difficulty with <b>config -gamemode difficulty</b> (normal or hardcore).<br>' +
         'If you want to see this guide again, just type the <b>guide</b> command.<br><br>' +
         'Good luck in your hacking adventure!');
 };

@@ -28,16 +28,35 @@ game.player = {
     gamemode: 'normal',
     difficultyMult: 1.5,
     
-    changeGamemode: function(option) {
+    isNew: true,
+    
+    changeGamemode: function(option, fromModal) {
         game.player.gamemode = option;
         
         if (option == 'hardcore') {
-            $('#servers-tab').fadeOut('slow');
-            game.console.print('log', 'Gamemode changed, now playing on ' + option + '. While playing on hardcore mode, you gain money faster (x' + game.player.difficultyMult + ' to money multiplier).');
+            $('#servers-tab, #places-tab, #hack-button').fadeOut('fast');
+            game.console.print('log', 'Gamemode changed, now playing on ' + option + '. While playing on hardcore mode, you gain money and exp faster (x' + fix(game.player.difficultyMult, 0) + ').');
         }
         else {
-            $('#servers-tab').fadeIn('slow');
+            $('#servers-tab, #places-tab, #hack-button').fadeIn('fast');
             game.console.print('log', 'Gamemode changed, now playing on ' + option + '. The hardcore money multiplier have been removed.');
         }
+        
+        if (fromModal) {
+            $('#modal-newplayer').modal('hide');
+            game.player.isNew = false;
+        }
+    },
+    
+    domInit: function() {
+        var option = game.player.gamemode;
+        
+        if (option == 'hardcore')
+            $('#servers-tab, #places-tab, #hack-button').fadeOut('fast')
+        else
+            $('#servers-tab, #places-tab, #hack-button').fadeIn('fast');
+        
+        if (game.player.isNew)
+            $('#modal-newplayer').modal('show');
     }
 };
