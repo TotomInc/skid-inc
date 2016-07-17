@@ -49,9 +49,10 @@ var game = {
     },
 
     getGlobalExpMult: function() {
-        var proMult = game.servers.getProReward().exp;
+        var proMult = game.servers.getProReward().exp,
+            difficulty = (game.player.gamemode == 'hardcore' ? game.player.difficultyMult : 1);
 
-        return proMult;
+        return proMult * difficulty;
     },
 
     getPlaceTime: function(thisPlace) {
@@ -77,6 +78,13 @@ var game = {
                 globalExpMult = game.getGlobalExpMult();
 
             game.player.hackingProgress += times / fps;
+            
+            var uiWidth = game.player.hackingProgress / time * 100,
+                timeLeft = time - game.player.hackingProgress;
+            uiWidth = Math.max(uiWidth, 1);
+            
+            $('#bar-' + game.player.hackingWhat).css('width', uiWidth + '%');
+            $('#time-' + game.player.hackingWhat).html(fix(timeLeft) + ' sec left');
 
             if (game.player.hackingProgress < time) {
                 for (var i = 0; i < filled; i++)
@@ -101,6 +109,8 @@ var game = {
                 barStatus += '| (100.00%)';
 
                 $('#hacking-progress').html(barStatus).removeAttr('id');
+                $('#bar-' + game.player.hackingWhat).css('width', '0%');
+                $('#time-' + game.player.hackingWhat).html('0.00 sec left');
 
                 moneyReward *= globalMoneyMult;
                 expReward *= globalExpMult;
@@ -115,31 +125,37 @@ var game = {
                 game.player.hackingWhat = undefined;
             };
         }
-        else if (!isHacking) {
-            for (var hacker in game.team.list) {
-                if (game.team.list[hacker].owned) {
-                    var thisHacker = game.team.list[hacker],
-                        thisPlace = game.console.cmds[0].places[thisHacker.effect],
-                        time = game.getPlaceTime(thisPlace),
-                        fps = game.options.fps,
-                        moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
-                        expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
-                        globalMoneyMult = game.getGlobalMoneyMult(),
-                        globalExpMult = game.getGlobalExpMult();
+        
+        for (var hacker in game.team.list) {
+            if (game.team.list[hacker].owned) {
+                var thisHacker = game.team.list[hacker],
+                    thisPlace = game.console.cmds[0].places[thisHacker.effect],
+                    time = game.getPlaceTime(thisPlace),
+                    fps = game.options.fps,
+                    moneyReward = game.randomInclusive(thisPlace.minMoneyReward, thisPlace.maxMoneyReward),
+                    expReward = game.randomInclusive(thisPlace.minExpReward, thisPlace.maxExpReward),
+                    globalMoneyMult = game.getGlobalMoneyMult(),
+                    globalExpMult = game.getGlobalExpMult();
 
-                    thisHacker.progress += times / fps;
+                thisHacker.progress += times / fps;
 
-                    if (thisHacker.progress >= time) {
-                        moneyReward *= globalMoneyMult;
-                        expReward *= globalExpMult;
+                var width = thisHacker.progress / time * 100,
+                    timeLeft = time - thisHacker.progress;
+                width = Math.max(width, 1);
+                
+                $('#bar-' + thisHacker.effect).css('width', width + '%');
+                $('#time-' + thisHacker.effect).html(fix(timeLeft) + ' sec left');
 
-                        game.earnMoney(moneyReward);
-                        game.earnExp(expReward);
+                if (thisHacker.progress >= time) {
+                    moneyReward *= globalMoneyMult;
+                    expReward *= globalExpMult;
 
-                        thisHacker.progress = 0;
-                        thisHacker.done++;
-                    };
-                }
+                    game.earnMoney(moneyReward);
+                    game.earnExp(expReward);
+
+                    thisHacker.progress = 0;
+                    thisHacker.done++;
+                };
             }
         }
     },
@@ -248,28 +264,6 @@ var game = {
             game.hack('sp-click');
         });
 
-        $('#console-enter').on('click', function() {
-            game.console.executer();
-        });
-
-        $('#console-input').bind('keydown', function(e) {
-            if (e.which == 13)
-                game.console.executer();
-        }).keydown(function(e) {
-            if (e.which == 38) {
-                e.preventDefault();
-                game.console.typeLast();
-            };
-        });
-
-        $('#console-input').bind('copy paste', function(e) {
-            e.preventDefault();
-        });
-
-        $('#console-input').bind('cut paste', function(e) {
-            e.preventDefault();
-        });
-
         $('html').bind('contextmenu', function(e) {
             e.preventDefault();
             return;
@@ -279,7 +273,9 @@ var game = {
             e.preventDefault();
         });
         
+        game.console.domInit();
         game.servers.domInit();
+        game.player.domInit();
 
         console.info('Dom init finished.');
     },

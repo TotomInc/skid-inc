@@ -124,3 +124,27 @@ a.thumbnail:hover {
 .divider {
 	background-color: #222222 !important;
 }
+
+p.hack-ui-margin {
+	margin-top: 7px;
+}
+
+.progress {
+	background-color: #4a4a4a !important;
+}
+
+.progress-bar {
+	background-color: #27ae60;
+	-webkit-transition: none;
+	-o-transition: none;
+	transition: none;
+	-moz-transition: none;
+}
+
+.hacker-owned {
+	background-color: #303a44 !important;
+}
+
+.bar-hacker-owned {
+	background-color: #337ab7 !important;
+}

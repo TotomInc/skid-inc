@@ -55,7 +55,9 @@ game.save = {
             gp.moneyMult = sgp.moneyMult;
             gp.expMult = sgp.expMult;
             gp.achievementsPoints = sgp.achievementsPoints;
-
+            gp.gamemode = sgp.gamemode;
+            gp.isNew = sgp.isNew;
+            gp.name = sgp.name;
             gp.timesHacked = sgp.timesHacked;
             gp.timesPlacesHacked = sgp.timesPlacesHacked;
 
@@ -96,7 +98,7 @@ game.save = {
             game.achievements.checkLoaded();
 
             console.info('Game loaded.');
-            game.console.print('save', 'Welcome back!');
+            game.console.print('save', 'Welcome back, ' + game.player.name + '!');
         }
     },
 

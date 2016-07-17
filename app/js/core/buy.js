@@ -78,6 +78,9 @@ game.buy = function(from, option) {
             game.player.money -= cost
             thisHacker.owned = true;
             
+            $('#hack-' + thisHacker.effect).html('Hacker owned').css('cursor', 'not-allowed').off('click').addClass('hacker-owned');
+            $('#bar-' + thisHacker.effect).addClass('bar-hacker-owned');
+            
             game.console.print('gain', 'You successfully hired <b>' + thisHacker.name + '</b> for ' + thisHacker.effect + ' at <b>$' + fix(cost) + '</b>.');
         }
         else if (game.player.hackingWhat == thisHacker.effect)

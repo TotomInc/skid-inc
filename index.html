@@ -43,9 +43,9 @@
 					<a id="navbar-save" href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now!</a>
 				</li>
 
-				<li>
-					<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Trigger sounds</a>
-				</li>
+				<!--<li>-->
+				<!--	<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Trigger sounds</a>-->
+				<!--</li>-->
 			</ul>
 		</div>
 	</nav>
@@ -64,8 +64,6 @@
 				<div id="hack-button" class="hack-button">
 					<p>Hack! <i class="fa fa-keyboard-o fa-lg" aria-hidden="true"></i></p>
 				</div>
-
-				<div id="custom-button1" class="hack-button" style="display: none;"></div>
 			</div>
 
 			<div class="col-md-9">
@@ -76,6 +74,10 @@
 					
 					<li id="servers-tab">
 						<a href="#servers" data-toggle="tab"><i class="fa fa-server"></i> Servers</a>
+					</li>
+					
+					<li id="places-tab">
+						<a href="#places" data-toggle="tab"><i class="fa fa-globe"></i> Places</a>
 					</li>
 
 					<li class="dropdown">
@@ -121,6 +123,10 @@
 
 					<div role="tabpanel" class="tab-pane fade" id="servers">
 						<div id="servers-well" class="well"></div>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane fade" id="places">
+						<div id="places-well" class="well"></div>
 					</div>
 
 					<div role="tabpanel" class="tab-pane fade" id="inventory">
@@ -173,7 +179,18 @@
 					<div role="tabpanel" class="tab-pane fade" id="notes">
 						<div class="well">
 							<p>
-								<b>v0.09: UI update <small>(TBD)</small></b>
+								<b>v0.10: improvements <small>(17 july 2016)</small></b>
+								<ul>
+									<li>Added hack place UI for normal difficulty.</li>
+									<li>Added a modal for new players where they can choose the difficulty.</li>
+									<li>Blancing changes on the places reward.</li>
+									<li>Some bugs fixed with UI.</li>
+									<li>Code cleanup.</li>
+								</ul>
+							</p>
+							
+							<p>
+								<b>v0.09: UI update <small>(15 july 2016)</small></b>
 								<ul>
 									<li>Game was totally bugged (can't execute any hack on a place). Very sorry for this.</li>
 									<li>Quickhack servers now have a limit an fixed their cost.</li>
@@ -272,6 +289,39 @@
 							</p>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modal-newplayer" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Welcome to SkidInc.</h4>
+				</div>
+				<div class="modal-body">
+					<p class="text-justify">
+						SkidInc is an incremental-game, where you are a poor script kid trying to make money with your little knowledge in hacking.<br><br>
+						This game is meant to be played on the console interface/tab, everything you can do with the interface can be done with commands.<br><br>
+						Before playing, choose your difficulty (this can be changed when you want in the game).<br><br>
+						<b>- Hardcore</b> give you a permanent money and exp boost, but you don't have any interface (like servers management, places hack management, etc).<br><br>
+						<b>- Normal</b> don't give any boost, but you have an access to all interfaces.<br><br>
+						Make your choice, hacker, and give your player a name!
+					</p>
+					
+					<div class="row">
+						<div class="col-md-7">
+							<input class="form-control" id="modal-playername" placeholder="Put your name here.">
+						</div>
+						<div class="col-md-5">
+							<button onclick="game.player.changeName()" type="button" class="btn btn-primary btn-block">I want this name!</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button onclick="game.player.changeGamemode('hardcore', true)" type="button" class="btn btn-danger">Play in hardcore</button>
+					<button onclick="game.player.changeGamemode('normal', true)" type="button" class="btn btn-primary">Play in normal</button>
 				</div>
 			</div>
 		</div>

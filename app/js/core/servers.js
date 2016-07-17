@@ -70,8 +70,8 @@ game.servers = {
             $('#servers-well').append('<div id="server-' + thisServer.name + '" class="row">');
             $('#server-' + thisServer.name).append('' +
                 '<div class="col-md-2">' +
-                    '<a href="#" class="thumbnail">' +
-                        '<img src="' + thisServer.iconURL + '" width="50">' +
+                    '<a class="thumbnail">' +
+                        '<img id="img-' + thisServer.name + '" src="' + thisServer.iconURL + '" width="50">' +
                     '</a>' +
                 '</div>' +
                 '<div class="col-md-5">' +
@@ -84,7 +84,7 @@ game.servers = {
                     '<a id="buy-' + thisServer.name + '" class="btn btn-default btn-block">Buy x1</a>' +
                 '</div>');
 
-            $('#buy-' + thisServer.name).on('click', function() {
+            $('#buy-' + thisServer.name + ', #img-' + thisServer.name).on('click', function() {
                 var serverID = $(this).attr('id'),
                     serverType = serverID.substring(4, serverID.length);
 
