@@ -29,6 +29,18 @@ game.player = {
     difficultyMult: 1.5,
     
     isNew: true,
+    name: 'Hacker',
+    
+    changeName: function() {
+        var name = $('#modal-playername').val();
+        
+        // equivalent to nodejs module 'ent'
+        // delete unsafe characters to avoid cheat via script injection
+        if (name.length < 1)
+            name = 'Hacker'
+        else
+            game.player.name = name.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    },
     
     changeGamemode: function(option, fromModal) {
         game.player.gamemode = option;

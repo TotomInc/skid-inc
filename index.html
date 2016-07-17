@@ -306,8 +306,17 @@
 						Before playing, choose your difficulty (this can be changed when you want in the game).<br><br>
 						<b>- Hardcore</b> give you a permanent money and exp boost, but you don't have any interface (like servers management, places hack management, etc).<br><br>
 						<b>- Normal</b> don't give any boost, but you have an access to all interfaces.<br><br>
-						Make your choice, hacker!
+						Make your choice, hacker, and give your player a name!
 					</p>
+					
+					<div class="row">
+						<div class="col-md-7">
+							<input class="form-control" id="modal-playername" placeholder="Put your name here.">
+						</div>
+						<div class="col-md-5">
+							<button onclick="game.player.changeName()" type="button" class="btn btn-primary btn-block">I want this name!</button>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button onclick="game.player.changeGamemode('hardcore', true)" type="button" class="btn btn-danger">Play in hardcore</button>
