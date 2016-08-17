@@ -1,0 +1,4 @@
+- update costs of items when buying them
+- update readme for commands docs (mod support?)
+- better error handling:
+	* unrecognized parameters (who)

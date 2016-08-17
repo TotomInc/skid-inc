@@ -388,3 +388,72 @@ input:focus {
 *:focus {
     outline: none;
 }
+.row.margin-top {
+    margin-top: 50px;
+}
+* {
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+}
+
+body {
+    background-color: #222;
+    font-family: 'Fira Mono', 'Consolas', 'Arial';
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+@font-face {
+    font-family: 'matrix-code';
+    src: url("../fonts/matrix-code.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/matrix-code.woff") format("woff"),
+        url("../fonts/matrix-code.ttf") format("truetype"),
+        url("../fonts/matrix-code.svg#svgFontName") format("svg");
+}
+
+.matrix-effect canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.20;
+    font-family: 'matrix-code';
+}
+@keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-moz-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+.typed-cursor {
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+	opacity: 1;
+}
+
+div.typed {
+    display: block;
+}
+
+div.typed p {
+    display: inline;
+}

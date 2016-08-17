@@ -1,0 +1,32 @@
+@keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-moz-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+.typed-cursor {
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+	opacity: 1;
+}
+
+div.typed {
+    display: block;
+}
+
+div.typed p {
+    display: inline;
+}
