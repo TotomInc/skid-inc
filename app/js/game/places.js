@@ -2,6 +2,7 @@ game.places = {
 	'mini_market': {
 		name: 'mini_market',
 		cleanName: 'mini-market',
+		hacker: 'noob',
 		minMoney: 250,
 		maxMoney: 750,
 		minExp: 100,
@@ -12,6 +13,7 @@ game.places = {
 	'market': {
 		name: 'market',
 		cleanName: 'market',
+		hacker: 'script_kiddie',
 		minMoney: 650,
 		maxMoney: 2500,
 		minExp: 200,
@@ -22,6 +24,7 @@ game.places = {
 	'jewelry': {
 		name: 'jewelry',
 		cleanName: 'jewelry',
+		hacker: 'coder',
 		minMoney: 7500,
 		maxMoney: 15000,
 		minExp: 400,
@@ -32,6 +35,7 @@ game.places = {
 	'bank': {
 		name: 'bank',
 		cleanName: 'bank',
+		hacker: 'hax0r',
 		minMoney: 25000,
 		maxMoney: 50000,
 		minExp: 2500,
@@ -42,6 +46,7 @@ game.places = {
 	'trading_center': {
 		name: 'trading_center',
 		cleanName: 'trading-center',
+		hacker: 'prodigy',
 		minMoney: 1e5,
 		maxMoney: 4e5,
 		minExp: 15000,
@@ -52,6 +57,7 @@ game.places = {
 	'anonymous_hideout': {
 		name: 'anonymous_hideout',
 		cleanName: 'anonymous-hideout',
+		hacker: 'elite_hacker',
 		minMoney: 1e6,
 		maxMoney: 1e7,
 		minExp: 75000,
@@ -62,6 +68,7 @@ game.places = {
 	'deepweb': {
 		name: 'deepweb',
 		cleanName: 'deepweb',
+		hacker: 'elite_skid',
 		minMoney: 5e8,
 		maxMoney: 15e8,
 		minExp: 300000,

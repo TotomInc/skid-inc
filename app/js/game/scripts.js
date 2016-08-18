@@ -71,6 +71,22 @@ g.scripts.buy = (what) => {
 		g.player.money -= price;
 		g.scripts[what].owned++;
 		g.console.print('You successfully bought a ' + what + '.');
+
+		g.console.commands.filter(function(baseCmd) {
+			if (baseCmd.name !== 'buy')
+				return;
+
+			baseCmd.commands.filter(function(cmd) {
+				if (cmd.cleanCmd.indexOf('script (option)') > -1) {
+					for (var i = 0; i < cmd.customDesc.length; i++) {
+						var splitDesc = cmd.customDesc[i].split('$');
+
+						splitDesc[1] = '$' + fix(g.scripts.getPrice(cmd.options[i])) + '.';
+						cmd.customDesc[i] = splitDesc.join('');
+					};
+				};
+			});
+		});
 	}
 	else if (g.player.money < price)
 		g.console.print('<b><u>Error</u></b>: not enough money to buy a ' + what + '.');

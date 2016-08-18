@@ -5,8 +5,7 @@ game.options = {
     now: new Date().getTime(),
     before: new Date().getTime(),
 
-    debug: false,
-    matrix: true,
+    debug: true,
     version: 0.2,
 
     whatOS: undefined,

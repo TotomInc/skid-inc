@@ -28,21 +28,46 @@ Commands are stored on `g.console.commands` array, each command is an object wit
 
 - `name:string`: command name which is displayed on the `help` command.
 - `desc:string`: global description of the command display on the `help` command.
-- `pattern:regexString`: regex pattern of the command, regex pattern must start with `^` and finish with `$`.
+- `pattern:regexString`: regex pattern of the command, regex pattern must start with `^` and finish with `$`. Example: `^test$`.
 - `commands:array`: commands of this object are stored on this array, commands must be objects.
 
 When creating specific commands on the commands array, here are the parameters you can use:
 
-- `pattern:regexString`: regex string of the command. As said before, it must start with `^` and finish with `$`. Use `[\\s]` to add space, use `[\\w]` if your command have options (`[\\w]` is the place for the option string).
+- `pattern:regexString`: regex string of the command. As said before, it must start with `^` and finish with `$`. Use `[\\s]` to add space, use `[\\w]` if your command have options (`[\\w]` is the place for the option string). Example: `^test[\\s]-param[\\s][\\w]$`.
 - `execute:string(function)`: string called on a `eval`, must be a reference to a function.
-- `cleanCmd:string`: command without regex pattern, if got an option (`[\\w]`) replace it with `(option)`.
+- `cleanCmd:string`: command without regex pattern, if got an option (`[\\w]`) replace it with `(option)`. Example: `test -param (option)`
 - `desc:string`: a global description of what does the command.
-- `customDesc:array`: needed if command got option. Each string in the array will match the proper `options` array index.
-- `callback:function`: function called when the command have been executed.
-- `options:array`: strings that must match user input (options replace `[\\w]` on the regex pattern).
+- `customDesc:array`: needed if command got option. Each string in the array will match the proper `options` array index. Example:
+
+```javascript
+customDesc: [
+	'this is the desc for the first option.',
+	'this is the desc for the second option.',
+	'this is the desc for the third option.'
+]
+```
+
+- `callback:function`: function called when the command have been executed. Example:
+
+```javascript
+callback: function() {
+	console.log('Callback have been called.');
+}
+```
+
+- `options:array`: strings that must match user input (options replace `[\\w]` on the regex pattern). Example:
+
+```javascript
+options: [
+	'first-param',
+	'second-param',
+	'third-param'
+]
+```
+
 - `optionsIndex:number`: index of `[\\w]` in pattern regex or of `(option)` in `cleanCmd`.
 
-Example command:
+**Example command**:
 
 ```javascript
 {
@@ -90,4 +115,5 @@ The live website branch is `gh-pages`.
 ### Links:
 
 [Play it here!](https://totominc.github.io/skid-inc/ "SkidInc game")
+
 [SkidInc subreddit!](https://www.reddit.com/r/skidinc "SkidInc subreddit")

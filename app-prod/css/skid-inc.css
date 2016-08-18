@@ -398,7 +398,7 @@ input:focus {
 
 body {
     background-color: #222;
-    font-family: 'Fira Mono', 'Consolas', 'Arial';
+    font-family: 'Source Code Pro', 'Consolas', monospace;
 }
 
 .noselect {

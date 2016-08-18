@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                     'app/js/game/player.js',
                     'app/js/game/console.js',
                 	'app/js/game/places.js',
+                    'app/js/game/hackers.js',
                     'app/js/game/scripts.js',
                     'app/js/game/*.js',
                     'app/js/game/console-commands.js'

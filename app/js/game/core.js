@@ -51,6 +51,7 @@ g.updateGame = (times) => {
     g.jobs.loop(times);
     g.scripts.action(times);
     g.hack.loop(times);
+    g.hack.hackerLoop(times);
 
     document.title = '$' + fix(g.player.money) + ' - SkidInc';
 };

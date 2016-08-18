@@ -420,8 +420,10 @@ g.loop = () => {
 
 g.updateGame = (times) => {
     g.console.update();
+    g.jobs.loop(times);
     g.scripts.action(times);
     g.hack.loop(times);
+    g.hack.hackerLoop(times);
 
     document.title = '$' + fix(g.player.money) + ' - SkidInc';
 };;
@@ -523,7 +525,7 @@ game.player = {
     rank: 'Script Kid',
     money: 0,
     totalMoney: 0,
-    level: 1,
+    level: 2,
     exp: 0,
     expReq: 100,
     expInflation: 1.30,
@@ -812,6 +814,7 @@ game.places = {
 	'mini_market': {
 		name: 'mini_market',
 		cleanName: 'mini-market',
+		hacker: 'noob',
 		minMoney: 250,
 		maxMoney: 750,
 		minExp: 100,
@@ -822,6 +825,7 @@ game.places = {
 	'market': {
 		name: 'market',
 		cleanName: 'market',
+		hacker: 'script_kiddie',
 		minMoney: 650,
 		maxMoney: 2500,
 		minExp: 200,
@@ -832,6 +836,7 @@ game.places = {
 	'jewelry': {
 		name: 'jewelry',
 		cleanName: 'jewelry',
+		hacker: 'coder',
 		minMoney: 7500,
 		maxMoney: 15000,
 		minExp: 400,
@@ -842,6 +847,7 @@ game.places = {
 	'bank': {
 		name: 'bank',
 		cleanName: 'bank',
+		hacker: 'hax0r',
 		minMoney: 25000,
 		maxMoney: 50000,
 		minExp: 2500,
@@ -852,6 +858,7 @@ game.places = {
 	'trading_center': {
 		name: 'trading_center',
 		cleanName: 'trading-center',
+		hacker: 'prodigy',
 		minMoney: 1e5,
 		maxMoney: 4e5,
 		minExp: 15000,
@@ -862,6 +869,7 @@ game.places = {
 	'anonymous_hideout': {
 		name: 'anonymous_hideout',
 		cleanName: 'anonymous-hideout',
+		hacker: 'elite_hacker',
 		minMoney: 1e6,
 		maxMoney: 1e7,
 		minExp: 75000,
@@ -872,6 +880,7 @@ game.places = {
 	'deepweb': {
 		name: 'deepweb',
 		cleanName: 'deepweb',
+		hacker: 'elite_skid',
 		minMoney: 5e8,
 		maxMoney: 15e8,
 		minExp: 300000,
@@ -907,6 +916,91 @@ g.places.getExp = (what) => {
 	var expMult = g.player.getExpMult();
 
 	return randomInclusive(g.places[what].minExp, g.places[what].maxExp) * expMult;
+};;
+g.hackers = {
+	'noob': {
+		name: 'noob',
+		cleanName: 'noob',
+		effect: 'mini_market',
+		price: 2000,
+		owned: false,
+		progress: 0
+	},
+
+	'script_kiddie': {
+		name: 'script_kiddie',
+		cleanName: 'script-kiddie',
+		effect: 'market',
+		price: 10e3,
+		owned: false,
+		progress: 0
+	},
+
+	'coder': {
+		name: 'coder',
+		cleanName: 'coder',
+		effect: 'jewelry',
+		price: 50e3,
+		owned: false,
+		progress: 0
+	},
+
+	'hax0r': {
+		name: 'hax0r',
+		cleanName: 'hax0r',
+		effect: 'bank',
+		price: 100e3,
+		owned: false,
+		progress: 0
+	},
+
+	'prodigy': {
+		name: 'prodigy',
+		cleanName: 'prodigy',
+		effect: 'trading_center',
+		price: 2e5,
+		owned: false,
+		progress: 0
+	},
+
+	'elite_hacker': {
+		name: 'elite_hacker',
+		cleanName: 'elite-hacker',
+		effect: 'anonymous_hideout',
+		price: 5e6,
+		owned: false,
+		progress: 0
+	},
+
+	'elite_skid': {
+		name: 'elite_skid',
+		cleanName: 'elite-skid',
+		effect: 'deepweb',
+		price: 10e8,
+		owned: false,
+		progress: 0
+	}
+};
+
+g.hackers.getPrice = (who) => {
+	return g.hackers[who].price;
+};
+
+g.hackers.buy = (who) => {
+	var price = g.hackers.getPrice(who);
+
+	if (g.player.money >= price) {
+		g.player.money -= price;
+		g.hackers[who].owned = true;
+
+		return g.console.print('You successfully hired ' + g.hackers[who].cleanName + '.');
+	}
+	else if (g.hackers[who].owned)
+		return g.console.print('<b><u>Error</u></b>: you already own this hacker.');
+	else if (g.player.money < price)
+		return g.console.print('<b><u>Error</u></b>: not enough money to hire ' + g.hackers[who].cleanName + '.');
+	else
+		return g.console.print('<b><u>Error</u></b>: you can\'t hire ' + g.hackers[who].cleanName + '.');
 };;
 g.scripts = {
 	calledOnce: false,
@@ -981,6 +1075,22 @@ g.scripts.buy = (what) => {
 		g.player.money -= price;
 		g.scripts[what].owned++;
 		g.console.print('You successfully bought a ' + what + '.');
+
+		g.console.commands.filter(function(baseCmd) {
+			if (baseCmd.name !== 'buy')
+				return;
+
+			baseCmd.commands.filter(function(cmd) {
+				if (cmd.cleanCmd.indexOf('script (option)') > -1) {
+					for (var i = 0; i < cmd.customDesc.length; i++) {
+						var splitDesc = cmd.customDesc[i].split('$');
+
+						splitDesc[1] = '$' + fix(g.scripts.getPrice(cmd.options[i])) + '.';
+						cmd.customDesc[i] = splitDesc.join('');
+					};
+				};
+			});
+		});
 	}
 	else if (g.player.money < price)
 		g.console.print('<b><u>Error</u></b>: not enough money to buy a ' + what + '.');
@@ -1107,6 +1217,31 @@ g.console.commands = [
                     'a computer execute the <b>hack</b> command 40 times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
                 ],
                 options: ['script', 'bot', 'vm', 'raspberry', 'computer'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^buy[\\s]hacker[\\s][\\w]',
+                cleanCmd: 'buy hacker (option)',
+                execute: 'g.hackers.buy',
+                desc: 'hire an hacker to automatize places hacks.',
+                customDesc: [
+                    'a noob auto-hack the mini-market, cost $' + fix(g.hackers.getPrice('noob')) + '.',
+                    'a script-kiddie auto-hack the market, cost $' + fix(g.hackers.getPrice('script_kiddie')) + '.',
+                    'a coder auto-hack the jewelry, cost $' + fix(g.hackers.getPrice('coder')) + '.',
+                    'a hax0r auto-hack the bank, cost $' + fix(g.hackers.getPrice('hax0r')) + '.',
+                    'a prodigy auto-hack the trading-center, cost $' + fix(g.hackers.getPrice('prodigy')) + '.',
+                    'an elite-hacker auto-hack the anonymous-hideout, cost $' + fix(g.hackers.getPrice('elite_hacker')) + '.',
+                    'an elite-skid auto-hack the deepweb, cost $' + fix(g.hackers.getPrice('elite_skid')) + '.'
+                ],
+                options: [
+                    'noob',
+                    'script_kiddie',
+                    'coder',
+                    'hax0r',
+                    'prodigy',
+                    'elite_hacker',
+                    'elite_skid'
+                ],
                 optionsIndex: 2
             }
         ]
@@ -1238,18 +1373,41 @@ g.hack.quickhack = () => {
 };
 
 g.hack.place = (place) => {
-	if (!g.hack.isHacking && g.player.level >= g.places[place].levelReq) {
+	if (!g.hack.isHacking && !g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
 		g.hack.isHacking = true;
 		g.hack.hackingWhat = place;
 		g.console.print('Starting ' + g.places[place].cleanName + ' hack.');
 		$('.text-side').prepend('<p id="hack-progress"></p>');
 	}
+	else if (g.hackers[g.places[place].hacker].owned)
+		g.console.print('<b><u>Error</u></b>: you already hired an hacker to hack this place.');
 	else if (g.hack.isHacking)
-		g.console.print('Error: you are already hacking a place.');
+		g.console.print('<b><u>Error</u></b>: you are already hacking a place.');
 	else if (g.player.level < g.places[place].levelReq)
 		g.console.print('<b><u>Error</u></b>: you don\'t have the required level to hack this place.');
 	else
 		g.console.print('<b><u>Error</u></b>: you can\'t hack this place.');
+};
+
+g.hack.hackerLoop = (times) => {
+	for (var place in g.places) {
+		if (typeof g.places[place] == 'object' && g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
+			var hacker = g.hackers[g.places[place].hacker],
+				time = g.places.getTime(place);
+
+			hacker.progress += times / g.options.fps;
+
+			if (hacker.progress >= time) {
+				var money = g.places.getCash(place),
+					exp = g.places.getExp(place);
+
+				g.earnMoney(money);
+				g.earnExp(exp);
+
+				g.hackers[g.places[place].hacker].progress = 0;
+			};
+		};
+	};
 };
 
 g.hack.loop = (times) => {
@@ -1321,11 +1479,13 @@ game.jobs = {
 	baseCash: 1000,
 	baseExp: 175,
 	baseTime: 30,
-	spawned: false,
-	accepted: false,
-	status: undefined,
-	current: undefined,
+
 	progress: 0,
+	spawned: false,
+	current: undefined,
+	status: undefined,
+	accepted: false,
+
 	interval: 180e3,
 	stories: [
 		'An hacker need your help to debug his code. Do you want to help him?',
@@ -1351,47 +1511,104 @@ g.jobs.getTime = () => {
 	return g.jobs.baseTime + randomInclusive(0, 45);
 };
 
+g.jobs.loop = (times) => {
+	if (g.jobs.status == 'accepted' && g.jobs.spawned) {
+		var time = g.jobs.current.time,
+			bar = '|',
+			timeLeft = 0,
+			percent = Math.floor(g.jobs.progress / time * 100),
+			filled = Math.floor(g.jobs.progress / time * 35),
+			left = Math.floor(35 - filled);
+
+		g.jobs.progress += times / g.options.fps;
+
+		if (g.jobs.progress < time) {
+			for (var i = 0; i < filled; i++)
+				bar += '#';
+
+			for (var e = 0; e < left; e++)
+				bar += '=';
+
+			timeLeft = time - g.jobs.progress;
+			bar += '| ' + fix(percent, 0) + '%, ' + fix(timeLeft, 2) + ' s.';
+
+			$('#job-progress').html(bar)
+		}
+		else if (g.jobs.progress >= time) {
+			for (var j = 0; j < 35; j++)
+				bar += '#';
+
+			bar += '| 100%, 0.00s';
+
+			g.console.print('Job finished, you earned $' + fix(g.jobs.current.cash) + ' and ' + fix(g.jobs.current.exp) + ' exp.');
+			$('#job-progress').html(bar);
+
+			g.earnMoney(g.jobs.current.cash);
+			g.earnExp(g.jobs.current.exp);
+
+			g.jobs.status = 'finished';
+			g.jobs.current = undefined;
+			g.jobs.accepted = false;
+			g.jobs.progress = 0;
+		};
+	};
+};
+
 g.jobs.spawn = () => {
 	var rand = randomInclusive(0, 0);
 
-	if (!g.jobs.spawned && !g.jobs.accepted && rand == 0) {
-		var id = randomInclusive(0, g.jobs.stories.length - 1);
+	if (rand == 0 && !g.jobs.spawned) {
+		var randStory = randomInclusive(0, g.jobs.stories.length - 1);
 
+		g.jobs.spawned = true;
+		g.jobs.status = 'waiting for response';
 		g.jobs.current = {
-			id: id,
-			money: g.jobs.getCash(),
+			id: randStory,
+			cash: g.jobs.getCash(),
 			exp: g.jobs.getExp(),
 			time: g.jobs.getTime()
 		};
 
-		g.jobs.spawned = true;
-		g.jobs.status = 'waiting to accept';
-		g.console.print(g.jobs.stories[id] + ' You have one minute to accept this offer.');
+		g.console.print(g.jobs.stories[randStory] +
+			' You will earn $' + fix(g.jobs.current.cash) + ' and ' + fix(g.jobs.current.exp) + ' exp.' +
+			' This offer will take ' + fix(g.jobs.current.time, 0) + ' seconds where you will not be able to do anything.' +
+			' You have one minute to resond to this offer.');
 
 		setTimeout(function() {
-			if (!g.jobs.accepted) {
+			if (!g.jobs.accepted && g.jobs.status == 'waiting for response') {
 				g.jobs.status = 'too late';
-				g.console.print('You didn\'t respond to the job offer, it\'s too late now.');
+				g.console.print('It\'s too late to accept this job offer.');
 			};
 		}, 60000);
 	}
-	else if (g.jobs.spawned && (g.jobs.status == 'waiting to accept' || g.jobs.status == 'too late')) {
+	else if (g.jobs.status == 'too late' || g.jobs.status == 'too late' || g.jobs.status == 'finished') {
 		g.jobs.spawned = false;
+		g.jobs.status = undefined;
 		g.jobs.accepted = false;
+		g.jobs.current = undefined;
 	};
 };
 
 g.jobs.respond = (response) => {
-	if (response == 'accept' && g.jobs.spawned && g.jobs.status !== 'too late') {
+	if (typeof g.jobs.current !== 'object' && g.jobs.status == 'rejected')
+		return g.console.print('You rejected the offer, wait for another one.');
+	if (typeof g.jobs.current !== 'object')
+		return g.console.print('There is no job offer, wait for one.');
+	if (g.jobs.status == 'too late')
+		return g.console.print('It\'s too late, wait for the next offer.');
+	if (g.jobs.status == 'accepted')
+		return g.console.print('You accepted the offer, wait for another one.');
+	if (g.jobs.status == 'finished')
+		return g.console.print('You finished the offer, wait for another one.');
+	if (g.jobs.status == 'waiting for response' && response == 'reject') {
+		g.jobs.current = undefined;
+		g.jobs.status = 'rejected';
+		return g.console.print('You rejected the offer.');
+	};
+	if (g.jobs.status == 'waiting for response' && response == 'accept') {
 		g.jobs.accepted = true;
-		g.console.print('You accepted the job, while you are doing the job you can\'t do any other actions.');
-	}
-	else if (response == 'reject' && g.jobs.spawned && g.jobs.status !== 'too late') {
-		g.jobs.accepted = false;
-		g.console.print('You rejected the job offer.');
-	}
-	else if (g.jobs.status == 'too late')
-		g.console.print('You didn\'t replied to the job offer in time, wait for next one.');
-	else if (!g.jobs.spawned)
-		g.console.print('Wait for a job offer.');
+		g.jobs.status = 'accepted';
+		g.console.print('You successfully accepted the job offer.');
+		$('.text-side').prepend('<p id="job-progress">');
+	};
 };

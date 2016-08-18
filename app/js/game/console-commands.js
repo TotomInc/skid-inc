@@ -87,6 +87,31 @@ g.console.commands = [
                 ],
                 options: ['script', 'bot', 'vm', 'raspberry', 'computer'],
                 optionsIndex: 2
+            },
+            {
+                pattern: '^buy[\\s]hacker[\\s][\\w]',
+                cleanCmd: 'buy hacker (option)',
+                execute: 'g.hackers.buy',
+                desc: 'hire an hacker to automatize places hacks.',
+                customDesc: [
+                    'a noob auto-hack the mini-market, cost $' + fix(g.hackers.getPrice('noob')) + '.',
+                    'a script-kiddie auto-hack the market, cost $' + fix(g.hackers.getPrice('script_kiddie')) + '.',
+                    'a coder auto-hack the jewelry, cost $' + fix(g.hackers.getPrice('coder')) + '.',
+                    'a hax0r auto-hack the bank, cost $' + fix(g.hackers.getPrice('hax0r')) + '.',
+                    'a prodigy auto-hack the trading-center, cost $' + fix(g.hackers.getPrice('prodigy')) + '.',
+                    'an elite-hacker auto-hack the anonymous-hideout, cost $' + fix(g.hackers.getPrice('elite_hacker')) + '.',
+                    'an elite-skid auto-hack the deepweb, cost $' + fix(g.hackers.getPrice('elite_skid')) + '.'
+                ],
+                options: [
+                    'noob',
+                    'script_kiddie',
+                    'coder',
+                    'hax0r',
+                    'prodigy',
+                    'elite_hacker',
+                    'elite_skid'
+                ],
+                optionsIndex: 2
             }
         ]
     },

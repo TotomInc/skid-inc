@@ -19,18 +19,41 @@ g.hack.quickhack = () => {
 };
 
 g.hack.place = (place) => {
-	if (!g.hack.isHacking && g.player.level >= g.places[place].levelReq) {
+	if (!g.hack.isHacking && !g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
 		g.hack.isHacking = true;
 		g.hack.hackingWhat = place;
 		g.console.print('Starting ' + g.places[place].cleanName + ' hack.');
 		$('.text-side').prepend('<p id="hack-progress"></p>');
 	}
+	else if (g.hackers[g.places[place].hacker].owned)
+		g.console.print('<b><u>Error</u></b>: you already hired an hacker to hack this place.');
 	else if (g.hack.isHacking)
-		g.console.print('Error: you are already hacking a place.');
+		g.console.print('<b><u>Error</u></b>: you are already hacking a place.');
 	else if (g.player.level < g.places[place].levelReq)
 		g.console.print('<b><u>Error</u></b>: you don\'t have the required level to hack this place.');
 	else
 		g.console.print('<b><u>Error</u></b>: you can\'t hack this place.');
+};
+
+g.hack.hackerLoop = (times) => {
+	for (var place in g.places) {
+		if (typeof g.places[place] == 'object' && g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
+			var hacker = g.hackers[g.places[place].hacker],
+				time = g.places.getTime(place);
+
+			hacker.progress += times / g.options.fps;
+
+			if (hacker.progress >= time) {
+				var money = g.places.getCash(place),
+					exp = g.places.getExp(place);
+
+				g.earnMoney(money);
+				g.earnExp(exp);
+
+				g.hackers[g.places[place].hacker].progress = 0;
+			};
+		};
+	};
 };
 
 g.hack.loop = (times) => {
