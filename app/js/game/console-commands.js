@@ -79,11 +79,11 @@ g.console.commands = [
                 execute: 'g.scripts.buy',
                 desc: 'buy some scripts to automatize tasks.',
                 customDesc: [
-                    'a script execute the <b>hack</b> command 1 time/sec, cost $' + fix(g.scripts.getPrice('script')) + '.',
-                    'a bot execute the <b>hack</b> command 5 times/sec, cost $' + fix(g.scripts.getPrice('bot')) + '.',
-                    'a vm execute the <b>hack</b> command 10 times/sec, cost $' + fix(g.scripts.getPrice('vm')) + '.',
-                    'a raspberry execute the <b>hack</b> command 20 times/sec, cost $' + fix(g.scripts.getPrice('raspberry')) + '.',
-                    'a computer execute the <b>hack</b> command 40 times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
+                    'a script execute the <b>hack</b> command ' + g.scripts.script.effect + ' time/sec, cost $' + fix(g.scripts.getPrice('script')) + '.',
+                    'a bot execute the <b>hack</b> command ' + g.scripts.bot.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('bot')) + '.',
+                    'a vm execute the <b>hack</b> command ' + g.scripts.vm.effect + 'times/sec, cost $' + fix(g.scripts.getPrice('vm')) + '.',
+                    'a raspberry execute the <b>hack</b> command ' + g.scripts.raspberry.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('raspberry')) + '.',
+                    'a computer execute the <b>hack</b> command ' + g.scripts.computer.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
                 ],
                 options: ['script', 'bot', 'vm', 'raspberry', 'computer'],
                 optionsIndex: 2
@@ -112,6 +112,21 @@ g.console.commands = [
                     'elite_skid'
                 ],
                 optionsIndex: 2
+            },
+            {
+                pattern: '^buy[\\s]server[\\s][\\w]',
+                cleanCmd: 'buy server (option)',
+                execute: 'g.servers.buy',
+                desc: 'buy a server to earn more cash and exp.',
+                customDesc: [
+                    'increase global money multiplier by x' + fix(g.servers.personal.moneyMult, 2) +
+                        ' and exp multiplier by x' + fix(g.servers.personal.expMult, 2) +
+                        ', cost $' + fix(g.servers.getCost('personal')) + '.'
+                ],
+                options: [
+                    'personal'
+                ],
+                optionsIndex: 2
             }
         ]
     },
@@ -131,6 +146,88 @@ g.console.commands = [
                     'reject the current job offer.'
                 ],
                 options: ['accept', 'reject'],
+                optionsIndex: 2
+            }
+        ]
+    },
+
+    {
+        name: 'options',
+        desc: 'change in-game options.',
+        pattern: '^options$',
+        commands: [
+            {
+                pattern: '^options[\\s]notes$',
+                desc: 'print the latest patch-notes.',
+                cleanCmd: 'options notes',
+                execute: 'g.options.notes.write()'
+            },
+            {
+                pattern: '^options[\\s]difficulty[\\s][\\w]$',
+                cleanCmd: 'options difficulty (option)',
+                desc: 'switch game difficulty, can only be done one time.',
+                execute: 'g.options.switchDifficulty',
+                customDesc: [
+                    'change game difficulty to normal (no exp/money multiplier but access to user interface).',
+                    'change game difficulty to hardcore (exp/money multiplier of x2 but no access to user interface).'
+                ],
+                options: ['normal', 'hardcore'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]console[\\s][\\w]$',
+                cleanCmd: 'options console (option)',
+                desc: 'change console theme.',
+                execute: 'g.options.switchTheme',
+                customDesc: [
+                    'change console theme to green (default theme, better hacking experience).',
+                    'change console theme to dark (classical theme, easier to read).'
+                ],
+                options: ['green', 'dark'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]matrix[\\s][\\w]$',
+                cleanCmd: 'options matrix (option)',
+                desc: 'enable/disable matrix background effect.',
+                execute: 'g.options.toggleBackground',
+                customDesc: [
+                    'enable matrix background effect.',
+                    'disable matrix background effect (disable it if game lags).'
+                ],
+                options: ['enable', 'disable'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]display[\\s][\\w]$',
+                cleanCmd: 'options display (option)',
+                desc: 'change console display.',
+                execute: 'g.options.changeVue',
+                customDesc: [
+                    'set vue to default.',
+                    'set vue to hackers_progress (show hackers progress, can\'t execute other commands).'
+                ],
+                options: [
+                    'default',
+                    'hackers_progress'
+                ],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]savegame[\\s][\\w]',
+                cleanCmd: 'options savegame (option)',
+                desc: 'save, load or erase your save data.',
+                execute: 'g.options.saveManager',
+                customDesc: [
+                    'save now.',
+                    'load savegame.',
+                    'hard-reset, erase all data and start from scratch. <b>CAREFUL, NO WARNING! YOU CAN\'T GO BACK IF YOU DO THIS!</b>'
+                ],
+                options: [
+                    'save',
+                    'load',
+                    'erase'
+                ],
                 optionsIndex: 2
             }
         ]
@@ -178,45 +275,15 @@ g.console.commands = [
     },
 
     {
-        name: 'options',
-        desc: 'change in-game options.',
-        pattern: '^options$',
+        name: 'credit',
+        desc: 'print credits.',
+        pattern: '^credit$',
         commands: [
             {
-                pattern: '^options[\\s]difficulty[\\s][\\w]$',
-                cleanCmd: 'options difficulty (option)',
-                desc: 'switch game difficulty, can only be done one time.',
-                execute: 'g.options.switchDifficulty',
-                customDesc: [
-                    'change game difficulty to normal (no exp/money multiplier but access to user interface).',
-                    'change game difficulty to hardcore (exp/money multiplier of x2 but no access to user interface).'
-                ],
-                options: ['normal', 'hardcore'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^options[\\s]console[\\s][\\w]$',
-                cleanCmd: 'options console (option)',
-                desc: 'change console theme.',
-                execute: 'g.options.switchTheme',
-                customDesc: [
-                    'change console theme to green (default theme, better hacking experience).',
-                    'change console theme to dark (classical theme, easier to read).'
-                ],
-                options: ['green', 'dark'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^options[\\s]matrix[\\s][\\w]$',
-                cleanCmd: 'options matrix (option)',
-                desc: 'enable/disable matrix background effect.',
-                execute: 'g.options.toggleBackground',
-                customDesc: [
-                    'enable matrix background effect.',
-                    'disable matrix background effect (disable it if game lags).'
-                ],
-                options: ['enable', 'disable'],
-                optionsIndex: 2
+                pattern: '^credit$',
+                cleanCmd: 'credit',
+                desc: 'print credits.',
+                execute: 'g.console.credits()'
             }
         ]
     }

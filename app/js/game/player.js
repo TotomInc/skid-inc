@@ -7,16 +7,16 @@ game.player = {
     expReq: 100,
     expInflation: 1.30,
 
-    isNew: false,
+    isNew: true,
     difficulty: 'normal'
 };
 
 g.player.getCashMult = () => {
-	return 1;
+	return g.servers.getAllCashMult();
 };
 
 g.player.getExpMult = () => {
-	return 1;
+	return g.servers.getAllExpMult();
 };
 
 g.player.calculateExpReq = () => {

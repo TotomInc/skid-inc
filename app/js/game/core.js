@@ -17,7 +17,7 @@ g.earnExp = (amount) => {
 };
 
 g.quickTutorial = () => {
-    if (g.player.isNew) {
+    if (g.player.isNew && !g.options.debug) {
         $('.text-side').prepend('<div id="quick-tutorial" class="typed">');
         $('#quick-tutorial').prepend('<p>');
         $("#quick-tutorial p").typed({
@@ -52,6 +52,7 @@ g.updateGame = (times) => {
     g.scripts.action(times);
     g.hack.loop(times);
     g.hack.hackerLoop(times);
+    g.hackers.loop();
 
     document.title = '$' + fix(g.player.money) + ' - SkidInc';
 };

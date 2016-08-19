@@ -259,6 +259,12 @@
     text-shadow: none !important;
 }
 
+.output a {
+    transition: color 1s;
+    font-weight: bold;
+    color: inherit;
+}
+
 .output p {
     transition: color 1s;
     margin: 0 0 7px;
@@ -290,6 +296,12 @@
 
 .infos-side p {
     text-align: right;
+}
+
+.console-mults {
+    position: absolute;
+    right: 10px;
+    bottom: 85px;
 }
 
 .console-bottom {

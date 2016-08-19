@@ -7,6 +7,7 @@ game.options = {
 
     debug: true,
     version: 0.2,
+    vue: 'default',
 
     whatOS: undefined,
     isOpera: false,
@@ -55,6 +56,46 @@ g.options.switchDifficulty = (difficulty) => {
         g.console.print('Sorry, you can\'t change difficulty anymore. It can only be done for new players when starting the game.');
 };
 
+g.options.changeVue = (vue) => {
+    if (vue == 'default') {
+        $('.text-side').empty();
+
+        g.console.print('Back to default vue, you can now send commands.');
+        g.console.setDefaultBinds();
+        g.options.vue = 'default';
+    }
+    else if (vue == 'hackers_progress') {
+        if (g.hack.isHacking)
+            return g.console.print('Wait for your hack to finish before changing vue.');
+
+        $('.text-side').empty();
+        $('#console-input').unbind()
+        .bind('keydown', function(e) {
+            if (e.which == 13)
+                g.console.strictMode('options display default');
+        });
+
+        for (var hacker in g.hackers) {
+            if (typeof g.hackers[hacker] == 'object' && g.hackers[hacker].owned)
+                $('.text-side').append('<p id="' + hacker + '-progress">');
+        };
+
+        g.options.vue = 'hackers_progress';
+        g.console.print('Type <b>options display default</b> to write commands and leave this screen.');
+    };
+};
+
+g.options.saveManager = (what) => {
+    if (what == 'save')
+        return g.save.save(true);
+    else if (what == 'load')
+        return g.save.load(true);
+    else if (what == 'erase')
+        return g.save.erase();
+    else
+        g.console.print('<b><u>Error</u></b>: unknown save action.');
+};
+
 g.options.varInit = () => {
     // os detection
     if (navigator.appVersion.indexOf("Win")!=-1)
@@ -87,6 +128,13 @@ g.options.varInit = () => {
     g.options.intervals.jobs = setInterval(function() {
         g.jobs.spawn();
     }, g.jobs.interval);
+    g.options.intervals.save = setInterval(function() {
+        g.save.save(false, true);
+    }, g.save.interval);
+
+    window.onbeforeunload = function() {
+        g.save.save();
+    };
 
     g.options.debug == true && debug('g.options.varInit finished');
 };

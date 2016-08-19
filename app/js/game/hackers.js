@@ -83,3 +83,31 @@ g.hackers.buy = (who) => {
 	else
 		return g.console.print('<b><u>Error</u></b>: you can\'t hire ' + g.hackers[who].cleanName + '.');
 };
+
+g.hackers.loop = () => {
+	if (g.options.vue !== 'hackers_progress')
+		return;
+
+	for (var hacker in g.hackers) {
+		if (typeof g.hackers[hacker] == 'object' && g.hackers[hacker].owned) {
+			var place = g.places[g.hackers[hacker].effect],
+				time = g.places.getTime(place.name),
+				timeLeft = 0,
+				percent = Math.floor(g.hackers[hacker].progress / time  * 100),
+				filled = Math.floor(g.hackers[hacker].progress / time * 35),
+				left = Math.ceil(35 - filled),
+				bar = '|';
+
+			for (var i = 0; i < filled; i++)
+				bar += '#';
+
+			for (var e = 0; e < left; e++)
+				bar += '=';
+
+			timeLeft = time - g.hackers[hacker].progress;
+			bar += '| ' + fix(percent, 0) + '%, ' + fix(timeLeft, 2) + ' s. (' + place.cleanName + ')';
+
+			$('#' + hacker + '-progress').html(bar);
+		};
+	};
+};

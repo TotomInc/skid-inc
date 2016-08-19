@@ -13,6 +13,7 @@ g.domInit = () => {
 
 $(document).ready(function() {
     g.varInit();
+    g.save.load();
     g.domInit();
     g.quickTutorial();
 

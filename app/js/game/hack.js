@@ -101,3 +101,7 @@ g.hack.loop = (times) => {
 		};
 	};
 };
+
+g.hack.userinput = (typed) => {
+	debug(typed);
+};

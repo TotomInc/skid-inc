@@ -68,6 +68,7 @@ g.jobs.loop = (times) => {
 
 			g.earnMoney(g.jobs.current.cash);
 			g.earnExp(g.jobs.current.exp);
+			g.console.setDefaultBinds();
 
 			g.jobs.status = 'finished';
 			g.jobs.current = undefined;
@@ -94,8 +95,8 @@ g.jobs.spawn = () => {
 
 		g.console.print(g.jobs.stories[randStory] +
 			' You will earn $' + fix(g.jobs.current.cash) + ' and ' + fix(g.jobs.current.exp) + ' exp.' +
-			' This offer will take ' + fix(g.jobs.current.time, 0) + ' seconds where you will not be able to do anything.' +
-			' You have one minute to resond to this offer.');
+			' This offer will take ' + fix(g.jobs.current.time, 0) + ' seconds, you will not be able to send commands.' +
+			' You have one minute to resond to this offer with the command <b>jobs respond accept/reject</b>.');
 
 		setTimeout(function() {
 			if (!g.jobs.accepted && g.jobs.status == 'waiting for response') {
@@ -132,6 +133,8 @@ g.jobs.respond = (response) => {
 		g.jobs.accepted = true;
 		g.jobs.status = 'accepted';
 		g.console.print('You successfully accepted the job offer.');
+
+		$('.enter, #console-input').unbind();
 		$('.text-side').prepend('<p id="job-progress">');
 	};
 };

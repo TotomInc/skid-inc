@@ -20,18 +20,21 @@ module.exports = function(grunt) {
         concat: {
             prod: {
                 options: {
-                    separator: ';\n'
+                    separator: ';\n\n'
                 },
                 src: [
                 	'app/js/misc/*.js',
                 	'app/js/game/core.js',
                 	'app/js/game/options.js',
+                    'app/js/game/options-notes.js',
                     'app/js/game/player.js',
                     'app/js/game/console.js',
                 	'app/js/game/places.js',
+                    'app/js/game/servers.js',
                     'app/js/game/hackers.js',
                     'app/js/game/scripts.js',
                     'app/js/game/*.js',
+                    'app/js/game/save.js',
                     'app/js/game/console-commands.js'
                 ],
                 dest: 'app-prod/js/skid-inc.js'

@@ -49,6 +49,7 @@ var beautify = {
 };
 
 beautify.varInit();;
+
 function cap(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
@@ -56,12 +57,13 @@ function cap(string) {
 String.prototype.cap = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };;
+
 var consolePrefix = 'SkidInc:',
     log = console.log.bind(console, consolePrefix),
     debug = console.info.bind(console, consolePrefix),
     warn = console.warn.bind(console, consolePrefix),
-    error = console.error.bind(console, consolePrefix);
-;
+    error = console.error.bind(console, consolePrefix);;
+
 // made by Neil Carpenter
 // https://github.com/neilcarpenter/Matrix-code-rain
 
@@ -367,9 +369,11 @@ window.onload = function() {
 	});
 };
 ;
+
 function randomInclusive(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };;
+
 var game = g = {};
 
 g.earnMoney = (amount) => {
@@ -389,7 +393,7 @@ g.earnExp = (amount) => {
 };
 
 g.quickTutorial = () => {
-    if (g.player.isNew) {
+    if (g.player.isNew && !g.options.debug) {
         $('.text-side').prepend('<div id="quick-tutorial" class="typed">');
         $('#quick-tutorial').prepend('<p>');
         $("#quick-tutorial p").typed({
@@ -424,9 +428,11 @@ g.updateGame = (times) => {
     g.scripts.action(times);
     g.hack.loop(times);
     g.hack.hackerLoop(times);
+    g.hackers.loop();
 
     document.title = '$' + fix(g.player.money) + ' - SkidInc';
 };;
+
 game.options = {
     fps: 30,
     interval: undefined,
@@ -434,9 +440,9 @@ game.options = {
     now: new Date().getTime(),
     before: new Date().getTime(),
 
-    debug: false,
-    matrix: true,
+    debug: true,
     version: 0.2,
+    vue: 'default',
 
     whatOS: undefined,
     isOpera: false,
@@ -485,6 +491,46 @@ g.options.switchDifficulty = (difficulty) => {
         g.console.print('Sorry, you can\'t change difficulty anymore. It can only be done for new players when starting the game.');
 };
 
+g.options.changeVue = (vue) => {
+    if (vue == 'default') {
+        $('.text-side').empty();
+
+        g.console.print('Back to default vue, you can now send commands.');
+        g.console.setDefaultBinds();
+        g.options.vue = 'default';
+    }
+    else if (vue == 'hackers_progress') {
+        if (g.hack.isHacking)
+            return g.console.print('Wait for your hack to finish before changing vue.');
+
+        $('.text-side').empty();
+        $('#console-input').unbind()
+        .bind('keydown', function(e) {
+            if (e.which == 13)
+                g.console.strictMode('options display default');
+        });
+
+        for (var hacker in g.hackers) {
+            if (typeof g.hackers[hacker] == 'object' && g.hackers[hacker].owned)
+                $('.text-side').append('<p id="' + hacker + '-progress">');
+        };
+
+        g.options.vue = 'hackers_progress';
+        g.console.print('Type <b>options display default</b> to write commands and leave this screen.');
+    };
+};
+
+g.options.saveManager = (what) => {
+    if (what == 'save')
+        return g.save.save(true);
+    else if (what == 'load')
+        return g.save.load(true);
+    else if (what == 'erase')
+        return g.save.erase();
+    else
+        g.console.print('<b><u>Error</u></b>: unknown save action.');
+};
+
 g.options.varInit = () => {
     // os detection
     if (navigator.appVersion.indexOf("Win")!=-1)
@@ -517,29 +563,51 @@ g.options.varInit = () => {
     g.options.intervals.jobs = setInterval(function() {
         g.jobs.spawn();
     }, g.jobs.interval);
+    g.options.intervals.save = setInterval(function() {
+        g.save.save(false, true);
+    }, g.save.interval);
+
+    window.onbeforeunload = function() {
+        g.save.save();
+    };
 
     g.options.debug == true && debug('g.options.varInit finished');
+};;
+
+g.options.notes = {
+	latest: '<b>v0.20: SkidInc full-rewrite.</b><br>' +
+		'- <b>better UI</b>: new console, you can switch between themes, try <b>options console -help</b>.<br>' +
+		'- <b>commands executer rewrite</b>: no more bugs with commands, case sensitive, options not buggy anymore, code is easier to manage.<br>' +
+		'- <b>random events</b>: jobs are random offers, you gain a consecutive amount of $$$ and exp just for a few seconds of your time.<br>' +
+		'- <b>added \'scripts\'</b>: you can buy them like servers to automatize the <b>hack</b> command.<br>' +
+		'- <b>balancing changes</b>: servers cost and effect have been reviewed, same for places rewards ($$$, exp, level requirement), hackers prices.',
+	
+	previous: ''
 };
-;
+
+g.options.notes.write = () => {
+	g.console.print(g.options.notes.latest);
+};;
+
 game.player = {
     rank: 'Script Kid',
     money: 0,
     totalMoney: 0,
-    level: 2,
+    level: 1,
     exp: 0,
     expReq: 100,
     expInflation: 1.30,
 
-    isNew: false,
+    isNew: true,
     difficulty: 'normal'
 };
 
 g.player.getCashMult = () => {
-	return 1;
+	return g.servers.getAllCashMult();
 };
 
 g.player.getExpMult = () => {
-	return 1;
+	return g.servers.getAllExpMult();
 };
 
 g.player.calculateExpReq = () => {
@@ -547,6 +615,7 @@ g.player.calculateExpReq = () => {
 
 	g.player.expReq = exp;
 };;
+
 game.console = {};
 
 g.console.getFirstWord = (command) => {
@@ -599,10 +668,30 @@ g.console.guide = () => {
         'Take a look at the <b>buy</b> command, at this point you should be able to buy your first script.');
 };
 
+g.console.credits = () => {
+    g.console.print('SkidInc v' + g.options.version + '.<br>' +
+        'An idle/incremental-game made by TotomInc.<br>' +
+        'An original idea from Emiel.<br>' +
+        'Logo made by Tim.<br>' +
+        'Thanks to /r/incremental_games and /r/skidinc for their help!<br>' +
+        'Subscribe to <a target="_blank" href="http://www.reddit.com/r/skidinc">/r/skidinc</a> for news about the game.');
+};
+
 g.console.help = () => {
     for (var i = 0; i < g.console.commands.length; i++)
         g.console.print('<b>' + g.console.commands[i].name + '</b>: ' + g.console.commands[i].desc);
-    g.console.print('For more in-depth help about a command, type <b>command -help</b>.');
+    g.console.print('For more in-depth help about a command, type <b>command -help</b>, it works too for commands with options <b>command cmd -help</b>.');
+};
+
+g.console.strictMode = (cmd) => {
+    var command = $('#console-input').val();
+
+    if (command !== cmd)
+        g.console.print('<b><u>Error</u></b>: you can\'t execute other commands than <b>' + cmd + '</b>.');
+    else if (command == cmd)
+        g.console.execute(command);
+
+    $('#console-input').val('');
 };
 
 g.console.commandsHelp = (command, cmdCmd) => {
@@ -613,7 +702,7 @@ g.console.commandsHelp = (command, cmdCmd) => {
         baseCmd.commands.filter(function(cmd) {
             var split = cmd.cleanCmd.split(' ');
 
-            if (split.indexOf('-help') == 1)
+            if (split.indexOf('-help') > -1)
                 return;
 
             if (typeof cmd.options == 'object' && typeof cmdCmd == 'undefined')
@@ -664,7 +753,7 @@ g.console.execute = (command) => {
         baseCmd.commands.filter(function(cmd) {
             if (typeof cmd.options == 'object') {
                 var parts = command.split(' '),
-                    goodOption = undefined; 
+                    goodOption = undefined;
 
                 for (var i = 0; i < cmd.options.length; i++) {
                     if (parts[cmd.optionsIndex] == cmd.options[i])
@@ -729,6 +818,21 @@ g.console.errorHandler = (command, emptyCmd, baseCmdFound, cmdFound) => {
         return g.console.print('<b><u>CommandError</u></b>: this command need parameters.');
 };
 
+g.console.setDefaultBinds = () => {
+    $('.enter, #console-input').unbind();
+
+    $('.enter').on('click', function() {
+        g.console.enter();
+    });
+
+    $('#console-input').bind('keydown', function(e) {
+        if (e.which == 13)
+            g.console.enter();
+    }).bind(('cut copy paste'), function(e) {
+        e.preventDefault();
+    });
+};
+
 g.console.update = () => {
     $('#console-name').html(g.player.rank);
     $('#console-money').html('$' + fix(g.player.money));
@@ -736,6 +840,8 @@ g.console.update = () => {
     $('#console-exp').html('Exp. ' + fix(g.player.exp) + '/' + fix(g.player.expReq));
     $('#script-income').html('Scripts ~$' + fix(g.scripts.getAverageCashPerSec()) + '/sec<br>' +
         '~exp ' + fix(g.scripts.getAverageExpPerSec()) + '/sec');
+    $('#player-mults').html('Money mult x' + fix(g.player.getCashMult(), 2) + '<br>' +
+        'Exp mult x' + fix(g.player.getExpMult()));
 };
 
 g.console.varInit = () => {
@@ -772,6 +878,7 @@ g.console.varInit = () => {
 g.console.domInit = () => {
     $('.infos-side')
         .append('<div id="player-stats">')
+        .append('<div id="player-multipliers" class="console-mults">')
         .append('<div id="game-stuff" class="console-bottom">');
     $('#player-stats')
         .append('<p id="console-name">')
@@ -779,6 +886,8 @@ g.console.domInit = () => {
         .append('<p id="console-level">')
         .append('<p id="console-exp">')
         .append('<p id="script-income">');
+    $('#player-multipliers')
+        .append('<p id="player-mults">');
     $('#game-stuff')
         .append('<p id="game-version">');
     $('#game-version')
@@ -797,19 +906,11 @@ g.console.domInit = () => {
         $('#console-input').focus();
     });
 
-    $('.enter').on('click', function() {
-        g.console.enter();
-    });
-
-    $('#console-input').bind('keydown', function(e) {
-        if (e.which == 13)
-            g.console.enter();
-    }).bind(('cut copy paste'), function(e) {
-        e.preventDefault();
-    });
+    g.console.setDefaultBinds();
 
     g.options.debug == true && debug('g.console.domInit finished');
 };;
+
 game.places = {
 	'mini_market': {
 		name: 'mini_market',
@@ -917,6 +1018,84 @@ g.places.getExp = (what) => {
 
 	return randomInclusive(g.places[what].minExp, g.places[what].maxExp) * expMult;
 };;
+
+g.servers = {
+	personal: {
+		baseCost: 15e3,
+		inflation: 1.30,
+		moneyMult: 0.15,
+		expMult: 0.08,
+		owned: 0
+	}
+};
+
+g.servers.getCost = (what) => {
+	return Math.floor(Math.pow(g.servers[what].inflation, g.servers[what].owned) * g.servers[what].baseCost);
+};
+
+g.servers.getAllCashMult = () => {
+	var mult = 1;
+
+	for (var server in g.servers) {
+		if (typeof g.servers[server] == 'object')
+			mult += g.servers.getCashMult(server);
+	};
+
+	return mult;
+};
+
+g.servers.getAllExpMult = () => {
+	var mult = 1;
+
+	for (var server in g.servers) {
+		if (typeof g.servers[server] == 'object')
+			mult += g.servers.getExpMult(server);
+	};
+
+	return mult;
+};
+
+g.servers.getCashMult = (what) => {
+	if (typeof g.servers[what].moneyMult == 'number')
+		return g.servers[what].moneyMult * g.servers[what].owned;
+};
+
+g.servers.getExpMult = (what) => {
+	if (typeof g.servers[what].expMult == 'number')
+		return g.servers[what].expMult * g.servers[what].owned;
+};
+
+g.servers.buy = (what) => {
+	var price = g.servers.getCost(what);
+
+	if (g.player.money >= price) {
+		g.player.money -= price;
+		g.servers[what].owned++;
+
+		g.console.commands.filter(function(baseCmd) {
+			if (baseCmd.name !== 'buy')
+				return;
+
+			baseCmd.commands.filter(function(cmd) {
+				if (cmd.cleanCmd.indexOf('server (option)') > -1) {
+					for (var i = 0; i < cmd.customDesc.length; i++) {
+						var splitDesc = cmd.customDesc[i].split('$');
+
+						splitDesc[1] = '$' + fix(g.servers.getCost(cmd.options[i])) + '.';
+						cmd.customDesc[i] = splitDesc.join('');
+					};
+				};
+			});
+		});
+
+		return g.console.print('You successfully bought a ' + what + ' server.');
+	}
+	else if (g.player.money < price)
+		return g.console.print('<b><u>Error</u></b>: not enough money to buy a ' + what + ' server.');
+	else
+		return g.console.print('<b><u>Error</u></b>: can\'t buy a ' + what + ' server.');
+};;
+
 g.hackers = {
 	'noob': {
 		name: 'noob',
@@ -1001,7 +1180,36 @@ g.hackers.buy = (who) => {
 		return g.console.print('<b><u>Error</u></b>: not enough money to hire ' + g.hackers[who].cleanName + '.');
 	else
 		return g.console.print('<b><u>Error</u></b>: you can\'t hire ' + g.hackers[who].cleanName + '.');
+};
+
+g.hackers.loop = () => {
+	if (g.options.vue !== 'hackers_progress')
+		return;
+
+	for (var hacker in g.hackers) {
+		if (typeof g.hackers[hacker] == 'object' && g.hackers[hacker].owned) {
+			var place = g.places[g.hackers[hacker].effect],
+				time = g.places.getTime(place.name),
+				timeLeft = 0,
+				percent = Math.floor(g.hackers[hacker].progress / time  * 100),
+				filled = Math.floor(g.hackers[hacker].progress / time * 35),
+				left = Math.ceil(35 - filled),
+				bar = '|';
+
+			for (var i = 0; i < filled; i++)
+				bar += '#';
+
+			for (var e = 0; e < left; e++)
+				bar += '=';
+
+			timeLeft = time - g.hackers[hacker].progress;
+			bar += '| ' + fix(percent, 0) + '%, ' + fix(timeLeft, 2) + ' s. (' + place.cleanName + ')';
+
+			$('#' + hacker + '-progress').html(bar);
+		};
+	};
 };;
+
 g.scripts = {
 	calledOnce: false,
 
@@ -1129,6 +1337,7 @@ var t = [g.t()];
 g.t = () => {
 	return 2;
 };;
+
 /*****
  *  Commands constructor:
  *
@@ -1210,11 +1419,11 @@ g.console.commands = [
                 execute: 'g.scripts.buy',
                 desc: 'buy some scripts to automatize tasks.',
                 customDesc: [
-                    'a script execute the <b>hack</b> command 1 time/sec, cost $' + fix(g.scripts.getPrice('script')) + '.',
-                    'a bot execute the <b>hack</b> command 5 times/sec, cost $' + fix(g.scripts.getPrice('bot')) + '.',
-                    'a vm execute the <b>hack</b> command 10 times/sec, cost $' + fix(g.scripts.getPrice('vm')) + '.',
-                    'a raspberry execute the <b>hack</b> command 20 times/sec, cost $' + fix(g.scripts.getPrice('raspberry')) + '.',
-                    'a computer execute the <b>hack</b> command 40 times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
+                    'a script execute the <b>hack</b> command ' + g.scripts.script.effect + ' time/sec, cost $' + fix(g.scripts.getPrice('script')) + '.',
+                    'a bot execute the <b>hack</b> command ' + g.scripts.bot.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('bot')) + '.',
+                    'a vm execute the <b>hack</b> command ' + g.scripts.vm.effect + 'times/sec, cost $' + fix(g.scripts.getPrice('vm')) + '.',
+                    'a raspberry execute the <b>hack</b> command ' + g.scripts.raspberry.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('raspberry')) + '.',
+                    'a computer execute the <b>hack</b> command ' + g.scripts.computer.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
                 ],
                 options: ['script', 'bot', 'vm', 'raspberry', 'computer'],
                 optionsIndex: 2
@@ -1243,6 +1452,21 @@ g.console.commands = [
                     'elite_skid'
                 ],
                 optionsIndex: 2
+            },
+            {
+                pattern: '^buy[\\s]server[\\s][\\w]',
+                cleanCmd: 'buy server (option)',
+                execute: 'g.servers.buy',
+                desc: 'buy a server to earn more cash and exp.',
+                customDesc: [
+                    'increase global money multiplier by x' + fix(g.servers.personal.moneyMult, 2) +
+                        ' and exp multiplier by x' + fix(g.servers.personal.expMult, 2) +
+                        ', cost $' + fix(g.servers.getCost('personal')) + '.'
+                ],
+                options: [
+                    'personal'
+                ],
+                optionsIndex: 2
             }
         ]
     },
@@ -1262,6 +1486,88 @@ g.console.commands = [
                     'reject the current job offer.'
                 ],
                 options: ['accept', 'reject'],
+                optionsIndex: 2
+            }
+        ]
+    },
+
+    {
+        name: 'options',
+        desc: 'change in-game options.',
+        pattern: '^options$',
+        commands: [
+            {
+                pattern: '^options[\\s]notes$',
+                desc: 'print the latest patch-notes.',
+                cleanCmd: 'options notes',
+                execute: 'g.options.notes.write()'
+            },
+            {
+                pattern: '^options[\\s]difficulty[\\s][\\w]$',
+                cleanCmd: 'options difficulty (option)',
+                desc: 'switch game difficulty, can only be done one time.',
+                execute: 'g.options.switchDifficulty',
+                customDesc: [
+                    'change game difficulty to normal (no exp/money multiplier but access to user interface).',
+                    'change game difficulty to hardcore (exp/money multiplier of x2 but no access to user interface).'
+                ],
+                options: ['normal', 'hardcore'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]console[\\s][\\w]$',
+                cleanCmd: 'options console (option)',
+                desc: 'change console theme.',
+                execute: 'g.options.switchTheme',
+                customDesc: [
+                    'change console theme to green (default theme, better hacking experience).',
+                    'change console theme to dark (classical theme, easier to read).'
+                ],
+                options: ['green', 'dark'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]matrix[\\s][\\w]$',
+                cleanCmd: 'options matrix (option)',
+                desc: 'enable/disable matrix background effect.',
+                execute: 'g.options.toggleBackground',
+                customDesc: [
+                    'enable matrix background effect.',
+                    'disable matrix background effect (disable it if game lags).'
+                ],
+                options: ['enable', 'disable'],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]display[\\s][\\w]$',
+                cleanCmd: 'options display (option)',
+                desc: 'change console display.',
+                execute: 'g.options.changeVue',
+                customDesc: [
+                    'set vue to default.',
+                    'set vue to hackers_progress (show hackers progress, can\'t execute other commands).'
+                ],
+                options: [
+                    'default',
+                    'hackers_progress'
+                ],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^options[\\s]savegame[\\s][\\w]',
+                cleanCmd: 'options savegame (option)',
+                desc: 'save, load or erase your save data.',
+                execute: 'g.options.saveManager',
+                customDesc: [
+                    'save now.',
+                    'load savegame.',
+                    'hard-reset, erase all data and start from scratch. <b>CAREFUL, NO WARNING! YOU CAN\'T GO BACK IF YOU DO THIS!</b>'
+                ],
+                options: [
+                    'save',
+                    'load',
+                    'erase'
+                ],
                 optionsIndex: 2
             }
         ]
@@ -1309,49 +1615,20 @@ g.console.commands = [
     },
 
     {
-        name: 'options',
-        desc: 'change in-game options.',
-        pattern: '^options$',
+        name: 'credit',
+        desc: 'print credits.',
+        pattern: '^credit$',
         commands: [
             {
-                pattern: '^options[\\s]difficulty[\\s][\\w]$',
-                cleanCmd: 'options difficulty (option)',
-                desc: 'switch game difficulty, can only be done one time.',
-                execute: 'g.options.switchDifficulty',
-                customDesc: [
-                    'change game difficulty to normal (no exp/money multiplier but access to user interface).',
-                    'change game difficulty to hardcore (exp/money multiplier of x2 but no access to user interface).'
-                ],
-                options: ['normal', 'hardcore'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^options[\\s]console[\\s][\\w]$',
-                cleanCmd: 'options console (option)',
-                desc: 'change console theme.',
-                execute: 'g.options.switchTheme',
-                customDesc: [
-                    'change console theme to green (default theme, better hacking experience).',
-                    'change console theme to dark (classical theme, easier to read).'
-                ],
-                options: ['green', 'dark'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^options[\\s]matrix[\\s][\\w]$',
-                cleanCmd: 'options matrix (option)',
-                desc: 'enable/disable matrix background effect.',
-                execute: 'g.options.toggleBackground',
-                customDesc: [
-                    'enable matrix background effect.',
-                    'disable matrix background effect (disable it if game lags).'
-                ],
-                options: ['enable', 'disable'],
-                optionsIndex: 2
+                pattern: '^credit$',
+                cleanCmd: 'credit',
+                desc: 'print credits.',
+                execute: 'g.console.credits()'
             }
         ]
     }
 ];;
+
 game.hack = {
 	minDefaultHackCash: 15,
 	maxDefaultHackCash: 25,
@@ -1454,7 +1731,12 @@ g.hack.loop = (times) => {
 			g.hack.hackProgress = 0;
 		};
 	};
+};
+
+g.hack.userinput = (typed) => {
+	debug(typed);
 };;
+
 g.varInit = () => {
     g.options.varInit();
     g.console.varInit();
@@ -1470,11 +1752,13 @@ g.domInit = () => {
 
 $(document).ready(function() {
     g.varInit();
+    g.save.load();
     g.domInit();
     g.quickTutorial();
 
     g.player.options == true && debug('game ready to play', g);
 });;
+
 game.jobs = {
 	baseCash: 1000,
 	baseExp: 175,
@@ -1545,6 +1829,7 @@ g.jobs.loop = (times) => {
 
 			g.earnMoney(g.jobs.current.cash);
 			g.earnExp(g.jobs.current.exp);
+			g.console.setDefaultBinds();
 
 			g.jobs.status = 'finished';
 			g.jobs.current = undefined;
@@ -1571,8 +1856,8 @@ g.jobs.spawn = () => {
 
 		g.console.print(g.jobs.stories[randStory] +
 			' You will earn $' + fix(g.jobs.current.cash) + ' and ' + fix(g.jobs.current.exp) + ' exp.' +
-			' This offer will take ' + fix(g.jobs.current.time, 0) + ' seconds where you will not be able to do anything.' +
-			' You have one minute to resond to this offer.');
+			' This offer will take ' + fix(g.jobs.current.time, 0) + ' seconds, you will not be able to send commands.' +
+			' You have one minute to resond to this offer with the command <b>jobs respond accept/reject</b>.');
 
 		setTimeout(function() {
 			if (!g.jobs.accepted && g.jobs.status == 'waiting for response') {
@@ -1609,6 +1894,92 @@ g.jobs.respond = (response) => {
 		g.jobs.accepted = true;
 		g.jobs.status = 'accepted';
 		g.console.print('You successfully accepted the job offer.');
+
+		$('.enter, #console-input').unbind();
 		$('.text-side').prepend('<p id="job-progress">');
+	};
+};;
+
+g.save = {
+	salt: 'SkidInc',
+	interval: 60e3,
+
+	toSave: [
+		'g.player.money',
+		'g.player.totalMoney',
+		'g.player.level',
+		'g.player.exp',
+		'g.player.rank',
+		'g.player.isNew',
+		'g.player.difficulty',
+
+		'g.servers.personal.owned',
+
+		'g.hackers.noob.owned',
+		'g.hackers.script_kiddie.owned',
+		'g.hackers.coder.owned',
+		'g.hackers.hax0r.owned',
+		'g.hackers.prodigy.owned',
+		'g.hackers.elite_hacker.owned',
+		'g.hackers.elite_skid.owned',
+
+		'g.scripts.script.owned',
+		'g.scripts.bot.owned',
+		'g.scripts.vm.owned',
+		'g.scripts.raspberry.owned',
+		'g.scripts.computer.owned'
+	]
+};
+
+g.save.save = (console) => {
+	var save = '',
+		values = [];
+
+	for (var i = 0; i < g.save.toSave.length; i++)
+		values.push(eval(g.save.toSave[i]));
+
+	save = btoa(JSON.stringify(values));
+	localStorage.setItem(g.save.salt, save);
+
+	if (console)
+		g.console.print('Game successfully saved.');
+
+	return debug('Game saved.');
+};
+
+g.save.load = (console, auto) => {
+	if (localStorage.getItem(g.save.salt) == null)
+		return warn('No save found.');
+	else {
+		var loaded = localStorage.getItem(g.save.salt),
+			decrypted = JSON.parse(atob(loaded));
+
+		for (var i = 0; i < g.save.toSave.length; i++) {
+			if (typeof decrypted[i] == 'undefined')
+				return;
+
+			if (typeof decrypted[i] == 'string')
+				eval(g.save.toSave[i] + ' = "' + decrypted[i] + '"');
+			else
+				eval(g.save.toSave[i] + ' = ' + decrypted[i]);
+		};
+
+		if (console) {
+			g.save.save();
+			g.console.print('Savegame loaded. You may need to refresh the page if something is broken.');
+		};
+
+		return debug('Save loaded.');
+	};
+};
+
+g.save.erase = () => {
+	if (localStorage.getItem(g.save.salt) == null)
+		return warn('No save found.');
+	else {
+		window.onbeforeunload = null;
+		clearInterval(g.options.intervals.save);
+		localStorage.removeItem(g.save.salt);
+		location.reload();
 	};
 };

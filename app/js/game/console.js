@@ -50,10 +50,30 @@ g.console.guide = () => {
         'Take a look at the <b>buy</b> command, at this point you should be able to buy your first script.');
 };
 
+g.console.credits = () => {
+    g.console.print('SkidInc v' + g.options.version + '.<br>' +
+        'An idle/incremental-game made by TotomInc.<br>' +
+        'An original idea from Emiel.<br>' +
+        'Logo made by Tim.<br>' +
+        'Thanks to /r/incremental_games and /r/skidinc for their help!<br>' +
+        'Subscribe to <a target="_blank" href="http://www.reddit.com/r/skidinc">/r/skidinc</a> for news about the game.');
+};
+
 g.console.help = () => {
     for (var i = 0; i < g.console.commands.length; i++)
         g.console.print('<b>' + g.console.commands[i].name + '</b>: ' + g.console.commands[i].desc);
-    g.console.print('For more in-depth help about a command, type <b>command -help</b>.');
+    g.console.print('For more in-depth help about a command, type <b>command -help</b>, it works too for commands with options <b>command cmd -help</b>.');
+};
+
+g.console.strictMode = (cmd) => {
+    var command = $('#console-input').val();
+
+    if (command !== cmd)
+        g.console.print('<b><u>Error</u></b>: you can\'t execute other commands than <b>' + cmd + '</b>.');
+    else if (command == cmd)
+        g.console.execute(command);
+
+    $('#console-input').val('');
 };
 
 g.console.commandsHelp = (command, cmdCmd) => {
@@ -64,7 +84,7 @@ g.console.commandsHelp = (command, cmdCmd) => {
         baseCmd.commands.filter(function(cmd) {
             var split = cmd.cleanCmd.split(' ');
 
-            if (split.indexOf('-help') == 1)
+            if (split.indexOf('-help') > -1)
                 return;
 
             if (typeof cmd.options == 'object' && typeof cmdCmd == 'undefined')
@@ -115,7 +135,7 @@ g.console.execute = (command) => {
         baseCmd.commands.filter(function(cmd) {
             if (typeof cmd.options == 'object') {
                 var parts = command.split(' '),
-                    goodOption = undefined; 
+                    goodOption = undefined;
 
                 for (var i = 0; i < cmd.options.length; i++) {
                     if (parts[cmd.optionsIndex] == cmd.options[i])
@@ -180,6 +200,21 @@ g.console.errorHandler = (command, emptyCmd, baseCmdFound, cmdFound) => {
         return g.console.print('<b><u>CommandError</u></b>: this command need parameters.');
 };
 
+g.console.setDefaultBinds = () => {
+    $('.enter, #console-input').unbind();
+
+    $('.enter').on('click', function() {
+        g.console.enter();
+    });
+
+    $('#console-input').bind('keydown', function(e) {
+        if (e.which == 13)
+            g.console.enter();
+    }).bind(('cut copy paste'), function(e) {
+        e.preventDefault();
+    });
+};
+
 g.console.update = () => {
     $('#console-name').html(g.player.rank);
     $('#console-money').html('$' + fix(g.player.money));
@@ -187,6 +222,8 @@ g.console.update = () => {
     $('#console-exp').html('Exp. ' + fix(g.player.exp) + '/' + fix(g.player.expReq));
     $('#script-income').html('Scripts ~$' + fix(g.scripts.getAverageCashPerSec()) + '/sec<br>' +
         '~exp ' + fix(g.scripts.getAverageExpPerSec()) + '/sec');
+    $('#player-mults').html('Money mult x' + fix(g.player.getCashMult(), 2) + '<br>' +
+        'Exp mult x' + fix(g.player.getExpMult()));
 };
 
 g.console.varInit = () => {
@@ -223,6 +260,7 @@ g.console.varInit = () => {
 g.console.domInit = () => {
     $('.infos-side')
         .append('<div id="player-stats">')
+        .append('<div id="player-multipliers" class="console-mults">')
         .append('<div id="game-stuff" class="console-bottom">');
     $('#player-stats')
         .append('<p id="console-name">')
@@ -230,6 +268,8 @@ g.console.domInit = () => {
         .append('<p id="console-level">')
         .append('<p id="console-exp">')
         .append('<p id="script-income">');
+    $('#player-multipliers')
+        .append('<p id="player-mults">');
     $('#game-stuff')
         .append('<p id="game-version">');
     $('#game-version')
@@ -248,16 +288,7 @@ g.console.domInit = () => {
         $('#console-input').focus();
     });
 
-    $('.enter').on('click', function() {
-        g.console.enter();
-    });
-
-    $('#console-input').bind('keydown', function(e) {
-        if (e.which == 13)
-            g.console.enter();
-    }).bind(('cut copy paste'), function(e) {
-        e.preventDefault();
-    });
+    g.console.setDefaultBinds();
 
     g.options.debug == true && debug('g.console.domInit finished');
 };
