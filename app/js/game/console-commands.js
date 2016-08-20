@@ -74,7 +74,7 @@ g.console.commands = [
         pattern: '^buy$',
         commands: [
             {
-                pattern: '^buy[\\s]script[\\s][\\w]',
+                pattern: '^buy[\\s]script[\\s][\\w]$',
                 cleanCmd: 'buy script (option)',
                 execute: 'g.scripts.buy',
                 desc: 'buy some scripts to automatize tasks.',
@@ -89,7 +89,7 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^buy[\\s]hacker[\\s][\\w]',
+                pattern: '^buy[\\s]hacker[\\s][\\w]$',
                 cleanCmd: 'buy hacker (option)',
                 execute: 'g.hackers.buy',
                 desc: 'hire an hacker to automatize places hacks.',
@@ -114,7 +114,7 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^buy[\\s]server[\\s][\\w]',
+                pattern: '^buy[\\s]server[\\s][\\w]$',
                 cleanCmd: 'buy server (option)',
                 execute: 'g.servers.buy',
                 desc: 'buy a server to earn more cash and exp.',
@@ -137,7 +137,7 @@ g.console.commands = [
         pattern: '^jobs$',
         commands: [
             {
-                pattern: '^jobs[\\s]respond[\\s][\\w]',
+                pattern: '^jobs[\\s]respond[\\s][\\w]$',
                 cleanCmd: 'jobs respond (option)',
                 execute: 'g.jobs.respond',
                 desc: 'accept or reject a job offer.',
@@ -214,7 +214,7 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^options[\\s]savegame[\\s][\\w]',
+                pattern: '^options[\\s]savegame[\\s][\\w]$',
                 cleanCmd: 'options savegame (option)',
                 desc: 'save, load or erase your save data.',
                 execute: 'g.options.saveManager',
