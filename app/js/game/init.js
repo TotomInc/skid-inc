@@ -8,6 +8,9 @@ g.varInit = () => {
 g.domInit = () => {
     g.console.domInit();
 
+    // if on mobile, adress bar is hidden
+    window.scrollTo(0, 1);
+
     g.options.debug == true && debug('g.domInit finished');
 };
 

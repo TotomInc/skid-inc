@@ -18,7 +18,8 @@ game.options = {
     isIE: false,
     isEdge: false,
     isChrome: false,
-    isBlink: false
+    isBlink: false,
+    isMobile: false
 };
 
 g.options.toggleSounds = (toggle) => {
@@ -132,6 +133,8 @@ g.options.varInit = () => {
         g.options.whatOS = "UNIX";
     if (navigator.appVersion.indexOf("Linux")!=-1)
         g.options.whatOS = "Linux";
+    if (window.innerWidth <= 800 && window.innerHeight <= 450)
+        g.options.mobile = true;
 
     if (g.options.matrix)
         $('#matrix').css('display', 'none');
@@ -161,6 +164,9 @@ g.options.varInit = () => {
     window.onbeforeunload = function() {
         g.save.save();
     };
+
+    if (g.options.mobile)
+        g.console.print('For performances reasons, the typing text effect is disabled on mobile.');
 
     g.options.debug == true && debug('g.options.varInit finished');
 };

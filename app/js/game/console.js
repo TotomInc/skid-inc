@@ -23,7 +23,11 @@ g.console.clear = () => {
 g.console.print = (text, typed) => {
     var rand = Math.floor(Math.random() * 1e9);
 
-    if (typeof typed == 'undefined' || typed) {
+    if (g.options.mobile) {
+        $('.text-side').prepend('<p id="text-' + rand + '">');
+        $('#text-' + rand).html(text);
+    }
+    else {
         $('.text-side').prepend('<div id="text-' + rand + '" class="typed">');
         $('#text-' + rand).prepend('<p>');
         $('#text-' + rand + ' p').typed({
@@ -34,12 +38,7 @@ g.console.print = (text, typed) => {
                 $('.typed-cursor').remove();
             }
         });
-    }
-    else
-        $('.text-side').prepend('<p id="text-' + rand + '" class="typed">').html(text);
-
-    if ($('.typed').size() >= 18)
-        $($('.typed').get(18)).remove();
+    };
 };
 
 g.console.guide = () => {

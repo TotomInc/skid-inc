@@ -103,17 +103,18 @@
         padding: 5px !important;
     }
     .output p {
-        font-size: 14px !important;
+        font-size: 12px !important;
     }
     .text-side {
         width: 70% !important;
-        line-height: 16px !important;
+        line-height: 12px !important;
+        overflow-y: auto !important;
     }
     .infos-side {
         width: 30% !important;
     }
     .infos-side p {
-        line-height: 16px !important;
+        line-height: 12px !important;
     }
     .input {
         margin-bottom: 0 !important;
@@ -123,7 +124,7 @@
     }
     .input-text {
         font-size: 16px !important;
-        line-height: 16px !important;
+        line-height: 12px !important;
     }
     .screen, .screen::before {
         width: 100% !important;
