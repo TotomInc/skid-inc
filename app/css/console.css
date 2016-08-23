@@ -88,8 +88,8 @@
         margin: 0 !important;
     }
     .text {
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: 100% !important;
     }
     .text::before {
         -o-animation: none !important;
@@ -103,27 +103,28 @@
         padding: 5px !important;
     }
     .output p {
-        font-size: 18px !important;
+        font-size: 28px !important;
     }
     .text-side {
         width: 70% !important;
-        line-height: 18px;
+        line-height: 36px !important;
     }
     .infos-side {
         width: 30% !important;
     }
     .infos-side p {
-        line-height: 18px !important;
+        line-height: 36px !important;
     }
     .input {
         margin-bottom: 0 !important;
     }
     .input-container {
         width: calc(100% - 60px - 25px) !important;
+        height: 70px !important;
     }
     .input-text {
-        font-size: 20px !important;
-        line-height: 20px !important;
+        font-size: 28px !important;
+        line-height: 38px !important;
     }
     .screen, .screen::before {
         width: 100% !important;
