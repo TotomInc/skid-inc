@@ -1,4 +1,4 @@
-@media (min-width: 320px) and (max-width: 767px) {
+@media (min-device-width: 320px) and (max-device-width: 767px) {
     .container, .row, .col-md-12 {
         position: absolute;
         height: 100%;
@@ -7,7 +7,7 @@
     .container, .col-md-12 {
         padding: 0 !important;
     }
-    .row {    
+    .row {
         margin: 0 !important;
     }
 }

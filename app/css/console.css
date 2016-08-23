@@ -79,7 +79,7 @@
 }
 
 /* mobile display */
-@media (min-width: 320px) and (max-width: 767px) {
+@media (min-device-width: 320px) and (max-device-width: 767px) {
     .console {
         width: 100% !important;
         height: 100% !important;
@@ -98,10 +98,12 @@
         animation: none !important;
     }
     .output {
+        width: 100% !important;
         height: calc(100% - 40px) !important;
+        padding: 5px !important;
     }
     .text-side {
-        width: 60% !important;
+        width: 70% !important;
     }
     .infos-side {
         width: 30% !important;
@@ -118,6 +120,7 @@
         border-radius: 0 !important;
     }
     .layer {
+        padding: 0 !important;
         border-radius: 0 !important;
     }
     .layer::after {
@@ -125,7 +128,7 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) {
     .console, .console::before, .console::after {
         width: 650px;
     }
@@ -332,7 +335,7 @@
 .output {
     display: block !important;
     overflow: hidden;
-    padding: 10px !important;
+    padding: 10px;
     resize: none;
     -webkit-appearance: none;
     box-sizing: border-box;
