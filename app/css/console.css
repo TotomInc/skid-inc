@@ -78,7 +78,54 @@
     100% { opacity: 0.21; }
 }
 
-@media (min-width: 768px) {
+/* mobile display */
+@media (min-width: 320px) and (max-width: 767px) {
+    .console {
+        width: 100% !important;
+        height: 100% !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+    }
+    .text {
+        width: 100%;
+        height: 100%;
+    }
+    .text::before {
+        -o-animation: none !important;
+        -moz-animation: none !important;
+        -webkit-animation: none !important;
+        animation: none !important;
+    }
+    .output {
+        height: calc(100% - 40px) !important;
+    }
+    .text-side {
+        width: 60% !important;
+    }
+    .infos-side {
+        width: 30% !important;
+    }
+    .input {
+        margin-bottom: 0 !important;
+    }
+    .input-container {
+        width: calc(100% - 60px - 25px) !important;
+    }
+    .screen, .screen::before {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+    }
+    .layer {
+        border-radius: 0 !important;
+    }
+    .layer::after {
+        height: 100% !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
     .console, .console::before, .console::after {
         width: 650px;
     }
@@ -208,6 +255,10 @@
     animation: pulse 5s linear infinite;
 }
 
+.screen.no-blackbars::before {
+    display: none;
+}
+
 .logo-layer {
     z-index: 0;
     position: absolute;
@@ -239,7 +290,7 @@
     opacity: 0.9;
 }
 
-.layer::after {
+.layer:after {
     position: absolute;
     content: '';
     height: 530px;
@@ -425,8 +476,11 @@
 }
 
 .input-text {
+    vertical-align: middle;
     height: 30px;
     width: 100%;
+    font-size: 18px;
+    padding-bottom: 7px;
     border: none;
     background: transparent;
 }

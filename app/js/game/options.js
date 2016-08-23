@@ -6,8 +6,10 @@ game.options = {
     before: new Date().getTime(),
 
     debug: true,
+    sound: false,
     version: 0.2,
     vue: 'default',
+    ambiance: undefined,
 
     whatOS: undefined,
     isOpera: false,
@@ -19,6 +21,23 @@ game.options = {
     isBlink: false
 };
 
+g.options.toggleSounds = (toggle) => {
+    if (toggle == 'disable') {
+        g.options.sounds = false;
+        g.options.ambiance.pause();
+        g.options.ambiance = undefined;
+        g.console.print('Sounds and ambiance sound disabled.');
+    }
+    else if (toggle == 'enable') {
+        g.options.sounds = true;
+        g.options.ambiance = new Audio('app/assets/sounds/ambiance.mp3');
+        g.options.ambiance.loop = true;
+        g.options.ambiance.volume = 0.15;
+        g.options.ambiance.play();
+        g.console.print('Sounds and ambiance sound enabled.');
+    };
+};
+
 g.options.toggleBackground = (toggle) => {
     if (toggle == 'enable') {
         $('#matrix').fadeIn('slow');
@@ -28,6 +47,13 @@ g.options.toggleBackground = (toggle) => {
         $('#matrix').fadeOut('slow');
         g.console.print('Matrix effect disabled.')
     };
+};
+
+g.options.blackbars = (toggle) => {
+    if (toggle == 'enable')
+        $('.screen').removeClass('no-blackbars');
+    else if (toggle == 'disable')
+        $('.screen').addClass('no-blackbars');
 };
 
 g.options.switchTheme = (theme) => {

@@ -106,6 +106,12 @@ g.console.commandsHelp = (command, cmdCmd) => {
 g.console.enter = () => {
     var command = $('#console-input').val();
 
+    if (g.options.sounds) {
+        var button = new Audio('app/assets/sounds/keyup.mp3');
+        button.volume = 1;
+        button.play();
+        debug('called')
+    };
     g.console.execute(command);
 
     $('#console-input').val('');
@@ -170,7 +176,7 @@ g.console.execute = (command) => {
         });
     });
 
-    if (!cmdFound || !baseCmdFound) 
+    if (!cmdFound || !baseCmdFound)
         g.console.errorHandler(command, false, baseCmdFound, cmdFound);
     else {
         if (typeof result.options == 'object') {

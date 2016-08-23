@@ -46,13 +46,13 @@ g.console.commands = [
                 execute: 'g.hack.place',
                 desc: 'hack a place to earn more $$$ and experience, can take some time depending the place.',
                 customDesc: [
-                    '~$' + fix(g.places.getAverageCash('mini_market')) + ', ~exp ' + fix(g.places.getAverageExp('mini_market')) + ', ' + fix(g.places.getTime('mini_market'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('market')) + ', ~exp ' + fix(g.places.getAverageExp('market')) + ', ' + fix(g.places.getTime('market'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('jewelry')) + ', ~exp ' + fix(g.places.getAverageExp('jewelry')) + ', ' + fix(g.places.getTime('jewelry'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('bank')) + ', ~exp ' + fix(g.places.getAverageExp('bank')) + ', ' + fix(g.places.getTime('bank'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('trading_center')) + ', ~exp ' + fix(g.places.getAverageExp('trading_center')) + ', ' + fix(g.places.getTime('trading_center'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('anonymous_hideout')) + ', ~exp ' + fix(g.places.getAverageExp('anonymous_hideout')) + ', ' + fix(g.places.getTime('anonymous_hideout'), 0) + ' sec.',
-                    '~$' + fix(g.places.getAverageCash('deepweb')) + ', ~exp ' + fix(g.places.getAverageExp('deepweb')) + ', ' + fix(g.places.getTime('deepweb'), 0) + ' sec.'
+                    '~$' + fix(g.places.getAverageCash('mini_market')) + ', ~exp ' + fix(g.places.getAverageExp('mini_market')) + ', ' + fix(g.places.getTime('mini_market'), 0) + ' sec. req. level <b>' + g.places['mini_market'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('market')) + ', ~exp ' + fix(g.places.getAverageExp('market')) + ', ' + fix(g.places.getTime('market'), 0) + ' sec. req. level <b>' + g.places['market'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('jewelry')) + ', ~exp ' + fix(g.places.getAverageExp('jewelry')) + ', ' + fix(g.places.getTime('jewelry'), 0) + ' sec. req. level <b>' + g.places['jewelry'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('bank')) + ', ~exp ' + fix(g.places.getAverageExp('bank')) + ', ' + fix(g.places.getTime('bank'), 0) + ' sec. req. level <b>' + g.places['bank'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('trading_center')) + ', ~exp ' + fix(g.places.getAverageExp('trading_center')) + ', ' + fix(g.places.getTime('trading_center'), 0) + ' sec. req. level <b>' + g.places['trading_center'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('anonymous_hideout')) + ', ~exp ' + fix(g.places.getAverageExp('anonymous_hideout')) + ', ' + fix(g.places.getTime('anonymous_hideout'), 0) + ' sec. req. level <b>' + g.places['anonymous_hideout'].levelReq + '</b>.',
+                    '~$' + fix(g.places.getAverageCash('deepweb')) + ', ~exp ' + fix(g.places.getAverageExp('deepweb')) + ', ' + fix(g.places.getTime('deepweb'), 0) + ' sec. req. level <b>' + g.places['deepweb'].levelReq + '</b>.'
                 ],
                 options: [
                     'mini_market',
@@ -132,13 +132,13 @@ g.console.commands = [
     },
 
     {
-        name: 'jobs',
+        name: 'job',
         desc: 'accept jobs when they are available to earn extra $$$ and exp.',
-        pattern: '^jobs$',
+        pattern: '^job$',
         commands: [
             {
-                pattern: '^jobs[\\s]respond[\\s][\\w]$',
-                cleanCmd: 'jobs respond (option)',
+                pattern: '^job[\\s]respond[\\s][\\w]$',
+                cleanCmd: 'job respond (option)',
                 execute: 'g.jobs.respond',
                 desc: 'accept or reject a job offer.',
                 customDesc: [
@@ -152,19 +152,19 @@ g.console.commands = [
     },
 
     {
-        name: 'options',
+        name: 'option',
         desc: 'change in-game options.',
-        pattern: '^options$',
+        pattern: '^option$',
         commands: [
             {
-                pattern: '^options[\\s]notes$',
+                pattern: '^option[\\s]notes$',
                 desc: 'print the latest patch-notes.',
-                cleanCmd: 'options notes',
+                cleanCmd: 'option notes',
                 execute: 'g.options.notes.write()'
             },
             {
-                pattern: '^options[\\s]difficulty[\\s][\\w]$',
-                cleanCmd: 'options difficulty (option)',
+                pattern: '^option[\\s]difficulty[\\s][\\w]$',
+                cleanCmd: 'option difficulty (option)',
                 desc: 'switch game difficulty, can only be done one time.',
                 execute: 'g.options.switchDifficulty',
                 customDesc: [
@@ -175,8 +175,8 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^options[\\s]console[\\s][\\w]$',
-                cleanCmd: 'options console (option)',
+                pattern: '^option[\\s]console[\\s][\\w]$',
+                cleanCmd: 'option console (option)',
                 desc: 'change console theme.',
                 execute: 'g.options.switchTheme',
                 customDesc: [
@@ -187,8 +187,8 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^options[\\s]matrix[\\s][\\w]$',
-                cleanCmd: 'options matrix (option)',
+                pattern: '^option[\\s]matrix[\\s][\\w]$',
+                cleanCmd: 'option matrix (option)',
                 desc: 'enable/disable matrix background effect.',
                 execute: 'g.options.toggleBackground',
                 customDesc: [
@@ -199,8 +199,8 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^options[\\s]display[\\s][\\w]$',
-                cleanCmd: 'options display (option)',
+                pattern: '^option[\\s]display[\\s][\\w]$',
+                cleanCmd: 'option display (option)',
                 desc: 'change console display.',
                 execute: 'g.options.changeVue',
                 customDesc: [
@@ -214,8 +214,23 @@ g.console.commands = [
                 optionsIndex: 2
             },
             {
-                pattern: '^options[\\s]savegame[\\s][\\w]$',
-                cleanCmd: 'options savegame (option)',
+                pattern: '^option[\\s]blackbars[\\s][\\w]$',
+                cleanCmd: 'option blackbars (option)',
+                desc: 'remove the blackbars effect on the console.',
+                execute: 'g.options.blackbars',
+                customDesc: [
+                    'enable blackbars effect on the console.',
+                    'disable blackbars effect on the console.'
+                ],
+                options: [
+                    'enable',
+                    'disable'
+                ],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^option[\\s]savegame[\\s][\\w]$',
+                cleanCmd: 'option savegame (option)',
                 desc: 'save, load or erase your save data.',
                 execute: 'g.options.saveManager',
                 customDesc: [
@@ -227,6 +242,21 @@ g.console.commands = [
                     'save',
                     'load',
                     'erase'
+                ],
+                optionsIndex: 2
+            },
+            {
+                pattern: '^option[\\s]sounds[\\s][\\w]',
+                cleanCmd: 'option sounds (option)',
+                desc: 'enable/disable sounds effect and server room ambiance.',
+                execute: 'g.options.toggleSounds',
+                customDesc: [
+                    'enable all sounds.',
+                    'disable all sounds.'
+                ],
+                options: [
+                    'enable',
+                    'disable'
                 ],
                 optionsIndex: 2
             }
