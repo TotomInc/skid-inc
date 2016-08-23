@@ -15,3 +15,9 @@
     opacity: 0.20;
     font-family: 'matrix-code';
 }
+
+@media (min-device-width: 320px) and (max-device-width: 767px) {
+    .matrix-effect {
+        display: none !important;
+    }
+}
