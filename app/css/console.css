@@ -102,17 +102,28 @@
         height: calc(100% - 40px) !important;
         padding: 5px !important;
     }
+    .output p {
+        font-size: 18px !important;
+    }
     .text-side {
         width: 70% !important;
+        line-height: 18px;
     }
     .infos-side {
         width: 30% !important;
+    }
+    .infos-side p {
+        line-height: 18px !important;
     }
     .input {
         margin-bottom: 0 !important;
     }
     .input-container {
         width: calc(100% - 60px - 25px) !important;
+    }
+    .input-text {
+        font-size: 20px !important;
+        line-height: 20px !important;
     }
     .screen, .screen::before {
         width: 100% !important;
