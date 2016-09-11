@@ -6,6 +6,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/TotomInc/skid-inc.git"
   },
+  "scripts": {
+    "build": "grunt",
+    "start": "http-server ."
+  },
   "author": "Thomas Cazade (TotomInc)",
   "license": "MIT",
   "bugs": {

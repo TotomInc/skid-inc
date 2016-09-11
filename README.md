@@ -10,8 +10,8 @@ For any coders that want to help me:
 
 0. Install NodeJS if not done.
 1. Clone the repo.
-2. Install all dev dependencies with `npm i`. We recommend you to test your changes on a local server, using `http-server .`.
-3. Run `grunt` (concat, transpile es6 -> es5, uglify). Please, take your time to test the new changes you have done, otherwise I will NOT accept the pull request.
+2. Install all dev dependencies with `npm i`. We recommend you to test your changes on a local server, using `npm start`.
+3. Run `npm run build` (concat, transpile es6 -> es5, uglify). Please, take your time to test the new changes you have done, otherwise I will NOT accept the pull request.
 4. Create a new branch and make your changes on it, and do a pull request.
 
 ### "Mod" support:
