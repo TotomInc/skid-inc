@@ -1,23 +1,17 @@
+* {
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+}
+
 body {
-	margin: 0;
-	padding: 0;
-	padding-top: 80px;
-	font-family: 'Fira Mono', 'Consolas', 'Arial';
-	background-color: #3A3A3C;
-	margin-bottom: 20px;
+    background-color: #222;
+    font-family: 'Source Code Pro', 'Consolas', monospace;
 }
 
-input:focus {
-	outline: none;
-}
-
-pre {
-	border: none;
-	color: #9d9d9d;
-	background-color: transparent;
-	font-size: 12px;
-}
-
-h1 {
-	font-size: 24px;
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

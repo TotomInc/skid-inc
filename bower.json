@@ -1,22 +1,17 @@
 {
-  "name": "hack-inc",
-  "description": "Incremental-game with hacking theme.",
+  "name": "skid-inc",
+  "description": "SkidInc is an incremental-game with hacking theme.",
   "authors": [
-    "TotomInc"
+    "Thomas Cazade (TotomInc)"
   ],
   "license": "MIT",
-  "keywords": [
-    "idle",
-    "game",
-    "hacking"
-  ],
+  "homepage": "http://github.com/TotomInc/skid-inc/",
   "private": true,
   "devDependencies": {
     "jquery": "^2.2.3",
     "bootstrap": "^3.3.6",
     "components-font-awesome": "^4.6.1",
-    "tooltipster": "^3.3.0",
-    "Ionicons": "ionicons#^2.0.1"
+    "typed.js": "^1.1.4"
   },
   "install": {
     "base": "lib",
@@ -41,10 +36,7 @@
         "bower_components/bootstrap/dist/fonts/*.*",
         "bower_components/bootstrap/dist/js/*.js"
       ],
-      "Ionicons": [
-        "bower_components/Ionicons/css/ionicons.min.css",
-        "bower_components/Ionicons/fonts/*.*"
-      ]
+      "typed.js": "bower_components/typed.js/dist/typed.min.js"
     }
   }
 }

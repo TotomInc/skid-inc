@@ -1,392 +1,83 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="utf-8">
-	<link rel="icon" type="image/png" href="favicon.png">
-	<title>$0 - SkidInc.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>SkidInc</title>
 
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Mono:400,700'>
-
-	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="lib/components-font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="lib/Ionicons/css/ionicons.min.css">
 
-	<!-- GAME CSS -->
-	<link rel="stylesheet" href="app/css/scrollbar.css">
-	<link rel="stylesheet" href="app/css/interface.css">
-	<link rel="stylesheet" href="app/css/nav-tabs.css">
-	<link rel="stylesheet" href="app/css/elements.css">
-	<link rel="stylesheet" href="app/css/navbar.css">
-	<link rel="stylesheet" href="app/css/console.css">
-	<link rel="stylesheet" href="app/css/no-select.css">
-	<link rel="stylesheet" href="app/css/floating.css">
-	<link rel="stylesheet" href="app/css/matrix.css">
+    <!-- <link rel="stylesheet" href="app-prod/css/skid-inc.min.css"> -->
 
-	<!-- GAME PROD CSS -->
-	<!--<link rel="stylesheet" href="app/prod/skid-inc.min.css">-->
+    <link rel="stylesheet" href="app/css/interface.css">
+    <link rel="stylesheet" href="app/css/console.css">
+    <link rel="stylesheet" href="app/css/custom-bootstrap.css">
+    <link rel="stylesheet" href="app/css/matrix.css">
+    <link rel="stylesheet" href="app/css/typedjs.css">
 
-	<script src="lib/jquery/js/jquery.min.js"></script>
-	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-	<script src="lib/lz-string/lz-string.min.js"></script>
+    <script src="lib/jquery/js/jquery.min.js"></script>
+    <script src="lib/typed.js/js/typed.min.js"></script>
 </head>
 
-<body class="noselect">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand">SkidInc. <small><span id="navbar-version"></span></small></a>
-			</div>
+<body>
+    <div class="container">
+        <div class="row margin-top">
+            <div class="col-md-12">
+                <div class="console">
+                    <div class="text">
+                        <div class="output noselect">
+                            <div class="text-side"></div>
+                            <div class="infos-side"></div>
+                        </div>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a id="navbar-save" href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now!</a>
-				</li>
+                        <div class="input">
+                            <div class="blinking-arrow">
+                                <i class="fa fa-caret-right"></i>
+                            </div>
 
-				<!--<li>-->
-				<!--	<a id="navbar-mute" href="#"><i class="fa fa-volume-off" aria-hidden="true"></i> Trigger sounds</a>-->
-				<!--</li>-->
-			</ul>
-		</div>
-	</nav>
+                            <div class="input-container">
+                                <input id="console-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" type="text" class="input-text">
+                            </div>
 
-	<div id="matrix-effect" class="background-matrix" style="display: none;">
-		<canvas id="canvas"></canvas>
-	</div>
+                            <div class="enter">
+                                <i class="fa fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-3">
-				<div class="well">
-					<p id="well-resources"></p>
-				</div>
+                    <div class="screen no-blackbars">
+                        <div class="layer"></div>
+                        <div class="logo-layer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				<div id="hack-button" class="hack-button">
-					<p>Hack! <i class="fa fa-keyboard-o fa-lg" aria-hidden="true"></i></p>
-				</div>
-			</div>
+    <!-- <script src="app-prod/js/skid-inc.min.js"></script> -->
 
-			<div class="col-md-9">
-				<ul class="nav nav-tabs nav-justified" role="tablist">
-					<li class="active">
-						<a href="#console" data-toggle="tab"><i class="fa fa-terminal"></i> Console</a>
-					</li>
-					
-					<li id="servers-tab">
-						<a href="#servers" data-toggle="tab"><i class="fa fa-server"></i> Servers</a>
-					</li>
-					
-					<li id="places-tab">
-						<a href="#places" data-toggle="tab"><i class="fa fa-globe"></i> Places</a>
-					</li>
+    <script src="app/js/misc/matrix.js"></script>
+    <script src="app/js/misc/beautify.js"></script>
+    <script src="app/js/misc/capitalize.js"></script>
+    <script src="app/js/misc/random.js"></script>
+    <script src="app/js/misc/console.js"></script>
 
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li>
-								<a href="#inventory" data-toggle="tab"><i class="fa fa-briefcase"></i> Inventory</a>
-							</li>
-							
-							<li class="divider"></li>
-							
-							<li>
-								<a href="#options" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> Options</a>
-							</li>
-
-							<li>
-								<a href="#notes" data-toggle="tab"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Patch-notes</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-
-				<div id="tab-container" class="tab-content">
-					<div role="tabpanel" class="tab-pane fade in active" id="console">
-						<div class="console-container">
-							<div id="console-content" class="console content"></div>
-
-							<div class="console logo"></div>
-
-							<div class="console input-container">
-								<div class="console input-logo">
-									<i class="fa fa-angle-right"></i>
-								</div>
-								<div class="console input">
-									<input id="console-input" type="text">
-								</div>
-								<div id="console-enter" class="console enter">
-									<i class="fa fa-chevron-right"></i>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="servers">
-						<div id="servers-well" class="well"></div>
-					</div>
-					
-					<div role="tabpanel" class="tab-pane fade" id="places">
-						<div id="places-well" class="well"></div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="inventory">
-						<div class="well">
-							<h4 class="text-center">Work in progress!</h4>
-						</div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="options">
-						<div class="well">
-							<div class="row">
-								<div class="col-md-4">
-									<a id="options-reset" class="btn btn-default btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i> Reset save</a>
-								</div>
-								<div class="col-md-4">
-									<a id="options-load" class="btn btn-default btn-block"><i class="fa fa-download" aria-hidden="true"></i> Load save</a>
-								</div>
-								<div class="col-md-4">
-									<a id="options-save" class="btn btn-default btn-block"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save game</a>
-								</div>
-							</div>
-
-							<br>
-
-							<div class="row">
-								<div class="col-md-4 col-md-offset-4">
-									<a id="options-effect" class="btn btn-default btn-block btn-line"><i class="fa fa-eye" aria-hidden="true"></i> Switch effects</a>
-								</div>
-							</div>
-
-							<br>
-
-							<div class="row">
-								<div class="col-md-8 col-md-offset-2">
-									<p class="text-center">
-										Project management <i class="fa fa-user" aria-hidden="true"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a>.
-										<br> Coding <i class="fa fa-code"></i> : <a target="_blank" href="http://totominc.github.io">TotomInc</a> and Mr. Pink.
-										<br> Assets designer <i class="fa fa-pencil"></i> : Tim.
-										<br>
-										<br> Based on a original idea by <a target="_blank" href="https://github.com/W1-PopelierE">Emiel</a>.
-										<br> Matrix effect made by <a target="_blank" href="https://github.com/neilcarpenter/Matrix-code-rain">Neil Carpenter</a>.
-										<br>
-										<br> Big thanks to all the awesome alpha-testers from <a target="_blank" href="https://www.reddit.com/r/skidinc/">/r/skidinc</a>!
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div role="tabpanel" class="tab-pane fade" id="notes">
-						<div class="well">
-							<p>
-								<b>v0.10: improvements <small>(17 july 2016)</small></b>
-								<ul>
-									<li>Added hack place UI for normal difficulty.</li>
-									<li>Added a modal for new players where they can choose the difficulty.</li>
-									<li>Blancing changes on the places reward.</li>
-									<li>Some bugs fixed with UI.</li>
-									<li>Code cleanup.</li>
-								</ul>
-							</p>
-							
-							<p>
-								<b>v0.09: UI update <small>(15 july 2016)</small></b>
-								<ul>
-									<li>Game was totally bugged (can't execute any hack on a place). Very sorry for this.</li>
-									<li>Quickhack servers now have a limit an fixed their cost.</li>
-									<li>Added a 'server tab' with some UI tweaks.</li>
-									<li>Added difficulties: hardcore and normal.</li>
-								</ul>
-							</p>
-							
-							<p>
-								<b>v0.08: kill these bugs! <small>(13 july 2016)</small></b>
-								<ul>
-									<li>Hackers now have names!</li>
-									<li>Removed some achievements.</li>
-									<li>Changed/added some commands for their respective content.</li>
-									<li>Server upgrades now display the proper price.</li>
-									<li>Some QoL changes (team -status display only hired hackers).</li>
-									<li>Small balancing with money income from place hack.</li>
-									<li>Reduced <i>up_key</i> ability cooldown (750ms to 500ms).</li>
-									<li>And lot of other bugs fixed!</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.07: first version released to alpha-testers <small>(5 july 2016)</small></b>
-								<ul>
-									<li>Better guide.</li>
-									<li>Start-game is now easier (the <i>click reducer</i> is now at 5), and automation is faster to get (hackers are less expensive).</li>
-									<li>Hackers now have a required level to be hired.</li>
-									<li>Fixed some bugs.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.06: big balancing update <small>(26 june 2016)</small></b>
-								<ul>
-									<li>Fixed bugs with team/hackers command.</li>
-									<li>Balancing changes: places give less exp and take slightly more time, quickhack server cost reduced.</li>
-									<li>You can't simple hack if you are hacking a place, and added a command to cancel the current place hack.</li>
-									<li>Changed notification icon.</li>
-									<li>Fixed some typos.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.05: server upgrades <small>(10 june 2016)</small><br></b>
-								<ul>
-									<li>Added server upgrades.</li>
-									<li>Redone code for commands.</li>
-									<li>Reduced auto-save time (from 1 sec to 30 sec).</li>
-									<li>Compressed save to local-storage (thanks to Pullingour), using LZString.</li>
-									<li>Reduced cooldown time between two commands.</li>
-									<li>Better tutorial.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.04: matrix update! <small>(7 june 2016)</small><br></b>
-								<ul>
-									<li>Added hackers to automatically hack places for you.</li>
-									<li>Added abilities to enhance your hacking power.</li>
-									<li>Added a notifiaction system (will alert you when you are not in browser).</li>
-									<li>Added Matrix background effect (this effect is really beautiful, take a look at it!).</li>
-									<li>More balancing to the game.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.03: NSA update (save system)! <small>(3 june 2016)</small><br></b>
-								<ul>
-									<li>Added save system to the game (seems stable and will persists through all versions).</li>
-									<li>Big balancing update: game is now a lot harder.</li>
-									<li>Servers code totally redone (it was a spaghetti code!).</li>
-									<li>Lot of bugs are fixed.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.02: sounds update <small>(2 june 2016)</small><br></b>
-								<ul>
-									<li>Added sounds and ambient background music/sound.</li>
-									<li>Added achievements with achievements points.</li>
-									<li>Added more places to hack, new servers types.</li>
-									<li>Better UI.</li>
-									<li>Some backend changes.</li>
-									<li>Fixed lot of bugs.</li>
-								</ul>
-							</p>
-
-							<p>
-								<b>v0.01: hello world! <small>(30 may 2016)</small><br></b>
-								<ul>
-									<li>First prototype release, at least playable but buggy!</li>
-									<li>Include simple hacking, place hacking and servers.</li>
-									<li>Prototype born when talking with <i>Emiel</i> about an incremental hacking game.</li>
-								</ul>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="modal fade" id="modal-newplayer" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">Welcome to SkidInc.</h4>
-				</div>
-				<div class="modal-body">
-					<p class="text-justify">
-						SkidInc is an incremental-game, where you are a poor script kid trying to make money with your little knowledge in hacking.<br><br>
-						This game is meant to be played on the console interface/tab, everything you can do with the interface can be done with commands.<br><br>
-						Before playing, choose your difficulty (this can be changed when you want in the game).<br><br>
-						<b>- Hardcore</b> give you a permanent money and exp boost, but you don't have any interface (like servers management, places hack management, etc).<br><br>
-						<b>- Normal</b> don't give any boost, but you have an access to all interfaces.<br><br>
-						Make your choice, hacker, and give your player a name!
-					</p>
-					
-					<div class="row">
-						<div class="col-md-7">
-							<input class="form-control" id="modal-playername" placeholder="Put your name here.">
-						</div>
-						<div class="col-md-5">
-							<button onclick="game.player.changeName()" type="button" class="btn btn-primary btn-block">I want this name!</button>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button onclick="game.player.changeGamemode('hardcore', true)" type="button" class="btn btn-danger">Play in hardcore</button>
-					<button onclick="game.player.changeGamemode('normal', true)" type="button" class="btn btn-primary">Play in normal</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- GAME SCRIPTS -->
-	<script src="app/js/helpers/beautify.js"></script>
-	<script src="app/js/helpers/capitalize.js"></script>
-	<script src="app/js/helpers/floating.js"></script>
-	<script src="app/js/helpers/msToTime.js"></script>
-	<script src="app/js/helpers/executer-helpers.js"></script>
-
-	<script src="app/js/core/core.js"></script>
-	<script src="app/js/core/player.js"></script>
-	<script src="app/js/core/options.js"></script>
-	<script src="app/js/core/hack.js"></script>
-	<script src="app/js/core/detection.js"></script>
-	<script src="app/js/core/config.js"></script>
-	<script src="app/js/core/buy.js"></script>
-	<script src="app/js/core/servers.js"></script>
-	<script src="app/js/core/upgrade.js"></script>
-	<script src="app/js/core/abilities.js"></script>
-	<script src="app/js/core/team.js"></script>
-	<script src="app/js/core/notif.js"></script>
-	<script src="app/js/core/save.js"></script>
-
-	<script src="app/js/console/core.js"></script>
-	<script src="app/js/console/cmds.js"></script>
-	<script src="app/js/console/errors.js"></script>
-	<script src="app/js/console/print.js"></script>
-	<script src="app/js/console/help.js"></script>
-	<script src="app/js/console/places.js"></script>
-	<script src="app/js/console/ascii.js"></script>
-
-	<script src="app/js/achievements/core.js"></script>
-
-	<script src="app/js/sounds/core.js"></script>
-
-	<script src="app/js/matrix/core.js"></script>
-
-	<!-- PRODUCTION GAME SCRIPT -->
-	<!--<script src="app/prod/skid-inc.min.js"></script>-->
-
-	<!-- CALLED WHEN ALL SCRIPTS LOADED -->
-	<script type="text/javascript">
-		game.init();
-	</script>
-
-	<!-- GA -->
-	<script>
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o),
-				m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'analytics');
-
-		analytics('create', 'UA-54540685-19', 'auto');
-		analytics('send', 'pageview');
-	</script>
+    <script src="app/js/game/core.js"></script>
+    <script src="app/js/game/options.js"></script>
+    <script src="app/js/game/options-notes.js"></script>
+    <script src="app/js/game/player.js"></script>
+    <script src="app/js/game/console.js"></script>
+    <script src="app/js/game/hack.js"></script>
+    <script src="app/js/game/servers.js"></script>
+    <script src="app/js/game/scripts.js"></script>
+    <script src="app/js/game/places.js"></script>
+    <script src="app/js/game/hackers.js"></script>
+    <script src="app/js/game/jobs.js"></script>
+    <script src="app/js/game/console-commands.js"></script>
+    <script src="app/js/game/save.js"></script>
+    <script src="app/js/game/init.js"></script>
 </body>
-
 </html>
