@@ -13,5 +13,40 @@
 }
 
 .row.margin-top {
-    margin-top: 50px;
+    margin-top: 75px;
+}
+
+.navbar-default {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: #000;
+}
+
+.navbar-default .navbar-brand {
+    transition: color 200ms;
+    color: #18FF62 !important;
+    cursor: default;
+}
+
+.navbar-default .navbar-brand small {
+    transition: color 200ms;
+    color: #90ffb4 !important;
+    cursor: default;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #18FF62 !important;
+    cursor: pointer;
+}
+
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+    transition: color 200ms;
+    color: #90ffb4 !important;
+    cursor: pointer;
+}
+
+.navbar-default .navbar-nav>li>a,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+    transition: color 200ms;
 }

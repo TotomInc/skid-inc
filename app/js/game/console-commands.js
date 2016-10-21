@@ -1,320 +1,199 @@
-/*****
- *  Commands constructor:
- *
- *  object
- *      name:string
- *      desc:string
- *      pattern:regexString
- *      commands:array
- *          object:
- *              pattern:regexString : options must be tagged as [\\w] flag
- *                                  : must have [\\s] after the [\\w] flag
- *
- *              execute:string : if got an option, don't add parenthesis at the end
- *              cleanCmd:string : command without regex pattern, if options add (option) at right place
- *
- *              desc:string     : if cmd got options, desc is a global desc of the command with options
- *                              : else it explain the command
- *
- *              callback:function : a function called when the command have been executed
- *
- *              options:array : commands only have 1 option max. but can have multiple option on the array (at the same index)
- *
- *              optionsIndex:number : number 0-indexed, required if got options
- *
- *              customDesc:array : required if got options, each string in array match option index
- *
- *  Each command have cmd -help added on g.console.varInit
- *  Each command with an option have its specific help section added on g.console.varInit
- *****/
-
-g.console.commands = [
-    {
-        name: 'hack',
-        desc: 'hack things to earn money, experience and reputation.',
-        pattern: '^hack$',
-        commands: [
-            {
-                pattern: '^hack$',
-                cleanCmd: 'hack',
-                desc: 'quickhack, instant cash and experience, no cooldown.',
-                execute: 'g.hack.quickhack()'
-            },
-            {
-                pattern: '^hack[\\s]-p[\\s][\\w]$',
-                cleanCmd: '^hack -p (option)',
-                execute: 'g.hack.place',
-                desc: 'hack a place to earn more $$$ and experience, can take some time depending the place.',
-                customDesc: [
-                    '~$' + fix(g.places.getAverageCash('mini_market')) + ', ~exp ' + fix(g.places.getAverageExp('mini_market')) + ', ' + fix(g.places.getTime('mini_market'), 0) + ' sec. req. level <b>' + g.places['mini_market'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('market')) + ', ~exp ' + fix(g.places.getAverageExp('market')) + ', ' + fix(g.places.getTime('market'), 0) + ' sec. req. level <b>' + g.places['market'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('jewelry')) + ', ~exp ' + fix(g.places.getAverageExp('jewelry')) + ', ' + fix(g.places.getTime('jewelry'), 0) + ' sec. req. level <b>' + g.places['jewelry'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('bank')) + ', ~exp ' + fix(g.places.getAverageExp('bank')) + ', ' + fix(g.places.getTime('bank'), 0) + ' sec. req. level <b>' + g.places['bank'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('trading_center')) + ', ~exp ' + fix(g.places.getAverageExp('trading_center')) + ', ' + fix(g.places.getTime('trading_center'), 0) + ' sec. req. level <b>' + g.places['trading_center'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('anonymous_hideout')) + ', ~exp ' + fix(g.places.getAverageExp('anonymous_hideout')) + ', ' + fix(g.places.getTime('anonymous_hideout'), 0) + ' sec. req. level <b>' + g.places['anonymous_hideout'].levelReq + '</b>.',
-                    '~$' + fix(g.places.getAverageCash('deepweb')) + ', ~exp ' + fix(g.places.getAverageExp('deepweb')) + ', ' + fix(g.places.getTime('deepweb'), 0) + ' sec. req. level <b>' + g.places['deepweb'].levelReq + '</b>.'
-                ],
-                options: [
-                    'mini_market',
-                    'market',
-                    'jewelry',
-                    'bank',
-                    'trading_center',
-                    'anonymous_hideout',
-                    'deepweb'
-                ],
-                optionsIndex: 2
-            }
+game.console.commands = [
+{
+    name: 'hack',
+    desc: 'execute hacks to earn money, gain experience and even reputation.',
+    pattern: '^hack$',
+    optionsNeeded: true,
+    commands: [{
+        pattern: '^hack[\\s]place[\\s][\\w]$',
+        readable: 'hack place (option)',
+        desc: 'hack a specified place to earn money, experience and reputation.',
+        execute: 'game.hack.place',
+        options: [
+            'place1',
+            'place2',
+            'place3',
+            'place4',
+            'place5',
+            'place6',
+            'place7',
+            'place8',
+            'place9',
+            'place10',
+            'place11',
+            'place12',
+            'place13',
+            'place14',
+            'place15',
+            'place16',
+            'place17',
+            'place18',
+            'place19',
+            'place20'
+        ],
+        optionsDesc: [
+            game.hack.placeDesc('place1'),
+            game.hack.placeDesc('place2'),
+            game.hack.placeDesc('place3'),
+            game.hack.placeDesc('place4'),
+            game.hack.placeDesc('place5'),
+            game.hack.placeDesc('place6'),
+            game.hack.placeDesc('place7'),
+            game.hack.placeDesc('place8'),
+            game.hack.placeDesc('place9'),
+            game.hack.placeDesc('place10'),
+            game.hack.placeDesc('place11'),
+            game.hack.placeDesc('place12'),
+            game.hack.placeDesc('place13'),
+            game.hack.placeDesc('place14'),
+            game.hack.placeDesc('place15'),
+            game.hack.placeDesc('place16'),
+            game.hack.placeDesc('place17'),
+            game.hack.placeDesc('place18'),
+            game.hack.placeDesc('place19'),
+            game.hack.placeDesc('place20'),
+        ],
+        optionIndex: 2
+    }]
+},{
+    name: 'buy',
+    desc: 'buy stuff to earn more money and experience.',
+    pattern: '^buy$',
+    optionsNeeded: true,
+    commands: [{
+        id: 0,
+        pattern: '^buy[\\s]server[\\s][\\w]$',
+        readable: 'buy server (option)',
+        desc: 'buy different types of servers to buff your multipliers.',
+        execute: 'game.servers.buy',
+        options: ['vm', 'irc'],
+        optionIndex: 2,
+        optionsDesc: [
+            'VM servers decrease time required to hack a place by <b>1%</b>.' + ' Cost $<b>' + fix(game.servers.getCost(game.servers.vm)) + '</b>.',
+            'IRC servers increase your money multiplier by +<b>' + game.servers.getEffects(game.servers.irc).moneyEffect +
+                '</b>, same for experience multiplier by +<b>' + game.servers.getEffects(game.servers.irc).expEffect + '</b>. Cost $<b>' + fix(game.servers.getCost(game.servers.irc)) + '</b>.'
         ]
-    },
-
-    {
-        name: 'buy',
-        desc: 'buy things such as bots and servers to automatize tasks.',
-        pattern: '^buy$',
-        commands: [
-            {
-                pattern: '^buy[\\s]script[\\s][\\w]$',
-                cleanCmd: 'buy script (option)',
-                execute: 'g.scripts.buy',
-                desc: 'buy some scripts to automatize tasks.',
-                customDesc: [
-                    'a script execute the <b>hack</b> command ' + g.scripts.script.effect + ' time/sec, cost $' + fix(g.scripts.getPrice('script')) + '.',
-                    'a bot execute the <b>hack</b> command ' + g.scripts.bot.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('bot')) + '.',
-                    'a vm execute the <b>hack</b> command ' + g.scripts.vm.effect + 'times/sec, cost $' + fix(g.scripts.getPrice('vm')) + '.',
-                    'a raspberry execute the <b>hack</b> command ' + g.scripts.raspberry.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('raspberry')) + '.',
-                    'a computer execute the <b>hack</b> command ' + g.scripts.computer.effect + ' times/sec, cost $' + fix(g.scripts.getPrice('computer')) + '.'
-                ],
-                options: ['script', 'bot', 'vm', 'raspberry', 'computer'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^buy[\\s]hacker[\\s][\\w]$',
-                cleanCmd: 'buy hacker (option)',
-                execute: 'g.hackers.buy',
-                desc: 'hire an hacker to automatize places hacks.',
-                customDesc: [
-                    'a noob auto-hack the mini-market, cost $' + fix(g.hackers.getPrice('noob')) + '.',
-                    'a script-kiddie auto-hack the market, cost $' + fix(g.hackers.getPrice('script_kiddie')) + '.',
-                    'a coder auto-hack the jewelry, cost $' + fix(g.hackers.getPrice('coder')) + '.',
-                    'a hax0r auto-hack the bank, cost $' + fix(g.hackers.getPrice('hax0r')) + '.',
-                    'a prodigy auto-hack the trading-center, cost $' + fix(g.hackers.getPrice('prodigy')) + '.',
-                    'an elite-hacker auto-hack the anonymous-hideout, cost $' + fix(g.hackers.getPrice('elite_hacker')) + '.',
-                    'an elite-skid auto-hack the deepweb, cost $' + fix(g.hackers.getPrice('elite_skid')) + '.'
-                ],
-                options: [
-                    'noob',
-                    'script_kiddie',
-                    'coder',
-                    'hax0r',
-                    'prodigy',
-                    'elite_hacker',
-                    'elite_skid'
-                ],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^buy[\\s]server[\\s][\\w]$',
-                cleanCmd: 'buy server (option)',
-                execute: 'g.servers.buy',
-                desc: 'buy a server to earn more cash and exp.',
-                customDesc: [
-                    'increase global money multiplier by x' + fix(g.servers.personal.moneyMult, 2) +
-                        ' and exp multiplier by x' + fix(g.servers.personal.expMult, 2) +
-                        ', cost $' + fix(g.servers.getCost('personal')) + '.'
-                ],
-                options: [
-                    'personal'
-                ],
-                optionsIndex: 2
-            }
+    }, {
+        id: 1,
+        pattern: '^buy[\\s]hacker[\\s][\\w]$',
+        readable: 'buy hacker (option)',
+        desc: 'hire an hacker to auto-hack his specified place.',
+        execute: 'game.hack.buyHacker',
+        options: [
+            'hacker1',
+            'hacker2',
+            'hacker3',
+            'hacker4',
+            'hacker5',
+            'hacker6',
+            'hacker7',
+            'hacker8',
+            'hacker9',
+            'hacker10',
+            'hacker11',
+            'hacker12',
+            'hacker13',
+            'hacker14',
+            'hacker15',
+            'hacker16',
+            'hacker17',
+            'hacker18',
+            'hacker19',
+            'hacker20'
+        ],
+        optionIndex: 2,
+        optionsDesc: [
+            game.hack.hackerDesc('hacker1'),
+            game.hack.hackerDesc('hacker2'),
+            game.hack.hackerDesc('hacker3'),
+            game.hack.hackerDesc('hacker4'),
+            game.hack.hackerDesc('hacker5'),
+            game.hack.hackerDesc('hacker6'),
+            game.hack.hackerDesc('hacker7'),
+            game.hack.hackerDesc('hacker8'),
+            game.hack.hackerDesc('hacker9'),
+            game.hack.hackerDesc('hacker10'),
+            game.hack.hackerDesc('hacker11'),
+            game.hack.hackerDesc('hacker12'),
+            game.hack.hackerDesc('hacker13'),
+            game.hack.hackerDesc('hacker14'),
+            game.hack.hackerDesc('hacker15'),
+            game.hack.hackerDesc('hacker16'),
+            game.hack.hackerDesc('hacker17'),
+            game.hack.hackerDesc('hacker18'),
+            game.hack.hackerDesc('hacker19'),
+            game.hack.hackerDesc('hacker20')
         ]
-    },
-
-    {
-        name: 'job',
-        desc: 'accept jobs when they are available to earn extra $$$ and exp.',
-        pattern: '^job$',
-        commands: [
-            {
-                pattern: '^job[\\s]respond[\\s][\\w]$',
-                cleanCmd: 'job respond (option)',
-                execute: 'g.jobs.respond',
-                desc: 'accept or reject a job offer.',
-                customDesc: [
-                    'accept the current job offer.',
-                    'reject the current job offer.'
-                ],
-                options: ['accept', 'reject'],
-                optionsIndex: 2
-            }
+    }]
+}, {
+    name: 'option',
+    desc: 'change in-game options.',
+    pattern: '^option$',
+    optionsNeeded: true,
+    commands: [{
+        pattern: '^option[\\s]background[\\s][\\w]$',
+        readable: 'option background (option)',
+        desc: 'enable/disable matrix background effect (can reduce lag).',
+        execute: 'game.options.toggleBackground',
+        options: ['enable', 'disable'],
+        optionIndex: 2,
+        optionsDesc: [
+            'enable matrix background effect.',
+            'disable matrix background effect (can reduce lag).'
         ]
-    },
-
-    {
-        name: 'option',
-        desc: 'change in-game options.',
-        pattern: '^option$',
-        commands: [
-            {
-                pattern: '^option[\\s]notes$',
-                desc: 'print the latest patch-notes.',
-                cleanCmd: 'option notes',
-                execute: 'g.options.notes.write()'
-            },
-            {
-                pattern: '^option[\\s]difficulty[\\s][\\w]$',
-                cleanCmd: 'option difficulty (option)',
-                desc: 'switch game difficulty, can only be done one time.',
-                execute: 'g.options.switchDifficulty',
-                customDesc: [
-                    'change game difficulty to normal (no exp/money multiplier but access to user interface).',
-                    'change game difficulty to hardcore (exp/money multiplier of x2 but no access to user interface).'
-                ],
-                options: ['normal', 'hardcore'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]console[\\s][\\w]$',
-                cleanCmd: 'option console (option)',
-                desc: 'change console theme.',
-                execute: 'g.options.switchTheme',
-                customDesc: [
-                    'change console theme to green (default theme, better hacking experience).',
-                    'change console theme to dark (classical theme, easier to read).'
-                ],
-                options: ['green', 'dark'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]matrix[\\s][\\w]$',
-                cleanCmd: 'option matrix (option)',
-                desc: 'enable/disable matrix background effect.',
-                execute: 'g.options.toggleBackground',
-                customDesc: [
-                    'enable matrix background effect.',
-                    'disable matrix background effect (disable it if game lags).'
-                ],
-                options: ['enable', 'disable'],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]display[\\s][\\w]$',
-                cleanCmd: 'option display (option)',
-                desc: 'change console display.',
-                execute: 'g.options.changeVue',
-                customDesc: [
-                    'set vue to default.',
-                    'set vue to hackers_progress (show hackers progress, can\'t execute other commands).'
-                ],
-                options: [
-                    'default',
-                    'hackers_progress'
-                ],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]blackbars[\\s][\\w]$',
-                cleanCmd: 'option blackbars (option)',
-                desc: 'remove the blackbars effect on the console.',
-                execute: 'g.options.blackbars',
-                customDesc: [
-                    'enable blackbars effect on the console.',
-                    'disable blackbars effect on the console.'
-                ],
-                options: [
-                    'enable',
-                    'disable'
-                ],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]savegame[\\s][\\w]$',
-                cleanCmd: 'option savegame (option)',
-                desc: 'save, load or erase your save data.',
-                execute: 'g.options.saveManager',
-                customDesc: [
-                    'save now.',
-                    'load savegame.',
-                    'hard-reset, erase all data and start from scratch. <b>CAREFUL, NO WARNING! YOU CAN\'T GO BACK IF YOU DO THIS!</b>'
-                ],
-                options: [
-                    'save',
-                    'load',
-                    'erase'
-                ],
-                optionsIndex: 2
-            },
-            {
-                pattern: '^option[\\s]sounds[\\s][\\w]',
-                cleanCmd: 'option sounds (option)',
-                desc: 'enable/disable sounds effect and server room ambiance.',
-                execute: 'g.options.toggleSounds',
-                customDesc: [
-                    'enable all sounds.',
-                    'disable all sounds.'
-                ],
-                options: [
-                    'enable',
-                    'disable'
-                ],
-                optionsIndex: 2
-            }
+    }, {
+        pattern: '^option[\\s]blackbars[\\s][\\w]$',
+        readable: 'option blackbars (option)',
+        desc: 'enable/disable blackbars effect on the terminal.',
+        execute: 'game.options.toggleBlackbars',
+        options: ['enable', 'disable'],
+        optionIndex: 2,
+        optionsDesc: [
+            'enable blackbars visual effect on the terminal.',
+            'disable blackbars visual effect on the terminal.'
         ]
-    },
-
-    {
-        name: 'help',
-        desc: 'print a list of commands available.',
-        pattern: '^help$',
-        commands: [
-            {
-                pattern: '^help$',
-                cleanCmd: 'help',
-                execute: 'g.console.help()'
-            }
+    }, {
+        pattern: '^option[\\s]typed[\\s][\\w]$',
+        readable: 'option typed (option)',
+        desc: 'enable/disable typing text effect (can reduce lag).',
+        execute: 'game.options.toggleTyped',
+        options: ['enable', 'disable'],
+        optionIndex: 2,
+        optionsDesc: [
+            'enable typing text effect.',
+            'disable typing text effect (can reduce lag).'
         ]
-    },
-
-    {
-        name: 'clear',
-        desc: 'clear console output.',
-        pattern: '^clear$',
-        commands: [
-            {
-                pattern: '^clear$',
-                cleanCmd: 'clear',
-                desc: 'clear console output.',
-                execute: 'g.console.clear()'
-            }
+    }, {
+        pattern: '^option[\\s]fps[\\s][\\w]$',
+        readable: 'option fps (option)',
+        desc: 'change fps of the game (default is 30).',
+        execute: 'game.options.setFps',
+        options: ['userinput'],
+        userInputExpected: 'number',
+        optionIndex: 2,
+        optionsDesc: ['set your own amount of fps desired (low value can reduce lag).']
+    }, {
+        pattern: '^option[\\s]statsView[\\s][\\w]$',
+        readable: 'option statsView (option)',
+        desc: 'change displayed stats under the terminal.',
+        execute: 'game.options.changeStats',
+        options: ['default', 'servers'],
+        optionIndex: 2,
+        optionsDesc: [
+            'default stats view display: money, level, exp, reputation, money/exp mult, total money, times prestigied.',
+            'servers stats view display: money, level, exp, money/exp mult, servers cost/owned.'
         ]
-    },
-
-    {
-        name: 'guide',
-        desc: 'a guide to help you.',
-        pattern: '^guide$',
-        commands: [
-            {
-                pattern: '^guide$',
-                cleanCmd: 'guide',
-                desc: 'print the guide.',
-                execute: 'g.console.guide()'
-            }
-        ]
-    },
-
-    {
-        name: 'credit',
-        desc: 'print credits.',
-        pattern: '^credit$',
-        commands: [
-            {
-                pattern: '^credit$',
-                cleanCmd: 'credit',
-                desc: 'print credits.',
-                execute: 'g.console.credits()'
-            }
-        ]
-    }
-];
+    }]
+}, {
+    name: 'clear',
+    desc: 'clear console logs.',
+    pattern: '^clear$',
+    optionsNeeded: false,
+    execute: 'game.console.clear()'
+}, {
+    name: 'help',
+    desc: 'show a list of available commands.',
+    pattern: '^help$',
+    optionsNeeded: false,
+    execute: 'game.console.help()'
+}];

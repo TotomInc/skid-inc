@@ -1,58 +1,87 @@
-var game = g = {};
+var game = {
+	now: new Date().getTime(),
+	before: new Date().getTime(),
+	version: 0.21,
+	fps: 30,
+	interval: 1000,
+	intervals: {
+		core: undefined
+	},
 
-g.earnMoney = (amount) => {
-    g.player.money += amount;
-    g.player.totalMoney += amount;
-};
+	core: function() {
+		game.now = new Date().getTime();
 
-g.earnExp = (amount) => {
-    g.player.exp += amount;
+		var elapsed = game.now - game.before,
+			times = Math.floor(elapsed / game.interval);
 
-    while (g.player.exp >= g.player.expReq) {
-        g.player.exp -= g.player.expReq;
-        g.player.level++;
-        g.player.calculateExpReq();
-        g.console.print('Level-up, you are now level ' + g.player.level + '.');
-    };
-};
+		elapsed > game.interval ? game.update(times) : game.update(1);
 
-g.quickTutorial = () => {
-    if (g.player.isNew && !g.options.debug) {
-        $('.text-side').prepend('<div id="quick-tutorial" class="typed">');
-        $('#quick-tutorial').prepend('<p>');
-        $("#quick-tutorial p").typed({
-            strings: ['Welcome to <b>SkidInc</b>, an idle-game where you are a poor script kid trying to make money with your little knowledge in hacking.<br>^750' +
-                    'To begin your hacking adventure, you need to choose the difficulty:<br>' +
-                    '<b>normal difficulty</b> (you have access to console and a user interface but no money/experience modifiers).<br>' +
-                    '<b>hardcore difficulty</b> (you have only access to console, no user interface but you have a global money/experience multiplier of x2.<br>^750' +
-                    'To choose your difficulty, type the command <b>options difficulty yourDifficulty</b>.'],
-            contentType: 'html',
-            typeSpeed: -20,
-            callback: function() {
-                $('.typed-cursor').remove();
-            }
-        });
-    };
-};
+		game.before = new Date().getTime();
+	},
 
-g.loop = () => {
-    g.options.now = new Date().getTime();
+	update: function(times) {
+		game.hack.loop(times);
+		game.hack.hackerLoop(times);
+		game.display();
+	},
 
-    var elapsed = g.options.now - g.options.before,
-        times = Math.floor(elapsed / g.options.interval);
+	display: function() {
+		$('#stats-money').html('Money: $' + fix(game.player.money));
+		$('#stats-level').html('Level: ' + game.player.level);
+		$('#stats-exp').html('Exp: ' + fix(game.player.exp) + '/' + fix(game.player.expReq));
+		$('#stats-reputation').html('Reputation: ' + fix(game.player.reputation));
+		$('#stats-moneymult').html('Money mult: x' + fix(game.player.getGlobalMoneyMult()));
+		$('#stats-expmult').html('Exp mult: x' + fix(game.player.getGlobalExpMult()));
+		$('#stats-timemult').html('Time mult: /' + fix(game.player.getGlobalTimeMult()));
+		$('#stats-totalmoney').html('Total money: $' + fix(game.player.totalMoney));
+		$('#stats-prestigied').html('Prestigied: ' + 'TODO' + ' times');
+		$('#stats-irccost').html('IRC cost: $' + fix(game.servers.getCost(game.servers.irc)));
+		$('#stats-vmcost').html('VM cost: $' + fix(game.servers.getCost(game.servers.vm)));
+		$('#stats-ircowned').html('IRC owned: ' + game.servers.irc.owned);
+		$('#stats-vmowned').html('VM owned: ' + game.servers.vm.owned);
+	},
 
-    elapsed > g.options.interval ? g.updateGame(times) : g.updateGame(1);
+	varInit: function() {
+		game.console.varInit();
 
-    g.options.before = new Date().getTime();
-};
+		game.interval = 1000 / game.fps;
 
-g.updateGame = (times) => {
-    g.console.update();
-    g.jobs.loop(times);
-    g.scripts.action(times);
-    g.hack.loop(times);
-    g.hack.hackerLoop(times);
-    g.hackers.loop();
+		game.intervals.core = setInterval(function() {
+			game.core();
+		}, game.interval);
+	},
 
-    document.title = '$' + fix(g.player.money) + ' - SkidInc';
+	domInit: function() {
+		$('#game-version').html('v' + game.version);
+		
+		$('#console-input').bind('keydown', function(e) {
+			if (e.which == 13)
+				game.console.parser();
+		}).bind(('cut copy paste'), function(e) {
+			e.preventDefault();
+		});
+		
+		$('.enter').on('click', function() {
+			game.console.parser();
+		});
+		
+		$('.blinking-arrow').on('click', function() {
+			$('#console-input').focus();
+		});
+		
+		$('#console-input').focus();
+		
+		setTimeout(function() {
+			if (!game.options.background)
+				game.options.toggleBackground('disabled');
+		}, 250);
+	},
+
+	init: function() {
+		game.varInit();
+		game.domInit();
+		game.kongregate.init();
+
+		console.info('v' + game.version + ':', 'game ready to play!');
+	}
 };

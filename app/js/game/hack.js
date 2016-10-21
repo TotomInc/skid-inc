@@ -1,107 +1,142 @@
 game.hack = {
-	minDefaultHackCash: 15,
-	maxDefaultHackCash: 25,
-	minDefaultHackExp: 5,
-	maxDefaultHackExp: 10,
+    isHacking: false,
+    currentHack: false,
+    hackProgress: 0,
+    
+    getTime: function(what) {
+        return what.time / game.player.getGlobalTimeMult();
+    },
+    
+    getMoney: function(what) {
+        var rand = Math.random() * 0.5;
 
-	isHacking: false,
-	hackingWhat: undefined,
-	hackProgress: 0
-};
+        return (what.money + (what.money * rand)) * game.player.getGlobalMoneyMult();
+    },
+    
+    getExp: function(what) {
+        var rand = Math.random() * 0.25;
 
-g.hack.quickhack = () => {
-	var randCash = randomInclusive(g.hack.minDefaultHackCash, g.hack.maxDefaultHackCash) * g.player.getCashMult(),
-		randExp = randomInclusive(g.hack.minDefaultHackExp, g.hack.maxDefaultHackExp) * g.player.getExpMult();
+        return (what.exp + (what.exp * rand)) * game.player.getGlobalExpMult();
+    },
+    
+    getReputation: function(what) {
+        return what.reputation;
+    },
+    
+    buyHacker: function(who) {
+        var Hacker = game.hack.hackers[who],
+            Place = game.hack.places[Hacker.placeObject];
+        
+        if (Hacker.owned)
+            game.console.print('You already hired this hacker.', 'error');
+        if (game.player.money < Hacker.price)
+            game.console.print('You don\'t have enough money to hire this hacker.', 'error');
+        if (game.hack.currentHack.name == Hacker.placeName)
+            game.console.print('You are currently hacking the place that the hacker should hack, hire him when hack is finished.', 'error');
+        else {
+            Hacker.owned = true;
+            game.player.money -= Hacker.price;
+            game.console.print('You successfully hired <b>' + Hacker.name + '</b> hacker.');
+        };
+    },
+    
+    hackerDesc: function(what) {
+        var Hacker = game.hack.hackers[what];
+        return Hacker.name + ' hacker will hack <b>' + Hacker.placeName + '</b>, hire him for $<b>' + fix(Hacker.price) + '</b>.';
+    },
+    
+    placeDesc: function(what) {
+        var Place = game.hack.places[what];
+        return 'hack ' + Place.readable + ', require level <b>' + Place.levelReq + '</b>, take <b>' + fix(game.hack.getTime(Place), 0) + '</b> sec. +$<b>' + fix(game.hack.getMoney(Place)) + '</b>, +<b>' + fix(game.hack.getExp(Place)) + '</b> exp. ~<b>' + fix(game.hack.getReputation(Place)) + '</b> rep.';
+    },
+    
+    place: function(what) {
+        var Place = game.hack.places[what];
+        
+        if (!game.hack.isHacking && game.player.level >= Place.levelReq) {
+            game.hack.isHacking = true;
+            game.hack.currentHack = Place;
+            $('.text-side').append('<p id="hack-progress">');
+            game.console.print('Starting ' + Place.name + ' hack...');
+        }
+        else if (game.hack.isHacking)
+            game.console.print('You can\'t hack more than one place at a time.', 'error');
+        else if (game.player.level < Place.levelReq)
+            game.console.print('Your level is too low for this place, you need to be at least level ' + Place.levelReq + ' to hack it.', 'error');
+        else
+            game.console.print('You can\'t hack this place.', 'error');
+    },
+    
+    loop: function(times) {
+    	if (game.hack.isHacking) {
+    	    var Place = game.hack.currentHack,
+    	        time = game.hack.getTime(Place),
+    	        timeLeft = 0,
+    	        percent = Math.floor(game.hack.hackProgress / time * 100),
+    	        filled = Math.floor(game.hack.hackProgress / time * 35),
+    	        left = Math.ceil(35 - filled),
+    	        bar = '|';
 
-	g.earnMoney(randCash);
-	g.earnExp(randExp);
-	g.console.print('+$' + fix(randCash) + ', +' + fix(randExp) + ' exp.');
-};
+    	    game.hack.hackProgress += times / game.fps;
 
-g.hack.place = (place) => {
-	if (!g.hack.isHacking && !g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
-		g.hack.isHacking = true;
-		g.hack.hackingWhat = place;
-		g.console.print('Starting ' + g.places[place].cleanName + ' hack.');
-		$('.text-side').prepend('<p id="hack-progress"></p>');
-	}
-	else if (g.hackers[g.places[place].hacker].owned)
-		g.console.print('<b><u>Error</u></b>: you already hired an hacker to hack this place.');
-	else if (g.hack.isHacking)
-		g.console.print('<b><u>Error</u></b>: you are already hacking a place.');
-	else if (g.player.level < g.places[place].levelReq)
-		g.console.print('<b><u>Error</u></b>: you don\'t have the required level to hack this place.');
-	else
-		g.console.print('<b><u>Error</u></b>: you can\'t hack this place.');
-};
+    	    if (game.hack.hackProgress < time) {
+    	        for (var i = 0; i < filled; i++)
+    	            bar += '#';
 
-g.hack.hackerLoop = (times) => {
-	for (var place in g.places) {
-		if (typeof g.places[place] == 'object' && g.hackers[g.places[place].hacker].owned && g.player.level >= g.places[place].levelReq) {
-			var hacker = g.hackers[g.places[place].hacker],
-				time = g.places.getTime(place);
+    	        for (var e = 0; e < left; e++)
+    	            bar += '=';
 
-			hacker.progress += times / g.options.fps;
+    	        timeLeft = time - game.hack.hackProgress;
+    	        bar += '| <b>' + fix(percent, 0) + '%</b>, <b>' + fix(timeLeft, 2) + '</b> s.';
 
-			if (hacker.progress >= time) {
-				var money = g.places.getCash(place),
-					exp = g.places.getExp(place);
+    	        $('#hack-progress').html(bar);
+    	    }
+    	    else if (game.hack.hackProgress >= time) {
+    	        var money = game.hack.getMoney(game.hack.currentHack),
+    	            reputation = game.hack.getReputation(Place),
+    	            exp = game.hack.getExp(game.hack.currentHack);
 
-				g.earnMoney(money);
-				g.earnExp(exp);
+    	        for (var j = 0; j < 35; j++)
+    	            bar += '#';
 
-				g.hackers[g.places[place].hacker].progress = 0;
-			};
-		};
-	};
-};
+    	        bar += '| 100%, 0.00s';
 
-g.hack.loop = (times) => {
-	if (g.hack.isHacking) {
-		var place = g.hack.hackingWhat,
-			time = g.places.getTime(place),
-			timeLeft = 0,
-			percent = Math.floor(g.hack.hackProgress / time  * 100),
-			filled = Math.floor(g.hack.hackProgress / time * 35),
-			left = Math.ceil(35 - filled),
-			bar = '|';
+    	        game.console.print(cap(game.hack.currentHack.readable) + ' hack finished: +$<b>' + fix(money) + '</b>, +<b>' + fix(exp) + '</b> exp.');
+    	        $('#hack-progress').html(bar).attr('id', 'old-hack-progress');
 
-		g.hack.hackProgress += times / g.options.fps;
+                game.player.earnMoney(money);
+                game.player.earnExp(exp);
+                game.player.earnReputation(reputation);
 
-		if (g.hack.hackProgress < time) {
-			for (var i = 0; i < filled; i++)
-				bar += '#';
-
-			for (var e = 0; e < left; e++)
-				bar += '=';
-
-			timeLeft = time - g.hack.hackProgress;
-			bar += '| ' + fix(percent, 0) + '%, ' + fix(timeLeft, 2) + ' s.';
-
-			$('#hack-progress').html(bar);
-		}
-		else if (g.hack.hackProgress >= time) {
-			var money = g.places.getCash(g.hack.hackingWhat),
-				exp = g.places.getExp(g.hack.hackingWhat);
-
-			for (var j = 0; j < 35; j++)
-				bar += '#';
-
-			bar += '| 100%, 0.00s';
-
-			g.console.print(cap(g.places[place].cleanName) + ' hack finished, you earned $' + fix(money) + ' and ' + fix(exp) + ' exp.');
-			$('#hack-progress').html(bar).attr('id', 'old-hack-progress');
-
-			g.earnMoney(money);
-			g.earnExp(exp);
-
-			g.hack.isHacking = false;
-			g.hack.hackingWhat = undefined;
-			g.hack.hackProgress = 0;
-		};
-	};
-};
-
-g.hack.userinput = (typed) => {
-	debug(typed);
+    	        game.hack.isHacking = false;
+    	        game.hack.currentHack = undefined;
+    	        game.hack.hackProgress = 0;
+    	    };
+    	};
+    },
+    
+    hackerLoop: function(times) {
+        for (var place in game.hack.places) {
+            var Place = game.hack.places[place];
+            
+            if (game.hack.hackers[Place.hacker].owned && game.player.level >= Place.levelReq) {
+                var Hacker = game.hack.hackers[Place.hacker],
+                    time = game.hack.getTime(Place);
+                
+                Hacker.progress += times / game.fps;
+                
+                if (Hacker.progress >= time) {
+                    var money = game.hack.getMoney(Place),
+                        reputation = game.hack.getReputation(Place),
+                        exp = game.hack.getExp(Place);
+                    
+                    game.player.earnMoney(money);
+                    game.player.earnExp(exp);
+                    game.player.earnReputation(reputation);
+                    
+                    Hacker.progress = 0;
+                };
+            };
+        };
+    }
 };

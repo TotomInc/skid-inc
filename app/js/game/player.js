@@ -1,26 +1,49 @@
 game.player = {
-    rank: 'Script Kid',
-    money: 0,
-    totalMoney: 0,
-    level: 1,
-    exp: 0,
-    expReq: 100,
-    expInflation: 1.30,
+	money: 0,
+	totalMoney: 0,
+	reputation: 0,
+	level: 1,
+	exp: 0,
+	expReq: 100,
+	oldExpReq: 100,
+	expInflation: 1.0405,
+	
+	getGlobalMoneyMult: function() {
+		var ircEffect = game.servers.getTotalEffects(game.servers.irc).moneyEffect;
 
-    isNew: true,
-    difficulty: 'normal'
-};
+		return (ircEffect);
+	},
 
-g.player.getCashMult = () => {
-	return g.servers.getAllCashMult();
-};
+	getGlobalExpMult: function() {
+		var ircEffect = game.servers.getTotalEffects(game.servers.irc).expEffect;
 
-g.player.getExpMult = () => {
-	return g.servers.getAllExpMult();
-};
+		return (ircEffect);
+	},
 
-g.player.calculateExpReq = () => {
-	var exp = Math.floor(Math.pow(g.player.expInflation, g.player.level) * (100 * g.player.level));
+	getGlobalTimeMult: function() {
+		var vmEffect = game.servers.getTotalEffects(game.servers.vm).timeEffect;
 
-	g.player.expReq = exp;
+		return (vmEffect);
+	},
+
+	earnMoney: function(amount) {
+		game.player.money += amount;
+		game.player.totalMoney += amount;
+	},
+	
+	earnExp: function(amount) {
+		game.player.exp += amount;
+		
+		while (game.player.exp >= game.player.expReq) {
+			game.player.level++;
+			game.player.exp -= game.player.expReq;
+			game.player.expReq = Math.pow(game.player.oldExpReq, game.player.expInflation);
+			game.player.oldExpReq = Math.pow(game.player.oldExpReq, game.player.expInflation);
+			game.console.print('<b>Level-up!</b> You are now level <b>' + game.player.level + '</b>.', 'success');
+		};
+	},
+	
+	earnReputation: function(amount) {
+		game.player.reputation += amount;
+	}
 };
