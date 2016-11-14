@@ -1,13 +1,12 @@
 {
   "name": "skid-inc",
   "version": "1.0.0",
-  "description": "SkidInc is an incremental-game with hacking theme.",
+  "description": "SkidInc is an incremental-game with an hacking theme.",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/TotomInc/skid-inc.git"
   },
   "scripts": {
-    "build": "grunt",
     "start": "http-server ."
   },
   "author": "Thomas Cazade (TotomInc)",
@@ -18,13 +17,6 @@
   "homepage": "https://github.com/TotomInc/skid-inc#readme",
   "devDependencies": {
     "bower": "^1.7.9",
-    "grunt": "^1.0.1",
-    "grunt-concat-css": "^0.3.1",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-cssmin": "^1.0.1",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-es6-transpiler": "^1.0.2",
-    "http-server": "^0.9.0",
-    "load-grunt-tasks": "^3.5.2"
+    "http-server": "^0.9.0"
   }
 }

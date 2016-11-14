@@ -4,20 +4,22 @@ game.player = {
 	reputation: 0,
 	level: 1,
 	exp: 0,
-	expReq: 100,
-	oldExpReq: 100,
-	expInflation: 1.0405,
+	expReq: 200,
+	expInflation: 1.175,
+	prestigied: 0,
 	
 	getGlobalMoneyMult: function() {
-		var ircEffect = game.servers.getTotalEffects(game.servers.irc).moneyEffect;
+		var ircEffect = game.servers.getTotalEffects(game.servers.irc).moneyEffect,
+			adMult = game.kongregate.getBonusMult();
 
-		return (ircEffect);
+		return (ircEffect) * adMult;
 	},
 
 	getGlobalExpMult: function() {
-		var ircEffect = game.servers.getTotalEffects(game.servers.irc).expEffect;
+		var ircEffect = game.servers.getTotalEffects(game.servers.irc).expEffect,
+			adMult = game.kongregate.getBonusMult();
 
-		return (ircEffect);
+		return (ircEffect) * adMult;
 	},
 
 	getGlobalTimeMult: function() {
@@ -37,13 +39,7 @@ game.player = {
 		while (game.player.exp >= game.player.expReq) {
 			game.player.level++;
 			game.player.exp -= game.player.expReq;
-			game.player.expReq = Math.pow(game.player.oldExpReq, game.player.expInflation);
-			game.player.oldExpReq = Math.pow(game.player.oldExpReq, game.player.expInflation);
-			game.console.print('<b>Level-up!</b> You are now level <b>' + game.player.level + '</b>.', 'success');
+			game.player.expReq = Math.floor(200 * Math.pow(game.player.expInflation, game.player.level));
 		};
-	},
-	
-	earnReputation: function(amount) {
-		game.player.reputation += amount;
 	}
 };

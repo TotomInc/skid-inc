@@ -19,10 +19,6 @@ game.hack = {
         return (what.exp + (what.exp * rand)) * game.player.getGlobalExpMult();
     },
     
-    getReputation: function(what) {
-        return what.reputation;
-    },
-    
     buyHacker: function(who) {
         var Hacker = game.hack.hackers[who],
             Place = game.hack.places[Hacker.placeObject];
@@ -47,7 +43,7 @@ game.hack = {
     
     placeDesc: function(what) {
         var Place = game.hack.places[what];
-        return 'hack ' + Place.readable + ', require level <b>' + Place.levelReq + '</b>, take <b>' + fix(game.hack.getTime(Place), 0) + '</b> sec. +$<b>' + fix(game.hack.getMoney(Place)) + '</b>, +<b>' + fix(game.hack.getExp(Place)) + '</b> exp. ~<b>' + fix(game.hack.getReputation(Place)) + '</b> rep.';
+        return Place.readable + ', level >= <b>' + Place.levelReq + '</b>; <b>' + fix(game.hack.getTime(Place), 0) + '</b> sec; <b>≈ +$' + fix(game.hack.getMoney(Place), 0) + '</b>; <b>≈ +' + fix(game.hack.getExp(Place), 0) + '</b> exp.';
     },
     
     place: function(what) {
@@ -93,7 +89,6 @@ game.hack = {
     	    }
     	    else if (game.hack.hackProgress >= time) {
     	        var money = game.hack.getMoney(game.hack.currentHack),
-    	            reputation = game.hack.getReputation(Place),
     	            exp = game.hack.getExp(game.hack.currentHack);
 
     	        for (var j = 0; j < 35; j++)
@@ -106,7 +101,6 @@ game.hack = {
 
                 game.player.earnMoney(money);
                 game.player.earnExp(exp);
-                game.player.earnReputation(reputation);
 
     	        game.hack.isHacking = false;
     	        game.hack.currentHack = undefined;

@@ -1,6 +1,6 @@
 game.options = {
 	typedEffect: false,
-	background: true,
+	background: false,
 	view: 'default',
 
 	toggleBackground: function(toggle) {
@@ -49,6 +49,9 @@ game.options = {
 		
 		switch (view) {
 			case 'default':
+				$(col1[0]).attr('id', 'stats-money').html('');
+				$(col1[1]).attr('id', 'stats-level').html('');
+				$(col1[2]).attr('id', 'stats-exp').html('');
 				$(col2[0]).attr('id', 'stats-timemult').html('');
 				$(col2[1]).attr('id', 'stats-moneymult').html('');
 				$(col2[2]).attr('id', 'stats-expmult').html('');
@@ -58,16 +61,34 @@ game.options = {
 				break;
 			
 			case 'servers':
+				$(col1[0]).attr('id', 'stats-money').html('');
+				$(col1[1]).attr('id', 'stats-moneymult').html('');
+				$(col1[2]).attr('id', 'stats-expmult').html('');
 				$(col2[0]).attr('id', 'stats-irccost').html('');
 				$(col2[1]).attr('id', 'stats-vmcost').html('');
-				$(col2[2]).attr('id', 'stats-moneymult').html('');
+				$(col2[2]).attr('id', 'stats-lampcost').html('');
 				$(col3[0]).attr('id', 'stats-ircowned').html('');
 				$(col3[1]).attr('id', 'stats-vmowned').html('');
-				$(col3[2]).attr('id', 'stats-expmult').html('');
+				$(col3[2]).attr('id', 'stats-lampowned').html('');
 				break;
 		};
 		
 		game.options.view = view;
 		game.console.print('Stats view switched to <b>' + view + '</b>.');
+	},
+	
+	changeTheme: function(what) {
+		switch (what) {
+			case 'default':
+				$('.console').attr('class', 'console');
+				break;
+			
+			case 'black':
+				if (game.console.themesUnlocked[1])
+					$('.console').attr('class', 'console dark');
+				else
+					game.console.print('This theme is locked, you need to buy it.', 'error');
+				break;
+		};
 	}
 };

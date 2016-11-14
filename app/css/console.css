@@ -106,11 +106,16 @@
     padding: 3px 10px;
 }
 
-.stats p {
+.console .stats p {
     font-size: 14px;
     line-height: 20px;
     text-shadow: 2px 2px 8px #295637, -2px -2px 8px #295637, -2px 2px 8px #295637, 2px -2px 8px #295637;
     color: #18ff62;
+}
+
+.console.dark .stats p {
+    color: white !important;
+    text-shadow: 1px 1px 12px #7b7b7b, -2px -2px 8px #7b7b7b, -2px 2px 8px #7b7b7b, 2px -2px 8px #7b7b7b !important;
 }
 
 .screen {
@@ -131,7 +136,7 @@
     content: '';
     height: 530px;
     border-radius: 10px;
-    background: linear-gradient(#fff 50%, #000 50%);
+    background: linear-gradient(rgba(255, 255, 255, 0.6) 50%, #000 50%);
     background-size: 100% 4px;
     background-repeat: repeat-y;
     opacity: 0.15;
@@ -235,11 +240,6 @@
     cursor: default;
 }
 
-.console.dark .output {
-    color: #fff !important;
-    text-shadow: none !important;
-}
-
 .output a {
     transition: color 1s;
     font-weight: bold;
@@ -255,7 +255,17 @@
     text-shadow: 2px 2px 8px #337147, -2px -2px 8px #337147, -2px 2px 8px #337147, 2px -2px 8px #337147;
 }
 
+.console.dark .output p {
+    color: white !important;
+    text-shadow: 2px 2px 8px #7b7b7b, -2px -2px 8px #7b7b7b, -2px 2px 8px #7b7b7b, 2px -2px 8px #7b7b7b !important;
+}
+
 .console .output .error {
+    color: #ffd631 !important;
+    text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
+}
+
+.console.dark .output .error {
     color: #ffd631 !important;
     text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
 }
@@ -264,7 +274,18 @@
     color: #ffe88d !important;
 }
 
+.console.dark .output .error b {
+    color: #fdd84b !important;
+    text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
+}
+
+
 .console .output .success {
+    color: #24f5cb !important;
+    text-shadow: 2px 2px 8px #218a75, -2px -2px 8px #218a75, -2px 2px 8px #218a75, 2px -2px 8px #218a75;
+}
+
+.console.dark .output .success {
     color: #24f5cb !important;
     text-shadow: 2px 2px 8px #218a75, -2px -2px 8px #218a75, -2px 2px 8px #218a75, 2px -2px 8px #218a75;
 }
@@ -273,12 +294,17 @@
     color: #79ffe4 !important;
 }
 
+.console.dark .output .success b {
+    color: #79ffe4 !important;
+}
+
 .console .output p b {
     color: #90ffb4;
 }
 
-.console.dark .output p {
-    text-shadow: 2px 2px 8px #777, -2px -2px 8px #777, -2px 2px 8px #777, 2px -2px 8px #777;
+.console.dark .output p b {
+    color: #66ABB2 !important;
+    text-shadow: 2px 2px 8px #435152, -2px -2px 8px #435152, -2px 2px 8px #435152, 2px -2px 8px #435152 !important;
 }
 
 .text-side {
@@ -318,7 +344,7 @@
     display: block !important;
     overflow: hidden;
     margin-bottom: 15px;
-    width: 100%;
+    /* width: 100%; */
     height: 40px;
     color: #18FF62;
     text-shadow: 0px 0px 2px rgba(10, 255, 10, .8);
@@ -341,12 +367,17 @@
     line-height: 25px;
     font-size: 30px;
     cursor: pointer;
-    transition: all 150ms;
+    transition: all 250ms;
 }
 
-.blinking-arrow:hover {
-    transition: all 150ms;
+.console .blinking-arrow:hover {
+    transition: all 250ms;
     text-shadow: 0px 0px 8px #18FF62;
+}
+
+.console.dark .blinking-arrow:hover {
+    transition: all 250ms;
+    text-shadow: 0px 0px 8px #366267 !important;
 }
 
 .blinking-arrow > i {
@@ -367,9 +398,14 @@
     transition: all 250ms;
 }
 
-.enter:hover {
+.console .enter:hover {
     transition: all 250ms;
     text-shadow: 0px 0px 8px #18FF62;
+}
+
+.console.dark .enter:hover {
+    transition: all 250ms;
+    text-shadow: 0px 0px 8px #366267 !important;
 }
 
 .input-container {
@@ -383,9 +419,14 @@
     border-radius: 4px;
 }
 
-.input-container:hover {
+.console .input-container:hover {
     transition: all 350ms;
     border-color: #0e712e;
+}
+
+.console.dark .input-container:hover {
+    transition: all 350ms;
+    border-color: #366267 !important;
 }
 
 #console-input::selection {

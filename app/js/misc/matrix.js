@@ -292,13 +292,11 @@ var M = {
 	}
 };
 
-window.onload = function() {
+function initMatrixBackground() {
 	$('body').prepend('<div id="matrix" class="matrix-effect" style="display: none;">');
 	$('#matrix').append('<canvas id="canvas">');
 
 	M.init();
 
-    $('#matrix').fadeIn('slow', function() {
-
-	});
+    $('#matrix').fadeIn('slow');
 };

@@ -4,54 +4,36 @@ game.console.commands = [
     desc: 'execute hacks to earn money, gain experience and even reputation.',
     pattern: '^hack$',
     optionsNeeded: true,
-    commands: [{
+    commands: [
+    {
+        pattern: '^hack[\\s]basic$',
+        readable: 'hack basic',
+        desc: 'execute a basic hack to earn a small amount of $$$ and exp instantly.',
+        execute: 'game.hack.basic()'
+    }, {
         pattern: '^hack[\\s]place[\\s][\\w]$',
         readable: 'hack place (option)',
         desc: 'hack a specified place to earn money, experience and reputation.',
         execute: 'game.hack.place',
         options: [
-            'place1',
-            'place2',
-            'place3',
-            'place4',
-            'place5',
-            'place6',
-            'place7',
-            'place8',
-            'place9',
-            'place10',
-            'place11',
-            'place12',
-            'place13',
-            'place14',
-            'place15',
-            'place16',
-            'place17',
-            'place18',
-            'place19',
-            'place20'
+            'grocery',
+            'business',
+            'market',
+            'bank',
+            'jewelry',
+            'facebook',
+            'apple',
+            'google'
         ],
         optionsDesc: [
-            game.hack.placeDesc('place1'),
-            game.hack.placeDesc('place2'),
-            game.hack.placeDesc('place3'),
-            game.hack.placeDesc('place4'),
-            game.hack.placeDesc('place5'),
-            game.hack.placeDesc('place6'),
-            game.hack.placeDesc('place7'),
-            game.hack.placeDesc('place8'),
-            game.hack.placeDesc('place9'),
-            game.hack.placeDesc('place10'),
-            game.hack.placeDesc('place11'),
-            game.hack.placeDesc('place12'),
-            game.hack.placeDesc('place13'),
-            game.hack.placeDesc('place14'),
-            game.hack.placeDesc('place15'),
-            game.hack.placeDesc('place16'),
-            game.hack.placeDesc('place17'),
-            game.hack.placeDesc('place18'),
-            game.hack.placeDesc('place19'),
-            game.hack.placeDesc('place20'),
+            game.hack.placeDesc('grocery'),
+            game.hack.placeDesc('business'),
+            game.hack.placeDesc('market'),
+            game.hack.placeDesc('bank'),
+            game.hack.placeDesc('jewelry'),
+            game.hack.placeDesc('facebook'),
+            game.hack.placeDesc('apple'),
+            game.hack.placeDesc('google')
         ],
         optionIndex: 2
     }]
@@ -70,8 +52,8 @@ game.console.commands = [
         optionIndex: 2,
         optionsDesc: [
             'VM servers decrease time required to hack a place by <b>1%</b>.' + ' Cost $<b>' + fix(game.servers.getCost(game.servers.vm)) + '</b>.',
-            'IRC servers increase your money multiplier by +<b>' + game.servers.getEffects(game.servers.irc).moneyEffect +
-                '</b>, same for experience multiplier by +<b>' + game.servers.getEffects(game.servers.irc).expEffect + '</b>. Cost $<b>' + fix(game.servers.getCost(game.servers.irc)) + '</b>.'
+            'IRC servers increase your money multiplier by +<b>' + game.servers.getEffects(game.servers.irc).moneyEffect + '</b>, same for experience multiplier by +<b>' + game.servers.getEffects(game.servers.irc).expEffect + '</b>. Cost $<b>' + fix(game.servers.getCost(game.servers.irc)) + '</b>.',
+            'LAMP servers increase your botnet power, cost $<b>' + fix(game.servers.getCost(game.servers.lamp)) + '</b>.'
         ]
     }, {
         id: 1,
@@ -87,19 +69,7 @@ game.console.commands = [
             'hacker5',
             'hacker6',
             'hacker7',
-            'hacker8',
-            'hacker9',
-            'hacker10',
-            'hacker11',
-            'hacker12',
-            'hacker13',
-            'hacker14',
-            'hacker15',
-            'hacker16',
-            'hacker17',
-            'hacker18',
-            'hacker19',
-            'hacker20'
+            'hacker8'
         ],
         optionIndex: 2,
         optionsDesc: [
@@ -110,20 +80,17 @@ game.console.commands = [
             game.hack.hackerDesc('hacker5'),
             game.hack.hackerDesc('hacker6'),
             game.hack.hackerDesc('hacker7'),
-            game.hack.hackerDesc('hacker8'),
-            game.hack.hackerDesc('hacker9'),
-            game.hack.hackerDesc('hacker10'),
-            game.hack.hackerDesc('hacker11'),
-            game.hack.hackerDesc('hacker12'),
-            game.hack.hackerDesc('hacker13'),
-            game.hack.hackerDesc('hacker14'),
-            game.hack.hackerDesc('hacker15'),
-            game.hack.hackerDesc('hacker16'),
-            game.hack.hackerDesc('hacker17'),
-            game.hack.hackerDesc('hacker18'),
-            game.hack.hackerDesc('hacker19'),
-            game.hack.hackerDesc('hacker20')
+            game.hack.hackerDesc('hacker8')
         ]
+    }, {
+        id: 2,
+        pattern: '^buy[\\s]theme[\\s][\\w]$',
+        readable: 'buy theme (option)',
+        desc: 'buy terminal theme with kreds (Kongregate money).',
+        execute: 'game.kongregate.buyMtx',
+        options: ['black_theme'],
+        optionIndex: 2,
+        optionsDesc: ['buy the black and white theme with a blue accentuation color for the terminal, cost <b>50 Kreds</b>.']
     }]
 }, {
     name: 'option',
@@ -173,8 +140,8 @@ game.console.commands = [
         optionIndex: 2,
         optionsDesc: ['set your own amount of fps desired (low value can reduce lag).']
     }, {
-        pattern: '^option[\\s]statsView[\\s][\\w]$',
-        readable: 'option statsView (option)',
+        pattern: '^option[\\s]view[\\s][\\w]$',
+        readable: 'option view (option)',
         desc: 'change displayed stats under the terminal.',
         execute: 'game.options.changeStats',
         options: ['default', 'servers'],
@@ -182,6 +149,28 @@ game.console.commands = [
         optionsDesc: [
             'default stats view display: money, level, exp, reputation, money/exp mult, total money, times prestigied.',
             'servers stats view display: money, level, exp, money/exp mult, servers cost/owned.'
+        ]
+    }, {
+        pattern: '^option[\\s]theme[\\s][\\w]$',
+        readable: 'option theme (option)',
+        desc: 'change the theme of the console.',
+        execute: 'game.options.changeTheme',
+        options: ['default', 'black'],
+        optionIndex: 2,
+        optionsDesc: ['The default SkidInc console theme, green and black.', 'Black and white theme, like in the 90s.']
+    }, {
+        pattern: '^option[\\s]savegame[\\s][\\w]$',
+        readable: 'option savegame (option)',
+        desc: 'save, load or reset your current game progression.',
+        execute: 'game.save.consoleHandler',
+        options: ['save', 'load', 'hardreset', 'export', 'import'],
+        optionIndex: 2,
+        optionsDesc: [
+            'Save your current game state in your browser.',
+            'Load your save from your browser.',
+            'Start from scratch, reset everything.',
+            'Export your save code.',
+            'Import your save code.'
         ]
     }]
 }, {
@@ -196,4 +185,10 @@ game.console.commands = [
     pattern: '^help$',
     optionsNeeded: false,
     execute: 'game.console.help()'
+}, {
+    name: 'watch',
+    desc: 'watch an ad to increase your ads bonus multiplier for 6h (only on Kongregate).',
+    pattern: '^watch$',
+    optionsNeeded: false,
+    execute: 'game.kongregate.watch()'
 }];

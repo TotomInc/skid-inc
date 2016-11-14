@@ -1,4 +1,6 @@
 game.console = {
+    themesUnlocked: [true, false],
+    
     getFirstWord: function(str) {
         var gotWhitespace = str.indexOf(' '),
             firstWord = str.substring(0, (gotWhitespace > 0) ? gotWhitespace : str.length);
@@ -197,7 +199,7 @@ game.console = {
         for (var i = 0; i < game.console.commands.length; i++)
             game.console.print('<b>' + game.console.commands[i].name + '</b>: ' + game.console.commands[i].desc);
         
-        game.console.print('For more in-depth help about a command, type <b>command -help</b>, it works too for commands with options <b>command cmd -help</b>.');
+        game.console.print('For more in-depth help about a command, type <b>command -help</b>, it works for commands with options <b>command cmd -help</b> too.');
     },
     
     clear: function() {

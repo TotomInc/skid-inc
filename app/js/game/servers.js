@@ -2,18 +2,28 @@ game.servers = {
     vm: {
         name: 'vm',
         owned: 0,
-        price: 1e12,
-        inflation: 5,
-        timeEffect: 0.01
+        price: 1e6,
+        inflation: 5.5,
+        timeEffect: 0.25,
+        maxCount: 50
     },
     
     irc: {
         name: 'irc',
         owned: 0,
         price: 1e4,
-        inflation: 4.75,
-        moneyEffect: 0.5,
-        expEffect: 0.3
+        inflation: 1.23,
+        moneyEffect: 2.5,
+        expEffect: 1.5,
+        maxCount: 1e6
+    },
+    
+    lamp: {
+        name: 'LAMP',
+        owned: 0,
+        price: 1e9,
+        inflation: 1,
+        maxCount: 1e6
     },
     
     getCost: function(what) {
@@ -54,7 +64,7 @@ game.servers = {
     buy: function(what) {
         var Server = game.servers[what];
 
-        if (game.player.money >= game.servers.getCost(Server)) {
+        if (game.player.money >= game.servers.getCost(Server) && (Server.owned + 1) < Server.maxCount) {
             game.player.money -= game.servers.getCost(Server);
             Server.owned++;
             game.servers.priceUpdate();
