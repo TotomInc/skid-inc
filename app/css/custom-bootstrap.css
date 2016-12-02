@@ -50,3 +50,33 @@
 .navbar-default .navbar-nav>li>a:hover {
     transition: color 200ms;
 }
+
+.monokai.navbar .navbar-brand {
+    color: #A6E22E !important;
+}
+.monokai.navbar .navbar-brand small {
+    color: #daefb1 !important;
+}
+.monokai.navbar .navbar-nav>li>a {
+    color: #A6E22E !important;
+}
+
+.dark.navbar .navbar-brand {
+    color: #66ABB2 !important;
+}
+.dark.navbar .navbar-brand small {
+    color: #c9d5d6 !important;
+}
+.dark.navbar .navbar-nav>li>a {
+    color: #66ABB2 !important;
+}
+
+.afterglow.navbar .navbar-brand {
+    color: #ab7388 !important;
+}
+.afterglow.navbar .navbar-brand small {
+    color: #f3acc6 !important;
+}
+.afterglow.navbar .navbar-nav>li>a {
+    color: #ab7388 !important;
+}

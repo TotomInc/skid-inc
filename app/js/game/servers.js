@@ -5,7 +5,8 @@ game.servers = {
         price: 1e6,
         inflation: 5.5,
         timeEffect: 0.25,
-        maxCount: 50
+        maxCount: 50,
+        buyable: true
     },
     
     irc: {
@@ -13,17 +14,17 @@ game.servers = {
         owned: 0,
         price: 1e4,
         inflation: 1.23,
-        moneyEffect: 2.5,
-        expEffect: 1.5,
-        maxCount: 1e6
+        moneyEffect: 1.15,
+        expEffect: 0.75,
+        maxCount: 1e6,
+        buyable: true
     },
     
-    lamp: {
-        name: 'LAMP',
+    zombie: {
+        name: 'zombie',
         owned: 0,
-        price: 1e9,
-        inflation: 1,
-        maxCount: 1e6
+        powerEffect: 0.1,
+        buyable: false
     },
     
     getCost: function(what) {
@@ -64,14 +65,18 @@ game.servers = {
     buy: function(what) {
         var Server = game.servers[what];
 
-        if (game.player.money >= game.servers.getCost(Server) && (Server.owned + 1) < Server.maxCount) {
+        if (game.player.money >= game.servers.getCost(Server) && (Server.owned + 1) < Server.maxCount && Server.buyable) {
             game.player.money -= game.servers.getCost(Server);
             Server.owned++;
             game.servers.priceUpdate();
             game.console.print('You successfully bought <b>1 ' + Server.name + '</b> server.');
         }
+        else if (!Server.buyable)
+            game.console.print('You can\'t buy this type of server.', 'error');
         else if (game.player.money < game.servers.getCost(Server))
             game.console.print('Not enough money, you need $<b>' + fix(game.servers.getCost(Server)) + '</b>.', 'error');
+        else
+            game.console.print('Can\'t buy server.');
     },
 
     priceUpdate: function() {
@@ -79,7 +84,7 @@ game.servers = {
             if (base.name == 'buy') {
                 base.commands.filter(function(command) {
                     if (command.id == 0) {
-                        command.optionsDesc[0] = 'VM servers decrease time required to hack a place by <b>1%</b>.' +
+                        command.optionsDesc[0] = 'VM servers decrease time required to hack a place by <b>25%</b>.' +
                             ' Cost $<b>' + fix(game.servers.getCost(game.servers.vm)) + '</b>.';
                         command.optionsDesc[1] = 'IRC servers increase your money multiplier by +<b>' + game.servers.getEffects(game.servers.irc).moneyEffect +
                             '</b>, same for experience multiplier by +<b>' + game.servers.getEffects(game.servers.irc).expEffect + '</b>. Cost $<b>' +

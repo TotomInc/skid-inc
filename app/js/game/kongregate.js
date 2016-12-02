@@ -4,10 +4,15 @@ game.kongregate = {
     adsCompleted: 0,
     bonusTime: 0,
     bonusMult: 3,
+    boughtMults: 0,
+    
+    getMult: function() {
+        return game.kongregate.bonusMult + game.kongregate.boughtMults;
+    },
     
     getBonusMult: function() {
         if (game.kongregate.bonusTime > 0)
-            return game.kongregate.bonusMult;
+            return game.kongregate.bonusMult + game.kongregate.boughtMults;
         else
             return 1;
     },
@@ -88,7 +93,7 @@ game.kongregate = {
     
     buyMtx: function(what) {
         if (typeof game.kongregate.isGuest !== 'boolean') {
-            game.console.print('This feature is only available for Kongregate.', 'error');
+            game.console.print('This feature is only available for Kongregate players.', 'error');
             return;
         };
         
@@ -103,13 +108,31 @@ game.kongregate = {
             };
             
             switch(what) {
+                case 'ad_mult':
+                    game.kongregate.boughtMults++;
+                    game.console.print('Your ads multiplier is now of <b>x' + game.kongregate.getMult() + '</b>.');
+                    break;
+                
+                case 'ad_mult_x5':
+                    game.kongregate.boughtMults += 5;
+                    game.console.print('Your ads multiplier is now of <b>x' + game.kongregate.getMult() + '</b>.');
+                    break;
+                
                 case 'black_theme':
-                    game.console.themesUnlocked[1] = true;
+                    game.console.black = true;
                     game.console.print('To enable your theme, write <b>option theme black</b>.');
                     break;
+                
+                case 'monokai_theme':
+                    game.console.monokai = true;
+                    game.console.print('To enable your theme, write <b>option theme monokai</b>.');
+                    break;
+                
+                case 'afterglow_theme':
+                    game.console.afterglow = true;
+                    game.console.print('To enable your theme, write <b>option theme afterglow</b>.');
+                    break;
             };
-            
-            game.console.print('Thanks for your purchase, it help me to maintain the game and introduce new features.');
         };
     },
     
@@ -120,7 +143,7 @@ game.kongregate = {
             var api = kongregateAPI.getAPI();
             
             if (!game.kongregate.adAvailable)
-                game.console.print('Sorry, there is no ad currently, try again later.', 'error');
+                game.console.print('Sorry, no ads available, try again later.', 'error');
             else
                 api.mtx.showIncentivizedAd();
         };
@@ -129,7 +152,7 @@ game.kongregate = {
     bonusTimeLoop: function(times) {
         if (game.kongregate.bonusTime > 0)
             game.kongregate.bonusTime -= (times / game.fps) * 1000;
-        else if (game.kongregate <= 0)
+        else if (game.kongregate.bonusTime <= 0)
             game.kongregate.bonusTime = 0;
     }
 };

@@ -24,11 +24,13 @@ game.hack = {
             Place = game.hack.places[Hacker.placeObject];
         
         if (Hacker.owned)
-            game.console.print('You already hired this hacker.', 'error');
-        if (game.player.money < Hacker.price)
-            game.console.print('You don\'t have enough money to hire this hacker.', 'error');
-        if (game.hack.currentHack.name == Hacker.placeName)
-            game.console.print('You are currently hacking the place that the hacker should hack, hire him when hack is finished.', 'error');
+            game.console.print('You already hired <b>' + Hacker.readable +'</b>.', 'error');
+        else if (game.player.money < Hacker.price)
+            game.console.print('You don\'t have enough money to hire <b>' + Hacker.readable + '</b>.', 'error');
+        else if (game.hack.isHacking) {
+            if (game.hack.currentHack.name == Hacker.placeName)
+                game.console.print('You are currently hacking the place that the hacker should hack, hire him when hack is finished.', 'error');
+        }
         else {
             Hacker.owned = true;
             game.player.money -= Hacker.price;
@@ -38,23 +40,48 @@ game.hack = {
     
     hackerDesc: function(what) {
         var Hacker = game.hack.hackers[what];
-        return Hacker.name + ' hacker will hack <b>' + Hacker.placeName + '</b>, hire him for $<b>' + fix(Hacker.price) + '</b>.';
+        return Hacker.readable + ' will hack <b>' + Hacker.placeName + '</b>, hire him for $<b>' + fix(Hacker.price) + '</b>.';
     },
     
     placeDesc: function(what) {
         var Place = game.hack.places[what];
-        return Place.readable + ', level >= <b>' + Place.levelReq + '</b>; <b>' + fix(game.hack.getTime(Place), 0) + '</b> sec; <b>≈ +$' + fix(game.hack.getMoney(Place), 0) + '</b>; <b>≈ +' + fix(game.hack.getExp(Place), 0) + '</b> exp.';
+        return 'level req. <b>' + Place.levelReq + '</b>, takes <b>' + fix(game.hack.getTime(Place), 0) + '</b> sec, <b>≈ +$'
+            + fix(game.hack.getMoney(Place), 0) + ' and ≈ +' + fix(game.hack.getExp(Place), 0) + '</b> exp.';
+    },
+    
+    cancel: function() {
+        if (!game.hack.isHacking)
+            game.console.print('You are not hacking a place.', 'error');
+        else if (game.hack.isHacking) {
+    	    $('#hack-progress').html('<b>' + cap(game.hack.currentHack.name) + '</b> hack cancelled.').attr('id', 'old-hack-progress');
+    	    
+    	    game.hack.isHacking = false;
+    	    game.hack.currentHack = undefined;
+    	    game.hack.hackProgress = 0;
+        };
+    },
+    
+    basic: function() {
+        var money = (Math.random() + 1) * (150 * Math.pow(1.4, game.player.level)),
+            exp = (Math.random() + 1) * (25 * Math.pow(1.35, game.player.level));
+        
+        game.player.earnExp(exp);
+        game.player.earnMoney(money);
+        
+        game.console.print('You gained <b>$' + fix(money) + '</b> and <b>' + fix(exp) + '</b> exp.');
     },
     
     place: function(what) {
         var Place = game.hack.places[what];
         
-        if (!game.hack.isHacking && game.player.level >= Place.levelReq) {
+        if (!game.hack.isHacking && !game.virus.doingVirus && !game.hack.hackers[Place.hacker].owned && game.player.level >= Place.levelReq) {
             game.hack.isHacking = true;
             game.hack.currentHack = Place;
             $('.text-side').append('<p id="hack-progress">');
-            game.console.print('Starting ' + Place.name + ' hack...');
+            game.console.print('Starting ' + Place.name + ' hack... You can cancel the hack with <b>hack place cancel</b>.');
         }
+        else if (game.virus.doingVirus)
+            game.console.print('You can\'t create a virus and hack a place at the same time.', 'error');
         else if (game.hack.isHacking)
             game.console.print('You can\'t hack more than one place at a time.', 'error');
         else if (game.player.level < Place.levelReq)
@@ -83,7 +110,7 @@ game.hack = {
     	            bar += '=';
 
     	        timeLeft = time - game.hack.hackProgress;
-    	        bar += '| <b>' + fix(percent, 0) + '%</b>, <b>' + fix(timeLeft, 2) + '</b> s.';
+    	        bar += '| <b>' + fix(percent, 0) + '%, ' + fix(timeLeft, 2) + ' sec.</b>';
 
     	        $('#hack-progress').html(bar);
     	    }
@@ -94,9 +121,9 @@ game.hack = {
     	        for (var j = 0; j < 35; j++)
     	            bar += '#';
 
-    	        bar += '| 100%, 0.00s';
+    	        bar += '| <b>100%, 0.00 sec</b>';
 
-    	        game.console.print(cap(game.hack.currentHack.readable) + ' hack finished: +$<b>' + fix(money) + '</b>, +<b>' + fix(exp) + '</b> exp.');
+    	        game.console.print(cap(game.hack.currentHack.readable) + ' hack finished: <b>+$' + fix(money) + ', +' + fix(exp) + '</b> exp.');
     	        $('#hack-progress').html(bar).attr('id', 'old-hack-progress');
 
                 game.player.earnMoney(money);
@@ -119,16 +146,14 @@ game.hack = {
                 
                 Hacker.progress += times / game.fps;
                 
-                if (Hacker.progress >= time) {
+                while (Hacker.progress >= time) {
                     var money = game.hack.getMoney(Place),
-                        reputation = game.hack.getReputation(Place),
                         exp = game.hack.getExp(Place);
                     
                     game.player.earnMoney(money);
                     game.player.earnExp(exp);
-                    game.player.earnReputation(reputation);
                     
-                    Hacker.progress = 0;
+                    Hacker.progress -= time;
                 };
             };
         };

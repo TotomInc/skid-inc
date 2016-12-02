@@ -1,5 +1,7 @@
 game.console = {
-    themesUnlocked: [true, false],
+    monokai: false,
+    black: false,
+    afterglow: false,
     
     getFirstWord: function(str) {
         var gotWhitespace = str.indexOf(' '),
@@ -203,8 +205,8 @@ game.console = {
     },
     
     clear: function() {
-        if (game.hack.isHacking)
-            game.console.print('You can\'t clear console while doing a hack.', 'error');
+        if (game.hack.isHacking || game.virus.doingVirus)
+            game.console.print('You can\'t clear console while doing a hack/virus.', 'error');
         else
             $('.text-side').empty();
     },

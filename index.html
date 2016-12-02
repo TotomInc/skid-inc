@@ -23,7 +23,7 @@
 </head>
 
 <body class="noselect">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top monokai">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand">SkidInc <small id="game-version"></small></a>
@@ -40,7 +40,7 @@
     <div class="container">
         <div class="row margin-top">
             <div class="col-md-12">
-                <div class="console">
+                <div class="console monokai">
                     <div class="text">
                         <div class="output noselect">
                             <div class="text-side"></div>
@@ -103,19 +103,31 @@
     <script src="app/js/game/hack.js"></script>
     <script src="app/js/game/hack-hackers.js"></script>
     <script src="app/js/game/hack-places.js"></script>
+    <script src="app/js/game/virus.js"></script>
+    <script src="app/js/game/virus-list.js"></script>
     <script src="app/js/game/kongregate.js"></script>
     <script src="app/js/game/player.js"></script>
     <script src="app/js/game/servers.js"></script>
+    <script src="app/js/game/botnet.js"></script>
     <script src="app/js/game/console.js"></script>
     <script src="app/js/game/console-commands.js"></script>
     <script src="app/js/game/options.js"></script>
-    <script src="app/js/game/notification.js"></script>
     <script src="app/js/game/save.js"></script>
-
+    
     <script type="text/javascript">
         $(document).ready(function() {
             game.init();
         });
+    </script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-54540685-21', 'auto');
+      ga('send', 'pageview');
     </script>
 </body>
 </html>

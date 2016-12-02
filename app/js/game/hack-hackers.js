@@ -1,73 +1,73 @@
 game.hack.hackers = {
-    'hacker1': {
-        name: 'noob',
-        readable: 'noob',
+    'grocer': {
+        name: 'grocer',
+        readable: 'grocer',
         placeObject: 'grocery',
         placeName: 'grocery',
-        price: 1500,
-        owned: false,
-        progress: 0
-    },
-    'hacker2': {
-        name: 'TBD',
-        readable: 'TBD',
-        placeObject: 'business',
-        placeName: 'business',
-        price: 2500,
-        owned: false,
-        progress: 0
-    },
-    'hacker3': {
-        name: 'TBD',
-        readable: 'TBD',
-        placeObject: 'market',
-        placeName: 'market',
-        price: 5000,
-        owned: false,
-        progress: 0
-    },
-    'hacker4': {
-        name: 'TBD',
-        readable: 'TBD',
-        placeObject: 'bank',
-        placeName: 'bank',
         price: 10000,
         owned: false,
         progress: 0
     },
-    'hacker5': {
-        name: 'TBD',
-        readable: 'TBD',
+    'business_man': {
+        name: 'business-man',
+        readable: 'business-man',
+        placeObject: 'business',
+        placeName: 'business',
+        price: 50000,
+        owned: false,
+        progress: 0
+    },
+    'cashier': {
+        name: 'cashier',
+        readable: 'cashier',
+        placeObject: 'market',
+        placeName: 'market',
+        price: 75000,
+        owned: false,
+        progress: 0
+    },
+    'banker': {
+        name: 'banker',
+        readable: 'banker',
+        placeObject: 'bank',
+        placeName: 'bank',
+        price: 1000000,
+        owned: false,
+        progress: 0
+    },
+    'jeweler': {
+        name: 'jeweler',
+        readable: 'jeweler',
         placeObject: 'jewelry',
         placeName: 'jewelry',
-        price: 30000,
+        price: 15000000,
         owned: false,
         progress: 0
     },
-    'hacker6': {
-        name: 'TBD',
-        readable: 'TBD',
+    'mark': {
+        name: 'mark',
+        readable: 'Mark',
         placeObject: 'facebook',
         placeName: 'facebook',
-        price: 150000,
+        price: 500000000,
         owned: false,
         progress: 0
     },
-    'hacker7': {
-        name: 'TBD',
-        readable: 'TBD',
+    'steve': {
+        name: 'steve',
+        readable: 'Steve',
         placeObject: 'apple',
         placeName: 'apple',
-        price: 600000,
+        price: 5000000000,
         owned: false,
         progress: 0
     },
-    'hacker8': {
-        name: 'elliot',
-        readable: 'Elliot',
+    'larry': {
+        name: 'larry',
+        readable: 'Larry',
         placeObject: 'google',
         placeName: 'google',
-        price: 1500000,
+        price: 75000000000,
         owned: false,
         progress: 0
     }

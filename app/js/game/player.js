@@ -4,8 +4,9 @@ game.player = {
 	reputation: 0,
 	level: 1,
 	exp: 0,
-	expReq: 200,
-	expInflation: 1.175,
+	expReq: 1000,
+	expInflation: 1.5,
+	power: 0,
 	prestigied: 0,
 	
 	getGlobalMoneyMult: function() {
@@ -39,7 +40,9 @@ game.player = {
 		while (game.player.exp >= game.player.expReq) {
 			game.player.level++;
 			game.player.exp -= game.player.expReq;
-			game.player.expReq = Math.floor(200 * Math.pow(game.player.expInflation, game.player.level));
+			game.player.expReq = Math.floor(1000 * Math.pow(game.player.expInflation, game.player.level));
+			
+			game.console.print('Level-up, you are now level <b>' + game.player.level + '</b>.');
 		};
 	}
 };

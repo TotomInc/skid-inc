@@ -109,13 +109,16 @@
 .console .stats p {
     font-size: 14px;
     line-height: 20px;
-    text-shadow: 2px 2px 8px #295637, -2px -2px 8px #295637, -2px 2px 8px #295637, 2px -2px 8px #295637;
     color: #18ff62;
 }
-
 .console.dark .stats p {
     color: white !important;
-    text-shadow: 1px 1px 12px #7b7b7b, -2px -2px 8px #7b7b7b, -2px 2px 8px #7b7b7b, 2px -2px 8px #7b7b7b !important;
+}
+.console.monokai .stats p {
+    color: #66D9EF;
+}
+.console.afterglow .stats p {
+    color: rgba(255,198,109,1);
 }
 
 .screen {
@@ -193,9 +196,20 @@
         rgba(255,255,255,0) 100%);
     opacity: 0.1;
 }
-
+.console.monokai .layer {
+    background: radial-gradient(ellipse at center,
+        rgba(102,217,239,0.4) 0%,
+        rgba(255,255,255,0) 100%);
+}
 .console.dark .layer {
-    background: transparent !important;
+    background: radial-gradient(ellipse at center,
+        rgba(102,171,178,0.4) 0%,
+        rgba(255,255,255,0) 100%);
+}
+.console.afterglow .layer {
+    background: radial-gradient(ellipse at center,
+        rgba(161,97,122,0.4) 0%,
+        rgba(255,255,255,0) 100%);
 }
 
 .text {
@@ -254,57 +268,68 @@
 .console .output p {
     text-shadow: 2px 2px 8px #337147, -2px -2px 8px #337147, -2px 2px 8px #337147, 2px -2px 8px #337147;
 }
-
+.console.monokai .output p {
+    color: #66D9EF !important;
+    text-shadow: 2px 2px 8px #497f8a, -2px -2px 8px #497f8a, -2px 2px 8px #497f8a, 2px -2px 8px #497f8a;
+}
 .console.dark .output p {
     color: white !important;
-    text-shadow: 2px 2px 8px #7b7b7b, -2px -2px 8px #7b7b7b, -2px 2px 8px #7b7b7b, 2px -2px 8px #7b7b7b !important;
+    text-shadow: 2px 2px 8px #696969, -2px -2px 8px #696969, -2px 2px 8px #696969, 2px -2px 8px #696969;
+}
+.console.afterglow .output p {
+    color: rgba(255,198,109,1) !important;
+    text-shadow: 2px 2px 8px #613c00, -2px -2px 8px #613c00, -2px 2px 8px #613c00, 2px -2px 8px #613c00;
 }
 
 .console .output .error {
-    color: #ffd631 !important;
+    color: #f5cd2f !important;
     text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
 }
-
+.console.monokai .output .error {
+    color: #ff85b1 !important;
+    text-shadow: 2px 2px 8px #6f3248, -2px -2px 8px #6f3248, -2px 2px 8px #6f3248, 2px -2px 8px #6f3248;
+}
 .console.dark .output .error {
     color: #ffd631 !important;
-    text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
+    text-shadow: 2px 2px 8px #583a25, -2px -2px 8px #583a25, -2px 2px 8px #583a25, 2px -2px 8px #583a25;
+}
+.console.afterglow .output .error {
+    color: #d3422e !important;
+    text-shadow: 2px 2px 8px #5d1c14, -2px -2px 8px #5d1c14, -2px 2px 8px #5d1c14, 2px -2px 8px #5d1c14;
 }
 
 .console .output .error b {
     color: #ffe88d !important;
 }
-
+.console.monokai .output .error b {
+    color: #da7197 !important;
+}
 .console.dark .output .error b {
     color: #fdd84b !important;
-    text-shadow: 2px 2px 8px #9c5424, -2px -2px 8px #9c5424, -2px 2px 8px #9c5424, 2px -2px 8px #9c5424;
 }
-
-
-.console .output .success {
-    color: #24f5cb !important;
-    text-shadow: 2px 2px 8px #218a75, -2px -2px 8px #218a75, -2px 2px 8px #218a75, 2px -2px 8px #218a75;
-}
-
-.console.dark .output .success {
-    color: #24f5cb !important;
-    text-shadow: 2px 2px 8px #218a75, -2px -2px 8px #218a75, -2px 2px 8px #218a75, 2px -2px 8px #218a75;
-}
-
-.console .output .success b {
-    color: #79ffe4 !important;
-}
-
-.console.dark .output .success b {
-    color: #79ffe4 !important;
+.console.afterglow .output .error b {
+    color: #cc7833 !important;
+    text-shadow: 2px 2px 8px #39220e, -2px -2px 8px #39220e, -2px 2px 8px #39220e, 2px -2px 8px #39220e;
 }
 
 .console .output p b {
     color: #90ffb4;
 }
-
+.console.monokai .output p b {
+    color: #A6E22E !important;
+    text-shadow: 2px 2px 8px #5a6f31, -2px -2px 8px #5a6f31, -2px 2px 8px #5a6f31, 2px -2px 8px #5a6f31;
+}
 .console.dark .output p b {
     color: #66ABB2 !important;
-    text-shadow: 2px 2px 8px #435152, -2px -2px 8px #435152, -2px 2px 8px #435152, 2px -2px 8px #435152 !important;
+    text-shadow: 2px 2px 8px #3f494a, -2px -2px 8px #3f494a, -2px 2px 8px #3f494a, 2px -2px 8px #3f494a;
+}
+.console.afterglow .output p b {
+    color: #ab7388 !important;
+    text-shadow: 2px 2px 8px #39222b, -2px -2px 8px #39222b, -2px 2px 8px #39222b, 2px -2px 8px #39222b;
+}
+
+.console.monokai .output .error b {
+    text-shadow: 2px 2px 8px #58303f, -2px -2px 8px #58303f, -2px 2px 8px #58303f, 2px -2px 8px #58303f;
 }
 
 .text-side {
@@ -352,9 +377,16 @@
         rgba(0,0,0,0) 0%,
         rgba(0,0,0,0.19) 100%);
 }
-
+.console.monokai .input {
+    color: #66D9EF !important;
+    text-shadow: none !important;
+}
 .console.dark .input {
     color: #fff !important;
+    text-shadow: none !important;
+}
+.console.afterglow .input {
+    color: #a1617a !important;
     text-shadow: none !important;
 }
 
@@ -374,10 +406,14 @@
     transition: all 250ms;
     text-shadow: 0px 0px 8px #18FF62;
 }
-
+.console.monokai .blinking-arrow:hover {
+    text-shadow: 0px 0px 8px #66D9EF;
+}
 .console.dark .blinking-arrow:hover {
-    transition: all 250ms;
     text-shadow: 0px 0px 8px #366267 !important;
+}
+.console.afterglow .blinking-arrow:hover {
+    text-shadow: 0px 0px 8px #7c4b5e !important;
 }
 
 .blinking-arrow > i {
@@ -402,10 +438,14 @@
     transition: all 250ms;
     text-shadow: 0px 0px 8px #18FF62;
 }
-
+.console.monokai .enter:hover {
+    text-shadow: 0px 0px 8px #66D9EF;
+}
 .console.dark .enter:hover {
-    transition: all 250ms;
     text-shadow: 0px 0px 8px #366267 !important;
+}
+.console.afterglow .enter:hover {
+    text-shadow: 0px 0px 8px #7c4b5e !important;
 }
 
 .input-container {
@@ -423,10 +463,14 @@
     transition: all 350ms;
     border-color: #0e712e;
 }
-
+.console.monokai .input-container:hover {
+    border-color: #66D9EF !important;
+}
 .console.dark .input-container:hover {
-    transition: all 350ms;
     border-color: #366267 !important;
+}
+.console.afterglow .input-container:hover {
+    border-color: #a1617a !important;
 }
 
 #console-input::selection {
@@ -454,4 +498,12 @@ input:focus {
 
 *:focus {
     outline: none;
+}
+
+.virus-factoid .virus-factoid-content {
+    display: none;
+}
+.virus-factoid:hover .virus-factoid-content,
+.virus-factoid:hover .virus-factoid-content:hover {
+    display: block;
 }

@@ -23,8 +23,10 @@ var game = {
 
 	update: function(times) {
 		game.hack.loop(times);
+		game.virus.loop(times);
 		game.hack.hackerLoop(times);
 		game.kongregate.bonusTimeLoop(times);
+		
 		game.display();
 	},
 
@@ -42,11 +44,13 @@ var game = {
 		$('#stats-vmcost').html('VM cost: $' + fix(game.servers.getCost(game.servers.vm)));
 		$('#stats-ircowned').html('IRC owned: ' + game.servers.irc.owned);
 		$('#stats-vmowned').html('VM owned: ' + game.servers.vm.owned);
-		$('#stats-lampcost').html('LAMP cost: $' + fix(game.servers.getCost(game.servers.lamp)));
-		$('#stats-lampowned').html('LAMP owned: ' + fix(game.servers.lamp.owned));
+		$('#stats-zombieowned').html('Zombies owned: ' + game.servers.zombie.owned);
+		$('#stats-infectionspersec').html('Infections/sec: ' + game.virus.getAllVirusSend());
+		$('#stats-botnetpower').html('Botnet power: ' + fix(game.botnet.power));
+		$('#stats-powermult').html('Power mult: x' + fix(game.botnet.getPowerMult()));
 		
 		if (typeof game.kongregate.isGuest == 'boolean')
-			$('#navbar-bonustime').html('x' + game.kongregate.bonusMult + ' ads boost: ' + msToTime(game.kongregate.bonusTime));
+			$('#navbar-bonustime').html('<b>x' + game.kongregate.getMult() + '</b> ads boost: ' + msToTime(game.kongregate.bonusTime));
 	},
 
 	varInit: function() {
@@ -57,7 +61,7 @@ var game = {
 		game.intervals.core = setInterval(function() {
 			game.core();
 		}, game.interval);
-		
+        
         game.intervals.save = setInterval(function() {
             game.save.save();
         }, game.save.interval);
@@ -100,12 +104,13 @@ var game = {
 			case 'snow':
 				initSnowBackground();
 				break;
-		}
+		};
 	},
 
 	init: function() {
 		game.varInit();
 		game.save.load();
+		game.update(Math.floor((game.now - game.before) / game.interval));
 		game.domInit();
 		game.kongregate.init();
 

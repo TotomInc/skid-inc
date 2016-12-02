@@ -1,6 +1,6 @@
 game.options = {
 	typedEffect: false,
-	background: false,
+	background: true,
 	view: 'default',
 
 	toggleBackground: function(toggle) {
@@ -24,8 +24,8 @@ game.options = {
 	},
 
 	setFps: function(num) {
-		if (num > 144)
-			game.console.print('You can\'t put a value greater than <b>144 fps</b>.', 'error');
+		if (num > 60)
+			game.console.print('You can\'t put a value greater than <b>60 fps</b>.', 'error');
 		else if (num < 1)
 			game.console.print('You can\'t put a value lower than <b>1 fps</b>.', 'error');
 		else {
@@ -62,14 +62,26 @@ game.options = {
 			
 			case 'servers':
 				$(col1[0]).attr('id', 'stats-money').html('');
-				$(col1[1]).attr('id', 'stats-moneymult').html('');
-				$(col1[2]).attr('id', 'stats-expmult').html('');
+				$(col1[1]).attr('id', 'stats-level').html('');
+				$(col1[2]).attr('id', 'stats-moneymult').html('');
 				$(col2[0]).attr('id', 'stats-irccost').html('');
 				$(col2[1]).attr('id', 'stats-vmcost').html('');
-				$(col2[2]).attr('id', 'stats-lampcost').html('');
+				$(col2[2]).attr('id', 'stats-expmult').html('');
 				$(col3[0]).attr('id', 'stats-ircowned').html('');
 				$(col3[1]).attr('id', 'stats-vmowned').html('');
-				$(col3[2]).attr('id', 'stats-lampowned').html('');
+				$(col3[2]).attr('id', 'stats-timemult').html('');
+				break;
+			
+			case 'botnet':
+				$(col1[0]).attr('id', 'stats-money').html('');
+				$(col1[1]).attr('id', 'stats-exp').html('');
+				$(col1[2]).attr('id', 'stats-level').html('');
+				$(col2[0]).attr('id', 'stats-infectionspersec').html('');
+				$(col2[1]).attr('id', 'stats-zombieowned').html('');
+				$(col2[2]).attr('id', '').html('');
+				$(col3[0]).attr('id', 'stats-botnetpower').html('');
+				$(col3[1]).attr('id', 'stats-powermult').html('');
+				$(col3[2]).attr('id', '').html('');
 				break;
 		};
 		
@@ -80,12 +92,33 @@ game.options = {
 	changeTheme: function(what) {
 		switch (what) {
 			case 'default':
+				$('.navbar').attr('class', 'navbar navbar-default navbar-fixed-top');
 				$('.console').attr('class', 'console');
 				break;
 			
 			case 'black':
-				if (game.console.themesUnlocked[1])
+				if (game.console.black) {
+					$('.navbar').attr('class', 'navbar navbar-default navbar-fixed-top dark');
 					$('.console').attr('class', 'console dark');
+				}
+				else
+					game.console.print('This theme is locked, you need to buy it.', 'error');
+				break;
+			
+			case 'monokai':
+				if (game.console.monokai) {
+					$('.navbar').attr('class', 'navbar navbar-default navbar-fixed-top monokai');
+					$('.console').attr('class', 'console monokai');
+				}
+				else
+					game.console.print('This theme is locked, you need to buy it.', 'error');
+				break;
+			
+			case 'afterglow':
+				if (game.console.afterglow) {
+					$('.navbar').attr('class', 'navbar navbar-default navbar-fixed-top afterglow');
+					$('.console').attr('class', 'console afterglow');
+				}
 				else
 					game.console.print('This theme is locked, you need to buy it.', 'error');
 				break;

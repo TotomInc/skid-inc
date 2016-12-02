@@ -13,18 +13,44 @@ game.save = {
         'game.player.exp',
         'game.player.expReq',
         
-        'game.console.themesUnlocked',
-        
-        /* hack variables save experimental */
-        'game.hack.isHacking',
-        'game.hack.currentHack',
-        'game.hack.hackProgress',
+        'game.console.monokai',
+        'game.console.black',
+        'game.console.afterglow',
         
         'game.options.typedEffect',
         'game.options.background',
         
         'game.servers.vm.owned',
-        'game.servers.irc.owned'
+        'game.servers.irc.owned',
+        'game.servers.zombie.owned',
+        
+        'game.virus.list.boza.send',
+        'game.virus.list.happy99.send',
+        'game.virus.list.memz.send',
+        'game.virus.list.faggot.send',
+        'game.virus.list.magistr.send',
+        
+        'game.hack.hackers.grocer.owned',
+        'game.hack.hackers.business_man.owned',
+        'game.hack.hackers.cashier.owned',
+        'game.hack.hackers.banker.owned',
+        'game.hack.hackers.jeweler.owned',
+        'game.hack.hackers.mark.owned',
+        'game.hack.hackers.steve.owned',
+        'game.hack.hackers.larry.owned',
+        
+        'game.hack.hackers.grocer.progress',
+        'game.hack.hackers.business_man.progress',
+        'game.hack.hackers.cashier.progress',
+        'game.hack.hackers.banker.progress',
+        'game.hack.hackers.jeweler.progress',
+        'game.hack.hackers.mark.progress',
+        'game.hack.hackers.steve.progress',
+        'game.hack.hackers.larry.progress',
+        
+        'game.botnet.power',
+        
+        'game.kongregate.boughtMults'
     ],
     
     consoleHandler: function(what) {
@@ -110,6 +136,7 @@ game.save = {
                 return;
             
             var path = game.save.toSave[i].split('.'),
+                lastItemPath = path[path.length - 1],
                 str = 'game';
             
             path.shift();
