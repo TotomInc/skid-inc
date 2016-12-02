@@ -80,3 +80,13 @@
 .afterglow.navbar .navbar-nav>li>a {
     color: #ab7388 !important;
 }
+
+.fluoro.navbar .navbar-brand {
+    color: rgba(253, 99, 186, 1) !important;
+}
+.fluoro.navbar .navbar-brand small {
+    color: rgba(252, 54, 166, 1) !important;
+}
+.fluoro.navbar .navbar-nav>li>a {
+    color: rgba(253, 99, 186, 1) !important;
+}

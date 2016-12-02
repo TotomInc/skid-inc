@@ -125,12 +125,13 @@ game.console.commands = [
         readable: 'buy theme (option)',
         desc: 'buy terminal theme with kreds (Kongregate money).',
         execute: 'game.kongregate.buyMtx',
-        options: ['black_theme', 'monokai_theme', 'afterglow_theme'],
+        options: ['black_theme', 'monokai_theme', 'afterglow_theme', 'fluoro_theme'],
         optionIndex: 2,
         optionsDesc: [
             'buy the black and white theme with a blue accentuation color for the terminal, cost <b>50 Kreds</b>.',
             'buy the monokai theme (light blue background and text, pink and green accentuation color), cost <b>50 Kreds</b>.',
-            'buy the afterglow theme (light pink background, light orange text, pink and red accentuation colors), cost <b>50 Kreds</b>.'
+            'buy the afterglow theme (light pink background, light orange text, pink and red accentuation colors), cost <b>50 Kreds</b>.',
+            'buy the fluoro theme (dark purple background, heavy pink text with green and orange accentuation colors), cost <b>50 Kreds</b>.'
         ]
     }, {
         id: 3,
@@ -209,13 +210,14 @@ game.console.commands = [
         readable: 'option theme (option)',
         desc: 'change the theme of the console.',
         execute: 'game.options.changeTheme',
-        options: ['default', 'black', 'monokai', 'afterglow'],
+        options: ['default', 'black', 'monokai', 'afterglow', 'fluoro'],
         optionIndex: 2,
         optionsDesc: [
             'The default SkidInc console theme, green and black.',
             'Black and white theme, like in the 90s.',
             'Monokai theme, based on the original and famous Monokai color scheme.',
-            'Afterglow theme, based on the original afterglow color scheme.'
+            'Afterglow theme, based on the original afterglow color scheme.',
+            'Fluoro theme, high in pink.'
         ]
     }, {
         pattern: '^option[\\s]savegame[\\s][\\w]$',
@@ -231,6 +233,15 @@ game.console.commands = [
             'Export your save code.',
             'Import your save code.'
         ]
+    }, {
+        pattern: '^option[\\s]code[\\s][\\w]$',
+        readable: 'option code (option)',
+        desc: 'redeem a code to earn some bonuses.',
+        execute: 'game.options.redeemCode',
+        options: ['userinput'],
+        userInputExpected: 'number',
+        optionIndex: 2,
+        optionsDesc: ['check skidinc twitter account for codes.']
     }]
 }, {
     name: 'clear',

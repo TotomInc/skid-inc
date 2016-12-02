@@ -28,10 +28,14 @@ game.kongregate = {
             
             api.mtx.addEventListener("adsAvailable", function() {
                 game.kongregate.adAvailable = true;
+                
+                console.info('Ad available.');
             });
             
             api.mtx.addEventListener("adsUnavailable", function() {
                 game.kongregate.adAvailable = false;
+                
+                console.info('Ad unavailable.')
             });
             
             api.mtx.addEventListener("adOpened", function() {
@@ -42,7 +46,7 @@ game.kongregate = {
                 game.kongregate.adsCompleted++;
                 game.kongregate.onAd = false;
                 game.kongregate.bonusTime += 2.16E7;
-                game.console.print('Thanks for watching the ad, this support me to develop this game. Here are 6h of the bonus ads multiplier.');
+                game.console.print('Thanks, you help the developer when watching ads.');
             });
             
             api.mtx.addEventListener("adAbandoned", function() {
@@ -131,6 +135,11 @@ game.kongregate = {
                 case 'afterglow_theme':
                     game.console.afterglow = true;
                     game.console.print('To enable your theme, write <b>option theme afterglow</b>.');
+                    break;
+                
+                case 'fluoro_theme':
+                    game.console.fluoro = true;
+                    game.console.print('To enable your theme, write <b>option theme fluoro</b>.');
                     break;
             };
         };

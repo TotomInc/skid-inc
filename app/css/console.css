@@ -120,6 +120,9 @@
 .console.afterglow .stats p {
     color: rgba(255,198,109,1);
 }
+.console.fluoro .stats p {
+    color: rgba(249,91,128,1);
+}
 
 .screen {
     z-index: 3;
@@ -211,6 +214,11 @@
         rgba(161,97,122,0.4) 0%,
         rgba(255,255,255,0) 100%);
 }
+.console.fluoro .layer {
+    background: radial-gradient(ellipse at center,
+        rgba(32,9,51,0.7) 0%,
+        rgba(255,255,255,0) 100%);
+}
 
 .text {
     z-index: 4;
@@ -280,6 +288,10 @@
     color: rgba(255,198,109,1) !important;
     text-shadow: 2px 2px 8px #613c00, -2px -2px 8px #613c00, -2px 2px 8px #613c00, 2px -2px 8px #613c00;
 }
+.console.fluoro .output p {
+    color: rgba(249,91,128,1) !important;
+    text-shadow: 2px 2px 8px #820826, -2px -2px 8px #820826, -2px 2px 8px #820826, 2px -2px 8px #820826;
+}
 
 .console .output .error {
     color: #f5cd2f !important;
@@ -297,6 +309,10 @@
     color: #d3422e !important;
     text-shadow: 2px 2px 8px #5d1c14, -2px -2px 8px #5d1c14, -2px 2px 8px #5d1c14, 2px -2px 8px #5d1c14;
 }
+.console.fluoro .output .error {
+    color: rgba(252,25,154,1) !important;
+    text-shadow: 2px 2px 8px #790245, -2px -2px 8px #790245, -2px 2px 8px #790245, 2px -2px 8px #790245;
+}
 
 .console .output .error b {
     color: #ffe88d !important;
@@ -310,6 +326,10 @@
 .console.afterglow .output .error b {
     color: #cc7833 !important;
     text-shadow: 2px 2px 8px #39220e, -2px -2px 8px #39220e, -2px 2px 8px #39220e, 2px -2px 8px #39220e;
+}
+.console.fluoro .output .error b {
+    color: rgba(253,137,2,1) !important;
+    text-shadow: 2px 2px 8px #603401, -2px -2px 8px #603401, -2px 2px 8px #603401, 2px -2px 8px #603401;
 }
 
 .console .output p b {
@@ -326,6 +346,10 @@
 .console.afterglow .output p b {
     color: #ab7388 !important;
     text-shadow: 2px 2px 8px #39222b, -2px -2px 8px #39222b, -2px 2px 8px #39222b, 2px -2px 8px #39222b;
+}
+.console.fluoro .output p b {
+    color: rgba(47,252,29,1) !important;
+    text-shadow: 2px 2px 8px #074b01, -2px -2px 8px #074b01, -2px 2px 8px #074b01, 2px -2px 8px #074b01;
 }
 
 .console.monokai .output .error b {
@@ -389,6 +413,10 @@
     color: #a1617a !important;
     text-shadow: none !important;
 }
+.console.fluoro .input {
+    color: rgba(249,91,128,1) !important;
+    text-shadow: none !important;
+}
 
 .blinking-arrow {
     float: left;
@@ -414,6 +442,9 @@
 }
 .console.afterglow .blinking-arrow:hover {
     text-shadow: 0px 0px 8px #7c4b5e !important;
+}
+.console.fluoro .blinking-arrow:hover {
+    text-shadow: 0px 0px 8px #820826 !important;
 }
 
 .blinking-arrow > i {
@@ -447,6 +478,9 @@
 .console.afterglow .enter:hover {
     text-shadow: 0px 0px 8px #7c4b5e !important;
 }
+.console.fluoro .enter:hover {
+    text-shadow: 0px 0px 8px #820826 !important;
+}
 
 .input-container {
     float: left;
@@ -471,6 +505,9 @@
 }
 .console.afterglow .input-container:hover {
     border-color: #a1617a !important;
+}
+.console.fluoro .input-container:hover {
+    border-color: rgba(181, 3, 104, 1) !important;
 }
 
 #console-input::selection {

@@ -2,6 +2,7 @@ game.console = {
     monokai: false,
     black: false,
     afterglow: false,
+    fluoro: false,
     
     getFirstWord: function(str) {
         var gotWhitespace = str.indexOf(' '),

@@ -16,6 +16,7 @@ game.save = {
         'game.console.monokai',
         'game.console.black',
         'game.console.afterglow',
+        'game.console.fluoro',
         
         'game.options.typedEffect',
         'game.options.background',

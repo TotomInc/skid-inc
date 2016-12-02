@@ -1,6 +1,6 @@
 game.options = {
 	typedEffect: false,
-	background: true,
+	background: false,
 	view: 'default',
 
 	toggleBackground: function(toggle) {
@@ -121,6 +121,29 @@ game.options = {
 				}
 				else
 					game.console.print('This theme is locked, you need to buy it.', 'error');
+				break;
+			
+			case 'fluoro':
+				if (game.console.afterglow) {
+					$('.navbar').attr('class', 'navbar navbar-default navbar-fixed-top fluoro');
+					$('.console').attr('class', 'console fluoro');
+				}
+				else
+					game.console.print('This theme is locked, you need to buy it.', 'error');
+				break;
+		};
+	},
+	
+	redeemCode: function(code) {
+		var time = new Date().getTime();
+		
+		switch(code) {
+			case 1337:
+				var limit = new Date(2016,12,25).getTime();
+				
+				if (time < limit) {
+					game.console.print('TODO');
+				};
 				break;
 		};
 	}
