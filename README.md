@@ -22,9 +22,3 @@ For any pull request, create your own branch.
 New features incoming are on a developement branch. When we reach a milestone on this branch, I merge it to `stable` branch.
 
 The live website branch is `gh-pages`, it refers to `stable` branch.
-
-### Links:
-
-[Play it here!](https://totominc.github.io/skid-inc/ "SkidInc game")
-
-[SkidInc subreddit!](https://www.reddit.com/r/skidinc "SkidInc subreddit")
