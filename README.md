@@ -11,8 +11,9 @@ The community is growing on the subreddit [/r/skidinc](https://www.reddit.com/r/
 For any coders that want to help:
 
 1. Clone the repo.
-2. Install all dev dependencies with `npm i`. We recommend you to test your changes on a local server, using `npm start`.
-3. Please, carefully test changes that you have done, otherwise I will not accept the pull-request.
+2. Install all dev dependencies with `npm i`. Test your changes on a local server, using `npm start`.
+3. Before pushing everything, run `npm run build` (concat + minify).
+4. Please, carefully test changes that you have done, otherwise I will not accept the pull-request.
 
 ### Workflow:
 

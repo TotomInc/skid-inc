@@ -7,7 +7,8 @@
     "url": "git+ssh://git@github.com/TotomInc/skid-inc.git"
   },
   "scripts": {
-    "start": "http-server ."
+    "start": "http-server .",
+    "build": "gulp"
   },
   "author": "Thomas Cazade (TotomInc)",
   "license": "MIT",
