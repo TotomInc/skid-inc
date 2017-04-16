@@ -1,0 +1,221 @@
+@keyframes cursor {
+	0% { opacity: 0; }
+	40% { opacity: 0; }
+	50% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+.logo {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../assets/logo.png) center center no-repeat;
+    opacity: 0.3;
+}
+body.inverted .logo {
+    opacity: 0.1;
+}
+
+.intro {
+    z-index: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.intro .terminal {
+    width: 60%;
+    height: 400px;
+}
+.intro .terminal .logs {
+    float: none !important;
+    width: 100% !important;
+    height: calc(400px - 42px);
+}
+.intro .terminal .input {
+    width: 100%;
+    height: 42px;
+}
+.intro .terminal.inverted .input .custom-input {
+    text-shadow: 0 0 0 #f1f1f1;
+}
+
+.game {
+    display: none;
+    z-index: 1000;
+}
+
+.terminal {
+    width: 100%;
+    height: calc(100vh - 42px);
+}
+.terminal.inverted {
+    color: #f1f1f1;
+}
+
+.terminal .logs {
+    overflow-y: auto;
+    float: left;
+    padding: 10px;
+    width: 70%;
+    height: 100%;
+}
+.terminal .logs .buttons {
+    float: right;
+    width: 150px;
+    height: 40px;
+}
+.terminal .logs p, .logs span {
+    margin: 0;
+    font-size: 16px;
+}
+.terminal .logs p.text-bullet {
+    width: calc(100% - 15px);
+    margin-left: 15px;
+}
+.terminal .logs span red {
+    color: #ff6060;
+}
+.terminal .logs span green {
+    color: #56d640;
+}
+
+.terminal .stats {
+    overflow-y: auto;
+    float: right;
+    padding: 10px;
+    width: 30%;
+    height: 100%;
+}
+.terminal .stats .names {
+    float: left;
+    width: 50%;
+    text-align: left;
+}
+.terminal .stats .content {
+    float: right;
+    width: 50%;
+    text-align: right;
+    font-weight: bold;
+}
+.terminal .stats > div {
+    float: left;
+    width: 100%;
+}
+.terminal .stats p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.terminal .spacer {
+    height: 14px;
+}
+
+.terminal.inverted + .input {
+    background: #333;
+    color: #f1f1f1;
+}
+.input {
+    height: 42px;
+    width: 100%;
+    line-height: 42px;
+}
+.input span {
+    float: left;
+    margin-left: 10px;
+    font-size: 26px;
+    cursor: pointer;
+}
+.input span .unique {
+    float: none;
+    margin-left: 0;
+    font-size: 26px;
+    cursor: pointer;
+}
+.terminal.inverted + .input .custom-input {
+    text-shadow: 0 0 0 #f1f1f1;
+}
+.input .custom-input {
+    float: left;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    text-align: left !important;
+    height: 100%;
+    width: calc(100% - 25px - 250px - 5px - 1px);
+    margin-left: 5px;
+    color: transparent;
+    text-shadow: 0 0 0 #292b2c;
+}
+.input .custom-input:after {
+    content: "_";
+    opacity: 0;
+    animation: cursor 1s infinite;
+}
+
+.input .input-cog {
+    margin: 0;
+}
+.input .input-cog i {
+    transition: all 200ms;
+    color: #292b2c;
+}
+.input .input-cog i:hover {
+    transition: all 200ms;
+    -webkit-transform: rotate(50deg);
+    transform: rotate(50deg);
+}
+.cog-content {
+    overflow-y: auto;
+    position: absolute;
+    margin-left: -127px;
+    margin-top: -118px;
+    width: 150px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: #666;
+    cursor: default;
+}
+.terminal.inverted + .input .input-cog i {
+    color: #f1f1f1;
+}
+.cog-content p {
+    cursor: pointer;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #555;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    transition: color 200ms;
+}
+.cog-content p:hover {
+    transition: color 200ms;
+    color: #aaa;
+}
+.cog-content p img {
+    max-height: 17px;
+}
+.cog-content p i {
+    transition: all 0ms !important;
+}
+.cog-content p:last-child {
+    border-bottom: 0;
+}
+.input .input-cog.show .cog-content {
+    transition: opacity 200ms;
+    visibility: visible;
+    opacity: 1;
+}
+.input .input-cog .cog-content {
+    transition: opacity 200ms;
+    visibility: hidden;
+    opacity: 0;
+}

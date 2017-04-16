@@ -1,0 +1,17 @@
+{
+    "globals": {
+        "M": true,
+        "$": true,
+        "io": true,
+        "fix": true,
+        "moment": true,
+        "skidinc": true,
+        "kongregate": true,
+        "kongregateAPI": true
+    },
+    
+    "env": {
+        "node": true,
+        "browser": true
+    }
+}

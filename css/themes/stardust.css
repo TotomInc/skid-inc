@@ -1,0 +1,86 @@
+@-webkit-keyframes scroll {
+    100% {
+        background-position: 0px -3000px;
+    }
+}
+
+body.stardust {
+    background-image: url(../../assets/stardust.png);
+    background-repeat: repeat;
+    animation: 100s scroll infinite linear;
+    -webkit-animation: 100s scroll infinite linear;
+}
+body.stardust .logo {
+    visibility: hidden;
+}
+
+.game.stardust .terminal.inverted + .input,
+.game.stardust .input {
+    background: rgba(0, 0, 0, 0) !important;
+}
+
+/* <x> for errors (red) */
+.game.stardust .logs span x,
+.intro.stardust .logs span x {
+    color: #ff6060;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span x {
+    background-color: inherit;
+}
+
+/* <w> for warnings (orange) */
+.game.stardust .logs span w,
+.intro.stardust .logs span w {
+    color: #ffa500;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span w {
+    background-color: inherit;
+}
+
+/* <z> for success (gold) */
+.game.stardust .logs span z,
+.intro.stardust .logs span z {
+    color: #ffd700;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span z {
+    background-color: inherit;
+}
+
+/* <y> for logs info (lemon gold) */
+.game.stardust .logs span y,
+.intro.stardust .logs span y {
+    color: #a4c136;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span y {
+    background-color: inherit;
+}
+
+/* <t> for hour (light blue) */
+.game.stardust .logs span t,
+.intro.stardust .logs span t {
+    color: #add8e6;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span t {
+    background-color: inherit;
+}
+
+/* <h> for tutorial (light violet) */
+.game.stardust .logs span h,
+.intro.stardust .logs span h {
+    color: #c785c7;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span h {
+    background-color: inherit;
+}

@@ -1,0 +1,65 @@
+/* <x> for errors (red) */
+.game.default .logs span x,
+.intro.default .logs span x {
+    color: #ff6060;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span x {
+    background-color: inherit;
+}
+
+/* <w> for warnings (orange) */
+.game.default .logs span w,
+.intro.default .logs span w {
+    color: #ffa500;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span w {
+    background-color: inherit;
+}
+
+/* <z> for success (gold) */
+.game.default .logs span z,
+.intro.default .logs span z {
+    color: #ffd700;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span z {
+    background-color: inherit;
+}
+
+/* <y> for logs info (lemon gold) */
+.game.default .logs span y,
+.intro.default .logs span y {
+    color: #a4c136;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span y {
+    background-color: inherit;
+}
+
+/* <t> for hour (light blue) */
+.game.default .logs span t,
+.intro.default .logs span t {
+    color: #add8e6;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span t {
+    background-color: inherit;
+}
+
+/* <h> for tutorial (light violet) */
+.game.default .logs span h,
+.intro.default .logs span h {
+    color: #c785c7;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span h {
+    background-color: inherit;
+}

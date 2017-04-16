@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu Mono';
+    background: #f1f1f1;
+}
+
+body.inverted {
+    background: #333;
+}
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}

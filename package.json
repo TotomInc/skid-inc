@@ -1,0 +1,20 @@
+{
+  "name": "skid-inc",
+  "version": "0.0.0",
+  "description": "Idle-game with hacking theme.",
+  "main": "server/server.js",
+  "dependencies": {
+    "http-server": "^0.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TotomInc/skid-inc"
+  },
+  "author": "TotomInc <cazade.thomas@gmail.com>",
+  "license": "MIT"
+}

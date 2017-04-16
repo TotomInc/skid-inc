@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'matrix-code';
+    src: url("../../assets/matrix-code.woff") format("woff"),
+        url("../../assets/matrix-code.svg#svgFontName") format("svg");
+}
+
+.matrix-effect canvas {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.20;
+    font-family: 'matrix-code';
+}
+
+body.matrix .logo {
+    visibility: hidden;
+}
+
+.game.matrix .terminal.inverted + .input,
+.game.matrix .input {
+    background: rgba(0, 0, 0, 0) !important;
+}
+
+/* <x> for errors (green) */
+.game.matrix .logs span x,
+.intro.matrix .logs span x {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span x {
+    background-color: inherit;
+}
+
+/* <w> for warnings (green) */
+.game.matrix .logs span w,
+.intro.matrix .logs span w {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span w {
+    background-color: inherit;
+}
+
+/* <z> for success (green) */
+.game.matrix .logs span z,
+.intro.matrix .logs span z {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span z {
+    background-color: inherit;
+}
+
+/* <y> for logs info (green) */
+.game.matrix .logs span y,
+.intro.matrix .logs span y {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span y {
+    background-color: inherit;
+}
+
+/* <t> for hour (green) */
+.game.matrix .logs span t,
+.intro.matrix .logs span t {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span t {
+    background-color: inherit;
+}
+
+/* <h> for tutorial (green) */
+.game.matrix .logs span h,
+.intro.matrix .logs span h {
+    color: #18FF62;
+    background-color: #3c3c3c;
+    font-weight: bold;
+}
+.terminal.inverted .logs span h {
+    background-color: inherit;
+}

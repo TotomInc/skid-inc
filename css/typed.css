@@ -1,0 +1,16 @@
+@keyframes cursor {
+	0% { opacity: 0; }
+	40% { opacity: 0; }
+	50% { opacity: 1; }
+	90% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+.typed-cursor {
+    opacity: 0;
+    animation: cursor 1s infinite;
+}
+
+.loader .typed-cursor {
+	font-weight: bold;
+}

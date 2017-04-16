@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Skid-Inc - Idle-game for hackers!</title>
+    <meta name="description" content="Skid-Inc is an idle-game with an hacking theme, where you enter commands to hack things." />
+    
+    <link rel="icon" type="image/png" href="/favicon">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700">
+    
+    <link rel="stylesheet" href="css/helpers.css">
+    <link rel="stylesheet" href="css/core.css">
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/game-queries.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/typed.css">
+    <link rel="stylesheet" href="css/scrollbar.css">
+    
+    <link rel="stylesheet" href="css/themes/default.css">
+    <link rel="stylesheet" href="css/themes/stardust.css">
+    <link rel="stylesheet" href="css/themes/matrix.css">
+    
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn1.kongregate.com/javascripts/kongregate_api.js"></script>
+    <script src="lib/typed.min.js"></script>
+</head>
+
+<body class="noselect inverted">
+    <div class="logo"></div>
+    
+    <div id="loader" class="loader">
+        <p class="text">
+            <span id="loading-text"></span><span id="loading-dots"></span>
+        </p>
+    </div>
+    
+    <div class="intro default">
+        <div class="terminal inverted">
+            <div id="intro-logs" class="logs"></div>
+            <div class="input">
+                <span class="input-before">skidinc@root:~$</span>
+                
+                <span id="intro-input" class="custom-input" contenteditable="true" spellcheck="false"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="game default">
+        <div class="terminal inverted">
+            <div id="logs" class="logs"></div>
+            
+            <div class="stats">
+                <div id="player">
+                    <div class="names">
+                        <p>Level</p>
+                        <p>Money</p>
+                        <p>Exp.</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p id="level"></p>
+                        <p id="money"></p>
+                        <p id="exp"></p>
+                    </div>
+                </div>
+                
+                <div class="spacer"></div>
+
+                <div id="script">
+                    <div class="names">
+                        <p>Script executed</p>
+                        <p>Script name</p>
+                        <p>Time</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p id="executed"></p>
+                        <p id="name"></p>
+                        <p id="time"></p>
+                    </div>
+                </div>
+                
+                <div class="spacer"></div>
+                
+                <div id="telnet">
+                    <div class="names">
+                        <p>Telnet level</p>
+                        <p>Telnet price</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p id="level"></p>
+                        <p id="price"></p>
+                    </div>
+                </div>
+                
+                <div class="spacer"></div>
+                
+                <div id="web">
+                    <div class="names">
+                        <p>Web level</p>
+                        <p>Web price</p>
+                    </div>
+                    
+                    <div class="content">
+                        <p id="level"></p>
+                        <p id="price"></p>
+                    </div>
+                </div>
+                
+                <div class="spacer"></div>
+            </div>
+        </div>
+        
+        <div class="input">
+            <span class="input-before"><span id="input-session" class="unique">skidinc</span>@root:~$</span>
+            
+            <span id="command-input" class="custom-input" contenteditable="true" spellcheck="false"></span>
+            
+            <span id="cog-btn" class="input-cog">
+                <div id="cog-content" class="cog-content">
+                    <p data-toggle="modal" data-target="#modal-themes"><img src="/assets/kred_single.png"> Buy themes</p>
+                    <p data-toggle="modal" data-target="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</p>
+                    <p data-toggle="modal" data-target="#modal-options"><i class="fa fa-cog norotate"></i> Options</p>
+                </div>
+                
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <div id="modal-themes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-themeshop" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-shop">
+                    <h5 class="modal-title" id="themeshop"><img src="/assets/kred_single.png"> Theme Shop - <a target=_"blank" href="http://imgur.com/a/tKCdW">preview themes</a></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                
+                <div id="themeshop-content" class="modal-body">
+                    <p id="modal-themes4kong" class="text-center">Theme shop is only available for Kongregate players.</p>
+                    <p id="modal-themes4guests" class="text-center">You need to be logged into Kongregate to purchase themes.</p>
+                    <div id="modal-themes4logged">
+                        <div class="row text-justify">
+                            <div class="col-md-9">
+                                <p><b>Stardust theme</b>: a cosmic theme with an animated stardust background.<br>Cost <b>30 Kreds</b></p>
+                            </div>
+                            <div class="col-md-3">
+                                <a id="theme-1" class="btn btn-secondary btn-block" role="button">Buy</a>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-justify">
+                            <div class="col-md-9">
+                                <p><b>Matrix theme</b>: a Matrix theme for your terminal, which include a matrix background effect!<br>Cost <b>30 Kreds</b>.</p>
+                            </div>
+                            <div class="col-md-3">
+                                <a id="theme-2" class="btn btn-secondary btn-block" role="button">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/helpers/cog.js"></script>
+    <script src="js/helpers/beautify.js"></script>
+    <script src="js/helpers/matrix.js"></script>
+    
+    <script src="js/core.js"></script>
+    <script src="js/console.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/autoscript.js"></script>
+    <script src="js/server.js"></script>
+    <script src="js/buy.js"></script>
+    <script src="js/options.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/tutorial.js"></script>
+    <script src="js/kongregate.js"></script>
+</body>
+</html>
