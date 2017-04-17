@@ -9,6 +9,7 @@ skidinc.loops = {};
 
 skidinc.update = function(times) {
     this.script.loop(times);
+    this.autoscript.loop(times);
     this.stats();
 };
 

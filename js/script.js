@@ -5,6 +5,7 @@ skidinc.script.time = 0;
 skidinc.script.maxTime = 0;
 skidinc.script.maxBar = 40;
 skidinc.script.unlocked = [true, false, false, false, false, false, false, false];
+skidinc.script.completed = [0, 0, 0, 0, 0, 0, 0, 0];
 skidinc.script.scripts = [{
     id: 'hare.ctx',
     cost: 0,
@@ -157,6 +158,9 @@ skidinc.script.execute = function(args) {
 skidinc.script.start = function(script) {
     if (!skidinc.script.available)
         return skidinc.console.print('<x>ERR</x> you can\'t execute multiple scripts at once.');
+    
+    if (skidinc.autoscript.unlocked[script.i])
+        return skidinc.console.print('<x>ERR</x> you already have an autoscript for <b>' + script.id + '</b> script.');
         
     if (!skidinc.script.unlocked[script.i])
         return skidinc.console.print('<x>ERR</x> you haven\'t unlocked the <b>' + script.id + '</b> script.');
@@ -176,6 +180,9 @@ skidinc.script.start = function(script) {
 skidinc.script.stop = function(script) {
     if (skidinc.script.available)
         return skidinc.console.print('<x>ERR</x> there are no script executed.');
+    
+    if (skidinc.autoscript.unlocked[script.i])
+        return skidinc.console.print('<x>ERR</x> you can\'t stop the autoscript for <b>' + script.id + '</b> script.');
     
     if (script.id !== skidinc.script.current.id)
         return skidinc.console.print('<x>ERR</x> this script is not executed.');
@@ -200,6 +207,9 @@ skidinc.script.finish = function() {
     
     skidinc.player.earn('money', money);
     skidinc.player.earn('exp', exp);
+    
+    skidinc.script.completed[script.i]++;
+    
     skidinc.script.available = true;
     skidinc.script.current = null;
     skidinc.script.time = 0;
@@ -263,13 +273,13 @@ skidinc.script.buy = function(what) {
 };
 
 skidinc.script.loop = function(times) {
-    if (!this.available && typeof this.current == 'object') {
-        this.time -= times / skidinc.interval;
+    if (!skidinc.script.available && typeof skidinc.script.current == 'object') {
+        skidinc.script.time -= times / skidinc.interval;
         
-        this.bar();
+        skidinc.script.bar();
         
-        if (this.time <= 0)
-            return this.finish();
+        if (skidinc.script.time <= 0)
+            skidinc.script.finish();
     };
 };
 
