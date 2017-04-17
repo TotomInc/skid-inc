@@ -81,3 +81,21 @@ skidinc.autoscript.finish = function(script) {
     skidinc.script.completed[script.i]++;
     skidinc.autoscript.time[script.i] = 0;
 };
+
+skidinc.autoscript.init = function() {
+    if (skidinc.script.scripts.length !== skidinc.autoscript.unlocked.length) {
+        skidinc.autoscript.unlocked = [];
+        
+        skidinc.script.scripts.forEach(function(i) {
+            skidinc.autoscript.unlocked.push(false);
+        });
+    };
+
+    if (skidinc.script.scripts.length !== skidinc.autoscript.time.length) {
+        skidinc.autoscript.time = [];
+        
+        skidinc.script.scripts.forEach(function(i) {
+            skidinc.autoscript.time.push(0);
+        });
+    };
+};

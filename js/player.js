@@ -9,15 +9,15 @@ skidinc.player.expReq = 100;
 skidinc.player.level = 1;
 
 skidinc.player.getTimeMult = function() {
-    return 1;
+    return skidinc.server.getEffects('telnet').time;
 };
 
 skidinc.player.getMoneyMult = function() {
-    return 1;
+    return skidinc.server.getEffects('web').money;
 };
 
 skidinc.player.getExpMult = function() {
-    return 1;
+    return skidinc.server.getEffects('web').exp;
 };
 
 skidinc.player.setUsernamePrefix = function() {

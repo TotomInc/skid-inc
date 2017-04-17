@@ -91,7 +91,10 @@ skidinc.script.list = function() {
     for (var script in skidinc.script.scripts) {
         var i = script,
             script = skidinc.script.scripts[i],
-            unlocked = skidinc.script.unlocked[script.i];
+            unlocked = skidinc.script.unlocked[script.i],
+            money = script.money * skidinc.player.getMoneyMult(),
+            exp = script.exp * skidinc.player.getExpMult(),
+            time = script.time / skidinc.player.getTimeMult();
         
         str += '<b>-</b> <b>';
         
@@ -100,7 +103,7 @@ skidinc.script.list = function() {
         else
             str += '<green>' + script.id + '</green>';
         
-        str += '</b>: <b>+$' + fix(script.money, 0) + '</b> and <b>+' + fix(script.exp, 0) + ' exp</b>, cost <b>$' + fix(script.cost, 0) + '</b>, execution takes <b>' + fix(script.time, 0) + ' sec</b>.<br>';
+        str += '</b>: <b>+$' + fix(money, 0) + '</b> and <b>+' + fix(exp, 0) + ' exp</b>, cost <b>$' + fix(script.cost, 0) + '</b>, execution takes <b>' + fix(time, 2) + ' sec</b>.<br>';
     };
     
     return skidinc.console.print(str);
@@ -292,5 +295,13 @@ skidinc.script.init = function() {
         });
         
         skidinc.script.scripts[0] = true;
+    };
+    
+    if (skidinc.script.scripts.length !== skidinc.script.completed.length) {
+        skidinc.script.completed = [];
+        
+        skidinc.script.scripts.forEach(function(i) {
+            skidinc.script.completed.push(0);
+        });
     };
 };

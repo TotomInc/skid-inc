@@ -29,6 +29,10 @@ skidinc.stats = function() {
     
     $('#web #level').html('Lvl. ' + fix(this.server.owned[this.server.web.index], 0));
     $('#web #price').html('$' + fix(this.server.getPrice('web')));
+    
+    $('#mults #money').html('x' + fix(this.player.getMoneyMult(), 2));
+    $('#mults #exp').html('x' + fix(this.player.getExpMult(), 2));
+    $('#mults #time').html('/' + fix(this.player.getTimeMult(), 2));
 };
 
 skidinc.core = function() {
@@ -72,8 +76,11 @@ skidinc.init = function() {
         });
 
         skidinc.script.init();
-        skidinc.domInit();
+        skidinc.autoscript.init();
         skidinc.kongregate.init();
+        
+        skidinc.domInit();
+        
         skidinc.tutorial.begin();
     }, 3000);
 };

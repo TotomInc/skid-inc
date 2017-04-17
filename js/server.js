@@ -1,6 +1,6 @@
 skidinc.server = {};
 skidinc.server.servers = ['telnet', 'web'];
-skidinc.server.owned = [1, 1];
+skidinc.server.owned = [0, 0];
 skidinc.server.telnet = {
     id: 'telnet',
     index: 0,
@@ -27,6 +27,21 @@ skidinc.server.getPrice = function(what) {
     var server = skidinc.server[what];
     
     return Math.floor(server.price * Math.pow(server.inflation, skidinc.server.owned[server.index]));
+};
+
+skidinc.server.getEffects = function(what) {
+    var server = skidinc.server[what],
+        size = Object.keys(server.effects).length,
+        obj = {};
+    
+    for (var effect in server.effects) {
+        var i = effect,
+            effect = server.effects[effect];
+        
+        obj[i] = 1 + effect * skidinc.server.owned[server.index];
+    };
+    
+    return obj;
 };
 
 skidinc.server.getEffectsToStr = function(what) {
