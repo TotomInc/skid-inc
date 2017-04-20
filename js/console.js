@@ -1,5 +1,5 @@
 skidinc.console = {};
-skidinc.console.typeSpeed = -45;
+skidinc.console.typeSpeed = -50;
 skidinc.console.inputEnabled = true;
 skidinc.console.notAccepted = ['<', '>', '[', ']', '(', ')', ',', ';', '/', '\\', '\'', '"'];
 skidinc.console.commands = [{

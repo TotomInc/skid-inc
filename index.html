@@ -7,7 +7,7 @@
     <title>Skid-Inc - Idle-game for hackers!</title>
     <meta name="description" content="Skid-Inc is an idle-game with an hacking theme, where you enter commands to hack things." />
     
-    <link rel="icon" type="image/png" href="/favicon">
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/game.css">
     <link rel="stylesheet" href="css/game-queries.css">
     <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/custom-bootstrap.css">
     <link rel="stylesheet" href="css/typed.css">
     <link rel="stylesheet" href="css/scrollbar.css">
     
@@ -145,7 +146,7 @@
             <span id="cog-btn" class="input-cog">
                 <div id="cog-content" class="cog-content">
                     <p data-toggle="modal" data-target="#modal-themes"><img src="/assets/kred_single.png"> Buy themes</p>
-                    <p><i class="fa fa-video-camera norotate"></i> Watch an ad</p>
+                    <p id="cog-watchad"><i class="fa fa-video-camera norotate"></i> Watch an ad</p>
                     <p data-toggle="modal" data-target="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</p>
                     <p data-toggle="modal" data-target="#modal-options"><i class="fa fa-cog norotate"></i> Options</p>
                 </div>
@@ -154,7 +155,20 @@
             </span>
         </div>
     </div>
-
+    
+    <div id="modal-achievements" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-success" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-bar-chart"></i> Achievements - Hover them for infos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                
+                <div id="achievements-content" class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    
     <div id="modal-themes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-themeshop" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -200,9 +214,11 @@
     <script src="js/autoscript.js"></script>
     <script src="js/server.js"></script>
     <script src="js/buy.js"></script>
-    <script src="js/options.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/options.js"></script>
     <script src="js/tutorial.js"></script>
+    <script src="js/save.js"></script>
     <script src="js/kongregate.js"></script>
 </body>
 </html>

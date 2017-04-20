@@ -6,6 +6,7 @@ skidinc.script.maxTime = 0;
 skidinc.script.maxBar = 40;
 skidinc.script.unlocked = [true, false, false, false, false, false, false, false];
 skidinc.script.completed = [0, 0, 0, 0, 0, 0, 0, 0];
+skidinc.script.totalCompleted = 0;
 skidinc.script.scripts = [{
     id: 'hare.ctx',
     cost: 0,
@@ -212,6 +213,7 @@ skidinc.script.finish = function() {
     skidinc.player.earn('exp', exp);
     
     skidinc.script.completed[script.i]++;
+    skidinc.script.totalCompleted = skidinc.script.completed.reduce((a, b) => a + b, 0);
     
     skidinc.script.available = true;
     skidinc.script.current = null;

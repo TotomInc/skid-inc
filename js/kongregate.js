@@ -22,10 +22,17 @@ skidinc.kongregate.init = function() {
         });
     };
     
-    if (window.location.search.indexOf('kongregate') == -1)  {
+    if (typeof skidinc.kongregate.isGuest == 'undefined' && window.location.search.indexOf('kongregate') == -1)  {
         $('#modal-themes4guests, #modal-themes4logged').hide();
         $('#modal-themes4kong').show();
     };
+};
+
+skidinc.kongregate.watchAd = function() {
+    if (typeof skidinc.kongregate.isGuest == 'undefined' && window.location.search.indexOf('kongregate') == -1)
+        return skidinc.console.print('<x>ERR</x> this feature is only available for Kongregate players.');
+    
+    kongregate.mtx.showIncentivizedAd();
 };
 
 skidinc.kongregate.initAds = function() {
@@ -36,7 +43,7 @@ skidinc.kongregate.initAds = function() {
     });
     
     kongregate.mtx.addEventListener("adsUnavailable", function() {
-        skidinc.console.print('<x>ERR</x> no ads available, try again later.');
+        return skidinc.console.print('<x>ERR</x> no ads available, make sure your adblocker is disabled or try again later.');
     });
     
     kongregate.mtx.addEventListener("adOpened", function() {
@@ -48,7 +55,7 @@ skidinc.kongregate.initAds = function() {
     });
     
     kongregate.mtx.addEventListener("adAbandoned", function() {
-        skidinc.console.print('<w>WARN</w> you closed the ad before it end, you are not awarded of your boost.');
+        return skidinc.console.print('<w>WARN</w> you closed the ad before it end, you are not awarded of your boost.');
     });
 };
 

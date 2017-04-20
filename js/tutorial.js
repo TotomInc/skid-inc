@@ -1,5 +1,5 @@
 skidinc.tutorial = {};
-skidinc.tutorial.enabled = false;
+skidinc.tutorial.enabled = true;
 skidinc.tutorial.finish = false;
 skidinc.tutorial.step = 0;
 

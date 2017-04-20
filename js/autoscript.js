@@ -79,6 +79,7 @@ skidinc.autoscript.finish = function(script) {
     skidinc.player.earn('exp', exp);
     
     skidinc.script.completed[script.i]++;
+    skidinc.script.totalCompleted = skidinc.script.completed.reduce((a, b) => a + b, 0);
     skidinc.autoscript.time[script.i] = 0;
 };
 

@@ -1,6 +1,7 @@
 var skidinc = {};
 skidinc.fps = 30;
 skidinc.interval = 1000 / skidinc.fps;
+skidinc.version = 0.3;
 
 skidinc.before = new Date().getTime();
 skidinc.now = new Date().getTime();
@@ -77,7 +78,12 @@ skidinc.init = function() {
 
         skidinc.script.init();
         skidinc.autoscript.init();
+        skidinc.achievements.init();
         skidinc.kongregate.init();
+        
+        skidinc.save.loadNow();
+        
+        skidinc.achievements.saveInit();
         
         skidinc.domInit();
         
@@ -117,7 +123,12 @@ skidinc.domInit = function() {
         };
     });
     
+    $('#cog-watchad').on('click', skidinc.kongregate.watchAd);
+    
+    skidinc.achievements.domInit();
     skidinc.player.setUsernamePrefix();
+    
+    $('[data-toggle="tooltip"]').tooltip();
 };
 
 $(document).ready(function() {

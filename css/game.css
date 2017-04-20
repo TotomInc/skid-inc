@@ -14,10 +14,10 @@
     width: 100%;
     height: 100%;
     background: url(../assets/logo.png) center center no-repeat;
-    opacity: 0.3;
+    opacity: 0.1;
 }
 body.inverted .logo {
-    opacity: 0.1;
+    opacity: 0.03;
 }
 
 .intro {
@@ -175,9 +175,9 @@ body.inverted .logo {
 .cog-content {
     overflow-y: auto;
     position: absolute;
-    margin-left: -127px;
-    margin-top: -148px;
-    width: 150px;
+    margin-left: -157px;
+    margin-top: -150px;
+    width: 180px;
     border: 1px solid #555;
     border-radius: 4px;
     background: #666;
@@ -190,15 +190,15 @@ body.inverted .logo {
     cursor: pointer;
     margin: 0;
     padding: 10px;
-    border-bottom: 1px solid #555;
     font-size: 16px;
     line-height: 16px;
     text-align: center;
-    transition: color 200ms;
+    transition: all 200ms;
 }
 .cog-content p:hover {
-    transition: color 200ms;
-    color: #aaa;
+    transition: all 200ms;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 .cog-content p img {
     max-height: 17px;
@@ -218,4 +218,25 @@ body.inverted .logo {
     transition: opacity 200ms;
     visibility: hidden;
     opacity: 0;
+}
+
+.achievement-block {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    color: #bfbfbf;
+    border: 1px solid #8e8e8e;
+    border-radius: 4px;
+}
+.achievement-block i {
+    margin-left: 6px;
+    line-height: 50px;
+    font-size: 34px;
+    color: #333;
+}
+.achievement-col p {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
 }

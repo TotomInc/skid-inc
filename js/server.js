@@ -85,10 +85,13 @@ skidinc.server.buy = function(item) {
     var cost = skidinc.server.getPrice(item),
         server = skidinc.server[item];
     
-    if (skidinc.player.money >= cost) {
+    if (skidinc.player.money >= cost && skidinc.server.owned[server.index] + 1 <= server.max) {
         skidinc.player.money -= cost;
         skidinc.server.owned[server.index]++;
+        return;
     }
+    if (skidinc.server.owned[server.index] + 1 > server.max)
+        return skidinc.console.print('<x>ERR</x> this server have a max level which is <b>' + server.max + '</b>.');
     else if (skidinc.player.money < cost)
         return skidinc.console.print('<x>ERR</x> not enough money to upgrade your <b>' + server.id + '</b> server (cost <b>$' + fix(cost) + '</b>).');
 };
