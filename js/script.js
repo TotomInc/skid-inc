@@ -169,7 +169,7 @@ skidinc.script.start = function(script) {
     if (!skidinc.script.unlocked[script.i])
         return skidinc.console.print('<x>ERR</x> you haven\'t unlocked the <b>' + script.id + '</b> script.');
     
-    var el = (skidinc.tutorial.enabled) ? '#intro-logs' : '#logs';
+    var el = (!skidinc.tutorial.finish && skidinc.tutorial.enabled) ? '#intro-logs' : '#logs';
     
     skidinc.script.available = false;
     skidinc.script.current = script;
