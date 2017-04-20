@@ -80,10 +80,7 @@ skidinc.init = function() {
         skidinc.autoscript.init();
         skidinc.achievements.init();
         skidinc.kongregate.init();
-        
-        skidinc.save.loadNow();
-        
-        skidinc.achievements.saveInit();
+        skidinc.save.init();
         
         skidinc.domInit();
         

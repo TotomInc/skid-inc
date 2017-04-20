@@ -33,12 +33,12 @@ body.inverted .logo {
 }
 .intro .terminal {
     width: 60%;
-    height: 400px;
+    height: 500px;
 }
 .intro .terminal .logs {
     float: none !important;
     width: 100% !important;
-    height: calc(400px - 42px);
+    height: calc(500px - 42px);
 }
 .intro .terminal .input {
     width: 100%;

@@ -42,11 +42,11 @@ skidinc.player.setUsername = function(args) {
         
         var usernameWidth = Math.floor($('#username-width').width());
         
+        skidinc.player.username = args[0];
+        
         $('#username-width').remove();
         $('#input-session').html(args[0]);
         $('#command-input').css('width', 'calc(100% - 25px - 115px - ' + usernameWidth + 'px - 5px - 1px - 5px)');
-        
-        this.username = args[0];
         
         skidinc.console.print('Your new username is now <b>' + args[0] + '</b>.', function() {
             if (skidinc.tutorial.enabled)

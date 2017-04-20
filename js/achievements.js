@@ -3,6 +3,17 @@ skidinc.achievements.categories = [];
 skidinc.achievements.owned = [];
 skidinc.achievements.list = [];
 
+skidinc.achievements.getOwnedAmount = function() {
+    var owned = 0;
+    
+    for (var i = 0; i < skidinc.achievements.owned.length; i++) {
+        if (skidinc.achievements.owned[i])
+            owned++;
+    };
+    
+    return owned;
+};
+
 skidinc.achievements.getLast = function() {
     var list = [];
     
@@ -105,7 +116,11 @@ skidinc.achievements.saveInit = function() {
 };
 
 skidinc.achievements.update = function() {
-    var achievements = skidinc.achievements.getLast();
+    var achievements = skidinc.achievements.getLast(),
+        owned = skidinc.achievements.getOwnedAmount(),
+        max = skidinc.achievements.list.length;
+    
+    $('#achievements-owned').html('Achievements owned (' + owned + '/' + max + '):');
     
     for (var i = 0; i < achievements.length; i++) {
         var ach = achievements[i];
@@ -117,12 +132,16 @@ skidinc.achievements.update = function() {
 };
 
 skidinc.achievements.domInit = function() {
-    var achievements = skidinc.achievements.getLast();
+    var achievements = skidinc.achievements.getLast(),
+        owned = skidinc.achievements.getOwnedAmount(),
+        max = skidinc.achievements.list.length;
     
-    $('#achievements-content').append('<div class="row"></div>');
+    $('#achievements-owned').html('Achievements owned (' + owned + '/' + max + '):');
+    $('#achievements-content').append('<div id="achievements-row" class="row"></div>');
+    $('#achievements-row').append('<div class="col-md-1"></div>');
     
     for (var i = 0; i < achievements.length; i++) {
-        $('#achievements-content .row').append('<div id="achievement-' + achievements[i].category + '" class="col-md-2 achievement-col">' +
+        $('#achievements-row').append('<div id="achievement-' + achievements[i].category + '" class="col-md-2 achievement-col">' +
             '<div id="achievement-' + achievements[i].category + '-tooltip" class="achievement-block" data-animation="false" data-toggle="tooltip" data-placement="top" title="' + achievements[i].desc + '">' +
                 '<i class="fa ' + achievements[i].icon + '" aria-hidden="true"></i>' +
             '</div>' +

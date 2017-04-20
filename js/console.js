@@ -94,16 +94,21 @@ skidinc.console.commandExist = function(base) {
 skidinc.console.help = function() {
     var str = '<y>HELP</y> you can type <b>[command] -help</b> to get a specific help of a command:<br>';
     
-    for (var cmd in this.commands) {
-        cmd = this.commands[cmd];
+    if (skidinc.tutorial.step == 1 && !skidinc.tutorial.finish) {
+        str += '<b>-</b> <z>help</z>: show a list of available commands.<br>' +
+            '<b>-</b> <z>script</z>: execute a script.';
         
-        str += '<b>-</b> <z>' + cmd.id + '</z>: ' + cmd.desc + '<br>';
+        return this.print(str, skidinc.tutorial.switchStep(2));
+    }
+    else {
+        for (var cmd in this.commands) {
+            cmd = this.commands[cmd];
+            
+            str += '<b>-</b> <z>' + cmd.id + '</z>: ' + cmd.desc + '<br>';
+        };
+        
+        return this.print(str);
     };
-    
-    if (skidinc.tutorial.enabled && skidinc.tutorial.step == 1)
-        this.print(str, skidinc.tutorial.switchStep(2));
-    else
-        this.print(str);
 };
 
 skidinc.console.parse = function() {
@@ -184,7 +189,7 @@ skidinc.console.parse = function() {
 skidinc.console.print = function(str, callback, force) {
     var time = moment().format('HH:mm:ss'),
         str = '<t>[' + time + ']</t> ' + str,
-        el = (skidinc.tutorial.enabled) ? '#intro-logs' : '#logs';
+        el = (!skidinc.tutorial.finish && skidinc.tutorial.enabled) ? '#intro-logs' : '#logs';
     
     if (skidinc.options.typed && !force) {
         var id = Math.floor(Math.random() * 1e6);

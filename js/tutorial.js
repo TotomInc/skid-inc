@@ -62,7 +62,7 @@ skidinc.tutorial.core = function() {
                 skidinc.console.print('<h>TUTORIAL</h> We are going to take a look at the <b>script</b> command. This command will execute a script, which will take some time, but when it will finish we will earn some money and experience. You can get a list of available scripts if you add the argument <b>-l/-list</b>, so it will looks like <b>script -l</b> or <b>script -list</b>. Now try to execute your first script.', function() {
                     skidinc.console.inputEnabled = true;
                 });
-            }, 10000);
+            }, 5000);
             break;
         
         case 3:
@@ -75,7 +75,7 @@ skidinc.tutorial.core = function() {
                         skidinc.tutorial.finished();
                     }, 5000);
                 });
-            }, 3000);
+            }, 2000);
             break;
     };
 };

@@ -69,3 +69,13 @@ skidinc.save.loadNow = function() {
     
     return console.info('Save found and loaded.', save.version);
 };
+
+skidinc.save.init = function() {
+    skidinc.save.loadNow();
+    
+    skidinc.achievements.saveInit();
+    
+    skidinc.loops.save = setInterval(function() {
+        skidinc.save.saveNow();
+    }, 30000);
+};
