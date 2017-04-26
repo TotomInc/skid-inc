@@ -81,36 +81,46 @@ body.inverted .logo {
     width: calc(100% - 15px);
     margin-left: 15px;
 }
-.terminal .logs span red {
+
+.terminal span red {
     color: #ff6060;
 }
-.terminal .logs span green {
+.terminal span green {
     color: #56d640;
 }
 
-.terminal .stats {
+.red {
+    color: #ff6060;
+}
+.green {
+    color: #56d640;
+}
+
+.terminal .stat-tabs {
     overflow-y: auto;
     float: right;
     padding: 10px;
     width: 30%;
     height: 100%;
 }
-.terminal .stats .names {
+.terminal .stat-tabs .names {
     float: left;
     width: 50%;
     text-align: left;
+    margin-bottom: 15px;
 }
-.terminal .stats .content {
+.terminal .stat-tabs .content {
     float: right;
     width: 50%;
     text-align: right;
     font-weight: bold;
+    margin-bottom: 15px;
 }
-.terminal .stats > div {
+.terminal .stat-tabs > div {
     float: left;
     width: 100%;
 }
-.terminal .stats p {
+.terminal .stat-tabs p {
     margin: 0;
     font-size: 16px;
 }
@@ -221,18 +231,20 @@ body.inverted .logo {
 }
 
 .achievement-block {
-    margin-left: auto;
-    margin-right: auto;
     width: 50px;
     height: 50px;
     color: #bfbfbf;
     border: 1px solid #8e8e8e;
     border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .achievement-block i {
-    margin-left: 6px;
+    width: 48px;
+    height: 48px;
     line-height: 50px;
     font-size: 34px;
+    text-align: center;
     color: #333;
 }
 .achievement-col p {

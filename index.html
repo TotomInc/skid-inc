@@ -59,82 +59,87 @@
         <div class="terminal inverted">
             <div id="logs" class="logs"></div>
             
-            <div class="stats">
-                <div id="player">
-                    <div class="names">
-                        <p>Level</p>
-                        <p>Money</p>
-                        <p>Exp.</p>
+            <div class="stat-tabs">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#stats-overview" role="tab">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab">Autoscripts</a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="stats-overview" role="tabpanel">
+                        <div id="player" class="stat-container">
+                            <div class="names">
+                                <p>Level</p>
+                                <p>Money</p>
+                                <p>Exp.</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="level"></p>
+                                <p id="money"></p>
+                                <p id="exp"></p>
+                            </div>
+                        </div>
+        
+                        <div id="script" class="stat-container">
+                            <div class="names">
+                                <p>Script executed</p>
+                                <p>Script name</p>
+                                <p>Time</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="executed"></p>
+                                <p id="name"></p>
+                                <p id="time"></p>
+                            </div>
+                        </div>
+                        
+                        <div id="telnet" class="stat-container">
+                            <div class="names">
+                                <p>Telnet level</p>
+                                <p>Telnet price</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="level"></p>
+                                <p id="price"></p>
+                            </div>
+                        </div>
+                        
+                        <div id="web" class="stat-container">
+                            <div class="names">
+                                <p>Web level</p>
+                                <p>Web price</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="level"></p>
+                                <p id="price"></p>
+                            </div>
+                        </div>
+                        
+                        <div id="mults" class="stat-container">
+                            <div class="names">
+                                <p>Money mult.</p>
+                                <p>Exp mult.</p>
+                                <p>Time mult.</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="money"></p>
+                                <p id="exp"></p>
+                                <p id="time"></p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="content">
-                        <p id="level"></p>
-                        <p id="money"></p>
-                        <p id="exp"></p>
-                    </div>
+                    <div class="tab-pane fade" id="stats-autoscripts" role="tabpanel"></div>
                 </div>
-                
-                <div class="spacer"></div>
-
-                <div id="script">
-                    <div class="names">
-                        <p>Script executed</p>
-                        <p>Script name</p>
-                        <p>Time</p>
-                    </div>
-                    
-                    <div class="content">
-                        <p id="executed"></p>
-                        <p id="name"></p>
-                        <p id="time"></p>
-                    </div>
-                </div>
-                
-                <div class="spacer"></div>
-                
-                <div id="telnet">
-                    <div class="names">
-                        <p>Telnet level</p>
-                        <p>Telnet price</p>
-                    </div>
-                    
-                    <div class="content">
-                        <p id="level"></p>
-                        <p id="price"></p>
-                    </div>
-                </div>
-                
-                <div class="spacer"></div>
-                
-                <div id="web">
-                    <div class="names">
-                        <p>Web level</p>
-                        <p>Web price</p>
-                    </div>
-                    
-                    <div class="content">
-                        <p id="level"></p>
-                        <p id="price"></p>
-                    </div>
-                </div>
-                
-                <div class="spacer"></div>
-                
-                <div id="mults">
-                    <div class="names">
-                        <p>Money mult.</p>
-                        <p>Exp mult.</p>
-                        <p>Time mult.</p>
-                    </div>
-                    
-                    <div class="content">
-                        <p id="money"></p>
-                        <p id="exp"></p>
-                        <p id="time"></p>
-                    </div>
-                </div>
-                
-                <div class="spacer"></div>
             </div>
         </div>
         

@@ -7,6 +7,7 @@ skidinc.player.exp = 0;
 skidinc.player.totalExp = 0;
 skidinc.player.expReq = 100;
 skidinc.player.level = 1;
+skidinc.player.prestigeCount = 0;
 
 skidinc.player.getTimeMult = function() {
     return skidinc.server.getEffects('telnet').time;

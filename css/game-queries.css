@@ -3,7 +3,7 @@
         width: 65% !important;
     }
     
-    .stats {
+    .stat-tabs {
         width: 35% !important;
     }
 }
@@ -13,7 +13,7 @@
         width: 60% !important;
     }
     
-    .stats {
+    .stat-tabs {
         width: 40% !important;
     }
 }
@@ -25,7 +25,7 @@
         max-height: 50% !important;
     }
     
-    .stats {
+    .stat-tabs {
         float: none !important;
         width: 100% !important;
         max-height: 50% !important;

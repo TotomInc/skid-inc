@@ -122,6 +122,7 @@ skidinc.domInit = function() {
     
     $('#cog-watchad').on('click', skidinc.kongregate.watchAd);
     
+    skidinc.autoscript.domInit();
     skidinc.achievements.domInit();
     skidinc.player.setUsernamePrefix();
     

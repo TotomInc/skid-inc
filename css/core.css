@@ -12,3 +12,7 @@ body.inverted {
 [contenteditable]:focus {
     outline: 0px solid transparent;
 }
+
+a, a:focus, a:hover {
+    color: #f1f1f1;
+}

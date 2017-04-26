@@ -53,6 +53,8 @@ skidinc.autoscript.buy = function(what) {
         else {
             skidinc.player.money -= skidinc.autoscript.cost[s.i];
             skidinc.autoscript.unlocked[s.i] = true;
+            skidinc.autoscript.update();
+            
             return skidinc.console.print('You bought <b>' + s.id + '</b> autoscript.');
         };
     };
@@ -64,6 +66,11 @@ skidinc.autoscript.loop = function(times) {
 
         if (skidinc.autoscript.unlocked[script.i]) {
             skidinc.autoscript.time[script.i] += times / skidinc.interval;
+            
+            var maxTime = script.time / skidinc.player.getTimeMult(),
+                percent = skidinc.autoscript.time[script.i] / maxTime * 100;
+            
+            $('#autoscript-' + script.i + ' #time').html(fix(skidinc.autoscript.time[script.i], 2) + 's (' + fix(percent, 0) + '%)');
 
             if (skidinc.autoscript.time[script.i] >= (script.time / skidinc.player.getTimeMult()))
                 skidinc.autoscript.finish(script);
@@ -81,6 +88,36 @@ skidinc.autoscript.finish = function(script) {
     skidinc.script.completed[script.i]++;
     skidinc.script.totalCompleted = skidinc.script.completed.reduce((a, b) => a + b, 0);
     skidinc.autoscript.time[script.i] = 0;
+};
+
+skidinc.autoscript.domInit = function() {
+    for (var i = 0; i < skidinc.script.scripts.length; i++) {
+        var script = skidinc.script.scripts[i],
+            unlocked = skidinc.autoscript.unlocked[i],
+            color = (unlocked) ? 'green' : 'red';
+        
+        $('#stats-autoscripts').append('<div id="autoscript-' + script.i + '" class="stat-container">' +
+            '<div id="autoscript-' + script.i + '-name" class="names ' + color + '">' +
+                '<p><b>' + script.id + '</b></p>' +
+            '</div>' +
+            '<div class="content">' +
+                '<p id="time">0.00s</p>' +
+            '</div>' +
+        '</div>');
+    };
+};
+
+skidinc.autoscript.update = function() {
+    for (var i = 0; i < skidinc.script.scripts.length; i++) {
+        var script = skidinc.script.scripts[i],
+            unlocked = skidinc.autoscript.unlocked[i],
+            color = (unlocked) ? 'green' : 'red';
+        
+        $('#autoscript-' + script.i + '-name').removeClass();
+        $('#autoscript-' + script.i + '-name').addClass('names ' + color);
+        
+        console.log(color)
+    };
 };
 
 skidinc.autoscript.init = function() {
