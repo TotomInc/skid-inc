@@ -15,8 +15,8 @@ skidinc.update = function(times) {
 };
 
 skidinc.stats = function() {
-    $('#player #money').html('$' + fix(this.player.money, 2));
-    $('#player #total-money').html('$' + fix(this.player.totalMoney, 2));
+    $('#player #money').html('$' + fix(this.player.money, 0));
+    $('#player #total-money').html('$' + fix(this.player.totalMoney, 0));
     $('#player #exp').html(fix(this.player.exp, 0) + '/' + fix(this.player.expReq, 0));
     $('#player #total-exp').html(fix(this.player.totalExp, 0));
     $('#player #level').html(fix(this.player.level, 0));
@@ -120,7 +120,25 @@ skidinc.domInit = function() {
         };
     });
     
-    $('#cog-watchad').on('click', skidinc.kongregate.watchAd);
+    $('#cog-watchad').on('click', function() {
+        skidinc.kongregate.watchAd();
+    });
+    
+    $('#option-inversion').on('click', function() {
+        skidinc.options.switchInversion(null, null, true)
+    });
+    
+    $('#option-typed').on('click', function() {
+        skidinc.options.switchTyped(null, null, true)
+    });
+    
+    $('#option-save').on('click', function() {
+        skidinc.save.saveNow(true);
+    });
+    
+    $('#option-erase').on('click', function() {
+        skidinc.save.eraseNow();
+    });
     
     skidinc.autoscript.domInit();
     skidinc.achievements.domInit();

@@ -90,7 +90,21 @@ skidinc.options.switchTheme = function(opt, theme) {
     return skidinc.console.print('<b>' + theme + '</b> theme enabled.');
 };
 
-skidinc.options.switchInversion = function(opt, invert) {
+skidinc.options.switchInversion = function(opt, invert, direct) {
+    // called from an UI element
+    if (direct) {
+        if (!$('body').hasClass('inverted')) {
+            $('body').addClass('inverted');
+            $('.terminal').removeClass().addClass('terminal inverted');
+        }
+        else {
+            $('body').removeClass('inverted');
+            $('.terminal').removeClass().addClass('terminal');
+        };
+        
+        return;
+    };
+    
     if (opt.accept.indexOf(invert) == -1)
         return skidinc.console.print('<x>ERR</x> <b>' + invert + '</b> is not a valid argument for <b>inversion</b> option.');
     
@@ -107,7 +121,13 @@ skidinc.options.switchInversion = function(opt, invert) {
     return skidinc.console.print('Terminal inversion <b>' + invert + 'd</b>.');
 };
 
-skidinc.options.switchTyped = function(opt, typed) {
+skidinc.options.switchTyped = function(opt, typed, direct) {
+    // called from an UI element
+    if (direct) {
+        skidinc.options.typed = !skidinc.options.typed;
+        return;
+    };
+    
     if (opt.accept.indexOf(typed) == -1)
         return skidinc.console.print('<x>ERR</x> <b>' + typed + '</b> is not a valid argument for <b>typed</b> option.');
     

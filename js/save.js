@@ -13,10 +13,13 @@ skidinc.save.b64uDecode = function(what) {
 	}).join(''));
 };
 
-skidinc.save.saveNow = function() {
+skidinc.save.saveNow = function(direct) {
     var str = skidinc.save.b64uEncode(JSON.stringify(skidinc));
     
     localStorage.setItem(skidinc.save.name, str);
+    
+    if (direct)
+        return skidinc.console.print('<z>SAVE</z> game saved.');
 };
 
 skidinc.save.eraseNow = function() {
@@ -61,6 +64,7 @@ skidinc.save.loadNow = function() {
     skidinc.player.money = save.player.money;
     skidinc.player.totalMoney = save.player.totalMoney;
     skidinc.player.exp = save.player.totalExp;
+    skidinc.player.expReq = save.player.expReq;
     skidinc.player.level = save.player.level;
     
     // loading for future versions

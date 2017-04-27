@@ -53,7 +53,6 @@ skidinc.autoscript.buy = function(what) {
         else {
             skidinc.player.money -= skidinc.autoscript.cost[s.i];
             skidinc.autoscript.unlocked[s.i] = true;
-            skidinc.autoscript.update();
             
             return skidinc.console.print('You bought <b>' + s.id + '</b> autoscript.');
         };
@@ -70,12 +69,14 @@ skidinc.autoscript.loop = function(times) {
             var maxTime = script.time / skidinc.player.getTimeMult(),
                 percent = skidinc.autoscript.time[script.i] / maxTime * 100;
             
-            $('#autoscript-' + script.i + ' #time').html(fix(skidinc.autoscript.time[script.i], 2) + 's (' + fix(percent, 0) + '%)');
+            $('#autoscript-' + script.i + ' #time').html(fix(skidinc.autoscript.time[script.i], 2) + 's <small>(' + fix(percent, 0) + '%)</small>');
 
             if (skidinc.autoscript.time[script.i] >= (script.time / skidinc.player.getTimeMult()))
                 skidinc.autoscript.finish(script);
         };
     };
+    
+    skidinc.autoscript.update();
 };
 
 skidinc.autoscript.finish = function(script) {
@@ -90,33 +91,38 @@ skidinc.autoscript.finish = function(script) {
     skidinc.autoscript.time[script.i] = 0;
 };
 
-skidinc.autoscript.domInit = function() {
-    for (var i = 0; i < skidinc.script.scripts.length; i++) {
-        var script = skidinc.script.scripts[i],
-            unlocked = skidinc.autoscript.unlocked[i],
-            color = (unlocked) ? 'green' : 'red';
-        
-        $('#stats-autoscripts').append('<div id="autoscript-' + script.i + '" class="stat-container">' +
-            '<div id="autoscript-' + script.i + '-name" class="names ' + color + '">' +
-                '<p><b>' + script.id + '</b></p>' +
-            '</div>' +
-            '<div class="content">' +
-                '<p id="time">0.00s</p>' +
-            '</div>' +
-        '</div>');
-    };
-};
-
 skidinc.autoscript.update = function() {
     for (var i = 0; i < skidinc.script.scripts.length; i++) {
         var script = skidinc.script.scripts[i],
             unlocked = skidinc.autoscript.unlocked[i],
-            color = (unlocked) ? 'green' : 'red';
+            time = script.time / skidinc.player.getTimeMult(),
+            income = (unlocked) ? script.money * skidinc.player.getMoneyMult() : 0,
+            incomePerSec = (unlocked) ? income / time : 0,
+            exp = (unlocked) ? script.exp * skidinc.player.getExpMult() : 0,
+            expPerSec = (unlocked) ? exp / time : 0;
         
-        $('#autoscript-' + script.i + '-name').removeClass();
-        $('#autoscript-' + script.i + '-name').addClass('names ' + color);
+        $('#autoscript-' + script.i + ' #income').html('$' + fix(income, 0) + ' <small>($' + fix(incomePerSec, 0) + '/s)</small>');
+        $('#autoscript-' + script.i + ' #exp').html(fix(exp, 0) + ' exp. <small>(' + fix(expPerSec, 0) + ' exp/s)</small>');
+    };
+};
+
+skidinc.autoscript.domInit = function() {
+    for (var i = 0; i < skidinc.script.scripts.length; i++) {
+        var script = skidinc.script.scripts[i],
+            unlocked = skidinc.autoscript.unlocked[i];
         
-        console.log(color)
+        $('#stats-autoscripts').append('<div id="autoscript-' + script.i + '" class="stat-container big-content">' +
+            '<div id="autoscript-' + script.i + '-name" class="names">' +
+                '<p><b>' + script.id + '</b></p>' +
+                '<p>Money</p>' +
+                '<p>Experience</p>' +
+            '</div>' +
+            '<div class="content">' +
+                '<p id="time">0.00s</p>' +
+                '<p id="income">$0.00</p>' +
+                '<p id="exp">$0.00</p>' +
+            '</div>' +
+        '</div>');
     };
 };
 

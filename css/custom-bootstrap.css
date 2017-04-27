@@ -7,6 +7,10 @@
     border-color: #505050;
 }
 
+.nav-tabs .nav-link {
+    font-size: 14px;
+}
+
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     transition: all 200ms;
@@ -18,4 +22,12 @@
 .nav-tabs .nav-link:focus,
 .nav-tabs .nav-link:hover {
     border-color: #505050;
+}
+
+.modal-title a {
+    color: #0275d8;
+}
+.modal-title a:hover,
+.modal-title a:focus {
+    color: #014c8c;
 }

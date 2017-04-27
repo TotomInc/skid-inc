@@ -1,13 +1,15 @@
-.logs::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #F5F5F5;
-}
-
-.logs::-webkit-scrollbar {
-    width: 6px;
-    background-color: #F5F5F5;
-}
-
-.logs::-webkit-scrollbar-thumb {
+.logs::-webkit-scrollbar-track,
+.stat-tabs::-webkit-scrollbar-track {
     background-color: #292b2c;
+}
+
+.logs::-webkit-scrollbar,
+.stat-tabs::-webkit-scrollbar {
+    width: 6px;
+    background-color: #292b2c;
+}
+
+.logs::-webkit-scrollbar-thumb,
+.stat-tabs::-webkit-scrollbar-thumb {
+    background-color: #DDDDDD;
 }

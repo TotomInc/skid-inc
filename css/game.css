@@ -107,14 +107,22 @@ body.inverted .logo {
     float: left;
     width: 50%;
     text-align: left;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.terminal .stat-tabs .stat-container.big-content .names {
+    width: 35%;
 }
 .terminal .stat-tabs .content {
     float: right;
     width: 50%;
     text-align: right;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.terminal .stat-tabs .stat-container.big-content .content {
+    width: 65%;
 }
 .terminal .stat-tabs > div {
     float: left;

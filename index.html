@@ -62,10 +62,13 @@
             <div class="stat-tabs">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#stats-overview" role="tab">Overview</a>
+                        <a class="nav-link active" data-toggle="tab" href="#stats-overview" role="tab"><i class="fa fa-bar-chart" aria-hidden="true"></i> Overview</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab">Autoscripts</a>
+                        <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab"><i class="fa fa-microchip" aria-hidden="true"></i> Autoscripts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#stats-prestige" role="tab"><i class="fa fa-star" aria-hidden="true"></i> Prestige</a>
                     </li>
                 </ul>
                 
@@ -75,7 +78,7 @@
                             <div class="names">
                                 <p>Level</p>
                                 <p>Money</p>
-                                <p>Exp.</p>
+                                <p>Experience</p>
                             </div>
                             
                             <div class="content">
@@ -139,6 +142,8 @@
                     </div>
                     
                     <div class="tab-pane fade" id="stats-autoscripts" role="tabpanel"></div>
+                    
+                    <div class="tab-pane fade" id="stats-prestige" role="tabpanel"></div>
                 </div>
             </div>
         </div>
@@ -184,7 +189,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-shop">
-                    <h5 class="modal-title" id="themeshop"><img src="/assets/kred_single.png"> Theme Shop - <a target=_"blank" href="http://imgur.com/a/tKCdW">preview themes</a></h5>
+                    <h5 class="modal-title" id="themeshop"><img src="/assets/kred_single.png"> Theme Shop - <a target="_blank" href="http://imgur.com/a/tKCdW">preview themes</a></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 
@@ -208,6 +213,45 @@
                             <div class="col-md-3">
                                 <a id="theme-2" class="btn btn-secondary btn-block" role="button">Buy</a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-options" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-opt" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-cog"></i> Options</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a id="option-inversion" class="btn btn-outline-info btn-block text-center" role="button"><i class="fa fa-eyedropper" aria-hidden="true"></i> Toggle inversion</a>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <a id="option-typed" class="btn btn-outline-info btn-block text-center" role="button"><i class="fa fa-i-cursor" aria-hidden="true"></i> Toggle typed effect</a>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <a id="option-save" class="btn btn-outline-success btn-block text-center" role="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now</a>
+                        </div>
+                    </div>
+                    
+                    <br>
+                    
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        
+                        <div class="col-md-4"></div>
+                        
+                        <div class="col-md-4">
+                            <a id="option-erase" class="btn btn-outline-success btn-block text-center" role="button"><i class="fa fa-trash-o" aria-hidden="true"></i> Erase save</a>
                         </div>
                     </div>
                 </div>
