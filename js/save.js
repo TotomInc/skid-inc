@@ -39,7 +39,6 @@ skidinc.save.loadNow = function() {
     var str = localStorage.getItem(skidinc.save.name),
         save = JSON.parse(skidinc.save.b64uDecode(str));
     
-    // v0.3: default
     skidinc.before = save.before;
     
     skidinc.achievements.owned = save.achievements.owned;
@@ -67,12 +66,15 @@ skidinc.save.loadNow = function() {
     skidinc.player.expReq = save.player.expReq;
     skidinc.player.level = save.player.level;
     
-    // loading for future versions
-    if (save.version > 0.3 && save.version <= 0.31)
-        return;
+    if (save.version == 0.31) {
+        skidinc.player.botnet = save.player.botnet;
+        skidinc.player.prestigeCount = save.player.prestigeCount;
+    };
     
     return console.info('Save found and loaded.', save.version);
 };
+
+skidinc.save.soft = function() {};
 
 skidinc.save.init = function() {
     skidinc.save.loadNow();
@@ -81,5 +83,9 @@ skidinc.save.init = function() {
     
     skidinc.loops.save = setInterval(function() {
         skidinc.save.saveNow();
-    }, 30000);
+    }, 500);
+    
+    window.onbeforeunload = function() {
+        skidinc.save.saveNow();
+    };
 };

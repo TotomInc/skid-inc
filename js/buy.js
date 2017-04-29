@@ -28,7 +28,7 @@ skidinc.buy.list = function() {
         str += '<b>-</b> <z>' + category + '</z>: ' + categoryDesc + '<br><p class="text-bullet">' + eval(categoryList)() + '</p>';
     };
     
-    return skidinc.console.print(str, null, true);
+    return skidinc.console.print(str);
 };
 
 skidinc.buy.execute = function(args) {

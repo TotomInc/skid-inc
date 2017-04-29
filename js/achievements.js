@@ -89,12 +89,7 @@ skidinc.achievements.init = function() {
         new skidinc.achievements.create('Virtualization II', 'Upgrade your telnet server to level 25.', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 25),
         new skidinc.achievements.create('Virtualization III', 'Upgrade your telnet server to level 50.', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 50),
         new skidinc.achievements.create('Virtualization IV', 'Upgrade your telnet server to level 75.', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 75),
-        new skidinc.achievements.create('Virtualization V', 'Upgrade your telnet server to level 100 (max level).', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 100),
-        
-        new skidinc.achievements.create('Rebirth I', 'Prestige 1 time.', 'totalPrestige', 'fa-microchip', 'skidinc.player.prestigeCount', '>=', 1),
-        new skidinc.achievements.create('Rebirth II', 'Prestige 2 times.', 'totalPrestige', 'fa-microchip', 'skidinc.player.prestigeCount', '>=', 2),
-        new skidinc.achievements.create('Rebirth III', 'Prestige 4 times.', 'totalPrestige', 'fa-microchip', 'skidinc.player.prestigeCount', '>=', 4),
-        new skidinc.achievements.create('Rebirth IV', 'Prestige 8 times.', 'totalPrestige', 'fa-microchip', 'skidinc.player.prestigeCount', '>=', 8)
+        new skidinc.achievements.create('Virtualization V', 'Upgrade your telnet server to level 100 (max level).', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 100)
     ];
     
     for (var i = 0; i < skidinc.achievements.list.length; i++) {

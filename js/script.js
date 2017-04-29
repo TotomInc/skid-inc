@@ -10,58 +10,58 @@ skidinc.script.totalCompleted = 0;
 skidinc.script.scripts = [{
     id: 'hare.ctx',
     cost: 0,
-    money: 50,
-    exp: 5,
+    money: 75,
+    exp: 13,
     time: 4,
     i: 0
 }, {
     id: 'yerg.trj',
-    cost: 475,
-    money: 600,
-    exp: 150,
-    time: 12,
+    cost: 3750,
+    money: 937,
+    exp: 94,
+    time: 16,
     i: 1
 }, {
     id: 'acid.pl',
-    cost: 14400,
-    money: 7200,
-    exp: 600,
-    time: 36,
+    cost: 46872,
+    money: 11718,
+    exp: 703,
+    time: 64,
     i: 2
 }, {
     id: 'memz.rsm',
-    cost: 172800,
-    money: 86400,
-    exp: 2400,
-    time: 108,
+    cost: 585936,
+    money: 146484,
+    exp: 5273,
+    time: 256,
     i: 3
 }, {
     id: 'gruel.vbs',
-    cost: 2073600,
-    money: 1036800,
-    exp: 9600,
-    time: 324,
+    cost: 7320000,
+    money: 1.83e6,
+    exp: 39550,
+    time: 1024,
     i: 4
 }, {
     id: 'cih.win',
-    cost: 24883200,
-    money: 12441600,
-    exp: 38400,
-    time: 972,
+    cost: 91200000,
+    money: 2.28e7,
+    exp: 296630,
+    time: 4096,
     i: 5
 }, {
     id: 'worm.cs',
-    cost: 298598400,
-    money: 149299200,
-    exp: 153600,
-    time: 2916,
+    cost: 1.14e9,
+    money: 2.86e8,
+    exp: 2.22e6,
+    time: 16384,
     i: 6
 }, {
     id: 'blazer.dos',
-    cost: 3583180800,
-    money: 1791590400,
-    exp: 614400,
-    time: 8748,
+    cost: 1.42e10,
+    money: 3.57e9,
+    exp: 1.66e7,
+    time: 65536,
     i: 7
 }];
 
@@ -104,35 +104,14 @@ skidinc.script.list = function() {
         else
             str += '<green>' + script.id + '</green>';
         
-        str += '</b>: <b>+$' + fix(money, 0) + '</b> and <b>+' + fix(exp, 0) + ' exp</b>, cost <b>$' + fix(script.cost, 0) + '</b>, execution takes <b>' + fix(time, 2) + ' sec</b>.<br>';
+        str += '</b>: <b>+$' + fix(money, 0) + '</b> and <b>+' + fix(exp, 0) + ' exp</b>, cost <b>$' + fix(script.cost, 0) + '</b>, execution takes <b>' + fix(time, 0) + ' sec</b>.<br>';
     };
     
     return skidinc.console.print(str);
 };
 
 skidinc.script.listBuy = function() {
-    var str = '',
-        e = 0;
-    
-    for (var script in skidinc.script.scripts) {
-        var i = script,
-            script = skidinc.script.scripts[i],
-            unlocked = skidinc.script.unlocked[script.i];
-        
-        if (!unlocked)
-            str += '<red>' + script.id + '</red>';
-        else
-            str += '<green>' + script.id + '</green>';
-        
-        e++;
-        
-        if (e !== skidinc.script.scripts.length)
-            str += ', ';
-        else
-            str += ' (<b>script -l/-list</b> for a detailed list).';
-    };
-    
-    return str;
+    return '<b>*</b> type <b>script -l/-list</b> for a detailed list of scripts.';
 };
 
 skidinc.script.execute = function(args) {
@@ -296,7 +275,7 @@ skidinc.script.init = function() {
             skidinc.script.unlocked.push(false);
         });
         
-        skidinc.script.scripts[0] = true;
+        skidinc.script.unlocked[0] = true;
     };
     
     if (skidinc.script.scripts.length !== skidinc.script.completed.length) {

@@ -7,18 +7,24 @@ skidinc.player.exp = 0;
 skidinc.player.totalExp = 0;
 skidinc.player.expReq = 100;
 skidinc.player.level = 1;
-skidinc.player.prestigeCount = 0;
+skidinc.player.botnet = 0;
 
 skidinc.player.getTimeMult = function() {
     return skidinc.server.getEffects('telnet').time;
 };
 
-skidinc.player.getMoneyMult = function() {
-    return skidinc.server.getEffects('web').money;
+skidinc.player.getMoneyMult = function(display) {
+    if (display)
+        return skidinc.server.getEffects('web').money;
+    
+    return skidinc.server.getEffects('web').money * skidinc.prestige.getPrestigeMult();
 };
 
-skidinc.player.getExpMult = function() {
-    return skidinc.server.getEffects('web').exp;
+skidinc.player.getExpMult = function(display) {
+    if (display)
+        return skidinc.server.getEffects('web').exp;
+    
+    return skidinc.server.getEffects('web').exp * skidinc.prestige.getPrestigeMult();
 };
 
 skidinc.player.setUsernamePrefix = function() {

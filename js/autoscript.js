@@ -1,29 +1,10 @@
 skidinc.autoscript = {};
 skidinc.autoscript.unlocked = [false, false, false, false, false, false, false, false];
 skidinc.autoscript.time = [0, 0, 0, 0, 0, 0, 0, 0];
-skidinc.autoscript.cost = [420, 7500, 90000, 550000, 12500000, 100000000, 1750000000, 15000000000];
+skidinc.autoscript.cost = [420, 18750, 234360, 2929680, 36600000, 456000000, 570000000000, 7100000000000];
 
 skidinc.autoscript.list = function() {
-    var str = '',
-        e = 0;
-    
-    for (var script in skidinc.script.scripts) {
-        var i = script,
-            script = skidinc.script.scripts[i],
-            cost = skidinc.autoscript.cost[script.i],
-            unlocked = skidinc.autoscript.unlocked[script.i];
-        
-        str += '<b>*</b> <b>';
-        
-        if (!unlocked)
-            str += '<red>' + script.id + '</red>';
-        else
-            str += '<green>' + script.id + '</green>';
-        
-        str += '</b>: cost <b>$' + fix(cost, 0) + '</b>.<br>';
-    };
-    
-    return str;
+    return '<b>*</b> autoscripts got the same names as scripts. You can also check the autoscript tab for names.';
 };
 
 skidinc.autoscript.buy = function(what) {
@@ -96,13 +77,23 @@ skidinc.autoscript.update = function() {
         var script = skidinc.script.scripts[i],
             unlocked = skidinc.autoscript.unlocked[i],
             time = script.time / skidinc.player.getTimeMult(),
-            income = (unlocked) ? script.money * skidinc.player.getMoneyMult() : 0,
-            incomePerSec = (unlocked) ? income / time : 0,
-            exp = (unlocked) ? script.exp * skidinc.player.getExpMult() : 0,
-            expPerSec = (unlocked) ? exp / time : 0;
+            income = script.money * skidinc.player.getMoneyMult(),
+            incomePerSec = income / time,
+            exp = script.exp * skidinc.player.getExpMult(),
+            expPerSec = exp / time;
         
-        $('#autoscript-' + script.i + ' #income').html('$' + fix(income, 0) + ' <small>($' + fix(incomePerSec, 0) + '/s)</small>');
-        $('#autoscript-' + script.i + ' #exp').html(fix(exp, 0) + ' exp. <small>(' + fix(expPerSec, 0) + ' exp/s)</small>');
+        if (unlocked) {
+            $('#autoscript-' + script.i + ' #money').html('Money');
+            $('#autoscript-' + script.i + ' #experience').html('Experience');
+            $('#autoscript-' + script.i + ' #income').html('$' + fix(income, 0) + ' <small>($' + fix(incomePerSec, 0) + '/s)</small>');
+            $('#autoscript-' + script.i + ' #exp').html(fix(exp, 0) + ' exp. <small>(' + fix(expPerSec, 0) + ' exp/s)</small>');
+        }
+        else {
+            $('#autoscript-' + script.i + ' #money').html('Script');
+            $('#autoscript-' + script.i + ' #experience').html('Autoscript');
+            $('#autoscript-' + script.i + ' #income').html('cost <b>$' + fix(script.cost, 0) + '</b>');
+            $('#autoscript-' + script.i + ' #exp').html('cost $' + fix(skidinc.autoscript.cost[i], 0) + '</b>');
+        };
     };
 };
 
@@ -114,8 +105,8 @@ skidinc.autoscript.domInit = function() {
         $('#stats-autoscripts').append('<div id="autoscript-' + script.i + '" class="stat-container big-content">' +
             '<div id="autoscript-' + script.i + '-name" class="names">' +
                 '<p><b>' + script.id + '</b></p>' +
-                '<p>Money</p>' +
-                '<p>Experience</p>' +
+                '<p id="money">Money</p>' +
+                '<p id="experience">Experience</p>' +
             '</div>' +
             '<div class="content">' +
                 '<p id="time">0.00s</p>' +

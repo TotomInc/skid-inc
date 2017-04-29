@@ -139,11 +139,29 @@
                                 <p id="time"></p>
                             </div>
                         </div>
+                        
+                        <div id="prestige">
+                            <div class="names">
+                                <p>Botnet</p>
+                                <p>Botnet reset</p>
+                                <p>Prestige mult.</p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="botnet"></p>
+                                <p id="botnet-reset"></p>
+                                <p id="mult"></p>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="tab-pane fade" id="stats-autoscripts" role="tabpanel"></div>
                     
-                    <div class="tab-pane fade" id="stats-prestige" role="tabpanel"></div>
+                    <div class="tab-pane fade" id="stats-prestige" role="tabpanel">
+                        <p class="text-center">You can do a prestige (also called a soft-reset) to earn botnet. Before doing a prestige, check on the overview tab if you will earn botnet on reset. A botnet boost your money and exp. gain by +2%.</p>
+                        
+                        <a id="prestige-button" class="btn btn-outline-info btn-block text-center" role="button">Prestige now</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -170,7 +188,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-bar-chart"></i> Achievements - (hover them for infos)</h5>
+                    <h5 class="modal-title"><i class="fa fa-bar-chart"></i> Achievements (hover them for infos)</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 
@@ -224,13 +242,13 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-cog"></i> Options</h5>
+                    <h5 class="modal-title"><i class="fa fa-cog"></i> Options - change game settings.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 offset-md-2">
                             <a id="option-inversion" class="btn btn-outline-info btn-block text-center" role="button"><i class="fa fa-eyedropper" aria-hidden="true"></i> Toggle inversion</a>
                         </div>
                         
@@ -238,22 +256,30 @@
                             <a id="option-typed" class="btn btn-outline-info btn-block text-center" role="button"><i class="fa fa-i-cursor" aria-hidden="true"></i> Toggle typed effect</a>
                         </div>
                         
-                        <div class="col-md-4">
-                            <a id="option-save" class="btn btn-outline-success btn-block text-center" role="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now</a>
-                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                     
                     <br>
                     
                     <div class="row">
-                        <div class="col-md-4"></div>
-                        
-                        <div class="col-md-4"></div>
+                        <div class="col-md-4 offset-md-2">
+                            <a id="option-save" class="btn btn-outline-success btn-block text-center" role="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save now</a>
+                        </div>
                         
                         <div class="col-md-4">
-                            <a id="option-erase" class="btn btn-outline-success btn-block text-center" role="button"><i class="fa fa-trash-o" aria-hidden="true"></i> Erase save</a>
+                            <a id="option-erase" class="btn btn-outline-danger btn-block text-center" role="button"><i class="fa fa-trash-o" aria-hidden="true"></i> Erase save</a>
                         </div>
+                        
+                        <div class="col-md-4"></div>
                     </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <p class="text-right nomargin">
+                        <a href="https://discord.gg/6dq3ZVC" target="_blank">Join our Discord!</a><br>
+                        Made by TotomInc, art by Tim089<br>
+                        SkidInc <span id="option-version"></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -271,6 +297,7 @@
     <script src="js/buy.js"></script>
     <script src="js/player.js"></script>
     <script src="js/achievements.js"></script>
+    <script src="js/prestige.js"></script>
     <script src="js/options.js"></script>
     <script src="js/tutorial.js"></script>
     <script src="js/save.js"></script>

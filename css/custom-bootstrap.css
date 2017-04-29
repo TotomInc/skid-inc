@@ -24,10 +24,10 @@
     border-color: #505050;
 }
 
-.modal-title a {
+.modal a {
     color: #0275d8;
 }
-.modal-title a:hover,
-.modal-title a:focus {
+.modal a:hover,
+.modal a:focus {
     color: #014c8c;
 }
