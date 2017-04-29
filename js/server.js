@@ -14,12 +14,12 @@ skidinc.server.telnet = {
 skidinc.server.web = {
     id: 'web',
     index: 1,
-    price: 1000,
+    price: 800,
     inflation: 1.15,
     max: Infinity,
     effects: {
-        money: 0.25,
-        exp: 0.1
+        money: 0.15,
+        exp: 0.07
     }
 };
 
@@ -93,5 +93,13 @@ skidinc.server.buy = function(item) {
     if (skidinc.server.owned[server.index] + 1 > server.max)
         return skidinc.console.print('<x>ERR</x> this server have a max level which is <b>' + server.max + '</b>.');
     else if (skidinc.player.money < cost)
-        return skidinc.console.print('<x>ERR</x> not enough money to upgrade your <b>' + server.id + '</b> server (cost <b>$' + fix(cost) + '</b>).');
+        return skidinc.console.print('<x>ERR</x> not enough money to upgrade your <b>' + server.id + '</b> server (cost <b>$' + fix(cost, 0) + '</b>).');
+};
+
+skidinc.server.prestige = function() {
+    skidinc.server.owned = [];
+    
+    skidinc.server.servers.forEach(function(i) {
+        skidinc.server.owned.push(0);
+    });
 };

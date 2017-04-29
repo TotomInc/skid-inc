@@ -154,7 +154,7 @@ skidinc.script.start = function(script) {
     skidinc.script.current = script;
     skidinc.script.time = script.time / skidinc.player.getTimeMult();
     skidinc.script.maxTime = script.time / skidinc.player.getTimeMult();
-    skidinc.console.print('<y>SCRIPT STARTED</y>: <b>' + script.id + '</b>.');
+    skidinc.console.print('<z>SCRIPT STARTED</z>: <b>' + script.id + '</b>.');
     
     
     $(el).append('<span id="script-bar">|========================================|</span>');
@@ -285,4 +285,18 @@ skidinc.script.init = function() {
             skidinc.script.completed.push(0);
         });
     };
+};
+
+skidinc.script.prestige = function() {
+    skidinc.script.unlocked = [];
+
+    skidinc.script.scripts.forEach(function(i) {
+        skidinc.script.unlocked.push(false);
+    });
+
+    skidinc.script.unlocked[0] = true;
+    skidinc.script.available = true;
+    skidinc.script.current = null;
+    skidinc.script.time = 0;
+    skidinc.script.maxTime = 0;
 };

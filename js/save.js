@@ -28,6 +28,9 @@ skidinc.save.eraseNow = function() {
     if (!conf)
         return;
     
+    window.onbeforeunload = function() {};
+    clearInterval(skidinc.loops.save);
+    
     localStorage.removeItem(skidinc.save.name);
     location.reload();
 };
@@ -62,7 +65,8 @@ skidinc.save.loadNow = function() {
     skidinc.player.username = save.player.username;
     skidinc.player.money = save.player.money;
     skidinc.player.totalMoney = save.player.totalMoney;
-    skidinc.player.exp = save.player.totalExp;
+    skidinc.player.exp = save.player.exp;
+    skidinc.player.totalExp = save.player.totalExp;
     skidinc.player.expReq = save.player.expReq;
     skidinc.player.level = save.player.level;
     
@@ -74,7 +78,20 @@ skidinc.save.loadNow = function() {
     return console.info('Save found and loaded.', save.version);
 };
 
-skidinc.save.soft = function() {};
+skidinc.save.soft = function() {
+    clearInterval(skidinc.loops.core);
+    clearInterval(skidinc.loops.save);
+    
+    skidinc.player.botnet += skidinc.prestige.botnetOnReset;
+    
+    skidinc.autoscript.prestige();
+    skidinc.script.prestige();
+    skidinc.server.prestige();
+    skidinc.player.prestige();
+    
+    skidinc.save.saveNow();
+    location.reload();
+};
 
 skidinc.save.init = function() {
     skidinc.save.loadNow();

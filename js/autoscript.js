@@ -134,3 +134,13 @@ skidinc.autoscript.init = function() {
         });
     };
 };
+
+skidinc.autoscript.prestige = function() {
+    skidinc.autoscript.unlocked = [];
+    skidinc.autoscript.time = [];
+
+    skidinc.script.scripts.forEach(function(i) {
+        skidinc.autoscript.unlocked.push(false);
+        skidinc.autoscript.time.push(0);
+    });
+};

@@ -9,7 +9,10 @@ skidinc.prestige.getBotnet = function() {
 skidinc.prestige.getPrestigeMult = function() {
     return 1 + (skidinc.player.botnet * skidinc.prestige.baseMult);
 };
-skidinc.prestige.loop = function(times) {};
+
+skidinc.prestige.loop = function(times) {
+    skidinc.prestige.botnetOnReset = skidinc.prestige.getBotnet() - skidinc.player.botnet;
+};
 
 skidinc.prestige.domInit = function() {
     $('#prestige-button').on('click', function() {

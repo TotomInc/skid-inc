@@ -80,3 +80,13 @@ skidinc.player.earn = function(type, amount) {
         };
     };
 };
+
+skidinc.player.prestige = function() {
+    skidinc.before = new Date().getTime();
+    skidinc.now = new Date().getTime();
+    
+    skidinc.player.money = 0;
+    skidinc.player.expReq = 100;
+    skidinc.player.exp = 0;
+    skidinc.player.level = 1;
+};

@@ -90,7 +90,7 @@ skidinc.init = function() {
         skidinc.domInit();
         
         skidinc.tutorial.begin();
-    }, 3000);
+    }, 3500);
 };
 
 skidinc.domInit = function() {

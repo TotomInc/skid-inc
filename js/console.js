@@ -94,7 +94,7 @@ skidinc.console.commandExist = function(base) {
 skidinc.console.help = function() {
     var str = '<y>HELP</y> you can type <b>[command] -help</b> to get a specific help of a command:<br>';
     
-    if (skidinc.tutorial.step == 1 && !skidinc.tutorial.finish) {
+    if (!skidinc.tutorial.finish) {
         str += '<b>-</b> <z>help</z>: show a list of available commands.<br>' +
             '<b>-</b> <z>script</z>: execute a script.';
         
