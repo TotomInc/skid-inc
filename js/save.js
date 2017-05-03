@@ -75,10 +75,25 @@ skidinc.save.loadNow = function() {
         skidinc.player.prestigeCount = save.player.prestigeCount;
     };
     
+    if (save.version == 0.32) {
+        skidinc.battery.level = save.battery.level;
+        skidinc.battery.time = save.battery.time;
+    };
+    
     return console.info('Save found and loaded.', save.version);
 };
 
 skidinc.save.soft = function() {
+    if (skidinc.prestige.botnetOnReset == 0) {
+        $('#prestige-button').html('You need to gain at least 1 botnet').removeClass('btn-outline-info').addClass('btn-outline-danger');
+        
+        setTimeout(function() {
+            $('#prestige-button').html('Prestige now').removeClass('btn-outline-danger').addClass('btn-outline-info');
+        }, 5000);
+        
+        return;
+    };
+    
     clearInterval(skidinc.loops.core);
     clearInterval(skidinc.loops.save);
     

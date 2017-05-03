@@ -136,3 +136,9 @@ skidinc.kongregate.buyTheme = function(i) {
         skidinc.kongregate.requestItemInventory();
     };
 };
+
+skidinc.kongregate.domInit = function() {
+    $('#cog-watchad').on('click', function() {
+        skidinc.kongregate.watchAd();
+    });
+};
