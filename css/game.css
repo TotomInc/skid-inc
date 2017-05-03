@@ -186,7 +186,8 @@ body.inverted .logo {
     margin-left: 5px;
     color: #292b2c;
 }
-.terminal.inverted + .input .custom-input {
+.terminal.inverted + .input .custom-input,
+.terminal.inverted .input .custom-input {
     color: #f1f1f1;
 }
 
