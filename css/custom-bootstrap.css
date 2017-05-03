@@ -31,3 +31,12 @@
 .modal a:focus {
     color: #014c8c;
 }
+
+.dropdown-menu {
+    margin-left: -88px;
+    padding: 0;
+    border: 1px solid #505050;
+}
+.dropdown-menu .nav-link {
+    border-radius: 0;
+}

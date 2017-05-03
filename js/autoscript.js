@@ -1,7 +1,7 @@
 skidinc.autoscript = {};
 skidinc.autoscript.unlocked = [false, false, false, false, false, false, false, false];
 skidinc.autoscript.time = [0, 0, 0, 0, 0, 0, 0, 0];
-skidinc.autoscript.cost = [420, 18750, 234360, 2929680, 36600000, 456000000, 570000000000, 7100000000000];
+skidinc.autoscript.cost = [420, 22500, 315000, 4410000, 61740000, 864360000, 12101040000, 169414560000];
 
 skidinc.autoscript.list = function() {
     return '<b>*</b> autoscripts got the same names as scripts. You can also check the autoscript tab for names.';
@@ -75,6 +75,7 @@ skidinc.autoscript.finish = function(script) {
 skidinc.autoscript.update = function() {
     for (var i = 0; i < skidinc.script.scripts.length; i++) {
         var script = skidinc.script.scripts[i],
+            scriptUnlocked = skidinc.script.unlocked[script.i],
             unlocked = skidinc.autoscript.unlocked[i],
             time = script.time / skidinc.player.getTimeMult(),
             income = script.money * skidinc.player.getMoneyMult(),
@@ -89,9 +90,13 @@ skidinc.autoscript.update = function() {
             $('#autoscript-' + script.i + ' #exp').html(fix(exp, 0) + ' exp. <small>(' + fix(expPerSec, 0) + ' exp/s)</small>');
         }
         else {
+            if (scriptUnlocked)
+                $('#autoscript-' + script.i + ' #income').html('bought');
+            else
+                $('#autoscript-' + script.i + ' #income').html('cost <b>$' + fix(script.cost, 0) + '</b>');
+            
             $('#autoscript-' + script.i + ' #money').html('Script');
             $('#autoscript-' + script.i + ' #experience').html('Autoscript');
-            $('#autoscript-' + script.i + ' #income').html('cost <b>$' + fix(script.cost, 0) + '</b>');
             $('#autoscript-' + script.i + ' #exp').html('cost $' + fix(skidinc.autoscript.cost[i], 0) + '</b>');
         };
     };

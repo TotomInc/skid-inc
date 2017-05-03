@@ -32,7 +32,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <script src="https://cdn1.kongregate.com/javascripts/kongregate_api.js"></script>
+    
     <script src="lib/typed.min.js"></script>
+    <script src="lib/jquery.caret.min.js"></script>
 </head>
 
 <body class="noselect inverted">
@@ -67,8 +69,12 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab"><i class="fa fa-microchip" aria-hidden="true"></i> Autoscripts</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#stats-prestige" role="tab"><i class="fa fa-star" aria-hidden="true"></i> Prestige</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                        <div class="dropdown-menu">
+                            <a id="stats-battery-title" class="nav-link" data-toggle="tab" href="#stats-battery" role="tab"><i class="fa fa-battery-empty" aria-hidden="true"></i> Battery</a>
+                            <a class="nav-link" data-toggle="tab" href="#stats-prestige" role="tab"><i class="fa fa-star" aria-hidden="true"></i> Prestige</a>
+                        </div>
                     </li>
                 </ul>
                 
@@ -77,14 +83,14 @@
                         <div id="player" class="stat-container">
                             <div class="names">
                                 <p>Level</p>
-                                <p>Money</p>
                                 <p>Experience</p>
+                                <p>Money</p>
                             </div>
                             
                             <div class="content">
                                 <p id="level"></p>
-                                <p id="money"></p>
                                 <p id="exp"></p>
+                                <p id="money"></p>
                             </div>
                         </div>
         
@@ -102,10 +108,10 @@
                             </div>
                         </div>
                         
-                        <div id="telnet" class="stat-container">
+                        <div id="web" class="stat-container">
                             <div class="names">
-                                <p>Telnet level</p>
-                                <p>Telnet price</p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Web servers increase both your money and exp. multipliers.">Web level <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p>Web price</p>
                             </div>
                             
                             <div class="content">
@@ -114,10 +120,10 @@
                             </div>
                         </div>
                         
-                        <div id="web" class="stat-container">
+                        <div id="telnet" class="stat-container">
                             <div class="names">
-                                <p>Web level</p>
-                                <p>Web price</p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Telnet servers increase your time multiplier.">Telnet level <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p>Telnet price</p>
                             </div>
                             
                             <div class="content">
@@ -140,11 +146,11 @@
                             </div>
                         </div>
                         
-                        <div id="prestige">
+                        <div id="prestige" class="stat-container">
                             <div class="names">
-                                <p>Botnet</p>
-                                <p>Botnet reset</p>
-                                <p>Prestige mult.</p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="1 botnet increase by 2% your money and exp. multipliers.">Botnet <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Amount of botnets you earn after a prestige.">Botnet reset <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Prestige mult. is not counted on other mult. stats.">Prestige mult. <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
                             </div>
                             
                             <div class="content">
@@ -157,11 +163,41 @@
                     
                     <div class="tab-pane fade" id="stats-autoscripts" role="tabpanel"></div>
                     
+                    <div class="tab-pane fade" id="stats-battery" role="tabpanel">
+                        <div id="battery" class="battery">
+                            <div id="battery-level" class="battery-level"></div>
+                        </div>
+                        
+                        <div id="battery" class="stat-container">
+                            <div class="names">
+                                <p><span data-toggle="tooltip" data-placement="top" title="Battery level increase your max charge and charge power.">Battery level <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p>Upgrade cost</p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Hover on battery to recharge.">Charge <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p>Charge power</p>
+                                <br>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Hover the battery to increase your money mult.">Money effect <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Hover the battery to increase your exp. mult.">Exp. effect <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                                <p><span data-toggle="tooltip" data-placement="top" title="Hover the battery to increase your time mult.">Time effect <i class="fa fa-info-circle" aria-hidden="true"></i></span></p>
+                            </div>
+                            
+                            <div class="content">
+                                <p id="level"></p>
+                                <p id="upgrade"></p>
+                                <p id="charge"></p>
+                                <p id="charge-power"></p>
+                                <br>
+                                <p id="money"></p>
+                                <p id="exp"></p>
+                                <p id="time"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="tab-pane fade" id="stats-prestige" role="tabpanel">
                         <p>You can do a prestige to earn <b>botnets</b>.</p>
                         <p>Botnets increase your money and exp. multipliers: <b>1 botnet</b> increase your multipliers by <b>2%</b>.</p>
                         <p>Be sure to gain botnets before doing a prestige, you can see this on the overview tab.</p>
-                        <p>Keep progressing to unlock new features!</p>
+                        <p class="text-center">Keep progressing to unlock new features!</p>
                         
                         <a id="prestige-button" class="btn btn-outline-info btn-block text-center" role="button">Prestige now</a>
                     </div>
@@ -178,6 +214,7 @@
                 <div id="cog-content" class="cog-content">
                     <p data-toggle="modal" data-target="#modal-themes"><img src="/assets/kred_single.png"> Buy themes</p>
                     <p id="cog-watchad"><i class="fa fa-video-camera norotate"></i> Watch an ad</p>
+                    <p data-toggle="modal" data-target="#modal-notes"><i class="fa fa-pencil-square" aria-hidden="true"></i> Patch-notes</p>
                     <p data-toggle="modal" data-target="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</p>
                     <p data-toggle="modal" data-target="#modal-options"><i class="fa fa-cog norotate"></i> Options</p>
                 </div>
@@ -280,9 +317,79 @@
                 <div class="modal-footer">
                     <p class="text-right nomargin">
                         <a class="blue" href="https://discord.gg/6dq3ZVC" target="_blank">Join our Discord!</a><br>
+                        <a href="https://www.patreon.com/totominc" target="_blank" class="blue">TotomInc Patreon</a><br>
+                        <a href="https://www.reddit.com/r/skidinc" target="_blank" class="blue">/r/skidinc</a><br>
                         Made by TotomInc, art by Tim089<br>
                         SkidInc <span id="option-version"></span>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-notes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-patch" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-pencil" aria-hidden="true"></i> Patch-notes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                
+                <div class="modal-body">
+                    <h5>0.32: battery system <small>(testing micro-management implementation).</small></h5>
+                    
+                    <ul>
+                        <li>
+                            Added battery micro-management system.
+                            <ul>
+                                <li>Hover battery to charge it.</li>
+                                <li>Upgrade your battery to increase capacity and charge time.</li>
+                                <li>Battery effect increase exp. mult. by 25%, money mult. by 25%, time mult. by 10%.</li>
+                            </ul>
+                        </li>
+                        
+                        <li>Improved terminal experience.
+                            <ul>
+                                <li>Autocomplete command when pressing TAB key <small>(feature in beta)</small>.</li>
+                                <li>Retrieve lastest commands sent with up/down arrow keys.</li>
+                                <li>CTRL+L clear terminal logs.</li>
+                                <li>Copy/paste enabled.</li>
+                            </ul>
+                        </li>
+                        
+                        <li>Commands improvements.
+                            <ul>
+                                <li>Added <b>-q</b> argument for multibuy.</li>
+                                <li><b>-q</b> must be followed by an amount (in numbers) or the <b>max</b> keyword.</li>
+                                <li>Added <b>achievements</b> command.</li>
+                            </ul>
+                        </li>
+                        
+                        <li>Better balancing.
+                            <ul>
+                                <li>Scripts: prices, exp and money reward changed.</li>
+                                <li>Autoscript: prices changed.</li>
+                                <li>Servers: reduced web server effects.</li>
+                            </ul>
+                        </li>
+                        
+                        <li>Improved UI.
+                            <ul>
+                                <li>Added tooltips on important gameplay elements.</li>
+                                <li>Better navigation tab.</li>
+                                <li>Switch tabs by pressing SHIFT+left/right arrow keys.</li>
+                            </ul>
+                        </li>
+                        
+                        <li>Many bugs fixes.</li>
+                    </ul>
+                    
+                    <h5>0.31: first beta-release.</h5>
+                    
+                    <ul>
+                        <li>Initial beta-release. Expect a buggy game with few gameplay features.</li>
+                        <li>Thanks for taking part of the game development.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -299,11 +406,22 @@
     <script src="js/server.js"></script>
     <script src="js/buy.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/battery.js"></script>
     <script src="js/achievements.js"></script>
     <script src="js/prestige.js"></script>
     <script src="js/options.js"></script>
     <script src="js/tutorial.js"></script>
     <script src="js/save.js"></script>
     <script src="js/kongregate.js"></script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-54540685-22', 'auto');
+      ga('send', 'pageview');
+    </script>
 </body>
 </html>

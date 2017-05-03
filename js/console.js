@@ -2,6 +2,8 @@ skidinc.console = {};
 skidinc.console.typeSpeed = -50;
 skidinc.console.inputEnabled = true;
 skidinc.console.notAccepted = ['<', '>', '[', ']', '(', ')', ',', ';', '/', '\\', '\'', '"'];
+skidinc.console.history = [];
+skidinc.console.posInHistory = -1;
 skidinc.console.commands = [{
     id: 'help',
     desc: 'show a list of available commands.',
@@ -39,7 +41,7 @@ skidinc.console.commands = [{
     desc: 'buy things such as new scripts, auto-scripts and servers.',
     effect: 'skidinc.buy.execute',
     requireArg: true,
-    argsType: ['base', 'string', 'string'],
+    argsType: ['base', 'string'],
     supportList: true,
     listExec: 'skidinc.buy.list',
     supportHelp: true,
@@ -54,6 +56,13 @@ skidinc.console.commands = [{
     listExec: 'skidinc.options.list',
     supportHelp: true,
     helpExec: 'skidinc.options.help'
+}, {
+    id: 'achievements',
+    desc: 'take a look on your progression.',
+    effect: 'skidinc.achievements.list()',
+    requireArg: false,
+    supportList: false,
+    supportHelp: false
 }];
 
 skidinc.console.checkStr = function(str) {
@@ -121,6 +130,7 @@ skidinc.console.parse = function() {
         command = (typeof this.commands[index] == 'object') ? this.commands[index]: null;
     
     document.querySelector('[contenteditable]').textContent = "";
+    skidinc.console.history.unshift(str);
     
     if (!this.inputEnabled)
         return;
@@ -160,7 +170,7 @@ skidinc.console.parse = function() {
         return eval(command.listExec)();
     
     // check args count
-    if (command.argsType.length !== parts.length)
+    if (parts.length < command.argsType.length)
         return this.print('<x>ERR</x> an argument is missing.');
     
     // args handling
@@ -179,7 +189,7 @@ skidinc.console.parse = function() {
             
             if (command.argsType[i] == 'string' && !isNan)
                 return this.print('<x>ERR</x> expected an argument of type <b>string</b> in command <b>' + base + '</b>, instead got argument <b>' + arg + '</b>.');
-
+            
             if (i == command.argsType.length - 1)
                 return eval(command.effect)(parts.splice(1, parts.length));
         };
@@ -214,4 +224,95 @@ skidinc.console.print = function(str, callback, force) {
 
 skidinc.console.clear = function() {
     $('#logs').empty();
+};
+
+skidinc.console.navigateHistory = function(how) {
+    var str;
+    
+    if (how == 'up') {
+        skidinc.console.posInHistory++;
+        
+        if (skidinc.console.posInHistory >= skidinc.console.history.length) {
+            skidinc.console.posInHistory = skidinc.console.history.length;
+            $('#command-input').html(skidinc.console.history[skidinc.console.history.length - 1]);
+            return;
+        };
+        
+        if (typeof skidinc.console.history[skidinc.console.posInHistory] == 'string') {
+            str = skidinc.console.history[skidinc.console.posInHistory];
+            $('#command-input').html(str);
+        };
+    };
+    
+    if (how == 'down') {
+        skidinc.console.posInHistory--;
+        
+        if (skidinc.console.posInHistory <= -1) {
+            skidinc.console.posInHistory = -1;
+            $('#command-input').html('');
+            return;
+        };
+        
+        if (typeof skidinc.console.history[skidinc.console.posInHistory] == 'string') {
+            str = skidinc.console.history[skidinc.console.posInHistory];
+            $('#command-input').html(str);
+        };
+    };
+};
+
+skidinc.console.autocomplete = function() {
+    var str = document.querySelector('[contenteditable]').textContent,
+        parts = str.split(' '),
+        el = (!skidinc.tutorial.finish && skidinc.tutorial.enabled) ? '#intro-input' : '#command-input';
+    
+    if (parts.length == 1) {
+        skidinc.console.commands.forEach(function(cmd) {
+            if (str.length <= 1)
+                return;
+            
+            if (cmd.id.indexOf(parts[0]) > -1) {
+                document.querySelector('[contenteditable]').textContent = cmd.id;
+                $(el).caret('pos', cmd.id.length);
+            };
+        });
+    };
+    
+    var command = (parts[0] == 'option') ? 'options' : parts[0];
+    
+    if (parts.length == 2) {
+        var secondArgs = (typeof skidinc[command].secondArgs == 'object') ? skidinc[command].secondArgs : undefined;
+        
+        if (typeof secondArgs == 'undefined')
+            return;
+        
+        secondArgs.forEach(function(i) {
+            if (parts[1].length <= 1)
+                return;
+            
+            if (i.indexOf(parts[1]) > -1) {
+                var str = parts[0] + ' ' + i;
+                document.querySelector('[contenteditable]').textContent = str;
+                $(el).caret('pos', str.length);
+            };
+        });
+    };
+    
+    if (parts.length == 3) {
+        var secondArg = parts[1],
+            thirdArgs = (typeof skidinc[command].thirdArgs == 'object') ? skidinc[command].thirdArgs : undefined;
+        
+        if (typeof thirdArgs == 'undefined')
+            return;
+        
+        thirdArgs.forEach(function(i) {
+            if (parts[2].length <= 1)
+                return;
+            
+            if (i.indexOf(parts[2]) > -1) {
+                var str = parts[0] + ' ' + parts[1] + ' ' + i;
+                document.querySelector('[contenteditable]').textContent = str;
+                $(el).caret('pos', str.length);
+            };
+        });
+    };
 };

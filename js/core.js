@@ -1,7 +1,7 @@
 var skidinc = {};
 skidinc.fps = 30;
 skidinc.interval = 1000 / skidinc.fps;
-skidinc.version = 0.31;
+skidinc.version = 0.32;
 
 skidinc.before = new Date().getTime();
 skidinc.now = new Date().getTime();
@@ -11,34 +11,44 @@ skidinc.loops = {};
 skidinc.update = function(times) {
     skidinc.script.loop(times);
     skidinc.autoscript.loop(times);
+    skidinc.battery.loop(times);
     skidinc.prestige.loop(times);
+    
     skidinc.stats();
 };
 
 skidinc.stats = function() {
-    $('#player #money').html('$' + fix(this.player.money, 0));
-    $('#player #total-money').html('$' + fix(this.player.totalMoney, 0));
-    $('#player #exp').html(fix(this.player.exp, 0) + '/' + fix(this.player.expReq, 0));
-    $('#player #total-exp').html(fix(this.player.totalExp, 0));
-    $('#player #level').html(fix(this.player.level, 0));
+    $('#stats-overview #player #money').html('$' + fix(this.player.money, 0));
+    $('#stats-overview #player #total-money').html('$' + fix(this.player.totalMoney, 0));
+    $('#stats-overview #player #exp').html(fix(this.player.exp, 0) + '/' + fix(this.player.expReq, 0));
+    $('#stats-overview #player #total-exp').html(fix(this.player.totalExp, 0));
+    $('#stats-overview #player #level').html(fix(this.player.level, 0));
     
-    $('#script #executed').html(this.script.isExecuted());
-    $('#script #name').html(this.script.getName());
-    $('#script #time').html(fix(this.script.time, 2) + 's');
+    $('#stats-overview #script #executed').html(this.script.isExecuted());
+    $('#stats-overview #script #name').html(this.script.getName());
+    $('#stats-overview #script #time').html(fix(this.script.time, 2) + 's');
     
-    $('#telnet #level').html('Lvl. ' + fix(this.server.owned[this.server.telnet.index], 0));
-    $('#telnet #price').html('$' + fix(this.server.getPrice('telnet'), 0));
+    $('#stats-overview #telnet #level').html('Lvl. ' + fix(this.server.owned[this.server.telnet.index], 0));
+    $('#stats-overview #telnet #price').html('$' + fix(this.server.getPrice('telnet'), 0));
     
-    $('#web #level').html('Lvl. ' + fix(this.server.owned[this.server.web.index], 0));
-    $('#web #price').html('$' + fix(this.server.getPrice('web'), 0));
+    $('#stats-overview #web #level').html('Lvl. ' + fix(this.server.owned[this.server.web.index], 0));
+    $('#stats-overview #web #price').html('$' + fix(this.server.getPrice('web'), 0));
     
-    $('#mults #money').html('x' + fix(this.player.getMoneyMult(true), 2));
-    $('#mults #exp').html('x' + fix(this.player.getExpMult(true), 2));
-    $('#mults #time').html('/' + fix(this.player.getTimeMult(), 2));
+    $('#stats-overview #mults #money').html('x' + fix(this.player.getMoneyMult(true), 2));
+    $('#stats-overview #mults #exp').html('x' + fix(this.player.getExpMult(true), 2));
+    $('#stats-overview #mults #time').html('/' + fix(this.player.getTimeMult(), 2));
     
-    $('#prestige #botnet').html(fix(skidinc.player.botnet, 0));
-    $('#prestige #botnet-reset').html(fix(skidinc.prestige.botnetOnReset, 0));
-    $('#prestige #mult').html('x' + fix(skidinc.prestige.getPrestigeMult(), 2));
+    $('#stats-overview #prestige #botnet').html(fix(skidinc.player.botnet, 0));
+    $('#stats-overview #prestige #botnet-reset').html(fix(skidinc.prestige.botnetOnReset, 0));
+    $('#stats-overview #prestige #mult').html('x' + fix(skidinc.prestige.getPrestigeMult(), 2));
+    
+    $('#stats-battery #battery #level').html(fix(skidinc.battery.level, 0));
+    $('#stats-battery #battery #upgrade').html('$' + fix(skidinc.battery.getCost(), 0));
+    $('#stats-battery #battery #charge').html(fix(skidinc.battery.time, 2) + '/' + fix(skidinc.battery.getMaxCharge(), 2) + 's');
+    $('#stats-battery #battery #charge-power').html('+' + fix(skidinc.battery.getChargePower(), 2) + '/s');
+    $('#stats-battery #battery #money').html('x' + fix(skidinc.battery.getMoneyEffect(), 2));
+    $('#stats-battery #battery #exp').html('x' + fix(skidinc.battery.getExpEffect(), 2));
+    $('#stats-battery #battery #time').html('x' + fix(skidinc.battery.getTimeEffect(), 2));
 };
 
 skidinc.core = function() {
@@ -83,7 +93,9 @@ skidinc.init = function() {
 
         skidinc.script.init();
         skidinc.autoscript.init();
+        skidinc.buy.init();
         skidinc.achievements.init();
+        skidinc.options.init();
         skidinc.kongregate.init();
         skidinc.save.init();
         
@@ -94,21 +106,49 @@ skidinc.init = function() {
 };
 
 skidinc.domInit = function() {
-    if (skidinc.tutorial.enabled)
-        $('#intro-input').focus();
-    else
-        $('#command-input').focus();
-
+    $(document).keydown(function(e){
+        if (e.keyCode == 37 && e.shiftKey)
+            skidinc.options.changeTab('left');
+        
+        if (e.keyCode == 39 && e.shiftKey)
+            skidinc.options.changeTab('right');
+        
+        if (e.keyCode == 76 && e.ctrlKey) {
+            e.preventDefault();
+            skidinc.console.clear();
+        };
+    });
+    
     $('#command-input, #intro-input').on('keypress', function(e) {
         if (e.which == 13) {
             e.preventDefault();
             skidinc.console.parse();
         };
-    }).bind("cut copy paste", function(e) {
-        e.preventDefault();
+        
+        if (e.which == 9) {
+            e.preventDefault();
+            skidinc.console.autocomplete();
+        };
     });
-
-    $('.terminal').on('click', function(e) {
+    
+    $('.input').keydown(function(objEvent) {
+        if (objEvent.keyCode == 9) {
+            objEvent.preventDefault();
+            skidinc.console.autocomplete();
+        };
+        
+        if (objEvent.keyCode == 38) {
+            objEvent.preventDefault();
+            skidinc.console.navigateHistory('up');
+        };
+        
+        if (objEvent.keyCode == 40) {
+            objEvent.preventDefault();
+            skidinc.console.navigateHistory('down');
+        };
+    });
+    
+    $('.logs').on('click', function(e) {
         e.preventDefault();
         $('#command-input').focus();
     });
@@ -117,39 +157,14 @@ skidinc.domInit = function() {
         e.preventDefault();
         $('#intro-input').focus();
     });
-
-    $('body').on('keypress', function(e) {
-        if (e.which == 9) {
-            e.preventDefault();
-            $('#command-input').focus();
-        };
-    });
     
-    $('#cog-watchad').on('click', function() {
-        skidinc.kongregate.watchAd();
-    });
-    
-    $('#option-inversion').on('click', function() {
-        skidinc.options.switchInversion(null, null, true)
-    });
-    
-    $('#option-typed').on('click', function() {
-        skidinc.options.switchTyped(null, null, true)
-    });
-    
-    $('#option-save').on('click', function() {
-        skidinc.save.saveNow(true);
-    });
-    
-    $('#option-erase').on('click', function() {
-        skidinc.save.eraseNow();
-    });
-    
-    $('#option-version').html('v' + skidinc.version.toFixed(2));
-    
+    skidinc.options.domInit();
     skidinc.autoscript.domInit();
     skidinc.achievements.domInit();
+    skidinc.battery.domInit();
     skidinc.prestige.domInit();
+    skidinc.kongregate.domInit();
+    
     skidinc.player.setUsernamePrefix();
     
     $('[data-toggle="tooltip"]').tooltip();

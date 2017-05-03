@@ -1,7 +1,7 @@
 skidinc.achievements = {};
 skidinc.achievements.categories = [];
 skidinc.achievements.owned = [];
-skidinc.achievements.list = [];
+skidinc.achievements.ach = [];
 
 skidinc.achievements.getOwnedAmount = function() {
     var owned = 0;
@@ -20,13 +20,13 @@ skidinc.achievements.getLast = function() {
     for (var e = 0; e < skidinc.achievements.categories.length; e++) {
         var category = skidinc.achievements.categories[e];
         
-        for (var i = 0; i < skidinc.achievements.list.length; i++) {
-            var achievement = skidinc.achievements.list[i],
+        for (var i = 0; i < skidinc.achievements.ach.length; i++) {
+            var achievement = skidinc.achievements.ach[i],
                 owned = skidinc.achievements.owned[i];
             
             if (!owned && achievement.category == category) {
                 list.push(achievement);
-                i = skidinc.achievements.list.length;
+                i = skidinc.achievements.ach.length;
             };
         };
     };
@@ -45,7 +45,7 @@ skidinc.achievements.create = function(name, desc, category, icon, varCheck, typ
 };
 
 skidinc.achievements.init = function() {
-    skidinc.achievements.list = [
+    skidinc.achievements.ach = [
         new skidinc.achievements.create('Kiddie I', 'Execute 10 scripts.', 'scriptsExecuted', 'fa-list-alt', 'skidinc.script.totalCompleted', '>=', 10),
         new skidinc.achievements.create('Kiddie II', 'Execute 50 scripts.', 'scriptsExecuted', 'fa-list-alt', 'skidinc.script.totalCompleted', '>=', 50),
         new skidinc.achievements.create('Kiddie III', 'Execute 250 scripts.', 'scriptsExecuted', 'fa-list-alt', 'skidinc.script.totalCompleted', '>=', 250),
@@ -92,8 +92,8 @@ skidinc.achievements.init = function() {
         new skidinc.achievements.create('Virtualization V', 'Upgrade your telnet server to level 100 (max level).', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 100)
     ];
     
-    for (var i = 0; i < skidinc.achievements.list.length; i++) {
-        var achievement = skidinc.achievements.list[i];
+    for (var i = 0; i < skidinc.achievements.ach.length; i++) {
+        var achievement = skidinc.achievements.ach[i];
         
         skidinc.achievements.owned.push(false);
         
@@ -106,9 +106,26 @@ skidinc.achievements.init = function() {
     }, 1000);
 };
 
+skidinc.achievements.list = function() {
+    var str = '',
+        achievements = skidinc.achievements.getLast(),
+        owned = skidinc.achievements.getOwnedAmount(),
+        max = skidinc.achievements.ach.length;
+    
+    str += '<y>ACHIEVEMENTS</y> ' + owned + '/' + max + ' completed:<br>';
+    
+    for (var i = 0; i < achievements.length; i++) {
+        var ach = achievements[i];
+        
+        str += '<b>*</b> <z>' + ach.name + '</z>: ' + ach.desc + '<br>';
+    };
+    
+    return skidinc.console.print(str);
+};
+
 skidinc.achievements.saveInit = function() {
-    if (skidinc.achievements.list.length !== skidinc.achievements.owned.length) {
-        var diff = skidinc.achievements.list.length - skidinc.achievements.owned.length;
+    if (skidinc.achievements.ach.length !== skidinc.achievements.owned.length) {
+        var diff = skidinc.achievements.ach.length - skidinc.achievements.owned.length;
         
         for (var i = 0; i < diff; i++)
             skidinc.achievements.owned.push(false);
@@ -118,7 +135,7 @@ skidinc.achievements.saveInit = function() {
 skidinc.achievements.update = function() {
     var achievements = skidinc.achievements.getLast(),
         owned = skidinc.achievements.getOwnedAmount(),
-        max = skidinc.achievements.list.length;
+        max = skidinc.achievements.ach.length;
     
     $('#achievements-owned').html('Achievements owned (' + owned + '/' + max + '):');
     
@@ -134,7 +151,7 @@ skidinc.achievements.update = function() {
 skidinc.achievements.domInit = function() {
     var achievements = skidinc.achievements.getLast(),
         owned = skidinc.achievements.getOwnedAmount(),
-        max = skidinc.achievements.list.length;
+        max = skidinc.achievements.ach.length;
     
     $('#achievements-owned').html('Achievements owned (' + owned + '/' + max + '):');
     $('#achievements-content').append('<div id="achievements-row" class="row"></div>');
@@ -150,8 +167,8 @@ skidinc.achievements.domInit = function() {
 };
 
 skidinc.achievements.loop = function() {
-    for (var i = 0; i < skidinc.achievements.list.length; i++) {
-        var achievement = skidinc.achievements.list[i],
+    for (var i = 0; i < skidinc.achievements.ach.length; i++) {
+        var achievement = skidinc.achievements.ach[i],
             owned = skidinc.achievements.owned[i];
         
         if (!owned) {

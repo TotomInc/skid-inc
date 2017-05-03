@@ -1,66 +1,69 @@
 skidinc.script = {};
+skidinc.script.secondArgs = [];
+
 skidinc.script.available = true;
 skidinc.script.current = null;
 skidinc.script.time = 0;
 skidinc.script.maxTime = 0;
 skidinc.script.maxBar = 40;
+
 skidinc.script.unlocked = [true, false, false, false, false, false, false, false];
 skidinc.script.completed = [0, 0, 0, 0, 0, 0, 0, 0];
 skidinc.script.totalCompleted = 0;
 skidinc.script.scripts = [{
     id: 'hare.ctx',
     cost: 0,
-    money: 75,
-    exp: 13,
+    money: 118,
+    exp: 8,
     time: 4,
     i: 0
 }, {
     id: 'yerg.trj',
     cost: 3750,
-    money: 937,
-    exp: 94,
+    money: 1298,
+    exp: 56,
     time: 16,
     i: 1
 }, {
     id: 'acid.pl',
-    cost: 46872,
-    money: 11718,
-    exp: 703,
+    cost: 52500,
+    money: 14278,
+    exp: 392,
     time: 64,
     i: 2
 }, {
     id: 'memz.rsm',
-    cost: 585936,
-    money: 146484,
-    exp: 5273,
+    cost: 735000,
+    money: 157058,
+    exp: 2744,
     time: 256,
     i: 3
 }, {
     id: 'gruel.vbs',
-    cost: 7320000,
-    money: 1.83e6,
-    exp: 39550,
+    cost: 10290000,
+    money: 1727638,
+    exp: 19208,
     time: 1024,
     i: 4
 }, {
     id: 'cih.win',
-    cost: 91200000,
-    money: 2.28e7,
-    exp: 296630,
+    cost: 144060000,
+    money: 19004018,
+    exp: 134456,
     time: 4096,
     i: 5
 }, {
     id: 'worm.cs',
-    cost: 1.14e9,
-    money: 2.86e8,
-    exp: 2.22e6,
+    cost: 2016840000,
+    money: 209044198,
+    exp: 941192,
     time: 16384,
     i: 6
 }, {
     id: 'blazer.dos',
-    cost: 1.42e10,
-    money: 3.57e9,
-    exp: 1.66e7,
+    cost: 28235760000,
+    money: 2299486178,
+    exp: 6588344,
     time: 65536,
     i: 7
 }];
@@ -285,6 +288,10 @@ skidinc.script.init = function() {
             skidinc.script.completed.push(0);
         });
     };
+    
+    skidinc.script.scripts.forEach(function(script) {
+        skidinc.script.secondArgs.push(script.id);
+    });
 };
 
 skidinc.script.prestige = function() {

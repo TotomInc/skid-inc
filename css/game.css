@@ -6,6 +6,12 @@
 	100% { opacity: 0; }
 }
 
+@keyframes low-battery {
+    0% { border-color: #8e3734; }
+    50% { border-color: #bf4f4b; }
+    100% { border-color: #8e3734; }
+}
+
 .logo {
     z-index: -1;
     position: absolute;
@@ -43,9 +49,6 @@ body.inverted .logo {
 .intro .terminal .input {
     width: 100%;
     height: 42px;
-}
-.intro .terminal.inverted .input .custom-input {
-    text-shadow: 0 0 0 #f1f1f1;
 }
 
 .game {
@@ -140,6 +143,9 @@ body.inverted .logo {
     margin: 0;
     font-size: 16px;
 }
+.terminal .stat-tabs .stat-container p i {
+    font-size: 14px;
+}
 .terminal .stat-tabs #stats-prestige p {
     margin-top: 5px;
     margin-bottom: 10px;
@@ -170,9 +176,6 @@ body.inverted .logo {
     font-size: 26px;
     cursor: pointer;
 }
-.terminal.inverted + .input .custom-input {
-    text-shadow: 0 0 0 #f1f1f1;
-}
 .input .custom-input {
     float: left;
     overflow-y: hidden;
@@ -181,13 +184,7 @@ body.inverted .logo {
     height: 100%;
     width: calc(100% - 25px - 250px - 5px - 1px);
     margin-left: 5px;
-    color: transparent;
-    text-shadow: 0 0 0 #292b2c;
-}
-.input .custom-input:after {
-    content: "_";
-    opacity: 0;
-    animation: cursor 1s infinite;
+    color: #f1f1f1;
 }
 
 .input .input-cog {
@@ -206,7 +203,7 @@ body.inverted .logo {
     overflow-y: auto;
     position: absolute;
     margin-left: -157px;
-    margin-top: -150px;
+    margin-top: -190px;
     width: 180px;
     border: 1px solid #555;
     border-radius: 4px;
@@ -271,4 +268,57 @@ body.inverted .logo {
     margin: 0;
     text-align: center;
     font-size: 14px;
+}
+
+.battery:after {
+    transition: background-color 200ms;
+    content: "";
+    position: absolute;
+    display: block;
+    height: 22px;
+    width: 8px;
+    top: 8px;
+    right: -8px;
+    border: 2px solid #888;
+}
+.battery {
+    transition: background-color 200ms;
+    margin-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 75%;
+    height: 42px;
+    background-color: none;
+    border: 2px solid #888;
+    border-radius: 4px;
+    position: relative;
+}
+.battery .battery-level {
+    transition: background-color 200ms;
+    height: 100%;
+    width: 0;
+    border-radius: 2px;
+    background-color: #666;
+}
+.battery.high,
+.battery.high:after {
+    border-color: #3f923f;
+}
+.battery .battery-level.high {
+    background-color: #5cb85c;
+}
+.battery.medium,
+.battery.medium:after {
+    border-color: #b98337;
+}
+.battery .battery-level.medium {
+    background-color: #f0ad4e;
+}
+.battery.low,
+.battery.low:after {
+    animation: low-battery 1s infinite;
+    border-color: #8e3734;
+}
+.battery .battery-level.low {
+    background-color: #d9534f;
 }

@@ -10,21 +10,21 @@ skidinc.player.level = 1;
 skidinc.player.botnet = 0;
 
 skidinc.player.getTimeMult = function() {
-    return skidinc.server.getEffects('telnet').time;
+    return skidinc.server.getEffects('telnet').time * skidinc.battery.getTimeEffect();
 };
 
 skidinc.player.getMoneyMult = function(display) {
     if (display)
-        return skidinc.server.getEffects('web').money;
+        return skidinc.server.getEffects('web').money * skidinc.battery.getMoneyEffect();
     
-    return skidinc.server.getEffects('web').money * skidinc.prestige.getPrestigeMult();
+    return (skidinc.server.getEffects('web').money * skidinc.battery.getMoneyEffect()) * skidinc.prestige.getPrestigeMult();
 };
 
 skidinc.player.getExpMult = function(display) {
     if (display)
-        return skidinc.server.getEffects('web').exp;
+        return skidinc.server.getEffects('web').exp * skidinc.battery.getExpEffect();
     
-    return skidinc.server.getEffects('web').exp * skidinc.prestige.getPrestigeMult();
+    return (skidinc.server.getEffects('web').exp * skidinc.battery.getExpEffect()) * skidinc.prestige.getPrestigeMult();
 };
 
 skidinc.player.setUsernamePrefix = function() {
