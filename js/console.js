@@ -76,7 +76,7 @@ skidinc.console.checkStr = function(str) {
 
 skidinc.console.autoScroll = function() {
     // used in custom typed.min.js
-    var el = (skidinc.tutorial.enabled) ? '#intro-logs' : '#logs';
+    var el = (skidinc.tutorial.finish) ? '#logs' : '#intro-logs';
 
     $(el).scrollTop(1e6);
 };
@@ -215,6 +215,8 @@ skidinc.console.print = function(str, callback, force) {
                 
                 if (typeof callback == 'function')
                     callback();
+                
+                skidinc.console.autoScroll();
             }
         });
     }

@@ -45,7 +45,7 @@ skidinc.autoscript.loop = function(times) {
         var script = skidinc.script.scripts[i];
 
         if (skidinc.autoscript.unlocked[script.i]) {
-            skidinc.autoscript.time[script.i] += times / skidinc.interval;
+            skidinc.autoscript.time[script.i] += times / skidinc.fps;
             
             var maxTime = script.time / skidinc.player.getTimeMult(),
                 percent = skidinc.autoscript.time[script.i] / maxTime * 100;

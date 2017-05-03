@@ -33,6 +33,11 @@ skidinc.tutorial.finished = function() {
     });
 };
 
+skidinc.tutorial.skip = function() {
+    skidinc.console.inputEnabled = true;
+    skidinc.tutorial.finished();
+};
+
 skidinc.tutorial.core = function() {
     switch(this.step) {
         case 0:

@@ -164,6 +164,11 @@
                     <div class="tab-pane fade" id="stats-autoscripts" role="tabpanel"></div>
                     
                     <div class="tab-pane fade" id="stats-battery" role="tabpanel">
+                        <p class="text-center">
+                            Hover the battery to charge it. When it's charged, it increase your multipliers.<br>
+                            Upgrade your battery for bigger multipliers, capacity and faster charge.
+                        </p>
+                        
                         <div id="battery" class="battery">
                             <div id="battery-level" class="battery-level"></div>
                         </div>
@@ -215,12 +220,81 @@
                     <p data-toggle="modal" data-target="#modal-themes"><img src="/assets/kred_single.png"> Buy themes</p>
                     <p id="cog-watchad"><i class="fa fa-video-camera norotate"></i> Watch an ad</p>
                     <p data-toggle="modal" data-target="#modal-notes"><i class="fa fa-pencil-square" aria-hidden="true"></i> Patch-notes</p>
+                    <p data-toggle="modal" data-target="#modal-shortcuts"><i class="fa fa fa-keyboard-o norotate"></i> Shortcuts</p>
                     <p data-toggle="modal" data-target="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</p>
                     <p data-toggle="modal" data-target="#modal-options"><i class="fa fa-cog norotate"></i> Options</p>
                 </div>
                 
                 <i class="fa fa-cog" aria-hidden="true"></i>
             </span>
+        </div>
+    </div>
+    
+    <div id="modal-shortcuts" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-keyboard" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-keyboard-o"></i> Keyboard shortcuts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Controls</th>
+                                <th>Effect</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">TAB</th>
+                                <td>Autocomplete command and gain input focus.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">SHIFT+LEFT/RIGHT</th>
+                                <td>Change stat-tab.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">UP/DOWN</th>
+                                <td>Navigate through commands history.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+L</th>
+                                <td>Clear terminal logs.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+Q</th>
+                                <td>Clear all text from the input.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+A</th>
+                                <td>Select all text in input.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+C</th>
+                                <td>Copy selected text in input.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+C</th>
+                                <td>Cut selected text in input.</td>
+                            </tr>
+                            
+                            <tr>
+                                <th scope="row">CTRL+V</th>
+                                <td>Paste text saved in clipboard in input.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     

@@ -70,12 +70,12 @@ skidinc.save.loadNow = function() {
     skidinc.player.expReq = save.player.expReq;
     skidinc.player.level = save.player.level;
     
-    if (save.version == 0.31) {
+    if (save.version >= 0.31) {
         skidinc.player.botnet = save.player.botnet;
         skidinc.player.prestigeCount = save.player.prestigeCount;
     };
     
-    if (save.version == 0.32) {
+    if (save.version >= 0.32) {
         skidinc.battery.level = save.battery.level;
         skidinc.battery.time = save.battery.time;
     };
@@ -95,6 +95,7 @@ skidinc.save.soft = function() {
     };
     
     clearInterval(skidinc.loops.core);
+    clearInterval(skidinc.loops.achievements);
     clearInterval(skidinc.loops.save);
     
     skidinc.player.botnet += skidinc.prestige.botnetOnReset;
@@ -103,6 +104,7 @@ skidinc.save.soft = function() {
     skidinc.script.prestige();
     skidinc.server.prestige();
     skidinc.player.prestige();
+    skidinc.battery.prestige();
     
     skidinc.save.saveNow();
     location.reload();

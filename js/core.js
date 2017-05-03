@@ -117,6 +117,11 @@ skidinc.domInit = function() {
             e.preventDefault();
             skidinc.console.clear();
         };
+        
+        if (e.keyCode == 81 && e.ctrlKey) {
+            e.preventDefault();
+            document.querySelector('[contenteditable]').textContent = "";
+        };
     });
     
     $('#command-input, #intro-input').on('keypress', function(e) {

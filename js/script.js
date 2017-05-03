@@ -261,7 +261,7 @@ skidinc.script.buy = function(what) {
 
 skidinc.script.loop = function(times) {
     if (!skidinc.script.available && typeof skidinc.script.current == 'object') {
-        skidinc.script.time -= times / skidinc.interval;
+        skidinc.script.time -= times / skidinc.fps;
         
         skidinc.script.bar();
         

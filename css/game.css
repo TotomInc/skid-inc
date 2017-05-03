@@ -184,6 +184,9 @@ body.inverted .logo {
     height: 100%;
     width: calc(100% - 25px - 250px - 5px - 1px);
     margin-left: 5px;
+    color: #292b2c;
+}
+.terminal.inverted + .input .custom-input {
     color: #f1f1f1;
 }
 
@@ -203,7 +206,7 @@ body.inverted .logo {
     overflow-y: auto;
     position: absolute;
     margin-left: -157px;
-    margin-top: -190px;
+    margin-top: -220px;
     width: 180px;
     border: 1px solid #555;
     border-radius: 4px;

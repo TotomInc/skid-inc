@@ -10,8 +10,12 @@ skidinc.battery.chargePower = 7;
 skidinc.battery.chargePowerMult = 1;
 skidinc.battery.chargeTimeMult = 1;
 
-skidinc.battery.expEffect = 1.25;
+skidinc.battery.moneyPerLevel = 0.06;
+skidinc.battery.expPerLevel = 0.04;
+skidinc.battery.timePerLevel = 0.02;
+
 skidinc.battery.moneyEffect = 1.25;
+skidinc.battery.expEffect = 1.15;
 skidinc.battery.timeMult = 1.10;
 
 skidinc.battery.cursorEnter = false;
@@ -20,21 +24,21 @@ skidinc.battery.oldState = 'null';
 
 skidinc.battery.getExpEffect = function() {
     if (skidinc.battery.time > 0.01)
-        return skidinc.battery.expEffect;
+        return skidinc.battery.expEffect + (skidinc.battery.level * skidinc.battery.expPerLevel);
     else
         return 1;
 };
 
 skidinc.battery.getMoneyEffect = function() {
     if (skidinc.battery.time > 0.01)
-        return skidinc.battery.moneyEffect;
+        return skidinc.battery.moneyEffect + (skidinc.battery.level * skidinc.battery.moneyPerLevel);
     else
         return 1;
 };
 
 skidinc.battery.getTimeEffect = function() {
     if (skidinc.battery.time > 0.01)
-        return skidinc.battery.timeMult;
+        return skidinc.battery.timeMult + (skidinc.battery.level * skidinc.battery.timePerLevel);
     else
         return 1;
 };
@@ -104,11 +108,11 @@ skidinc.battery.loop = function(times) {
             chargePower = skidinc.battery.getChargePower();
         
         if (skidinc.battery.time < maxCharge)
-            skidinc.battery.time += (chargePower / skidinc.fps) * times;
+            skidinc.battery.time += (times / skidinc.fps) * chargePower;
     };
     
     if (skidinc.battery.time > 0)
-        skidinc.battery.time -= (1 / skidinc.fps) * times;
+        skidinc.battery.time -= (times / skidinc.fps);
     else if (skidinc.battery.time <= 0)
         skidinc.battery.time = 0;
     
@@ -123,4 +127,9 @@ skidinc.battery.domInit = function() {
         skidinc.battery.cursorEnter = false;
         skidinc.battery.cursorLeave = true;
     });
+};
+
+skidinc.battery.prestige = function() {
+    skidinc.battery.level = 1;
+    skidinc.battery.time = 0;
 };
