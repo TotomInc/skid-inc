@@ -1,5 +1,5 @@
 var skidinc = {};
-skidinc.fps = 30;
+skidinc.fps = 20;
 skidinc.interval = 1000 / skidinc.fps;
 skidinc.version = 0.32;
 
@@ -9,6 +9,7 @@ skidinc.now = new Date().getTime();
 skidinc.loops = {};
 
 skidinc.update = function(times) {
+    skidinc.console.loop(times);
     skidinc.script.loop(times);
     skidinc.autoscript.loop(times);
     skidinc.battery.loop(times);

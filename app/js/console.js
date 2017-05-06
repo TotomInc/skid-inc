@@ -1,9 +1,16 @@
 skidinc.console = {};
 skidinc.console.typeSpeed = -50;
 skidinc.console.inputEnabled = true;
+skidinc.console.isTyping = false;
+
 skidinc.console.notAccepted = ['<', '>', '[', ']', '(', ')', ',', ';', '/', '\\', '\'', '"'];
+
 skidinc.console.history = [];
 skidinc.console.posInHistory = -1;
+
+skidinc.console.divs = -1;
+skidinc.console.divHeight = -1;
+
 skidinc.console.commands = [{
     id: 'help',
     desc: 'show a list of available commands.',
@@ -75,10 +82,18 @@ skidinc.console.checkStr = function(str) {
 };
 
 skidinc.console.autoScroll = function() {
-    // used in custom typed.min.js
-    var el = (skidinc.tutorial.finish) ? '#logs' : '#intro-logs';
-
-    $(el).scrollTop(1e6);
+    var el = (skidinc.tutorial.finish) ? '#logs' : '#intro-logs',
+        count = $(el + ' div').length;
+    
+    if (!skidinc.options.typed && count > skidinc.console.divs) {
+        skidinc.console.divs = count;
+        $(el).scrollTop(1e6);
+    };
+    
+    if (skidinc.options.typed && skidinc.console.isTyping) {
+        skidinc.console.divs = count;
+        $(el).scrollTop(1e6);
+    };
 };
 
 skidinc.console.commandExist = function(base) {
@@ -130,7 +145,9 @@ skidinc.console.parse = function() {
         command = (typeof this.commands[index] == 'object') ? this.commands[index]: null;
     
     document.querySelector('[contenteditable]').textContent = "";
+    
     skidinc.console.history.unshift(str);
+    skidinc.console.posInHistory = -1;
     
     if (!this.inputEnabled)
         return;
@@ -204,6 +221,8 @@ skidinc.console.print = function(str, callback, force) {
     if (skidinc.options.typed && !force) {
         var id = Math.floor(Math.random() * 1e6);
         
+        skidinc.console.isTyping = true;
+        
         $(el).append('<div id="' + id + '"><span></span></div>');
         
         $('#' + id + ' span').typed({
@@ -216,7 +235,7 @@ skidinc.console.print = function(str, callback, force) {
                 if (typeof callback == 'function')
                     callback();
                 
-                skidinc.console.autoScroll();
+                skidinc.console.isTyping = false;
             }
         });
     }
@@ -317,4 +336,8 @@ skidinc.console.autocomplete = function() {
             };
         });
     };
+};
+
+skidinc.console.loop = function(times) {
+    skidinc.console.autoScroll();
 };
