@@ -1,7 +1,7 @@
 var skidinc = {};
 skidinc.fps = 20;
 skidinc.interval = 1000 / skidinc.fps;
-skidinc.version = 0.32;
+skidinc.version = 0.33;
 
 skidinc.before = new Date().getTime();
 skidinc.now = new Date().getTime();
