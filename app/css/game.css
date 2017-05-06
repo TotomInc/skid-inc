@@ -191,66 +191,6 @@ body.inverted .logo {
     color: #f1f1f1;
 }
 
-.input .input-cog {
-    margin: 0;
-}
-.input .input-cog i {
-    transition: all 200ms;
-    color: #292b2c;
-}
-.input .input-cog i:hover {
-    transition: all 200ms;
-    -webkit-transform: rotate(50deg);
-    transform: rotate(50deg);
-}
-.cog-content {
-    overflow-y: auto;
-    position: absolute;
-    margin-left: -157px;
-    margin-top: -220px;
-    width: 180px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    background: #666;
-    cursor: default;
-}
-.terminal.inverted + .input .input-cog i {
-    color: #f1f1f1;
-}
-.cog-content p {
-    cursor: pointer;
-    margin: 0;
-    padding: 10px;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: center;
-    transition: all 200ms;
-}
-.cog-content p:hover {
-    transition: all 200ms;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.cog-content p img {
-    max-height: 17px;
-}
-.cog-content p i {
-    transition: all 0ms !important;
-}
-.cog-content p:last-child {
-    border-bottom: 0;
-}
-.input .input-cog.show .cog-content {
-    transition: opacity 200ms;
-    visibility: visible;
-    opacity: 1;
-}
-.input .input-cog .cog-content {
-    transition: opacity 200ms;
-    visibility: hidden;
-    opacity: 0;
-}
-
 .achievement-block {
     width: 50px;
     height: 50px;

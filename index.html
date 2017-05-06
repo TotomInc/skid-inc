@@ -64,22 +64,32 @@
             <div class="stat-tabs">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#stats-overview" role="tab"><i class="fa fa-bar-chart" aria-hidden="true"></i> Overview</a>
+                        <a class="nav-link active" data-toggle="tab" href="#stats-overview" role="tab"><i class="fa fa-bar-chart" aria-hidden="true"></i> Stats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab"><i class="fa fa-microchip" aria-hidden="true"></i> Autoscripts</a>
+                        <a class="nav-link" data-toggle="tab" href="#stats-autoscripts" role="tab"><i class="fa fa-microchip" aria-hidden="true"></i> Autoscr.</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="stats-battery-title" class="nav-link" data-toggle="tab" href="#stats-battery" role="tab"><i class="fa fa-battery-empty" aria-hidden="true"></i> Battery</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                         <div class="dropdown-menu">
-                            <a id="stats-battery-title" class="nav-link" data-toggle="tab" href="#stats-battery" role="tab"><i class="fa fa-battery-empty" aria-hidden="true"></i> Battery</a>
                             <a class="nav-link" data-toggle="tab" href="#stats-prestige" role="tab"><i class="fa fa-star" aria-hidden="true"></i> Prestige</a>
+                            <div class="spacer"></div>
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-notes" href="#modal-notes"><i class="fa fa-pencil-square" aria-hidden="true"></i> Patch-notes</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-shortcuts" href="#modal-shortcuts"><i class="fa fa fa-keyboard-o norotate"></i> Shortcuts</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-achievements" href="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-options" href="#modal-options"><i class="fa fa-cog norotate"></i> Options</a>
+                            <div class="spacer"></div>
+                            <a class="nav-link" data-toggle="modal" data-target="#modal-themes" href="#modal-themes"><img src="app/assets/kred_single.png"> Buy themes</a>
+                            <a id="cog-watchad" class="nav-link" href="#watch-ad"><i class="fa fa-video-camera norotate"></i> Watch an ad</a>
                         </div>
                     </li>
                 </ul>
                 
                 <div class="tab-content">
-                    <div class="tab-pane show" id="stats-overview" role="tabpanel">
+                    <div class="tab-pane active" id="stats-overview" role="tabpanel">
                         <div id="player" class="stat-container">
                             <div class="names">
                                 <p>Level</p>
@@ -214,19 +224,6 @@
             <span class="input-before"><span id="input-session" class="unique">skidinc</span>@root:~$</span>
             
             <span id="command-input" class="custom-input" contenteditable="true" spellcheck="false"></span>
-            
-            <span id="cog-btn" class="input-cog">
-                <div id="cog-content" class="cog-content">
-                    <p data-toggle="modal" data-target="#modal-themes"><img src="app/assets/kred_single.png"> Buy themes</p>
-                    <p id="cog-watchad"><i class="fa fa-video-camera norotate"></i> Watch an ad</p>
-                    <p data-toggle="modal" data-target="#modal-notes"><i class="fa fa-pencil-square" aria-hidden="true"></i> Patch-notes</p>
-                    <p data-toggle="modal" data-target="#modal-shortcuts"><i class="fa fa fa-keyboard-o norotate"></i> Shortcuts</p>
-                    <p data-toggle="modal" data-target="#modal-achievements"><i class="fa fa-bar-chart norotate"></i> Success</p>
-                    <p data-toggle="modal" data-target="#modal-options"><i class="fa fa-cog norotate"></i> Options</p>
-                </div>
-                
-                <i class="fa fa-cog" aria-hidden="true"></i>
-            </span>
         </div>
     </div>
     
