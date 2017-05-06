@@ -34,7 +34,7 @@ skidinc.player.setUsernamePrefix = function() {
 
     $('#username-width').remove();
     $('#input-session').html(skidinc.player.username);
-    $('#command-input').css('width', 'calc(100% - 25px - 115px - ' + usernameWidth + 'px - 5px - 1px - 5px)');
+    $('#command-input').css('width', 'calc(100% - 25px - 115px - ' + usernameWidth + 'px)');
 };
 
 skidinc.player.setUsername = function(args) {
@@ -53,7 +53,7 @@ skidinc.player.setUsername = function(args) {
         
         $('#username-width').remove();
         $('#input-session').html(args[0]);
-        $('#command-input').css('width', 'calc(100% - 25px - 115px - ' + usernameWidth + 'px - 5px - 1px - 5px)');
+        $('#command-input').css('width', 'calc(100% - 25px - 115px - ' + usernameWidth + 'px)');
         
         skidinc.console.print('Your new username is now <b>' + args[0] + '</b>.', function() {
             if (skidinc.tutorial.enabled)
