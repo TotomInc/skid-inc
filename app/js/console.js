@@ -11,6 +11,8 @@ skidinc.console.posInHistory = -1;
 skidinc.console.divs = -1;
 skidinc.console.divHeight = -1;
 
+skidinc.console.grammarly = false;
+
 skidinc.console.commands = [{
     id: 'help',
     desc: 'show a list of available commands.',
@@ -340,4 +342,11 @@ skidinc.console.autocomplete = function() {
 
 skidinc.console.loop = function(times) {
     skidinc.console.autoScroll();
+};
+
+skidinc.console.domInit = function() {
+    if (!skidinc.console.grammarly) {
+        skidinc.console.print('<x>WARNING</x> if you are using the <b>Grammarly</b> extension, I recommend you to disable it since as it can cause <b>severe</b> bugs with the game.');
+        skidinc.console.grammarly = true;
+    };
 };

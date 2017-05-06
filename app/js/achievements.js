@@ -91,11 +91,11 @@ skidinc.achievements.init = function() {
         new skidinc.achievements.create('Virtualization IV', 'Upgrade your telnet server to level 75.', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 75),
         new skidinc.achievements.create('Virtualization V', 'Upgrade your telnet server to level 100 (max level).', 'telnetLevel', 'fa-server', 'skidinc.server.owned[skidinc.server.servers.indexOf("telnet")]', '>=', 100),
         
-        new skidinc.achievements.create('Charge I', 'Upgrade your battery to level 5', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 5),
-        new skidinc.achievements.create('Charge II', 'Upgrade your battery to level 10', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 10),
-        new skidinc.achievements.create('Charge III', 'Upgrade your battery to level 25', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 25),
-        new skidinc.achievements.create('Charge IV', 'Upgrade your battery to level 50', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 50),
-        new skidinc.achievements.create('Charge V', 'Upgrade your battery to level 75', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 75)
+        new skidinc.achievements.create('Charge I', 'Upgrade your battery to level 5.', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 5),
+        new skidinc.achievements.create('Charge II', 'Upgrade your battery to level 10.', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 10),
+        new skidinc.achievements.create('Charge III', 'Upgrade your battery to level 25.', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 25),
+        new skidinc.achievements.create('Charge IV', 'Upgrade your battery to level 50.', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 50),
+        new skidinc.achievements.create('Charge V', 'Upgrade your battery to level 75.', 'batteryLevel', 'fa-battery-full', 'skidinc.battery.level', '>=', 75)
     ];
     
     for (var i = 0; i < skidinc.achievements.ach.length; i++) {

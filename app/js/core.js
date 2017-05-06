@@ -164,6 +164,7 @@ skidinc.domInit = function() {
         $('#intro-input').focus();
     });
     
+    skidinc.console.domInit();
     skidinc.options.domInit();
     skidinc.autoscript.domInit();
     skidinc.achievements.domInit();

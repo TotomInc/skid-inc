@@ -80,6 +80,9 @@ skidinc.save.loadNow = function() {
         skidinc.battery.time = save.battery.time;
     };
     
+    if (save.version >= 0.33)
+        skidinc.console.grammarly = save.console.grammarly;
+    
     return console.info('Save found and loaded.', save.version);
 };
 
