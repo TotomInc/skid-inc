@@ -19,14 +19,16 @@ skidinc.console.commands = [{
     effect: 'skidinc.console.help()',
     requireArg: false,
     supportList: false,
-    supportHelp: false
+    supportHelp: false,
+    showInHelp: true
 }, {
     id: 'clear',
     desc: 'remove all the logs from the terminal.',
     effect: 'skidinc.console.clear()',
     requireArg: false,
     supportList: false,
-    supportHelp: false
+    supportHelp: false,
+    showInHelp: true
 }, {
     id: 'username',
     desc: 'set your username, can only be used in the tutorial.',
@@ -34,7 +36,8 @@ skidinc.console.commands = [{
     requireArg: true,
     argsType: ['base', 'string'],
     supportList: false,
-    supportHelp: false
+    supportHelp: false,
+    showInHelp: false
 }, {
     id: 'script',
     desc: 'execute a script.',
@@ -44,7 +47,8 @@ skidinc.console.commands = [{
     supportList: true,
     listExec: 'skidinc.script.list',
     supportHelp: true,
-    helpExec: 'skidinc.script.help'
+    helpExec: 'skidinc.script.help',
+    showInHelp: true
 }, {
     id: 'buy',
     desc: 'buy things such as new scripts, auto-scripts and servers.',
@@ -54,7 +58,8 @@ skidinc.console.commands = [{
     supportList: true,
     listExec: 'skidinc.buy.list',
     supportHelp: true,
-    helpExec: 'skidinc.buy.help'
+    helpExec: 'skidinc.buy.help',
+    showInHelp: true
 }, {
     id: 'option',
     desc: 'change in-game options.',
@@ -64,14 +69,24 @@ skidinc.console.commands = [{
     supportList: true,
     listExec: 'skidinc.options.list',
     supportHelp: true,
-    helpExec: 'skidinc.options.help'
+    helpExec: 'skidinc.options.help',
+    showInHelp: true
 }, {
     id: 'achievements',
     desc: 'take a look on your progression.',
     effect: 'skidinc.achievements.list()',
     requireArg: false,
     supportList: false,
-    supportHelp: false
+    supportHelp: false,
+    showInHelp: true
+}, {
+    id: 'stats',
+    desc: 'display essential stats.',
+    effect: 'skidinc.player.stats()',
+    requireArg: false,
+    supportList: false,
+    supportHelp: false,
+    showInHelp: true
 }];
 
 skidinc.console.checkStr = function(str) {
@@ -130,7 +145,10 @@ skidinc.console.help = function() {
         for (var cmd in this.commands) {
             cmd = this.commands[cmd];
             
-            str += '<b>-</b> <z>' + cmd.id + '</z>: ' + cmd.desc + '<br>';
+            if (!cmd.showInHelp)
+                str += '';
+            else
+                str += '<b>-</b> <z>' + cmd.id + '</z>: ' + cmd.desc + '<br>';
         };
         
         return this.print(str);
@@ -346,7 +364,7 @@ skidinc.console.loop = function(times) {
 
 skidinc.console.domInit = function() {
     if (!skidinc.console.grammarly) {
-        skidinc.console.print('<x>WARNING</x> if you are using the <b>Grammarly</b> extension, I recommend you to disable it since as it can cause <b>severe</b> bugs with the game.');
+        skidinc.console.print('<x>WARNING</x> if you are using the <b>Grammarly</b> extension, I recommend you to disable it since it can cause <b>severe</b> bugs with the game.');
         skidinc.console.grammarly = true;
     };
 };

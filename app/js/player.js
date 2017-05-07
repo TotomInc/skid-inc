@@ -81,6 +81,13 @@ skidinc.player.earn = function(type, amount) {
     };
 };
 
+skidinc.player.stats = function() {
+    skidinc.console.print('<y>STATS</y> Level: <b>' + fix(skidinc.player.level, 0) + '</b><br>' +
+        'Exp: <b>' + fix(skidinc.player.exp, 0) + '/' + fix(skidinc.player.expReq, 0) + '</b><br>' +
+        'Money: <b>$' + fix(skidinc.player.money, 0) + '</b><br>' +
+        'All-time money: <b>$' + fix(skidinc.player.totalMoney, 0) + '</b>');
+};
+
 skidinc.player.prestige = function() {
     skidinc.before = new Date().getTime();
     skidinc.now = new Date().getTime();
