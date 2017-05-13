@@ -2,7 +2,7 @@
 .game.default .logs span x,
 .intro.default .logs span x {
     color: #ff6060;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
 .terminal.inverted .logs span x {
@@ -13,7 +13,7 @@
 .game.default .logs span w,
 .intro.default .logs span w {
     color: #ffa500;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
 .terminal.inverted .logs span w {
@@ -24,7 +24,7 @@
 .game.default .logs span z,
 .intro.default .logs span z {
     color: #ffd700;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
 .terminal.inverted .logs span z {
@@ -35,9 +35,11 @@
 .game.default .logs span y,
 .intro.default .logs span y {
     color: #a4c136;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
+
+
 .terminal.inverted .logs span y {
     background-color: inherit;
 }
@@ -46,7 +48,7 @@
 .game.default .logs span t,
 .intro.default .logs span t {
     color: #add8e6;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
 .terminal.inverted .logs span t {
@@ -57,7 +59,7 @@
 .game.default .logs span h,
 .intro.default .logs span h {
     color: #c785c7;
-    background-color: #3c3c3c;
+    background-color: inherit;
     font-weight: bold;
 }
 .terminal.inverted .logs span h {
