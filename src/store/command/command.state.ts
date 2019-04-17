@@ -8,7 +8,15 @@ export interface CommandState {
 }
 
 const state: CommandState = {
-  commands: [],
+  commands: [
+    {
+      name: 'help',
+      description: 'display a list of all available commands',
+      successAction: 'COMMAND_HELP_SUCCESS',
+      failedAction: 'COMMAND_HELP_FAILED',
+      requireValue: false,
+    },
+  ],
   logs: [],
   history: [],
   historyIndex: -1,
