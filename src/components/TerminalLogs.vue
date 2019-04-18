@@ -24,6 +24,10 @@ export default class TerminalLogs extends Vue {
       if (mutation.type === commandMutations.addLog) {
         this.addLog(mutation.payload);
       }
+
+      if (mutation.type === commandMutations.removeLogs) {
+        this.clearLogs();
+      }
     });
   }
 
@@ -53,8 +57,6 @@ export default class TerminalLogs extends Vue {
    * Remove all logs from both the DOM and the store state.
    */
   private clearLogs(): void {
-    this.$store.commit(commandMutations.removeLogs);
-
     while (this.$el.firstChild) {
       this.$el.removeChild(this.$el.firstChild);
     }

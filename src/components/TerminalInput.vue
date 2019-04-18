@@ -1,6 +1,6 @@
 <template>
   <div id="terminal-input" class="flex items-center absolute pin-b w-full h-12 px-4 py-2 font-mono">
-    <span class="text-white text-lg mr-2">user@rpi $</span>
+    <span class="text-white text-lg mr-2">{{player.player.username}}@home $</span>
 
     <div
       ref="terminal-input"
@@ -16,6 +16,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 import { commandActions } from '@/store/command/command.actions';
+import { PlayerState } from '../store/player/player.state';
 
 @Component({})
 export default class TerminalInput extends Vue {
@@ -43,6 +44,10 @@ export default class TerminalInput extends Vue {
     this.inputContent = '';
     input.textContent = '';
     input.innerHTML = '';
+  }
+
+  get player(): PlayerState {
+    return this.$store.state.player;
   }
 }
 </script>

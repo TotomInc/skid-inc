@@ -1,4 +1,5 @@
 import { Command } from '@/models/command.model';
+import { commandActions } from './command.actions';
 
 export interface CommandState {
   commands: Command[];
@@ -12,9 +13,24 @@ const state: CommandState = {
     {
       name: 'help',
       description: 'display a list of all available commands',
-      successAction: 'COMMAND_HELP_SUCCESS',
-      failedAction: 'COMMAND_HELP_FAILED',
+      successAction: commandActions.COMMAND_HELP_SUCCESS,
+      failedAction: commandActions.COMMAND_HELP_FAILED,
       requireValue: false,
+    },
+    {
+      name: 'clear',
+      description: 'clear logs from the terminal',
+      successAction: commandActions.COMMAND_CLEAR_SUCCESS,
+      failedAction: commandActions.COMMAND_CLEAR_FAILED,
+      requireValue: false,
+    },
+    {
+      name: 'username',
+      description: 'change your username',
+      successAction: commandActions.COMMAND_USERNAME_SUCCESS,
+      failedAction: commandActions.COMMAND_USERNAME_FAILED,
+      requireValue: true,
+      validation: (value) => typeof value === 'string' && !value.startsWith('-'),
     },
   ],
   logs: [],
