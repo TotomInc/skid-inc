@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import { RootState } from './state';
 import commands from './command';
 import scripts from './script';
+import player from './player';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const store = new Vuex.Store<RootState>({
   modules: {
     commands,
     scripts,
+    player,
   },
 });
 
