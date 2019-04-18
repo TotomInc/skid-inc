@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import parse, { setCommands, Command, getCommands } from '@totominc/command-parser';
+import parse, { Command } from '@totominc/command-parser';
 
 import LogoWrapper from '@/components/LogoWrapper.vue';
 import TerminalLogs from '@/components/TerminalLogs.vue';
@@ -26,14 +26,6 @@ import { CommandState } from './store/command/command.state';
   },
 })
 export default class App extends Vue {
-  /**
-   * Before mounting the app, register the commands from the app state into the
-   * parser module.
-   */
-  beforeMount() {
-    setCommands(this.commands.commands);
-  }
-
   get commands(): CommandState {
     return this.$store.state.commands;
   }
