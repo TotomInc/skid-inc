@@ -16,7 +16,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 import { commandActions } from '@/store/command/command.actions';
-import { PlayerState } from '../store/player/player.state';
+import { PlayerState } from '@/store/player/player.state';
 
 @Component({})
 export default class TerminalInput extends Vue {

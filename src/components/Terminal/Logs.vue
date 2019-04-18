@@ -46,7 +46,7 @@ export default class TerminalLogs extends Vue {
    */
   private addLog(text: string): void {
     const span = document.createElement('span');
-    span.setAttribute('class', 'log-element');
+    span.setAttribute('class', 'block text-grey-lighter mb-2');
 
     span.innerHTML = text;
 
@@ -63,9 +63,3 @@ export default class TerminalLogs extends Vue {
   }
 }
 </script>
-
-<style>
-.log-element {
-  @apply block text-white mb-2;
-}
-</style>

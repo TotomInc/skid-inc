@@ -14,9 +14,9 @@ import { Vue, Component } from 'vue-property-decorator';
 import parse, { Command } from '@totominc/command-parser';
 
 import LogoWrapper from '@/components/LogoWrapper.vue';
-import TerminalLogs from '@/components/TerminalLogs.vue';
-import TerminalInput from '@/components/TerminalInput.vue';
-import { CommandState } from './store/command/command.state';
+import TerminalLogs from '@/components/Terminal/Logs.vue';
+import TerminalInput from '@/components/Terminal/Input.vue';
+import { CommandState } from '@/store/command/command.state';
 
 @Component({
   components: {
