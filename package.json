@@ -10,6 +10,7 @@
   "dependencies": {
     "@totominc/command-parser": "^0.2.0",
     "core-js": "^2.6.5",
+    "plur": "^3.1.1",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.1.0",
