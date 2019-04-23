@@ -715,10 +715,10 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
-"@totominc/command-parser@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@totominc/command-parser/-/command-parser-0.2.0.tgz#3b9d50a47237c3d4341a6adb357c2c7ed769cb32"
-  integrity sha512-45WI7wxU4rWW4sZS/DdkBiymFhDVxnF54Tjq/NpcAbr42UV5qABLNL2Yg9VrNRxBKQO216H8JZPkO2GvFkFu8w==
+"@totominc/command-parser@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@totominc/command-parser/-/command-parser-0.2.1.tgz#1c242531e8e246e98846d399e4321816f6df1730"
+  integrity sha512-EoxoJ/vMB0LfYS6JaK1c02t/eVzoQFIf99De+oRUF/YMY4yzzQqJm3N4dYshWczFtWXNT/vcHRtZgRY5ZqDPcA==
 
 "@types/events@*":
   version "3.0.0"
