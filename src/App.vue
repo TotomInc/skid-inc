@@ -13,6 +13,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import parse, { Command } from '@totominc/command-parser';
 
+import Game from '@/game/core';
 import LogoWrapper from '@/components/LogoWrapper.vue';
 import TerminalLogs from '@/components/Terminal/Logs.vue';
 import TerminalInput from '@/components/Terminal/Input.vue';
@@ -26,8 +27,16 @@ import { CommandState } from '@/store/command/command.state';
   },
 })
 export default class App extends Vue {
-  get commands(): CommandState {
-    return this.$store.state.commands;
+  private game: Game;
+
+  constructor() {
+    super();
+
+    this.game = new Game(this.$root);
+  }
+
+  public mounted(): void {
+    this.game.initialize();
   }
 }
 </script>
