@@ -56,7 +56,10 @@ const actions: ActionTree<CommandState, RootState> = {
     context,
     payload: { command: Command; parsedArgs: ParsedArgument[] },
   ) {
-    context.commit(playerMutations.editUsername, payload.parsedArgs[0].value);
+    const username = payload.parsedArgs[0].value;
+
+    context.commit(playerMutations.editUsername, username);
+    context.commit(commandMutations.addLog, `username successfully changed to <b>${username}</b>`);
   },
 };
 
