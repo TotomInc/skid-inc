@@ -6,6 +6,8 @@ export interface CommandState {
   logs: string[];
   history: string[];
   historyIndex: number;
+  inputContent: string;
+  isInAutocomplete: boolean;
 }
 
 const state: CommandState = {
@@ -36,6 +38,8 @@ const state: CommandState = {
   logs: [],
   history: [],
   historyIndex: -1,
+  inputContent: '',
+  isInAutocomplete: false,
 };
 
 export default state;

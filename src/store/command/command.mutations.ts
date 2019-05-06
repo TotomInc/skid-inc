@@ -7,6 +7,8 @@ export const commandMutations = {
   removeLogs: 'removeLogs',
 
   addCommand: 'addCommand',
+  setInputContent: 'setInputContent',
+  toggleAutocompletion: 'toggleAutocompletion',
 };
 
 const mutations: MutationTree<CommandState> = {
@@ -30,6 +32,14 @@ const mutations: MutationTree<CommandState> = {
     }
 
     state.history.unshift(payload);
+  },
+
+  [commandMutations.setInputContent](state, payload: string) {
+    state.inputContent = payload;
+  },
+
+  [commandMutations.toggleAutocompletion](state) {
+    state.isInAutocomplete = !state.isInAutocomplete;
   },
 };
 

@@ -37,7 +37,6 @@ import { commandMutations } from '../../store/command/command.mutations';
 @Component({})
 export default class TerminalInput extends Vue {
   public inputContent = '';
-  public isInAutocompletion = false;
   public suggestions: string[] = [];
 
   public get player(): PlayerState {
@@ -52,9 +51,13 @@ export default class TerminalInput extends Vue {
     const target = event.target as HTMLDivElement;
 
     if (target && typeof target.textContent === 'string') {
-      this.inputContent = target.textContent;
+      // Avoid unnecessary commit
+      if (this.inputContent !== target.textContent) {
+        this.inputContent = target.textContent;
+        this.$store.commit(commandMutations.setInputContent, target.textContent);
+      }
 
-      if (this.isInAutocompletion) {
+      if (this.commands.isInAutocomplete) {
         this.hideAutocomplete();
       }
     }
@@ -63,7 +66,7 @@ export default class TerminalInput extends Vue {
   public onInputEnter(event: KeyboardEvent): void {
     event.preventDefault();
 
-    if (!this.isInAutocompletion) {
+    if (!this.commands.isInAutocomplete) {
       this.$store.dispatch(commandActions.PARSE_COMMAND, this.inputContent);
 
       this.cleanInput();
@@ -73,13 +76,13 @@ export default class TerminalInput extends Vue {
   public onInputTab(event: KeyboardEvent): void {
     event.preventDefault();
 
-    if (!this.isInAutocompletion) {
+    if (!this.commands.isInAutocomplete) {
       this.showAutocomplete();
     }
   }
 
   public onInputEsc(event: KeyboardEvent): void {
-    if (this.isInAutocompletion) {
+    if (this.commands.isInAutocomplete) {
       this.hideAutocomplete();
     }
   }
@@ -114,7 +117,7 @@ export default class TerminalInput extends Vue {
       autocompleteElement.style.transform = 'matrix(1, 0, 0, 1, 0, 5)';
       autocompleteElement.style.opacity = '1';
 
-      this.isInAutocompletion = true;
+      this.$store.commit(commandMutations.toggleAutocompletion);
     }, 0);
   }
 
@@ -129,7 +132,7 @@ export default class TerminalInput extends Vue {
       autocompleteElement.style.pointerEvents = 'none';
       autocompleteElement.style.transition = 'none';
 
-      this.isInAutocompletion = false;
+      this.$store.commit(commandMutations.toggleAutocompletion);
     }, 250);
   }
 
