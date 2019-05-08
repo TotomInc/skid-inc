@@ -61,6 +61,17 @@ export default class TerminalAutocomplete extends Vue {
   }
 
   /**
+   * Remove any content from the rulers.
+   */
+  private clearRulers(): void {
+    const textInputRulerEl = this.$refs['text-input-ruler'] as HTMLSpanElement;
+    const suggestionsRulerEl = this.$refs['suggestions-ruler'] as HTMLSpanElement;
+
+    textInputRulerEl.innerHTML = '';
+    suggestionsRulerEl.innerHTML = '';
+  }
+
+  /**
    * Calculate the top position which depends on the tooltip suggestions height
    * and the terminal text-input height.
    */
@@ -119,6 +130,8 @@ export default class TerminalAutocomplete extends Vue {
     autocompleteEl.style.transform = 'translateY(6px)';
     autocompleteEl.style.pointerEvents = 'auto';
     autocompleteEl.style.opacity = '1';
+
+    this.clearRulers();
   }
 
   private hideAutocomplete(): void {
