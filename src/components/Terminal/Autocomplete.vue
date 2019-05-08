@@ -40,6 +40,10 @@ export default class TerminalAutocomplete extends Vue {
     return this.$store.state.commands;
   }
 
+  /**
+   * When component is mounted, listen for a specific mutation to trigger the
+   * autocomplete tooltip.
+   */
   public mounted(): void {
     this.$store.subscribe(({ type, payload }) => {
       if (type === commandMutations.toggleAutocompletion) {
@@ -116,24 +120,34 @@ export default class TerminalAutocomplete extends Vue {
     return terminalNameWidth + terminalTextWidth - autocompleteWidth / 2;
   }
 
-  private showAutocomplete(): void {
+  /**
+   * Retrieve all suggestions and display the autocomplete tooltip.
+   * Need to pass everything in the `$nextTick` as Vue need to render the
+   * `suggestions` array into the component template.
+   */
+  private async showAutocomplete(): Promise<void> {
     this.setSuggestions();
 
-    const parent = this.$parent;
-    const autocompleteEl = this.$el as HTMLDivElement;
+    await this.$nextTick(() => {
+      const parent = this.$parent;
+      const autocompleteEl = this.$el as HTMLDivElement;
 
-    autocompleteEl.style.transition = 'all 0s ease-in-out';
-    autocompleteEl.style.left = `${this.calculateLeftPosition()}px`;
-    autocompleteEl.style.top = `-${this.calculateTopPosition()}px`;
+      autocompleteEl.style.transition = 'all 0s ease-in-out';
+      autocompleteEl.style.left = `${this.calculateLeftPosition()}px`;
+      autocompleteEl.style.top = `-${this.calculateTopPosition()}px`;
 
-    autocompleteEl.style.transition = 'all 0.25s ease-in-out';
-    autocompleteEl.style.transform = 'translateY(6px)';
-    autocompleteEl.style.pointerEvents = 'auto';
-    autocompleteEl.style.opacity = '1';
+      autocompleteEl.style.transition = 'all 0.25s ease-in-out';
+      autocompleteEl.style.transform = 'translateY(6px)';
+      autocompleteEl.style.pointerEvents = 'auto';
+      autocompleteEl.style.opacity = '1';
 
-    this.clearRulers();
+      this.clearRulers();
+    });
   }
 
+  /**
+   * Hide the autocomplete tooltip.
+   */
   private hideAutocomplete(): void {
     const autocompleteEl = this.$el as HTMLDivElement;
 
