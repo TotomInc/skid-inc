@@ -38,6 +38,8 @@ export default class TerminalInput extends Vue {
   public inputContent = '';
   public suggestions: string[] = [];
 
+  private ignoredKeys = [9, 13];
+
   public get player(): PlayerState {
     return this.$store.state.player;
   }
@@ -49,7 +51,7 @@ export default class TerminalInput extends Vue {
   public onInputKeyup(event: KeyboardEvent): void {
     const target = event.target as HTMLDivElement;
 
-    if (target && typeof target.textContent === 'string') {
+    if (target && typeof target.textContent === 'string' && !this.ignoredKeys.includes(event.keyCode)) {
       // Avoid unnecessary commit
       if (this.inputContent !== target.textContent) {
         this.inputContent = target.textContent;
