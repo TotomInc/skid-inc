@@ -1,10 +1,14 @@
 <template>
   <div
     id="autocomplete-tooltip"
-    class="z-10 absolute rounded py-2 px-4 opacity-0 pointer-events-none text-grey-darkest bg-white shadow-md"
+    class="z-10 absolute pin-t rounded py-2 px-1 opacity-0 pointer-events-none text-grey-darkest bg-white shadow-md"
   >
     <div v-if="suggestions.length">
-      <p v-for="(suggestion, index) in suggestions" :key="'suggestion-' + index">{{suggestion}}</p>
+      <p
+        v-for="(suggestion, index) in suggestions"
+        :key="'suggestion-' + index"
+        class="px-2 py-1"
+      >{{suggestion}}</p>
     </div>
 
     <span v-else>No suggestions</span>
@@ -15,7 +19,7 @@
       with other DOM elements.
     -->
     <span ref="text-input-ruler" class="absolute opacity-0 pointer-events-none"></span>
-    <span ref="suggestions-ruler" class="absolute opacity-0 pointer-events-none"></span>
+    <div ref="suggestions-ruler" class="absolute opacity-0 pointer-events-none"></div>
   </div>
 </template>
 
@@ -69,7 +73,7 @@ export default class TerminalAutocomplete extends Vue {
    */
   private clearRulers(): void {
     const textInputRulerEl = this.$refs['text-input-ruler'] as HTMLSpanElement;
-    const suggestionsRulerEl = this.$refs['suggestions-ruler'] as HTMLSpanElement;
+    const suggestionsRulerEl = this.$refs['suggestions-ruler'] as HTMLDivElement;
 
     textInputRulerEl.innerHTML = '';
     suggestionsRulerEl.innerHTML = '';
@@ -81,11 +85,21 @@ export default class TerminalAutocomplete extends Vue {
    */
   private calculateTopPosition(): number {
     const terminalInputEl = this.$parent.$refs['terminal-input'] as HTMLDivElement;
-    const suggestionsRulerEl = this.$refs['suggestions-ruler'] as HTMLSpanElement;
+    const suggestionsRulerEl = this.$refs['suggestions-ruler'] as HTMLDivElement;
 
     const noSuggestionsHeight = this.suggestions.length ? 0 : 16;
 
-    suggestionsRulerEl.innerHTML = this.suggestions.join('<br>');
+    suggestionsRulerEl.innerHTML = '';
+
+    // Simulate suggestions with the same classes as in the real autocomplete
+    this.suggestions.forEach((suggestion) => {
+      const node = document.createElement('p');
+
+      node.classList.add('px-2', 'py-1');
+      node.textContent = suggestion;
+
+      suggestionsRulerEl.appendChild(node);
+    });
 
     return suggestionsRulerEl.offsetHeight + terminalInputEl.offsetHeight + noSuggestionsHeight;
   }
