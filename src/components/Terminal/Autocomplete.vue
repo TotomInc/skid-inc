@@ -7,7 +7,8 @@
       <p
         v-for="(suggestion, index) in suggestions"
         :key="'suggestion-' + index"
-        class="px-2 py-1"
+        :class="{ 'bg-grey-light': commands.suggestionIndex === index }"
+        class="transition px-2 py-1 rounded"
       >{{suggestion}}</p>
     </div>
 
@@ -58,12 +59,13 @@ export default class TerminalAutocomplete extends Vue {
 
   /**
    * Call the `autocomplete` function from the command-parser to retrieve and
-   * store an array of all possibilities.
+   * store an array of all suggestions (both in the component and store).
    */
   private setSuggestions(): string[] {
     const suggestions = autocomplete<Command>(this.commands.inputContent, this.commands.commands);
 
     this.suggestions = suggestions;
+    this.$store.commit(commandMutations.setSuggestions, suggestions);
 
     return suggestions;
   }
@@ -142,6 +144,8 @@ export default class TerminalAutocomplete extends Vue {
   private async showAutocomplete(): Promise<void> {
     this.setSuggestions();
 
+    // Wait for Vue to render the autocomplete template with suggestions, then
+    // it will call the `$nextTick` function with our callback.
     await this.$nextTick(() => {
       const parent = this.$parent;
       const autocompleteEl = this.$el as HTMLDivElement;
@@ -168,6 +172,8 @@ export default class TerminalAutocomplete extends Vue {
     autocompleteEl.style.transform = 'translateY(-6px)';
     autocompleteEl.style.pointerEvents = 'none';
     autocompleteEl.style.opacity = '0';
+
+    this.$store.commit(commandMutations.resetSuggestionIndex);
   }
 }
 </script>
@@ -184,5 +190,9 @@ export default class TerminalAutocomplete extends Vue {
   border-top-color: #ffffff;
   border-width: 6px;
   margin-left: -6px;
+}
+
+.transition {
+  transition: all 0.25s ease-in-out;
 }
 </style>

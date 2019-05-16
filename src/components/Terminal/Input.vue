@@ -80,6 +80,8 @@ export default class TerminalInput extends Vue {
 
     if (!this.commands.isInAutocomplete) {
       this.$store.commit(commandMutations.toggleAutocompletion);
+    } else {
+      this.$store.commit(commandMutations.changeSuggestionIndex);
     }
   }
 
