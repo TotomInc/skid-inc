@@ -7,7 +7,7 @@
         ref="terminal-input"
         class="flex-1 text-white text-lg outline-none"
         contenteditable="true"
-        @keydown="onInputKeyup($event)"
+        @keyup="onInputKeyup($event)"
         @keydown.enter="onInputEnter($event)"
         @keydown.tab="onInputTab($event)"
         @keydown.esc="onInputEsc($event)"
