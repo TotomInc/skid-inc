@@ -13,6 +13,9 @@ export const commandMutations = {
 
   changeSuggestionIndex: 'changeSuggestionIndex',
   resetSuggestionIndex: 'resetSuggestionIndex',
+
+  changeHistoryIndex: 'changeHistoryIndex',
+  resetHistoryIndex: 'resetHistoryIndex',
 };
 
 const mutations: MutationTree<CommandState> = {
@@ -60,6 +63,20 @@ const mutations: MutationTree<CommandState> = {
 
   [commandMutations.resetSuggestionIndex](state) {
     state.suggestionIndex = 0;
+  },
+
+  [commandMutations.changeHistoryIndex](state, payload: 'increase' | 'decrease') {
+    if (payload === 'increase' && state.historyIndex + 1 < state.history.length) {
+      state.historyIndex += 1;
+    } else if (payload === 'decrease' && state.historyIndex > 0) {
+      state.historyIndex -= 1;
+    } else {
+      state.historyIndex = -1;
+    }
+  },
+
+  [commandMutations.resetHistoryIndex](state) {
+    state.historyIndex = 0;
   },
 };
 

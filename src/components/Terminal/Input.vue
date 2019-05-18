@@ -38,7 +38,20 @@ export default class TerminalInput extends Vue {
   public inputContent = '';
   public suggestions: string[] = [];
 
-  private ignoredKeys = [9, 13];
+  private ignoredKeys = [
+    'Tab',
+    'Shift',
+    'CapsLock',
+    'Control',
+    'Alt',
+    'Meta',
+    'Escape',
+    'Enter',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowUp',
+    'ArrowDown',
+  ];
 
   public get player(): PlayerState {
     return this.$store.state.player;
@@ -48,10 +61,35 @@ export default class TerminalInput extends Vue {
     return this.$store.state.commands;
   }
 
+  public mounted(): void {
+    const that = this;
+
+    this.$store.subscribe(({ type, payload }) => {
+      if (type === commandMutations.changeHistoryIndex) {
+        const historyCommand: string | undefined = this.commands.history[this.commands.historyIndex];
+
+        if (historyCommand) {
+          const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
+
+          inputElement.textContent = historyCommand;
+          this.inputContent = historyCommand;
+          this.$store.commit(commandMutations.setInputContent, historyCommand);
+          this.setCursorPosition(historyCommand.length);
+        } else {
+          this.cleanInput();
+        }
+      }
+    });
+  }
+
+  /**
+   * Default event handler when pressing a key on the `terminal-input` element.
+   * Some keys are ignored (modifiers, meta, ...) from this event handler.
+   */
   public onInputKeyup(event: KeyboardEvent): void {
     const target = event.target as HTMLDivElement;
 
-    if (target && typeof target.textContent === 'string' && !this.ignoredKeys.includes(event.keyCode)) {
+    if (target && typeof target.textContent === 'string' && !this.ignoredKeys.includes(event.key)) {
       // Avoid unnecessary commit
       if (this.inputContent !== target.textContent) {
         this.inputContent = target.textContent;
@@ -63,8 +101,19 @@ export default class TerminalInput extends Vue {
         this.$store.commit(commandMutations.toggleAutocompletion);
       }
     }
+
+    if (event.key === 'ArrowUp') {
+      this.$store.commit(commandMutations.changeHistoryIndex, 'increase');
+    }
+
+    if (event.key === 'ArrowDown') {
+      this.$store.commit(commandMutations.changeHistoryIndex, 'decrease');
+    }
   }
 
+  /**
+   * Event handler when pressing the enter key on the `terminal-input` element.
+   */
   public onInputEnter(event: KeyboardEvent): void {
     event.preventDefault();
 
@@ -75,6 +124,9 @@ export default class TerminalInput extends Vue {
     }
   }
 
+  /**
+   * Event handler when pressing the tab key on the `terminal-input` element.
+   */
   public onInputTab(event: KeyboardEvent): void {
     event.preventDefault();
 
@@ -85,6 +137,10 @@ export default class TerminalInput extends Vue {
     }
   }
 
+  /**
+   * Event handler when pressing the escape key on the `terminal-input`
+   * element.
+   */
   public onInputEsc(event: KeyboardEvent): void {
     if (this.commands.isInAutocomplete) {
       this.$store.commit(commandMutations.toggleAutocompletion);
@@ -102,20 +158,22 @@ export default class TerminalInput extends Vue {
     this.inputContent = '';
     this.$store.commit(commandMutations.setInputContent, '');
   }
+
+  /**
+   * Set the cursor to the desired position on the `terminal-input`
+   * content-editable element.
+   */
+  private setCursorPosition(position: number): void {
+    const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
+    const textInputNode = inputElement.childNodes[0] as Node;
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.setStart(textInputNode, position);
+    range.collapse(true);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
 }
 </script>
-
-<style scoped>
-#autocomplete-tooltip:after {
-  top: 100%;
-  left: 50%;
-  border: solid transparent;
-  content: ' ';
-  position: absolute;
-  pointer-events: none;
-  border-color: rgba(255, 255, 255, 0);
-  border-top-color: #ffffff;
-  border-width: 6px;
-  margin-left: -6px;
-}
-</style>
