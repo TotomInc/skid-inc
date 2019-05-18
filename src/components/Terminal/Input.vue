@@ -91,12 +91,16 @@ export default class TerminalInput extends Vue {
     }
   }
 
+  /**
+   * Remove all input content from the local variable, DOM and store.
+   */
   private cleanInput(): void {
     const input = this.$refs['terminal-input'] as HTMLDivElement;
 
-    this.inputContent = '';
     input.textContent = '';
     input.innerHTML = '';
+    this.inputContent = '';
+    this.$store.commit(commandMutations.setInputContent, '');
   }
 }
 </script>
