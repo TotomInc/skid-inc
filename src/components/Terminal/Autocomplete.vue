@@ -1,13 +1,13 @@
 <template>
   <div
     id="autocomplete-tooltip"
-    class="z-10 absolute pin-t rounded py-2 px-1 opacity-0 pointer-events-none text-grey-darkest bg-white shadow-md"
+    class="z-10 absolute top-0 rounded py-2 px-1 opacity-0 pointer-events-none text-gray-800 bg-white shadow-xl"
   >
     <div v-if="suggestions.length">
       <p
         v-for="(suggestion, index) in suggestions"
         :key="'suggestion-' + index"
-        :class="{ 'bg-grey-light': commands.suggestionIndex === index }"
+        :class="{ 'bg-gray-200': commands.suggestionIndex === index }"
         class="transition px-2 py-1 rounded"
       >
         {{ suggestion }}

@@ -1,5 +1,5 @@
 <template>
-  <div id="terminal-input" class="absolute pin-b w-full h-12 px-4 py-2 font-mono">
+  <div id="terminal-input" class="absolute bottom-0 w-full h-12 px-4 py-2 font-mono">
     <div class="flex items-center w-full h-full">
       <span ref="terminal-name" class="text-white text-lg mr-2">{{ player.player.username }}@home $</span>
 
