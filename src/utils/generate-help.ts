@@ -1,4 +1,4 @@
-import { Command } from '@/models/command.model';
+import Command from '@/models/command.model';
 
 /**
  * Find the highest name length of a command in an array of `Command`. Used to

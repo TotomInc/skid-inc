@@ -28,7 +28,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { autocomplete } from '@totominc/command-parser';
 
-import { Command } from '@/models/command.model';
+import Command from '@/models/command.model';
 import { CommandState } from '@/store/command/command.state';
 import { commandMutations } from '@/store/command/command.mutations';
 

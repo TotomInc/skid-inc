@@ -1,6 +1,6 @@
 import { Command as ParserCommand } from '@totominc/command-parser';
 
-export interface Command extends ParserCommand {
+interface Command extends ParserCommand {
   /** Condition to unlock the command */
   unlock?: () => boolean;
   /** Vuex action to emit on user-command success (complete) */
@@ -8,3 +8,5 @@ export interface Command extends ParserCommand {
   /** Vuex action to emit on user-command failed (invalid) */
   failedAction: string;
 }
+
+export default Command;

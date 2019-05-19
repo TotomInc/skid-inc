@@ -1,4 +1,4 @@
-export interface Player {
+interface Player {
   /** Player money */
   money: number;
   /** Player total money, stack after each prestige */
@@ -16,3 +16,5 @@ export interface Player {
   /** Player username */
   username: string;
 }
+
+export default Player;

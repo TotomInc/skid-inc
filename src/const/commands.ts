@@ -1,4 +1,4 @@
-import { Command } from '@/models/command.model';
+import Command from '@/models/command.model';
 
 /**
  * List of actions for the commands to use with Vuex and the `commands` Vuex

@@ -1,4 +1,4 @@
-import { Command } from '@/models/command.model';
+import Command from '@/models/command.model';
 import { commands } from '@/const/commands';
 
 export interface CommandState {

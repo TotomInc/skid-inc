@@ -2,7 +2,7 @@ import { ActionTree } from 'vuex';
 import parse, { ParsedArgument } from '@totominc/command-parser';
 
 import generateHelp from '@/utils/generate-help';
-import { Command } from '@/models/command.model';
+import Command from '@/models/command.model';
 import { commandActions as cmdActions } from '@/const/commands';
 import { RootState } from '../state';
 import { CommandState } from './command.state';
