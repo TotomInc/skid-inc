@@ -3,22 +3,15 @@ import parse, { ParsedArgument } from '@totominc/command-parser';
 
 import generateHelp from '@/utils/generate-help';
 import { Command } from '@/models/command.model';
+import { commandActions as cmdActions } from '@/const/commands';
 import { RootState } from '../state';
 import { CommandState } from './command.state';
 import { commandMutations } from './command.mutations';
 import { playerMutations } from '../player/player.mutations';
 
 export const commandActions = {
+  ...cmdActions,
   PARSE_COMMAND: 'parseCommand',
-
-  COMMAND_HELP_SUCCESS: 'commandHelpSuccess',
-  COMMAND_HELP_FAILED: 'commandHelpFailed',
-
-  COMMAND_CLEAR_SUCCESS: 'commandClearSuccess',
-  COMMAND_CLEAR_FAILED: 'commandClearFailed',
-
-  COMMAND_USERNAME_SUCCESS: 'commandUsernameSuccess',
-  COMMAND_USERNAME_FAILED: 'commandUsernameFailed',
 };
 
 const actions: ActionTree<CommandState, RootState> = {
@@ -42,20 +35,17 @@ const actions: ActionTree<CommandState, RootState> = {
     }
   },
 
-  async [commandActions.COMMAND_HELP_SUCCESS](context) {
+  async [commandActions.HELP.SUCCESS](context) {
     const helpLog = generateHelp(context.state.commands);
 
     context.commit(commandMutations.addLog, helpLog);
   },
 
-  async [commandActions.COMMAND_CLEAR_SUCCESS](context) {
+  async [commandActions.CLEAR](context) {
     context.commit(commandMutations.removeLogs);
   },
 
-  async [commandActions.COMMAND_USERNAME_SUCCESS](
-    context,
-    payload: { command: Command; parsedArgs: ParsedArgument[] },
-  ) {
+  async [commandActions.USERNAME.SUCCESS](context, payload: { command: Command; parsedArgs: ParsedArgument[] }) {
     const username = payload.parsedArgs[0].value;
 
     context.commit(playerMutations.editUsername, username);
