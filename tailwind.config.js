@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {
       inset: {
-        'full': '100%',
+        full: '100%',
       },
       opacity: {
         '10': '0.1',
@@ -80,4 +80,4 @@ module.exports = {
     container: false,
   },
   plugins: [],
-}
+};
