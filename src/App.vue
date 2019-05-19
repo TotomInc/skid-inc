@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="relative w-screen h-screen bg-grey-darkest">
+  <div id="app" class="relative w-screen h-screen bg-gray-800">
     <logo-wrapper />
 
     <div id="terminal-wrapper" class="w-full h-full">

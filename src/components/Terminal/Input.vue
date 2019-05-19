@@ -1,5 +1,5 @@
 <template>
-  <div id="terminal-input" class="absolute pin-b w-full h-12 px-4 py-2 font-mono">
+  <div id="terminal-input" class="absolute bottom-0 w-full h-12 px-4 py-2 font-mono">
     <div class="flex items-center w-full h-full">
       <span ref="terminal-name" class="text-white text-lg mr-2">{{ player.player.username }}@home $</span>
 
@@ -170,11 +170,14 @@ export default class TerminalInput extends Vue {
     const range = document.createRange();
     const selection = window.getSelection();
 
-    range.setStart(textInputNode, position);
-    range.collapse(true);
+    // In browsers like Firefox, the Selection can be null or have `None` type.
+    if (selection && selection.type !== 'None') {
+      range.setStart(textInputNode, position);
+      range.collapse(true);
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   }
 }
 </script>

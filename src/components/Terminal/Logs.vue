@@ -43,7 +43,7 @@ export default class TerminalLogs extends Vue {
    */
   private addLog(text: string): void {
     const span = document.createElement('span');
-    span.setAttribute('class', 'block text-grey-lighter mb-2');
+    span.setAttribute('class', 'block text-gray-200 mb-2');
 
     span.innerHTML = text;
 
