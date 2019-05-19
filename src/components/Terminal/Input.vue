@@ -170,11 +170,14 @@ export default class TerminalInput extends Vue {
     const range = document.createRange();
     const selection = window.getSelection();
 
-    range.setStart(textInputNode, position);
-    range.collapse(true);
+    // In browsers like Firefox, the Selection can be null or have `None` type.
+    if (selection && selection.type !== 'None') {
+      range.setStart(textInputNode, position);
+      range.collapse(true);
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   }
 }
 </script>
