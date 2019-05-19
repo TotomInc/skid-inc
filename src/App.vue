@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="relative w-screen h-screen bg-grey-darkest">
-    <logo-wrapper/>
+    <logo-wrapper />
 
     <div id="terminal-wrapper" class="w-full h-full">
-      <terminal-logs/>
-      <terminal-input/>
+      <terminal-logs />
+      <terminal-input />
     </div>
   </div>
 </template>

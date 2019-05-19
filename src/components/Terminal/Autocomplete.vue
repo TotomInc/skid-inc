@@ -9,7 +9,9 @@
         :key="'suggestion-' + index"
         :class="{ 'bg-grey-light': commands.suggestionIndex === index }"
         class="transition px-2 py-1 rounded"
-      >{{suggestion}}</p>
+      >
+        {{ suggestion }}
+      </p>
     </div>
 
     <span v-else>No suggestions</span>

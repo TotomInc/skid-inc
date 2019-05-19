@@ -11,9 +11,13 @@ class Game {
   private store: Store<RootState>;
 
   private fps: number = 30;
+
   private interval!: number;
+
   private before!: number;
+
   private now!: number;
+
   private loopRef!: number;
 
   constructor(vm: Vue) {

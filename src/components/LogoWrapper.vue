@@ -1,6 +1,6 @@
 <template>
   <div id="logo-wrapper">
-    <img src="@/assets/logo/logo-dark.png" alt="SkidInc logo">
+    <img src="@/assets/logo/logo-dark.png" alt="SkidInc logo" />
   </div>
 </template>
 

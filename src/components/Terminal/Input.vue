@@ -1,7 +1,7 @@
 <template>
   <div id="terminal-input" class="absolute pin-b w-full h-12 px-4 py-2 font-mono">
     <div class="flex items-center w-full h-full">
-      <span ref="terminal-name" class="text-white text-lg mr-2">{{player.player.username}}@home $</span>
+      <span ref="terminal-name" class="text-white text-lg mr-2">{{ player.player.username }}@home $</span>
 
       <div
         ref="terminal-input"
@@ -14,7 +14,7 @@
       />
     </div>
 
-    <autocomplete/>
+    <autocomplete />
   </div>
 </template>
 
@@ -36,6 +36,7 @@ import Autocomplete from './Autocomplete.vue';
 })
 export default class TerminalInput extends Vue {
   public inputContent = '';
+
   public suggestions: string[] = [];
 
   private ignoredKeys = [

@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="terminal-logs"
-    class="w-full sm:w-2/3 md:w-1/2 px-4 py-6 font-mono"
-    :style="{ 'height': logsHeight }"
-  />
+  <div id="terminal-logs" class="w-full sm:w-2/3 md:w-1/2 px-4 py-6 font-mono" :style="{ height: logsHeight }" />
 </template>
 
 <script lang="ts">
@@ -15,6 +11,7 @@ import { commandMutations } from '@/store/command/command.mutations';
 @Component({})
 export default class TerminalLogs extends Vue {
   private unsubscribe!: () => any;
+
   private logsHeight: string = '100%';
 
   public mounted(): void {
