@@ -163,13 +163,15 @@ export default class TerminalAutocomplete extends Vue {
 
   /**
    * Calculate the width of the text inside the terminal text-input using the
-   * ruler element.
+   * ruler element. Make sure to calculate the length up to the cursor
+   * position.
    */
   private calculateTextInputLength(): number {
     const terminalInputEl = this.$parent.$refs['terminal-input'] as HTMLDivElement;
     const textInputRulerEl = this.$refs['text-input-ruler'] as HTMLSpanElement;
+    const { cursorPosition } = this.commands;
 
-    textInputRulerEl.innerText = terminalInputEl.innerText;
+    textInputRulerEl.innerText = terminalInputEl.innerText.substr(0, cursorPosition);
 
     return textInputRulerEl.offsetWidth;
   }
