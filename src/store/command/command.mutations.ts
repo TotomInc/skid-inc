@@ -8,9 +8,11 @@ export const commandMutations = {
 
   addCommand: 'addCommand',
   setInputContent: 'setInputContent',
-  toggleAutocompletion: 'toggleAutocompletion',
   setSuggestions: 'setSuggestions',
   setCursorPosition: 'setCursorPosition',
+
+  showAutocomplete: 'showAutocomplete',
+  hideAutocomplete: 'hideAutocomplete',
 
   changeSuggestionIndex: 'changeSuggestionIndex',
   resetSuggestionIndex: 'resetSuggestionIndex',
@@ -46,16 +48,20 @@ const mutations: MutationTree<CommandState> = {
     state.inputContent = payload;
   },
 
-  [commandMutations.toggleAutocompletion](state) {
-    state.isInAutocomplete = !state.isInAutocomplete;
-  },
-
   [commandMutations.setSuggestions](state, payload: string[]) {
     state.suggestions = payload;
   },
 
   [commandMutations.setCursorPosition](state, payload: number) {
     state.cursorPosition = payload;
+  },
+
+  [commandMutations.showAutocomplete](state) {
+    state.isInAutocomplete = true;
+  },
+
+  [commandMutations.hideAutocomplete](state) {
+    state.isInAutocomplete = false;
   },
 
   [commandMutations.changeSuggestionIndex](state) {

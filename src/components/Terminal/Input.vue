@@ -99,7 +99,7 @@ export default class TerminalInput extends Vue {
       }
 
       if (this.commands.isInAutocomplete) {
-        this.$store.commit(commandMutations.toggleAutocompletion);
+        this.$store.commit(commandMutations.hideAutocomplete);
       }
     }
 
@@ -140,7 +140,7 @@ export default class TerminalInput extends Vue {
     this.updateCursorPositionState(cursorPosition);
 
     if (!this.commands.isInAutocomplete) {
-      this.$store.commit(commandMutations.toggleAutocompletion);
+      this.$store.commit(commandMutations.showAutocomplete);
     } else {
       this.$store.commit(commandMutations.changeSuggestionIndex);
     }
@@ -152,7 +152,7 @@ export default class TerminalInput extends Vue {
    */
   public onInputEsc(event: KeyboardEvent): void {
     if (this.commands.isInAutocomplete) {
-      this.$store.commit(commandMutations.toggleAutocompletion);
+      this.$store.commit(commandMutations.hideAutocomplete);
     }
   }
 

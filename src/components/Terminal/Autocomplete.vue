@@ -59,12 +59,12 @@ export default class TerminalAutocomplete extends Vue {
    */
   public mounted(): void {
     this.$store.subscribe(({ type, payload }) => {
-      if (type === commandMutations.toggleAutocompletion) {
-        if (this.commands.isInAutocomplete) {
-          this.showAutocomplete();
-        } else {
-          this.hideAutocomplete();
-        }
+      if (type === commandMutations.showAutocomplete) {
+        this.showAutocomplete();
+      }
+
+      if (type === commandMutations.hideAutocomplete) {
+        this.hideAutocomplete();
       }
     });
   }
@@ -105,7 +105,10 @@ export default class TerminalAutocomplete extends Vue {
     const newCursorPosition = suggestionStrPos + toAdd.length;
 
     terminalInputComponent.updateInput(inputText, newCursorPosition);
+
     this.$store.commit(commandMutations.setInputContent, inputText);
+    this.$store.commit(commandMutations.hideAutocomplete);
+
     this.hideAutocomplete();
   }
 
