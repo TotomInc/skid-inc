@@ -179,5 +179,27 @@ export default class TerminalInput extends Vue {
       selection.addRange(range);
     }
   }
+
+  /**
+   * Get the cursor position (after each character) on the `terminal-input`
+   * content-editable element.
+   */
+  private getCaretPosition(): number {
+    const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
+    const selection = window.getSelection();
+
+    let caretPos = 0;
+
+    // In browsers like Firefox, the Selection can be null or have `None` type.
+    if (selection && selection.type !== 'None' && selection.rangeCount) {
+      const range = selection.getRangeAt(0);
+
+      if (range.commonAncestorContainer.parentNode === inputElement) {
+        caretPos = range.endOffset;
+      }
+    }
+
+    return caretPos;
+  }
 }
 </script>
