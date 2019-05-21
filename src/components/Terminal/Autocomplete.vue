@@ -1,7 +1,7 @@
 <template>
   <div
     id="autocomplete-tooltip"
-    class="z-10 absolute top-0 rounded py-2 px-1 opacity-0 pointer-events-none text-gray-800 bg-white shadow-xl"
+    class="z-10 absolute -top-4 rounded py-2 px-1 opacity-0 pointer-events-none text-gray-800 bg-white shadow-xl"
   >
     <div v-if="suggestions.length">
       <p
