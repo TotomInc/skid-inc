@@ -1,0 +1,13 @@
+[Settings]
+ID = "6e6bb1a5-ae8a-4eb5-955a-0e9c3f8e57d4"
+
+[context.production]
+  base = "./"
+  publish = "./"
+  command = ""
+
+[context.develop]
+  base = "./"
+  publish = "dist/"
+  command = "npm run build"
+  functions = ""
