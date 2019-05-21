@@ -115,9 +115,13 @@ export default class TerminalAutocomplete extends Vue {
   /**
    * Call the `autocomplete` function from the command-parser to retrieve and
    * store an array of all suggestions (both in the component and store).
+   * Make sure to get suggestions up to where the cursor is located in the
+   * input.
    */
   private setSuggestions(): string[] {
-    const suggestions = autocomplete<Command>(this.commands.inputContent, this.commands.commands);
+    const { cursorPosition, inputContent } = this.commands;
+    const revelantInputPart = inputContent.substr(0, cursorPosition);
+    const suggestions = autocomplete<Command>(revelantInputPart, this.commands.commands);
 
     this.suggestions = suggestions;
     this.$store.commit(commandMutations.setSuggestions, suggestions);
