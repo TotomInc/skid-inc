@@ -114,6 +114,7 @@ export default class TerminalInput extends Vue {
 
   /**
    * Event handler when pressing the enter key on the `terminal-input` element.
+   * Make sure to update the `cursorPosition` state in case it changed.
    */
   public onInputEnter(event: KeyboardEvent): void {
     event.preventDefault();
@@ -124,9 +125,8 @@ export default class TerminalInput extends Vue {
       this.cleanInput();
     } else {
       const autocompleteElement = this.$refs.autocomplete as Autocomplete;
-      const caretPosition = this.getCaretPosition();
 
-      autocompleteElement.autocompleteWord(caretPosition, this);
+      autocompleteElement.autocompleteWord();
     }
   }
 
@@ -135,6 +135,9 @@ export default class TerminalInput extends Vue {
    */
   public onInputTab(event: KeyboardEvent): void {
     event.preventDefault();
+
+    const cursorPosition = this.getCursorPosition();
+    this.updateCursorPositionState(cursorPosition);
 
     if (!this.commands.isInAutocomplete) {
       this.$store.commit(commandMutations.toggleAutocompletion);
@@ -180,7 +183,7 @@ export default class TerminalInput extends Vue {
 
   /**
    * Set the cursor to the desired position on the `terminal-input`
-   * content-editable element.
+   * content-editable element. Update the `cursorPosition` state in the store.
    */
   private setCursorPosition(position: number): void {
     const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
@@ -195,6 +198,8 @@ export default class TerminalInput extends Vue {
 
       selection.removeAllRanges();
       selection.addRange(range);
+
+      this.$store.commit(commandMutations.setCursorPosition, position);
     }
   }
 
@@ -202,22 +207,31 @@ export default class TerminalInput extends Vue {
    * Get the cursor position (after each character) on the `terminal-input`
    * content-editable element.
    */
-  private getCaretPosition(): number {
+  private getCursorPosition(): number {
     const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
     const selection = window.getSelection();
 
-    let caretPos = 0;
+    let cursorPosition = 0;
 
     // In browsers like Firefox, the Selection can be null or have `None` type.
     if (selection && selection.type !== 'None' && selection.rangeCount) {
       const range = selection.getRangeAt(0);
 
       if (range.commonAncestorContainer.parentNode === inputElement) {
-        caretPos = range.endOffset;
+        cursorPosition = range.endOffset;
       }
     }
 
-    return caretPos;
+    return cursorPosition;
+  }
+
+  /**
+   * Update the `cursorPosition` state only if is has changed.
+   */
+  private updateCursorPositionState(cursorPosition: number): void {
+    if (cursorPosition !== this.commands.cursorPosition) {
+      this.$store.commit(commandMutations.setCursorPosition, cursorPosition);
+    }
   }
 }
 </script>

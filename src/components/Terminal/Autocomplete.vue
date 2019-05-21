@@ -68,14 +68,12 @@ export default class TerminalAutocomplete extends Vue {
    * Autocomplete the current word where the `caretPosition` is. Try to find
    * already written characters, execute a string substitution with the
    * suggestion and update the input-text (both in the store and DOM).
-   *
-   * @param caretPosition position of the caret in the `terminal-input` element
-   * @param inputComponent reference to the `TerminalInput` class who called
-   * this function
    */
-  public autocompleteWord(caretPosition: number, inputComponent: TerminalInput): void {
+  public autocompleteWord(): void {
+    const terminalInputComponent = this.$parent as TerminalInput;
     const inputTextSplitted = this.commands.inputContent.split('');
     const selectedSuggestion = this.commands.suggestions[this.commands.suggestionIndex];
+    const { cursorPosition } = this.commands;
 
     let startingSuggestionIndex = 0;
     let suggestionStrPos = 0;
@@ -96,12 +94,12 @@ export default class TerminalAutocomplete extends Vue {
     const toAdd = selectedSuggestion.replace(wrote, '').split('');
 
     // Add the characters from the `toAdd` array
-    inputTextSplitted.splice(caretPosition, 0, ...toAdd);
+    inputTextSplitted.splice(cursorPosition, 0, ...toAdd);
 
     const inputText = inputTextSplitted.join('');
     const newCursorPosition = suggestionStrPos + toAdd.length;
 
-    inputComponent.updateInput(inputText, newCursorPosition);
+    terminalInputComponent.updateInput(inputText, newCursorPosition);
     this.$store.commit(commandMutations.setInputContent, inputText);
     this.hideAutocomplete();
   }

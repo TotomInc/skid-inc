@@ -10,6 +10,7 @@ export const commandMutations = {
   setInputContent: 'setInputContent',
   toggleAutocompletion: 'toggleAutocompletion',
   setSuggestions: 'setSuggestions',
+  setCursorPosition: 'setCursorPosition',
 
   changeSuggestionIndex: 'changeSuggestionIndex',
   resetSuggestionIndex: 'resetSuggestionIndex',
@@ -51,6 +52,10 @@ const mutations: MutationTree<CommandState> = {
 
   [commandMutations.setSuggestions](state, payload: string[]) {
     state.suggestions = payload;
+  },
+
+  [commandMutations.setCursorPosition](state, payload: number) {
+    state.cursorPosition = payload;
   },
 
   [commandMutations.changeSuggestionIndex](state) {

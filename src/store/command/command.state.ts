@@ -10,6 +10,7 @@ export interface CommandState {
   inputContent: string;
   isInAutocomplete: boolean;
   suggestionIndex: number;
+  cursorPosition: number;
 }
 
 const state: CommandState = {
@@ -21,6 +22,7 @@ const state: CommandState = {
   inputContent: '',
   isInAutocomplete: false,
   suggestionIndex: 0,
+  cursorPosition: -1,
 };
 
 export default state;
