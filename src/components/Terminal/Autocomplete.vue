@@ -1,28 +1,33 @@
 <template>
-  <div
-    id="autocomplete-tooltip"
-    class="z-10 absolute -top-4 rounded py-2 px-1 opacity-0 pointer-events-none text-gray-800 bg-white shadow-xl"
-  >
-    <div v-if="suggestions.length">
-      <p
-        v-for="(suggestion, index) in suggestions"
-        :key="'suggestion-' + index"
-        :class="{ 'bg-gray-200': commands.suggestionIndex === index }"
-        class="transition px-2 py-1 rounded"
-      >
-        {{ suggestion }}
-      </p>
-    </div>
+  <div id="autocomplete-tooltip">
+    <div
+      id="tooltip"
+      ref="tooltip"
+      class="z-10 absolute -top-4 rounded p-2 opacity-0 pointer-events-none text-gray-800 bg-white shadow-xl"
+    >
+      <div v-if="suggestions.length">
+        <p
+          v-for="(suggestion, index) in suggestions"
+          :key="'suggestion-' + index"
+          :class="{ 'bg-gray-200': commands.suggestionIndex === index }"
+          class="transition px-2 py-1 rounded text-base"
+        >
+          {{ suggestion }}
+        </p>
+      </div>
 
-    <span v-else>No suggestions</span>
+      <span v-else class="text-base">No suggestions</span>
+    </div>
 
     <!--
       Thoses are fake elements, theyr are needed to calculate both the width of
       the text input and the height of the suggestions. It doesn't interfere
       with other DOM elements.
     -->
-    <span ref="text-input-ruler" class="absolute opacity-0 pointer-events-none"></span>
-    <div ref="suggestions-ruler" class="absolute opacity-0 pointer-events-none"></div>
+    <div>
+      <span ref="text-input-ruler" class="absolute pointer-events-none top-4 text-lg"></span>
+      <div ref="suggestions-ruler" class="absolute opacity-0 pointer-events-none text-base"></div>
+    </div>
   </div>
 </template>
 
@@ -174,7 +179,7 @@ export default class TerminalAutocomplete extends Vue {
   private calculateLeftPosition(): number {
     const terminalNameEl = this.$parent.$refs['terminal-name'] as HTMLSpanElement;
     const terminalInputEl = this.$parent.$refs['terminal-input'] as HTMLDivElement;
-    const autocompleteEl = this.$el as HTMLDivElement;
+    const autocompleteEl = this.$refs.tooltip as HTMLDivElement;
 
     const terminalNameWidth = terminalNameEl.offsetWidth + 24;
     const terminalTextWidth = this.calculateTextInputLength();
@@ -195,7 +200,7 @@ export default class TerminalAutocomplete extends Vue {
     // it will call the `$nextTick` function with our callback.
     await this.$nextTick(() => {
       const parent = this.$parent;
-      const autocompleteEl = this.$el as HTMLDivElement;
+      const autocompleteEl = this.$refs.tooltip as HTMLDivElement;
 
       autocompleteEl.style.transition = 'all 0s ease-in-out';
       autocompleteEl.style.left = `${this.calculateLeftPosition()}px`;
@@ -214,7 +219,7 @@ export default class TerminalAutocomplete extends Vue {
    * Hide the autocomplete tooltip.
    */
   private hideAutocomplete(): void {
-    const autocompleteEl = this.$el as HTMLDivElement;
+    const autocompleteEl = this.$refs.tooltip as HTMLDivElement;
 
     autocompleteEl.style.transform = 'translateY(-6px)';
     autocompleteEl.style.pointerEvents = 'none';
@@ -226,7 +231,7 @@ export default class TerminalAutocomplete extends Vue {
 </script>
 
 <style scoped>
-#autocomplete-tooltip:after {
+#tooltip:after {
   top: 100%;
   left: 50%;
   border: solid transparent;
