@@ -54,6 +54,8 @@ export default class TerminalInput extends Vue {
     'ArrowDown',
   ];
 
+  private arrowKeys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
+
   public get player(): PlayerState {
     return this.$store.state.player;
   }
@@ -90,8 +92,7 @@ export default class TerminalInput extends Vue {
   public onInputKeyup(event: KeyboardEvent): void {
     const target = event.target as HTMLDivElement;
 
-    if (target && typeof target.textContent === 'string' && !this.ignoredKeys.includes(event.key)) {
-      // Avoid unnecessary commit
+    if (typeof target.textContent === 'string' && !this.ignoredKeys.includes(event.key)) {
       if (this.inputContent !== target.textContent) {
         this.inputContent = target.textContent;
 
@@ -103,12 +104,19 @@ export default class TerminalInput extends Vue {
       }
     }
 
+    // Browse command history by increasing the command history index
     if (event.key === 'ArrowUp') {
       this.$store.commit(commandMutations.changeHistoryIndex, 'increase');
     }
 
+    // Browse command history by decreasing the command history index
     if (event.key === 'ArrowDown') {
       this.$store.commit(commandMutations.changeHistoryIndex, 'decrease');
+    }
+
+    // Hide autocomplete tooltip when hitting an arrow key
+    if (this.arrowKeys.indexOf(event.key) > -1 && this.commands.isInAutocomplete) {
+      this.$store.commit(commandMutations.hideAutocomplete);
     }
   }
 
