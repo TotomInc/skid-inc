@@ -30,6 +30,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { autocomplete } from '@totominc/command-parser';
 
+import TerminalInput from './Input.vue';
 import Command from '@/models/command.model';
 import { CommandState } from '@/store/command/command.state';
 import { commandMutations } from '@/store/command/command.mutations';
@@ -54,9 +55,55 @@ export default class TerminalAutocomplete extends Vue {
   public mounted(): void {
     this.$store.subscribe(({ type, payload }) => {
       if (type === commandMutations.toggleAutocompletion) {
-        this.commands.isInAutocomplete ? this.showAutocomplete() : this.hideAutocomplete();
+        if (this.commands.isInAutocomplete) {
+          this.showAutocomplete();
+        } else {
+          this.hideAutocomplete();
+        }
       }
     });
+  }
+
+  /**
+   * Autocomplete the current word where the `caretPosition` is. Try to find
+   * already written characters, execute a string substitution with the
+   * suggestion and update the input-text (both in the store and DOM).
+   *
+   * @param caretPosition position of the caret in the `terminal-input` element
+   * @param inputComponent reference to the `TerminalInput` class who called
+   * this function
+   */
+  public autocompleteWord(caretPosition: number, inputComponent: TerminalInput): void {
+    const inputTextSplitted = this.commands.inputContent.split('');
+    const selectedSuggestion = this.commands.suggestions[this.commands.suggestionIndex];
+
+    let startingSuggestionIndex = 0;
+    let suggestionStrPos = 0;
+    let wrote = '';
+
+    // Find a serie of matching characters in order to retrieve what characters
+    // have been already written and find the written character-index in the
+    // full input text
+    inputTextSplitted.forEach((str, i) => {
+      if (str === selectedSuggestion[suggestionStrPos]) {
+        wrote += str;
+        startingSuggestionIndex = i - wrote.length;
+        suggestionStrPos += 1;
+      }
+    });
+
+    // String substitution between written characters and the suggestion
+    const toAdd = selectedSuggestion.replace(wrote, '').split('');
+
+    // Add the characters from the `toAdd` array
+    inputTextSplitted.splice(caretPosition, 0, ...toAdd);
+
+    const inputText = inputTextSplitted.join('');
+    const newCursorPosition = suggestionStrPos + toAdd.length;
+
+    inputComponent.updateInput(inputText, newCursorPosition);
+    this.$store.commit(commandMutations.setInputContent, inputText);
+    this.hideAutocomplete();
   }
 
   /**

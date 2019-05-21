@@ -14,7 +14,7 @@
       />
     </div>
 
-    <autocomplete />
+    <autocomplete ref="autocomplete" />
   </div>
 </template>
 
@@ -122,6 +122,11 @@ export default class TerminalInput extends Vue {
       this.$store.dispatch(commandActions.PARSE_COMMAND, this.inputContent);
 
       this.cleanInput();
+    } else {
+      const autocompleteElement = this.$refs.autocomplete as Autocomplete;
+      const caretPosition = this.getCaretPosition();
+
+      autocompleteElement.autocompleteWord(caretPosition, this);
     }
   }
 
@@ -146,6 +151,19 @@ export default class TerminalInput extends Vue {
     if (this.commands.isInAutocomplete) {
       this.$store.commit(commandMutations.toggleAutocompletion);
     }
+  }
+
+  /**
+   * Update the terminal-input text state both in DOM and in local variables.
+   * Make sure to update the cursor position.
+   */
+  public updateInput(text: string, cursorPosition: number): void {
+    const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
+
+    this.inputContent = text;
+    inputElement.textContent = text;
+
+    this.setCursorPosition(cursorPosition);
   }
 
   /**
