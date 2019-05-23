@@ -165,8 +165,8 @@ export default class TerminalInput extends Vue {
   }
 
   /**
-   * Update the terminal-input text state both in DOM and in local variables.
-   * Make sure to update the cursor position.
+   * Update the terminal-input text state both in DOM, local variables and
+   * store. Make sure to update the cursor position.
    */
   public updateInput(text: string, cursorPosition: number): void {
     const inputElement = this.$refs['terminal-input'] as HTMLDivElement;
@@ -174,6 +174,7 @@ export default class TerminalInput extends Vue {
     this.inputContent = text;
     inputElement.textContent = text;
 
+    this.$store.commit(commandMutations.setInputContent, text);
     this.setCursorPosition(cursorPosition);
   }
 
@@ -186,6 +187,7 @@ export default class TerminalInput extends Vue {
     input.textContent = '';
     input.innerHTML = '';
     this.inputContent = '';
+
     this.$store.commit(commandMutations.setInputContent, '');
   }
 

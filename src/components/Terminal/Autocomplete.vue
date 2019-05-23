@@ -9,7 +9,7 @@
         <p
           v-for="(suggestion, index) in suggestions"
           :key="'suggestion-' + index"
-          :class="{ 'bg-gray-200': commands.suggestionIndex === index }"
+          :class="{ 'bg-gray-400': commands.suggestionIndex === index }"
           class="transition px-2 py-1 rounded text-base"
         >
           {{ suggestion }}
@@ -20,7 +20,7 @@
     </div>
 
     <!--
-      Thoses are fake elements, theyr are needed to calculate both the width of
+      Thoses are fake elements, they are needed to calculate both the width of
       the text input and the height of the suggestions. It doesn't interfere
       with other DOM elements.
     -->
@@ -76,40 +76,68 @@ export default class TerminalAutocomplete extends Vue {
    */
   public autocompleteWord(): void {
     const terminalInputComponent = this.$parent as TerminalInput;
-    const inputTextSplitted = this.commands.inputContent.split('');
+    const splittedInputcontent = this.commands.inputContent.split(' ');
     const selectedSuggestion = this.commands.suggestions[this.commands.suggestionIndex];
     const { cursorPosition } = this.commands;
+    const { typedWord, charsBeforeWord } = this.getWordOnCursorPosition();
 
-    let startingSuggestionIndex = 0;
-    let suggestionStrPos = 0;
-    let wrote = '';
+    splittedInputcontent.splice(splittedInputcontent.indexOf(typedWord), 1, selectedSuggestion);
 
-    // Find a serie of matching characters in order to retrieve what characters
-    // have been already written and find the written character-index in the
-    // full input text
-    inputTextSplitted.forEach((str, i) => {
-      if (str === selectedSuggestion[suggestionStrPos]) {
-        wrote += str;
-        startingSuggestionIndex = i - wrote.length;
-        suggestionStrPos += 1;
-      }
-    });
-
-    // String substitution between written characters and the suggestion
-    const toAdd = selectedSuggestion.replace(wrote, '').split('');
-
-    // Add the characters from the `toAdd` array
-    inputTextSplitted.splice(cursorPosition, 0, ...toAdd);
-
-    const inputText = inputTextSplitted.join('');
-    const newCursorPosition = suggestionStrPos + toAdd.length;
+    const inputText = splittedInputcontent.join(' ');
+    const newCursorPosition = charsBeforeWord.length + selectedSuggestion.length;
 
     terminalInputComponent.updateInput(inputText, newCursorPosition);
 
-    this.$store.commit(commandMutations.setInputContent, inputText);
     this.$store.commit(commandMutations.hideAutocomplete);
 
     this.hideAutocomplete();
+  }
+
+  /**
+   * Find the current word where the cursor position is located (based on the
+   * store state).
+   */
+  private getWordOnCursorPosition(): {
+    typedWord: string;
+    charsBeforeWord: string;
+  } {
+    const { inputContent, cursorPosition } = this.commands;
+
+    let charsAfterCursor = '';
+    let charsBeforeCursor = '';
+
+    // Go forward after the cursor position to match the next space which
+    // delimit words
+    for (let i = cursorPosition; i < inputContent.length - 1; i += 1) {
+      const char = inputContent[i];
+
+      if (char !== ' ') {
+        charsAfterCursor += char;
+      } else {
+        i = inputContent.length;
+      }
+    }
+
+    // Go backward before the cursor position to match the first space which
+    // delimite words. Also make sure to unshift the new char (instead of
+    // pushing, unlike `charsAfterCursor`)
+    for (let i = cursorPosition - 1; i >= 0; i -= 1) {
+      const char = inputContent[i];
+
+      if (char !== ' ') {
+        charsBeforeCursor = `${char}${charsBeforeCursor}`;
+      } else {
+        i = 0;
+      }
+    }
+
+    const typedWord = charsBeforeCursor + charsAfterCursor;
+    const charsBeforeWord = inputContent.substring(0, inputContent.indexOf(typedWord));
+
+    return {
+      typedWord,
+      charsBeforeWord,
+    };
   }
 
   /**
