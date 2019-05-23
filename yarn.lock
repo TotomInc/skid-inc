@@ -737,9 +737,9 @@
     string-width "^2.0.0"
 
 "@totominc/command-parser@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@totominc/command-parser/-/command-parser-0.3.1.tgz#2aa71d11d7aba6699c73a2351d6cef4fc69d06ab"
-  integrity sha512-pNzGHNHPFFexE7bVm7ZeZGokSLcmyhZonM0z9NeVNFy8ZG7vMwyMlc1YWsIlQbEJ6fQHxnCEVvtB/WzvbstZnQ==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@totominc/command-parser/-/command-parser-0.3.2.tgz#637c8a3eaeb4100f08b5715664676bac943b35b6"
+  integrity sha512-P7oYNr6BhjxoInURoWNzKQwmWEB1iw8r0xIJD9Rs0/c4nkfzw1Egk4VZ0B0Gdv6OEZnuJjOPUmrDmmyG1LRq9A==
 
 "@types/events@*":
   version "3.0.0"
