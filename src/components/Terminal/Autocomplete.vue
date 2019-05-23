@@ -10,7 +10,7 @@
           v-for="(suggestion, index) in suggestions"
           :key="'suggestion-' + index"
           :class="{ 'bg-gray-400': commands.suggestionIndex === index }"
-          class="transition px-2 py-1 rounded text-base"
+          class="transition-eio-normal px-2 py-1 rounded text-base"
         >
           {{ suggestion }}
         </p>
@@ -279,9 +279,5 @@ export default class TerminalAutocomplete extends Vue {
   border-top-color: #ffffff;
   border-width: 6px;
   margin-left: -6px;
-}
-
-.transition {
-  transition: all 0.25s ease-in-out;
 }
 </style>

@@ -1,3 +1,8 @@
+/*
+  eslint
+    "func-names": "off"
+*/
+
 module.exports = {
   theme: {
     extend: {
@@ -91,5 +96,24 @@ module.exports = {
   corePlugins: {
     container: false,
   },
-  plugins: [],
+  plugins: [
+    /**
+     * Custom plugin to add some transitions classes.
+     */
+    function({ addUtilities }) {
+      const transitionUtilities = {
+        '.transition-eio-fast': {
+          transition: 'all 0.1s ease-in-out',
+        },
+        '.transition-eio-normal': {
+          transition: 'all 0.25s ease-in-out',
+        },
+        '.transition-eio-slow': {
+          transition: 'all 0.5s ease-in-out',
+        },
+      };
+
+      addUtilities(transitionUtilities);
+    },
+  ],
 };
